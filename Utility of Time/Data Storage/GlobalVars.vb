@@ -68,7 +68,6 @@ Module GlobalVars
     Public LinkedCommands As New DLEdit
     Public ZAnimationCounter As New FrameAdvancer
     Public Rand As New Random
-    Public Interpolate As New SLERP
     Public AnimationStopWatch As New Stopwatch
     Public AllVertices As New N64Vertex
 #End Region
@@ -79,4 +78,3 @@ Module GlobalVars
     Public I As New TextureUpscaler.I
 #End Region
 End Module
-

@@ -294,7 +294,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Display List\N64DlistAssembler.vb" />
-    <Compile Include="Helpers\SLERP.vb" />
     <Compile Include="Hex Editor\HexEditor.Designer.vb">
       <DependentUpon>HexEditor.vb</DependentUpon>
     </Compile>
