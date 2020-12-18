@@ -1,4 +1,6 @@
-uot
+Utility of Time
 ---
 
-An exported version of http://code.google.com/p/uot that will be developed as a CC0 licensed fork. The original unmodified `uot` code can be found in the `uot` branch. The original unmodifed `Project Home` text can be found in the `wiki` branch.
+Fork of honzi's fork of the "Utility of Time" tool by cooliscool.
+
+This was transpiled into C# with the aims of polishing the importing logic and eventually exporting actor's models and animations as .glTF files.
