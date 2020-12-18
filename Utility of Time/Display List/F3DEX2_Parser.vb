@@ -1,7 +1,6 @@
-﻿Imports Tao.OpenGl
-Imports System.IO
-Imports System.Math
-Imports System.Runtime.InteropServices
+﻿Imports System.Math
+Imports Tao.OpenGl
+
 Public Class F3DEX2_Parser
 
 #Region "VARIABLES"

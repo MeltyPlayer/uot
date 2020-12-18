@@ -185,6 +185,7 @@
     <Import Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Display List\F3DEX2_Defs.vb" />
     <Compile Include="Display List\F3DEX2_Parser.vb" />
     <Compile Include="Helpers\Functions.vb" />
     <Compile Include="Main window\AboutBoxDialog.Designer.vb">
@@ -292,8 +293,6 @@
     <Compile Include="DL Command Editors\CombinerEditor.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Display List\F3DEX2_Defs.vb" />
-    <Compile Include="Display List\F3DEX_Defs.vb" />
     <Compile Include="Display List\N64DlistAssembler.vb" />
     <Compile Include="Helpers\SLERP.vb" />
     <Compile Include="Hex Editor\HexEditor.Designer.vb">
