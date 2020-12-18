@@ -73,5 +73,8 @@
   <ItemGroup>
     <Compile Include="helpers\Functions.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="displaylist\F3DEX2_Defs.cs" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
