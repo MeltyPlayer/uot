@@ -594,16 +594,19 @@ namespace UoT {
     }
 
     private int SearchTexCache(Structs.Texture Texture) {
-      int texCachePos = -1;
       for (int i = 0, loopTo = TextureCache.Length - 1; i <= loopTo; i++) {
-        if (TextureCache[i].Texture.Offset == Texture.Offset &
-            TextureCache[i].Texture.ImageBank == Texture.ImageBank) {
-          texCachePos = i;
-          break;
+        var cacheTexture = this.TextureCache[i]?.Texture;
+        if (cacheTexture == null) {
+          continue;
+        }
+
+        if (cacheTexture.Offset == Texture.Offset &&
+            cacheTexture.ImageBank == Texture.ImageBank) {
+          return i;
         }
       }
 
-      return texCachePos;
+      return -1;
     }
 
     private void VTX(uint w0, uint w1) {
@@ -975,7 +978,7 @@ namespace UoT {
             (uint) ((Textures[CurrentTex].TexBytes << 16 >> 16) * 2L);
       }
 
-      CalculateTexSize(CurrentTex);
+      this.Textures[CurrentTex].CalculateSize();
     }
 
     private void LOADTLUT(uint w1) {
@@ -1001,163 +1004,19 @@ namespace UoT {
         ushort RGBA5551 = 0;
         RGBA5551 = (ushort) Functions.ReadInt16(Palette16, (uint) iw);
         {
-          var withBlock = Textures[0];
-          withBlock.Palette32[curInd].r = (byte) ((RGBA5551 & 0xF800) >> 8);
-          withBlock.Palette32[curInd].g = (byte) ((RGBA5551 & 0x7C0) << 5 >> 8);
-          withBlock.Palette32[curInd].b =
-              (byte) ((RGBA5551 & 0x3E) << 18 >> 16);
-          if (Conversions.ToBoolean(RGBA5551 & 1))
-            withBlock.Palette32[curInd].a = 255;
-          else
-            withBlock.Palette32[curInd].a = 0;
+          var newTexture = new Structs.Texture();
+          newTexture.Palette32[curInd] = new Structs.Color4UByte {
+              r = (byte) ((RGBA5551 & 0xF800) >> 8),
+              g = (byte) ((RGBA5551 & 0x7C0) << 5 >> 8),
+              b = (byte) ((RGBA5551 & 0x3E) << 18 >> 16),
+              a = (byte) (Conversions.ToBoolean(RGBA5551 & 1) ? 255 : 0),
+          };
+
+          Textures[0] = newTexture;
         }
 
         curInd += 1;
       }
-    }
-
-    private void CalculateTexSize(int id) {
-      uint MaxTexel = 0U;
-      uint Line_Shift = 0U;
-      switch (Textures[id].TexFormat) {
-        case 0:
-        case 0x40: {
-          MaxTexel = 4096U;
-          Line_Shift = 4U;
-          break;
-        }
-
-        case 0x60:
-        case 0x80: {
-          MaxTexel = 8192U;
-          Line_Shift = 4U;
-          break;
-        }
-
-        case 0x8:
-        case 0x48: {
-          MaxTexel = 2048U;
-          Line_Shift = 3U;
-          break;
-        }
-
-        case 0x68:
-        case 0x88: {
-          MaxTexel = 4096U;
-          Line_Shift = 3U;
-          break;
-        }
-
-        case 0x10:
-        case 0x70: {
-          MaxTexel = 2048U;
-          Line_Shift = 2U;
-          break;
-        }
-
-        case 0x50:
-        case 0x90: {
-          MaxTexel = 2048U;
-          Line_Shift = 0U;
-          break;
-        }
-
-        case 0x18: {
-          MaxTexel = 1024U;
-          Line_Shift = 2U;
-          break;
-        }
-      }
-
-      uint Line_Width = (uint) (Textures[id].LineSize << (int) Line_Shift);
-      uint Tile_Width = (uint) (Textures[id].LRS - Textures[id].ULS + 1);
-      uint Tile_Height = (uint) (Textures[id].LRT - Textures[id].ULT + 1);
-      uint Mask_Width = (uint) (1 << Textures[id].MaskS);
-      uint Mask_Height = (uint) (1 << Textures[id].MaskT);
-      uint Line_Height = 0U;
-      if (Line_Width > 0L)
-        Line_Height =
-            (uint) Math.Min(MaxTexel / (double) Line_Width, Tile_Height);
-      if (Textures[id].MaskS > 0 & Mask_Width * Mask_Height <= MaxTexel) {
-        Textures[id].Width = (int) Mask_Width;
-      } else if (Tile_Width * Tile_Height <= MaxTexel) {
-        Textures[id].Width = (int) Tile_Width;
-      } else {
-        Textures[id].Width = (int) Line_Width;
-      }
-
-      if (Textures[id].MaskT > 0 & Mask_Width * Mask_Height <= MaxTexel) {
-        Textures[id].Height = (int) Mask_Height;
-      } else if (Tile_Width * Tile_Height <= MaxTexel) {
-        Textures[id].Height = (int) Tile_Height;
-      } else {
-        Textures[id].Height = (int) Line_Height;
-      }
-
-      uint Clamp_Width = 0U;
-      uint Clamp_Height = 0U;
-      if (Textures[id].CMS == 1) {
-        Clamp_Width = Tile_Width;
-      } else {
-        Clamp_Width = (uint) Textures[id].Width;
-      }
-
-      if (Textures[id].CMT == 1) {
-        Clamp_Height = Tile_Height;
-      } else {
-        Clamp_Height = (uint) Textures[id].Height;
-      }
-
-      if (Mask_Width > Textures[id].Width) {
-        Textures[id].MaskS = (int) Functions.PowOf((ulong) Textures[id].Width);
-        Mask_Width = (uint) (1 << Textures[id].MaskS);
-      }
-
-      if (Mask_Height > Textures[id].Height) {
-        Textures[id].MaskT = (int) Functions.PowOf((ulong) Textures[id].Height);
-        Mask_Height = (uint) (1 << Textures[id].MaskT);
-      }
-
-      if (Textures[id].CMS == 2 | Textures[id].CMS == 3) {
-        Textures[id].RealWidth = (int) Functions.Pow2(Clamp_Width);
-      } else if (Textures[id].CMS == 1) {
-        Textures[id].RealWidth = (int) Functions.Pow2(Mask_Width);
-      } else {
-        Textures[id].RealWidth =
-            (int) Functions.Pow2((ulong) Textures[id].Width);
-      }
-
-      if (Textures[id].CMT == 2 | Textures[id].CMT == 3) {
-        Textures[id].RealHeight = (int) Functions.Pow2(Clamp_Height);
-      } else if (Textures[id].CMT == 1) {
-        Textures[id].RealHeight = (int) Functions.Pow2(Mask_Height);
-      } else {
-        Textures[id].RealHeight =
-            (int) Functions.Pow2((ulong) Textures[id].Height);
-      }
-
-      Textures[id].ShiftS = 1.0d;
-      Textures[id].ShiftT = 1.0d;
-      if (Textures[id].TShiftS > 10d) {
-        Textures[id].ShiftS = 1 << (int) (16d - Textures[id].TShiftS);
-      } else if (Textures[id].TShiftS > 0d) {
-        Textures[id].ShiftS /= 1 << (int) Textures[id].TShiftS;
-      }
-
-      if (Textures[id].TShiftT > 10d) {
-        Textures[id].ShiftT = 1 << (int) (16d - Textures[id].TShiftT);
-      } else if (Textures[id].TShiftT > 0d) {
-        Textures[id].ShiftT /= 1 << (int) Textures[id].TShiftT;
-      }
-
-      Textures[id].TextureHRatio = Textures[id].T_Scale *
-                                   Textures[id].ShiftT /
-                                   32d /
-                                   Textures[id].RealHeight;
-      Textures[id].TextureWRatio = Textures[id].S_Scale *
-                                   Textures[id].ShiftS /
-                                   32d /
-                                   Textures[id].RealWidth;
     }
 
     private int LoadTex(
@@ -2115,8 +1974,12 @@ namespace UoT {
     }
 
     public void KillTexCache() {
-      for (int i = 0, loopTo = TextureCache.Length - 1; i <= loopTo; i++)
-        Gl.glDeleteTextures(1, ref TextureCache[i].Texture.ID);
+      foreach (var textureCache in this.TextureCache) {
+        var cachedTexture = textureCache?.Texture;
+        if (cachedTexture != null) {
+          Gl.glDeleteTextures(1, ref cachedTexture.ID);
+        }
+      }
       TextureCache = new Structs.TCache[0];
     }
 

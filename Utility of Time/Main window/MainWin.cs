@@ -5497,10 +5497,7 @@ namespace UoT {
       int cursegpos = 0;
       string curfilename = "";
       int sccount = -1;
-      int codecount = 0;
-      int othercount = 0;
       int mapcount = 0;
-      int objcount = 0;
       int scinc = 0;
       int scfile = -1;
       bool done = false;
@@ -5591,29 +5588,24 @@ namespace UoT {
           this.ROMFiles.Objects.Add(newObj);
 
           FileTree.Nodes[0].Nodes.Add(curfilename);
-          objcount += 1;
           mapcount = 0;
           sccount = -1;
         } else if (CultureInfo.CurrentCulture.CompareInfo.Compare(Strings.Mid(curfilename, 1, 4).ToLower(), "ovl_", CompareOptions.IgnoreCase | CompareOptions.IgnoreKanaType | CompareOptions.IgnoreWidth) == 0) {
-          var newActorCode = new Structs.ZCodeFiles();
-          newActorCode.filename = curfilename;
-          newActorCode.startoff = (int)tempstart[nameinc];
-          newActorCode.endoff = (int)tempend[nameinc];
-
-          this.ROMFiles.ActorCode.Add(newActorCode);
+          this.ROMFiles.ActorCode.Add(new Structs.ZCodeFiles {
+              filename = curfilename,
+              startoff = (int)tempstart[nameinc],
+              endoff = (int)tempend[nameinc],
+          });
 
           FileTree.Nodes[1].Nodes.Add(curfilename);
-          codecount += 1;
         } else {
-          var newOther = new Structs.ZOtherData();
-          newOther.filename = curfilename;
-          newOther.startoff = (int)tempstart[nameinc];
-          newOther.endoff = (int)tempend[nameinc];
-
-          this.ROMFiles.Others.Add(newOther);
+          this.ROMFiles.Others.Add(new Structs.ZOtherData {
+              filename = curfilename,
+              startoff = (int)tempstart[nameinc],
+              endoff = (int)tempend[nameinc],
+          });
 
           FileTree.Nodes[3].Nodes.Add(curfilename);
-          othercount += 1;
           mapcount = 0;
           sccount = -1;
         }
@@ -5627,6 +5619,11 @@ namespace UoT {
 
     public void PopulateCommonBanks(Structs.ObjectExchange Banks) {
       using var romFS = new FileStream(GlobalVars.DefROM, FileMode.Open);
+
+      Banks.Bank4.Banks.Clear();
+      Banks.Bank5.Banks.Clear();
+      Banks.Anims.Banks.Clear();
+
       for (var i = 0; i < 1; ++i) {
         Banks.Bank4.Banks.Add(new Structs.BankBuffers());
       }
@@ -5646,7 +5643,7 @@ namespace UoT {
         var fileSize = endOff - startOff;
 
         if (CultureInfo.CurrentCulture.CompareInfo.Compare(filename, "gameplay_keep", CompareOptions.IgnoreCase | CompareOptions.IgnoreKanaType | CompareOptions.IgnoreWidth) == 0) {
-          Banks.Bank4.Banks[0].Data = new byte[(int)(fileSize - 1L + 1)];
+          Banks.Bank4.Banks[0].Data = new byte[fileSize];
 
           romFS.Position = startOff;
           romFS.Read(Banks.Bank4.Banks[0].Data, 0, fileSize);
