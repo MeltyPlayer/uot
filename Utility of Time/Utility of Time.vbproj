@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="Current">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
@@ -25,7 +25,7 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>3.5</OldToolsVersion>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OptionInfer>Off</OptionInfer>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
@@ -42,6 +42,7 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <GenerateResourceNeverLockTypeAssemblies>true</GenerateResourceNeverLockTypeAssemblies>
@@ -61,6 +62,7 @@
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <UseVSHostingProcess>true</UseVSHostingProcess>
     <Optimize>true</Optimize>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <GenerateResourceNeverLockTypeAssemblies>true</GenerateResourceNeverLockTypeAssemblies>
@@ -81,6 +83,7 @@
     <UseVSHostingProcess>true</UseVSHostingProcess>
     <DebugSymbols>true</DebugSymbols>
     <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
     <GenerateResourceNeverLockTypeAssemblies>true</GenerateResourceNeverLockTypeAssemblies>
@@ -98,6 +101,7 @@
     <WarningsAsErrors>
     </WarningsAsErrors>
     <UseVSHostingProcess>false</UseVSHostingProcess>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
     <GenerateResourceNeverLockTypeAssemblies>true</GenerateResourceNeverLockTypeAssemblies>
@@ -116,6 +120,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <UseVSHostingProcess>false</UseVSHostingProcess>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -130,6 +135,7 @@
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <UseVSHostingProcess>true</UseVSHostingProcess>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -145,6 +151,7 @@
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -178,6 +185,8 @@
     <Import Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Display List\F3DEX2_Parser.vb" />
+    <Compile Include="Helpers\Functions.vb" />
     <Compile Include="Main window\AboutBoxDialog.Designer.vb">
       <DependentUpon>AboutBoxDialog.vb</DependentUpon>
     </Compile>
@@ -206,7 +215,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Helpers\IniWriter.vb" />
-    <Compile Include="Helpers\Functions.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -223,6 +231,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="TaoButton.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Main window\AboutBoxDialog.resx">
@@ -256,9 +267,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="bin\Debug\ext\kokirisword.cur" />
-    <EmbeddedResource Include="bin\Debug\ext\hook.cur" />
     <Content Include="Main window\uoticon64.ico" />
+    <Content Include="Tao GL Libs\freeglut.dll" />
+    <Content Include="Tao GL Libs\Tao.DevIl.dll" />
+    <Content Include="Tao GL Libs\Tao.DevIl.xml" />
+    <Content Include="Tao GL Libs\Tao.FreeGlut.dll" />
+    <Content Include="Tao GL Libs\Tao.FreeGlut.xml" />
+    <Content Include="Tao GL Libs\Tao.OpenGl.dll" />
+    <Content Include="Tao GL Libs\Tao.OpenGl.xml" />
+    <Content Include="Tao GL Libs\Tao.Platform.Windows.dll" />
+    <Content Include="Tao GL Libs\Tao.Platform.Windows.xml" />
     <None Include="Resources\icon_txt.gif" />
     <None Include="Resources\Button-Refresh-icon.png" />
     <None Include="Resources\Button-Stop-icon.png" />
@@ -277,7 +295,6 @@
     <Compile Include="Display List\F3DEX2_Defs.vb" />
     <Compile Include="Display List\F3DEX_Defs.vb" />
     <Compile Include="Display List\N64DlistAssembler.vb" />
-    <Compile Include="Display List\F3DEX2_Parser.vb" />
     <Compile Include="Helpers\SLERP.vb" />
     <Compile Include="Hex Editor\HexEditor.Designer.vb">
       <DependentUpon>HexEditor.vb</DependentUpon>
@@ -302,7 +319,6 @@
     <Compile Include="External Model Formats\OBJParser.vb" />
     <Compile Include="External Model Formats\ObjToF3DEX2.vb" />
     <Compile Include="Display List\RDP_Defs.vb" />
-    <Compile Include="Data Storage\Structs.vb" />
     <Compile Include="Display List\TextureConverter.vb" />
     <BaseApplicationManifest Include="My Project\app.manifest" />
     <EmbeddedResource Include="Hex Editor\HexEditor.resx">
@@ -340,6 +356,15 @@
       <ProductName>.NET Framework 3.5</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Debug\ext\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Utility of Time CSharp\Utility of Time CSharp.csproj">
+      <Project>{089c1412-5cca-4e35-a3a9-13bb34071e8c}</Project>
+      <Name>Utility of Time CSharp</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

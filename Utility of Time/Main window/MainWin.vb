@@ -5,6 +5,7 @@ Imports System.Math
 Imports System.IO
 Imports Tao.FreeGlut
 Imports System.Runtime.InteropServices
+Imports UoT.Tao.Platform.Windows
 
 Public Class MainWin
 
@@ -224,9 +225,9 @@ Public Class MainWin
         Me.RestorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.Label43 = New System.Windows.Forms.Label
         Me.TrackBar1 = New System.Windows.Forms.TrackBar
-        Me.UoTRender = New Tao.Platform.Windows.SimpleOpenGlControl
-        Me.ActorContextMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.DeselectToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+    Me.UoTRender = New UoT.Tao.Platform.Windows.SimpleOpenGlControl
+    Me.ActorContextMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
+    Me.DeselectToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.ToolStripSeparator14 = New System.Windows.Forms.ToolStripSeparator
         Me.EditToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem
         Me.CamXRotationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
