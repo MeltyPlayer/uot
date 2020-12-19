@@ -1,62 +1,63 @@
 ﻿Module F3DEX2_Defs
-    Public Function ReadInDL(ByVal Data() As Byte, ByRef DisplayList() As N64DisplayList, ByVal Offset As Integer, ByVal Index As Integer) As Integer
-        Try
-            If Offset < Data.Length Then
-                If Data(Offset) = &HDE Then
-                    Do Until Data(Offset) <> &HDE
-                        Offset = ReadUInt24(Data, Offset + 5)
-                    Loop
-                End If
+  Public Function ReadInDL(ByVal Data() As Byte, ByRef DisplayList() As N64DisplayList, ByVal Offset As Integer,
+                           ByVal Index As Integer) As Integer
+    Try
+      If Offset < Data.Length Then
+        If Data(Offset) = &HDE Then
+          Do Until Data(Offset) <> &HDE
+            Offset = ReadUInt24(Data, Offset + 5)
+          Loop
+        End If
 
-                ReDim Preserve DisplayList(Index)
-                DisplayList(Index) = New N64DisplayList
+        ReDim Preserve DisplayList(Index)
+        DisplayList(Index) = New N64DisplayList
 
-                Dim EPLoc As Integer = Offset
+        Dim EPLoc As Integer = Offset
 
-                MainWin.DListSelection.Items.Add((Index + 1).ToString & ". " & Hex(Offset))
+        MainWin.DListSelection.Items.Add((Index + 1).ToString & ". " & Hex(Offset))
 
-                With DisplayList(Index)
-                    .StartPos = New ZSegment
-                    .StartPos.Offset = Offset
-                    .StartPos.Bank = CurrentBank
-                    .Skip = False
-                    .PickCol = New Color3UByte
-                    .PickCol.r = Rand.Next(0, 255)
-                    .PickCol.g = Rand.Next(0, 255)
-                    .PickCol.b = Rand.Next(0, 255)
-                    Do
-                        ReDim Preserve .Commands(.CommandCount)
-                        ReDim Preserve .CommandsCopy(.CommandCount)
-                        ReDim .Commands(.CommandCount).CMDParams(7)
+        With DisplayList(Index)
+          .StartPos = New ZSegment
+          .StartPos.Offset = Offset
+          .StartPos.Bank = CurrentBank
+          .Skip = False
 
-                        .Commands(.CommandCount).Name = DLParser.IdentifyCommand(Data(EPLoc))
+          .PickCol = New Color3UByte
+          PickerUtil.NextRgb(.PickCol.r, .PickCol.g, .PickCol.b)
 
-                        For i As Integer = 0 To 7
-                            .Commands(.CommandCount).CMDParams(i) = Data(EPLoc + i)
-                        Next
+          Do
+            ReDim Preserve .Commands(.CommandCount)
+            ReDim Preserve .CommandsCopy(.CommandCount)
+            ReDim .Commands(.CommandCount).CMDParams(7)
 
-                        .Commands(.CommandCount).CMDLow = ReadUInt24(Data, EPLoc + 1)
+            .Commands(.CommandCount).Name = DLParser.IdentifyCommand(Data(EPLoc))
 
-                        .Commands(.CommandCount).CMDHigh = ReadUInt32(Data, EPLoc + 4)
+            For i As Integer = 0 To 7
+              .Commands(.CommandCount).CMDParams(i) = Data(EPLoc + i)
+            Next
 
-                        .Commands(.CommandCount).DLPos = .CommandCount
+            .Commands(.CommandCount).CMDLow = ReadUInt24(Data, EPLoc + 1)
 
-                        If Data(EPLoc) = F3DZEX.ENDDL Or EPLoc >= Data.Length Then
-                            EPLoc += 8
-                            Exit Do
-                        End If
+            .Commands(.CommandCount).CMDHigh = ReadUInt32(Data, EPLoc + 4)
 
-                        EPLoc += 8
-                        .CommandCount += 1
-                    Loop
-                    .CommandsCopy = .Commands
-                End With
+            .Commands(.CommandCount).DLPos = .CommandCount
 
-                Return EPLoc
+            If Data(EPLoc) = F3DZEX.ENDDL Or EPLoc >= Data.Length Then
+              EPLoc += 8
+              Exit Do
             End If
-        Catch ex As Exception
-            MsgBox("Error reading in display list: " & ex.Message, MsgBoxStyle.Critical, "Exception")
-            Exit Function
-        End Try
-    End Function
+
+            EPLoc += 8
+            .CommandCount += 1
+          Loop
+          .CommandsCopy = .Commands
+        End With
+
+        Return EPLoc
+      End If
+    Catch ex As Exception
+      MsgBox("Error reading in display list: " & ex.Message, MsgBoxStyle.Critical, "Exception")
+      Exit Function
+    End Try
+  End Function
 End Module
