@@ -61,6 +61,7 @@
     <Compile Include="tao\SimpleOpenGlControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="ui\main\viewer\PickerUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="TaoButton.jpg">
@@ -76,5 +77,6 @@
   <ItemGroup>
     <Compile Include="displaylist\F3DEX2_Defs.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
