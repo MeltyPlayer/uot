@@ -275,7 +275,7 @@ namespace UoT {
 
     public object getSegment(byte[] data, uint index) {
       Bank = data[(int)index];
-      Offset = Functions.ReadUInt24(data, (uint)(index + 1L));
+      Offset = FunctionsCs.ReadUInt24(data, (uint)(index + 1L));
       return default;
     }
   }

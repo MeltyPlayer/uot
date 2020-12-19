@@ -61,20 +61,6 @@ Module Functions
         Return ((Flip And &HFF000000) >> 24) Or ((Flip And &HFF0000) >> 8) Or _
         ((Flip And &HFF00) << 8) Or ((Flip And &HFF) << 24)
     End Function
-
-
-    Public Function ReadUInt32(ByVal Buffer() As Byte, ByVal Offset As UInteger) As UInteger
-        ReadUInt32 = Buffer(Offset) * &H1000000 _
-                                    + Buffer(Offset + 1) * &H10000 _
-                                    + Buffer(Offset + 2) * &H100 _
-                                    + Buffer(Offset + 3)
-
-    End Function
-    Public Function ReadUInt24(ByVal Buffer() As Byte, ByVal Offset As UInteger) As UInteger
-        ReadUInt24 = Buffer(Offset) * &H10000 _
-                            + Buffer(Offset + 1) * &H100 _
-                            + Buffer(Offset + 2)
-    End Function
     Public Function ReadInt16(ByVal Buffer() As Byte, ByVal Offset As UInteger) As Integer
         If Offset >= Buffer.Length - 1 Then
             ReadInt16 = 0
