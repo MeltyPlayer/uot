@@ -14,15 +14,12 @@ Public Class F3DEX2_Parser
 
 #Region "SHADERS & TEXTURE RELATED"
 
-  Private PalBank As Integer = 0
-  Private PalOff As Integer = 0
   Private Palette16() As Byte
   Private N64GeometryMode As UInt32
   Private MultiTexture As Boolean
   Private CurrentTex As Integer
   Private MultiTexCoord As Boolean = False
   Private TextureCache As TCache = New TCache()
-  Private TexCachePos As Integer
   Private Textures(1) As Texture
   Private FragShaderCache(-1) As ShaderCache
   Private PrimColor() As Single = {1.0, 1.0, 1.0, 0.5}
@@ -500,9 +497,9 @@ enddisplaylist:
       Gl.glEnable(Gl.GL_TEXTURE_2D)
 
       Gl.glActiveTextureARB(Gl.GL_TEXTURE0_ARB)
-      TexCachePos = SearchTexCache(Textures(0))
+      Dim texCachePos = SearchTexCache(Textures(0))
 
-      If TexCachePos = -1 Then
+      If texCachePos = -1 Then
         Select Case Textures(0).ImageBank
           Case CurrentBank
             LoadTex(ZFileBuffer, Textures(0).TexFormat, Textures(0).ImageBank, Textures(0).Offset, Textures(0).TexBytes,
@@ -520,14 +517,14 @@ enddisplaylist:
             Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2)
         End Select
       Else
-        Gl.glBindTexture(Gl.GL_TEXTURE_2D, TextureCache(TexCachePos).ID)
+        Gl.glBindTexture(Gl.GL_TEXTURE_2D, TextureCache(texCachePos).ID)
       End If
 
       If MultiTexture Then
         Gl.glActiveTextureARB(Gl.GL_TEXTURE1_ARB)
-        TexCachePos = SearchTexCache(Textures(1))
+        texCachePos = SearchTexCache(Textures(1))
 
-        If TexCachePos = -1 Then
+        If texCachePos = -1 Then
           Select Case Textures(1).ImageBank
             Case CurrentBank
               LoadTex(ZFileBuffer, Textures(1).TexFormat, Textures(1).ImageBank, Textures(1).Offset,
@@ -545,7 +542,7 @@ enddisplaylist:
               Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2)
           End Select
         Else
-          Gl.glBindTexture(Gl.GL_TEXTURE_2D, TextureCache(TexCachePos).ID)
+          Gl.glBindTexture(Gl.GL_TEXTURE_2D, TextureCache(texCachePos).ID)
         End If
         Gl.glDisable(Gl.GL_TEXTURE_2D)
         Gl.glActiveTextureARB(Gl.GL_TEXTURE0_ARB)
