@@ -19,7 +19,7 @@ Public Class F3DEX2_Parser
   Private MultiTexture As Boolean
   Private CurrentTex As Integer
   Private MultiTexCoord As Boolean = False
-  Private TextureCache As TCache = New TCache()
+  Private TextureCache As TextureCache = New TextureCache()
   Private Textures(1) As Texture
   Private FragShaderCache(-1) As ShaderCache
   Private PrimColor() As Single = {1.0, 1.0, 1.0, 0.5}

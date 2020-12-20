@@ -3,7 +3,7 @@
 using Tao.OpenGl;
 
 namespace UoT {
-  public class TCache {
+  public class TextureCache {
     private readonly IList<Texture> textures_ = new List<Texture>();
 
     public void Clear() {
