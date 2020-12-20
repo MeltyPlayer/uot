@@ -4767,6 +4767,12 @@ Public Class MainWin
       ColTriangleBox.Enabled = False
 
       If LoadedDataType = FileTypes.MAP Then
+        Dim colVar1s As ISet(Of UInteger) = New HashSet(Of UInteger)
+        Dim colVar2s As ISet(Of UInteger) = New HashSet(Of UInteger)
+        Dim colVar3s As ISet(Of UInteger) = New HashSet(Of UInteger)
+        Dim colVar4s As ISet(Of UInteger) = New HashSet(Of UInteger)
+        Dim colWalkSounds As ISet(Of Byte) = New HashSet(Of Byte)
+
         While scenePos < ZSceneBuffer.Length
           mscenePos = scenePos
           Select Case ZSceneBuffer(mscenePos)
@@ -4789,14 +4795,14 @@ Public Class MainWin
 
                   .offset = i1
 
-                  .no = (ZSceneBuffer(i1 + 4)*&H100) + (ZSceneBuffer(i1 + 5))
+                  .no = (ZSceneBuffer(i1 + 4) * &H100) + (ZSceneBuffer(i1 + 5))
 
-                  .x = (ZSceneBuffer(i1 + 6)*&H100) + (ZSceneBuffer(i1 + 7))
-                  .y = (ZSceneBuffer(i1 + 8)*&H100) + (ZSceneBuffer(i1 + 9))
-                  .z = (ZSceneBuffer(i1 + 10)*&H100) + (ZSceneBuffer(i1 + 11))
+                  .x = (ZSceneBuffer(i1 + 6) * &H100) + (ZSceneBuffer(i1 + 7))
+                  .y = (ZSceneBuffer(i1 + 8) * &H100) + (ZSceneBuffer(i1 + 9))
+                  .z = (ZSceneBuffer(i1 + 10) * &H100) + (ZSceneBuffer(i1 + 11))
 
-                  .yr = (ZSceneBuffer(i1 + 12)*&H100) + (ZSceneBuffer(i1 + 13))
-                  .var = (ZSceneBuffer(i1 + 14)*&H100) + (ZSceneBuffer(i1 + 15))
+                  .yr = (ZSceneBuffer(i1 + 12) * &H100) + (ZSceneBuffer(i1 + 13))
+                  .var = (ZSceneBuffer(i1 + 14) * &H100) + (ZSceneBuffer(i1 + 15))
                 End With
                 i1 += 16
 
@@ -4855,11 +4861,12 @@ Public Class MainWin
                   .unk3 = FunctionsCs.ReadUInt16(ZSceneBuffer, VariableOffset + 4)
                   .unk4 = FunctionsCs.ReadUInt16(ZSceneBuffer, VariableOffset + 6) >> 4
                   .WalkOnSound = ZSceneBuffer(VariableOffset + 7) << 4 >> 4
-                  ColVar1.AutoCompleteCustomSource.Add(.unk1.ToString("X4"))
-                  ColVar2.AutoCompleteCustomSource.Add(.unk2.ToString("X4"))
-                  ColVar3.AutoCompleteCustomSource.Add(.unk3.ToString("X4"))
-                  ColVar4.AutoCompleteCustomSource.Add(.unk4.ToString("X4"))
-                  ColWalkSound.AutoCompleteCustomSource.Add(.WalkOnSound.ToString("X0"))
+
+                  colVar1s.Add(.unk1)
+                  colVar2s.Add(.unk2)
+                  colVar3s.Add(.unk3)
+                  colVar4s.Add(.unk4)
+                  colWalkSounds.Add(.WalkOnSound)
                 End With
 
                 ColTypeBox.Items.Add(ctCnt)
@@ -4931,6 +4938,22 @@ Public Class MainWin
               scenePos += 8
           End Select
         End While
+
+        For Each unk1 As UInteger In colVar1s
+          ColVar1.AutoCompleteCustomSource.Add(unk1.ToString("X4"))
+        Next
+        For Each unk2 As UInteger In colVar2s
+          ColVar2.AutoCompleteCustomSource.Add(unk2.ToString("X4"))
+        Next
+        For Each unk3 As UInteger In colVar3s
+          ColVar3.AutoCompleteCustomSource.Add(unk3.ToString("X4"))
+        Next
+        For Each unk4 As UInteger In colVar4s
+          ColVar4.AutoCompleteCustomSource.Add(unk4.ToString("X4"))
+        Next
+        For Each walkSound As UInteger In colWalkSounds
+          ColWalkSound.AutoCompleteCustomSource.Add(walkSound.ToString("X0"))
+        Next
       End If
     Catch err As Exception
       MsgBox("Error parsing scene header: " & Environment.NewLine & Environment.NewLine & "Details: " & err.Message)

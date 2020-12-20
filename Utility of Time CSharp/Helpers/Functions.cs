@@ -13,7 +13,7 @@
     }
 
     /// <summary>
-    ///   Calculates which n results in 2^n closest under a given value. 
+    ///   Calculates which n results in 2^n closest under a given value.
     /// </summary>
     public static ulong PowOf(ulong val) {
       ulong num = 1;
