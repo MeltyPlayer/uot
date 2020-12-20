@@ -58,6 +58,7 @@
     <Compile Include="data\Structs.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="scene\SceneFileType.cs" />
     <Compile Include="tao\SimpleOpenGlControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

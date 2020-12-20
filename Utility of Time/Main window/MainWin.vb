@@ -5455,9 +5455,9 @@ Public Class MainWin
       Else
         Me.Text = "Utility of Time R8 - " & IndScFileName
         If IndScFileName.Contains(".zscene") Then
-          SetVariables(0)
+          SetVariables(SceneFileType.ZSCENE)
         ElseIf IndScFileName.Contains(".zobj") Then
-          SetVariables(1)
+          SetVariables(SceneFileType.ZOBJ)
         End If
       End If
     Catch err As Exception
@@ -6642,10 +6642,10 @@ Public Class MainWin
     End If
   End Sub
 
-  Private Sub SetVariables(ByVal ftype As Integer)
+  Private Sub SetVariables(ByVal ftype As SceneFileType)
     DLParser.Initialize()
     Select Case ftype
-      Case 0
+      Case SceneFileType.ZSCENE
         CurrentBank = &H3
         RenderGraphics = True
         RenderCollision = True
@@ -6662,7 +6662,7 @@ Public Class MainWin
         ProcessMapHeader()
         ProcessSceneHeader()
         GetEntryPoints()
-      Case 1
+      Case SceneFileType.ZOBJ
         CurrentBank = &H6
         RenderGraphics = True
         RenderCollision = False
@@ -7148,7 +7148,7 @@ Public Class MainWin
       IndMapFileName = LoadIndividual.FileName
       ZFileBuffer = File.ReadAllBytes(IndMapFileName)
       ZSceneBuffer = Nothing
-      SetVariables(1)
+      SetVariables(SceneFileType.ZOBJ)
     End If
   End Sub
 
@@ -7432,7 +7432,7 @@ Public Class MainWin
       ROMFileStream.Position = MapSt
       ROMFileStream.Read(ZFileBuffer, 0, MapBuffSize)
 
-      SetVariables(0)
+      SetVariables(SceneFileType.ZSCENE)
 
       IndMapFileName = ""
       IndScFileName = ""
@@ -7450,7 +7450,7 @@ Public Class MainWin
           ROMFileStream.Position = ROMFiles.Objects(filename).startoff
           ROMFileStream.Read(ZFileBuffer, 0, ObjBuffSize)
 
-          SetVariables(1)
+          SetVariables(SceneFileType.ZOBJ)
 
           IndMapFileName = ""
           IndScFileName = ""
