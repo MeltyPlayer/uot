@@ -7351,6 +7351,11 @@ Public Class MainWin
 
   Private Sub FileTree_NodeMouseDoubleClick(ByVal sender As System.Object, ByVal e As System.EventArgs) _
     Handles FileTree.NodeMouseDoubleClick
+
+    If FileTree.SelectedNode Is Nothing Then
+      Exit Sub
+    End If
+
     Dim CurrentNodeText As String = FileTree.SelectedNode.Text
 
     Select Case CurrentNodeText
