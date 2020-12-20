@@ -1,5 +1,8 @@
 ﻿namespace UoT {
   public static class FunctionsCs {
+    public static ushort ReadUInt16(byte[] buffer, uint offset)
+      => (ushort) FunctionsCs.ReadUInt(buffer, offset, 2);
+
     public static uint ReadUInt24(byte[] buffer, uint offset)
       => FunctionsCs.ReadUInt(buffer, offset, 3);
 

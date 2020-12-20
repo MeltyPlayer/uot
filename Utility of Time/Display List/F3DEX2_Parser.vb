@@ -284,8 +284,8 @@ Public Class F3DEX2_Parser
 
     For i As Integer = 0 To 3
       For j As Integer = 0 To 3
-        MatValue(0) = ReadInt16(TempRSPMatrix.N64Mat, MtxPos + 0)
-        MatValue(1) = ReadInt16(TempRSPMatrix.N64Mat, MtxPos + 32)
+        MatValue(0) = FunctionsCs.ReadUInt16(TempRSPMatrix.N64Mat, MtxPos + 0)
+        MatValue(1) = FunctionsCs.ReadUInt16(TempRSPMatrix.N64Mat, MtxPos + 32)
         TempRSPMatrix.OGLMat(i, j) = ((MatValue(0) << 16) Or MatValue(1))*1.0F/65536.0F
         MtxPos += 2
       Next
@@ -316,7 +316,7 @@ Public Class F3DEX2_Parser
   End Sub
 
   Private Sub MODIFYVTX(ByRef VertCache As N64Vertex, ByVal CMDParams() As Byte)
-    Dim Vertex As Integer = (ReadInt16(CMDParams, 2) And &HFFF)/2
+    Dim Vertex As Integer = (FunctionsCs.ReadUInt16(CMDParams, 2) And &HFFF) / 2
     Dim Target As Integer = CMDParams(1)
     Select Case Target
       Case &H10
@@ -325,8 +325,8 @@ Public Class F3DEX2_Parser
         VertCache.b(Vertex) = CMDParams(6)
         VertCache.a(Vertex) = CMDParams(7)
       Case &H14
-        VertCache.u(Vertex) = CShort(ReadInt16(CMDParams, 4))
-        VertCache.v(Vertex) = CShort(ReadInt16(CMDParams, 6))
+        VertCache.u(Vertex) = CShort(FunctionsCs.ReadUInt16(CMDParams, 4))
+        VertCache.v(Vertex) = CShort(FunctionsCs.ReadUInt16(CMDParams, 6))
     End Select
   End Sub
 
@@ -427,11 +427,11 @@ Public Class F3DEX2_Parser
           Dim b As Byte
           Dim a As Byte
           For i2 As Integer = v0 To (n0 + v0) - 1
-            x = CShort(ReadInt16(Data, Offset))
-            y = CShort(ReadInt16(Data, Offset + 2))
-            z = CShort(ReadInt16(Data, Offset + 4))
-            u = CShort(ReadInt16(Data, Offset + 8))
-            v = CShort(ReadInt16(Data, Offset + 10))
+            x = CShort(FunctionsCs.ReadUInt16(Data, Offset))
+            y = CShort(FunctionsCs.ReadUInt16(Data, Offset + 2))
+            z = CShort(FunctionsCs.ReadUInt16(Data, Offset + 4))
+            u = CShort(FunctionsCs.ReadUInt16(Data, Offset + 8))
+            v = CShort(FunctionsCs.ReadUInt16(Data, Offset + 10))
             r = Data(Offset + 12)
             g = Data(Offset + 13)
             b = Data(Offset + 14)
@@ -709,7 +709,7 @@ Public Class F3DEX2_Parser
     Dim curInd As Integer = 0
     For iw As Integer = 0 To PalSize Step 2
       Dim RGBA5551 As UShort = 0
-      RGBA5551 = ReadInt16(Palette16, iw)
+      RGBA5551 = FunctionsCs.ReadUInt16(Palette16, iw)
       With Textures(0)
         .Palette32(curInd).r = (RGBA5551 And &HF800) >> 8
         .Palette32(curInd).g = ((RGBA5551 And &H7C0) << 5) >> 8

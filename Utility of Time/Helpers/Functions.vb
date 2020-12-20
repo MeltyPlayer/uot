@@ -61,13 +61,6 @@ Module Functions
         Return ((Flip And &HFF000000) >> 24) Or ((Flip And &HFF0000) >> 8) Or _
         ((Flip And &HFF00) << 8) Or ((Flip And &HFF) << 24)
     End Function
-    Public Function ReadInt16(ByVal Buffer() As Byte, ByVal Offset As UInteger) As Integer
-        If Offset >= Buffer.Length - 1 Then
-            ReadInt16 = 0
-            Exit Function
-        End If
-        ReadInt16 = Buffer(Offset) * &H100 + Buffer(Offset + 1)
-    End Function
     Public Function WriteInt16(ByRef Buffer() As Byte, ByRef Offset As Short, ByVal Data As Short)
         If Offset >= (Buffer.Length - 1) Then
             ReDim Preserve Buffer(Offset + 2)

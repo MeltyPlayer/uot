@@ -23,9 +23,9 @@
                 tmpHierarchy(k) = New Limb
                 tmpLimbOff = FunctionsCs.ReadUInt24(Data, tOffset + 1)
                 With tmpHierarchy(k)
-                  .x = ReadInt16(Data, tmpLimbOff + 0)
-                  .y = ReadInt16(Data, tmpLimbOff + 2)
-                  .z = ReadInt16(Data, tmpLimbOff + 4)
+                  .x = FunctionsCs.ReadUInt16(Data, tmpLimbOff + 0)
+                  .y = FunctionsCs.ReadUInt16(Data, tmpLimbOff + 2)
+                  .z = FunctionsCs.ReadUInt16(Data, tmpLimbOff + 4)
                   .c0 = CSByte(Data(tmpLimbOff + 6))
                   .c1 = CSByte(Data(tmpLimbOff + 7))
 
@@ -70,14 +70,14 @@
         If (Data(i) = Bank And (Data(i + 4) = Bank) And (Data(i - 3) > 0) And Data(i - 4) = 0) Then
           angleOffset = FunctionsCs.ReadUInt24(Data, i + 1)
           If angleOffset < Data.Length Then
-            If Data(angleOffset) = 0 And Data(angleOffset + 1) = 0 And ReadInt16(Data, angleOffset + 2) > 0 Then
+            If Data(angleOffset) = 0 And Data(angleOffset + 1) = 0 And FunctionsCs.ReadUInt16(Data, angleOffset + 2) > 0 Then
               animCnt += 1
               ReDim Preserve tAnimation(animCnt)
               With tAnimation(animCnt)
                 .TrackCount = (LimbCount * 3)
-                .ConstTrackCount = ReadInt16(Data, i + 8)
+                .ConstTrackCount = FunctionsCs.ReadUInt16(Data, i + 8)
                 .TrackOffset = FunctionsCs.ReadUInt24(Data, i + 5)
-                .FrameCount = ReadInt16(Data, i - 4)
+                .FrameCount = FunctionsCs.ReadUInt16(Data, i - 4)
                 .AngleCount = ((.TrackOffset - angleOffset) \ 2)
                 If .FrameCount > 0 Then
                   ReDim .Angles(.AngleCount - 1)
@@ -86,19 +86,19 @@
                   MainWin.AnimationList.Items.Add("0x" & Hex(i))
 
                   For i1 As Integer = 0 To .AngleCount - 1
-                    .Angles(i1) = CShort(ReadInt16(Data, angleOffset))
+                    .Angles(i1) = CShort(FunctionsCs.ReadUInt16(Data, angleOffset))
                     angleOffset += 2
                   Next
 
-                  .XTrans = ReadInt16(Data, .TrackOffset + 0)
-                  .YTrans = ReadInt16(Data, .TrackOffset + 2)
-                  .ZTrans = ReadInt16(Data, .TrackOffset + 4)
+                  .XTrans = FunctionsCs.ReadUInt16(Data, .TrackOffset + 0)
+                  .YTrans = FunctionsCs.ReadUInt16(Data, .TrackOffset + 2)
+                  .ZTrans = FunctionsCs.ReadUInt16(Data, .TrackOffset + 4)
 
                   Dim tTrackOffset As Integer = .TrackOffset + 6
 
                   Dim tTrack As UInteger = 0
                   For i1 As Integer = 0 To .TrackCount - 1
-                    tTrack = ReadInt16(Data, tTrackOffset)
+                    tTrack = FunctionsCs.ReadUInt16(Data, tTrackOffset)
 
                     If tTrack < .ConstTrackCount Then
                       ReDim .Tracks(i1).Frames(0)

@@ -317,7 +317,6 @@
     <Compile Include="External Model Formats\OBJParser.vb" />
     <Compile Include="External Model Formats\ObjToF3DEX2.vb" />
     <Compile Include="Display List\RDP_Defs.vb" />
-    <Compile Include="Display List\TextureConverter.vb" />
     <BaseApplicationManifest Include="My Project\app.manifest" />
     <EmbeddedResource Include="Hex Editor\HexEditor.resx">
       <DependentUpon>HexEditor.vb</DependentUpon>

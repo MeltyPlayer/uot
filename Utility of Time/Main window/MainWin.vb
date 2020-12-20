@@ -4827,7 +4827,7 @@ Public Class MainWin
               ReDim Preserve SceneExits(ExitCount - 1)
               For i As Integer = 0 To ExitCount - 1
                 With SceneExits(i)
-                  .Index = ReadInt16(ZSceneBuffer, ExitOffset)
+                  .Index = FunctionsCs.ReadUInt16(ZSceneBuffer, ExitOffset)
                   .scOff = ExitOffset
                 End With
                 ExitCombobox.Items.Add(i)
@@ -4850,10 +4850,10 @@ Public Class MainWin
                 ReDim Preserve ColTypes(ctCnt)
                 With ColTypes(ctCnt)
                   .scOff = VariableOffset
-                  .unk1 = ReadInt16(ZSceneBuffer, VariableOffset)
-                  .unk2 = ReadInt16(ZSceneBuffer, VariableOffset + 2)
-                  .unk3 = ReadInt16(ZSceneBuffer, VariableOffset + 4)
-                  .unk4 = ReadInt16(ZSceneBuffer, VariableOffset + 6) >> 4
+                  .unk1 = FunctionsCs.ReadUInt16(ZSceneBuffer, VariableOffset)
+                  .unk2 = FunctionsCs.ReadUInt16(ZSceneBuffer, VariableOffset + 2)
+                  .unk3 = FunctionsCs.ReadUInt16(ZSceneBuffer, VariableOffset + 4)
+                  .unk4 = FunctionsCs.ReadUInt16(ZSceneBuffer, VariableOffset + 6) >> 4
                   .WalkOnSound = ZSceneBuffer(VariableOffset + 7) << 4 >> 4
                   ColVar1.AutoCompleteCustomSource.Add(.unk1.ToString("X4"))
                   ColVar2.AutoCompleteCustomSource.Add(.unk2.ToString("X4"))
@@ -4877,15 +4877,15 @@ Public Class MainWin
                 ReDim Preserve CollisionPolies(triCount)
                 With CollisionPolies(triCount)
                   .scOff = PolygonOffset
-                  .Param = ReadInt16(ZSceneBuffer, PolygonOffset)
+                  .Param = FunctionsCs.ReadUInt16(ZSceneBuffer, PolygonOffset)
 
-                  .A = (ReadInt16(ZSceneBuffer, PolygonOffset + 2) And &HFFF)
-                  .B = (ReadInt16(ZSceneBuffer, PolygonOffset + 4) And &HFFF)
-                  .C = (ReadInt16(ZSceneBuffer, PolygonOffset + 6) And &HFFF)
+                  .A = (FunctionsCs.ReadUInt16(ZSceneBuffer, PolygonOffset + 2) And &HFFF)
+                  .B = (FunctionsCs.ReadUInt16(ZSceneBuffer, PolygonOffset + 4) And &HFFF)
+                  .C = (FunctionsCs.ReadUInt16(ZSceneBuffer, PolygonOffset + 6) And &HFFF)
 
-                  .nX = (ReadInt16(ZSceneBuffer, PolygonOffset + 8))
-                  .nY = (ReadInt16(ZSceneBuffer, PolygonOffset + 10))
-                  .nZ = (ReadInt16(ZSceneBuffer, PolygonOffset + 12))
+                  .nX = (FunctionsCs.ReadUInt16(ZSceneBuffer, PolygonOffset + 8))
+                  .nY = (FunctionsCs.ReadUInt16(ZSceneBuffer, PolygonOffset + 10))
+                  .nZ = (FunctionsCs.ReadUInt16(ZSceneBuffer, PolygonOffset + 12))
 
                   .pickR = Rand.Next(0, 255)
                   .pickG = Rand.Next(0, 255)
@@ -4904,11 +4904,11 @@ Public Class MainWin
 
               While VertexOffset < colPtr
 
-                CollisionVerts.x.Add(CShort(ReadInt16(ZSceneBuffer, VertexOffset)))
+                CollisionVerts.x.Add(CShort(FunctionsCs.ReadUInt16(ZSceneBuffer, VertexOffset)))
 
-                CollisionVerts.y.Add(CShort(ReadInt16(ZSceneBuffer, VertexOffset + 2)))
+                CollisionVerts.y.Add(CShort(FunctionsCs.ReadUInt16(ZSceneBuffer, VertexOffset + 2)))
 
-                CollisionVerts.z.Add(CShort(ReadInt16(ZSceneBuffer, VertexOffset + 4)))
+                CollisionVerts.z.Add(CShort(FunctionsCs.ReadUInt16(ZSceneBuffer, VertexOffset + 4)))
 
                 CollisionVerts.VertR.Add(Rand.Next(0, 255))
                 CollisionVerts.VertG.Add(Rand.Next(0, 255))
@@ -5072,17 +5072,17 @@ Public Class MainWin
 
                   .offset = i1
 
-                  .no = ReadInt16(ZFileBuffer, i1 + 0)
+                  .no = FunctionsCs.ReadUInt16(ZFileBuffer, i1 + 0)
 
-                  .x = ReadInt16(ZFileBuffer, i1 + 2)
-                  .y = ReadInt16(ZFileBuffer, i1 + 4)
-                  .z = ReadInt16(ZFileBuffer, i1 + 6)
+                  .x = FunctionsCs.ReadUInt16(ZFileBuffer, i1 + 2)
+                  .y = FunctionsCs.ReadUInt16(ZFileBuffer, i1 + 4)
+                  .z = FunctionsCs.ReadUInt16(ZFileBuffer, i1 + 6)
 
-                  .xr = ReadInt16(ZFileBuffer, i1 + 8)
-                  .yr = ReadInt16(ZFileBuffer, i1 + 10)
-                  .zr = ReadInt16(ZFileBuffer, i1 + 12)
+                  .xr = FunctionsCs.ReadUInt16(ZFileBuffer, i1 + 8)
+                  .yr = FunctionsCs.ReadUInt16(ZFileBuffer, i1 + 10)
+                  .zr = FunctionsCs.ReadUInt16(ZFileBuffer, i1 + 12)
 
-                  .var = ReadInt16(ZFileBuffer, i1 + 14)
+                  .var = FunctionsCs.ReadUInt16(ZFileBuffer, i1 + 14)
 
                 End With
                 i1 += 16
@@ -5098,7 +5098,7 @@ Public Class MainWin
             Dim desc As String = "?"
             Dim objind As Integer = 0
             For i As Integer = 0 To Cnt - 1
-              gr = ReadInt16(ZFileBuffer, CurGr)
+              gr = FunctionsCs.ReadUInt16(ZFileBuffer, CurGr)
               ActorGroups.Add(gr)
               objind = Objects.IndexOf(gr.ToString("X4"))
               desc = "?"
