@@ -1,5 +1,3 @@
-using System.Diagnostics;
-
 using NUnit.Framework;
 
 namespace UoT.ui.main.viewer {
