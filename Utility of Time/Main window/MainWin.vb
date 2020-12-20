@@ -4991,56 +4991,7 @@ Public Class MainWin
 
   Private Function ReadInDL(ByVal Data() As Byte, ByRef DisplayList() As N64DisplayList, ByVal Offset As Integer,
                             ByVal Index As Integer) As Integer
-    If Data(Offset) = &HDE Then
-      Do Until Data(Offset) <> &HDE
-        Offset = Data(Offset + 5)*&H10000 + Data(Offset + 6)*&H100 + Data(Offset + 7)
-      Loop
-    End If
-
-    ReDim Preserve DisplayList(Index)
-    DisplayList(Index) = New N64DisplayList
-
-    Dim EPLoc As Integer = Offset
-
-    DListSelection.Items.Add((Index + 1).ToString & ". " & Hex(Offset))
-
-    With DisplayList(Index)
-      .StartPos = New ZSegment
-      .StartPos.Offset = Offset
-      .StartPos.Bank = CurrentBank
-      .Skip = False
-      .PickCol = New Color3UByte
-      .PickCol.r = Rand.Next(0, 255)
-      .PickCol.g = Rand.Next(0, 255)
-      .PickCol.b = Rand.Next(0, 255)
-      Do
-        ReDim Preserve .Commands(.CommandCount)
-        ReDim Preserve .CommandsCopy(.CommandCount)
-        ReDim .Commands(.CommandCount).CMDParams(7)
-
-        .Commands(.CommandCount).Name = DLParser.IdentifyCommand(Data(EPLoc))
-        For i As Integer = 0 To 7
-          .Commands(.CommandCount).CMDParams(i) = Data(EPLoc + i)
-        Next
-
-        .Commands(.CommandCount).CMDHigh = FunctionsCs.ReadUInt32(Data, EPLoc + 4)
-
-        .Commands(.CommandCount).CMDLow = FunctionsCs.ReadUInt24(Data, EPLoc + 1)
-
-        .Commands(.CommandCount).DLPos = .CommandCount
-
-        If Data(EPLoc) = F3DZEX.ENDDL Or EPLoc >= Data.Length Then
-          EPLoc += 8
-          Exit Do
-        End If
-
-        EPLoc += 8
-        .CommandCount += 1
-      Loop
-      .CommandsCopy = .Commands
-    End With
-
-    Return EPLoc
+    Return F3DEX2_Defs.ReadInDL(Data, DisplayList, Offset, Index)
   End Function
 
   Private Sub AboutToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
