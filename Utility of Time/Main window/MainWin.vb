@@ -4900,7 +4900,7 @@ Public Class MainWin
               Dim cx As Short = 0
               Dim cy As Short = 0
               Dim cz As Short = 0
-              Dim edgecnt As Integer = - 1
+              Dim edgecnt As Integer = -1
 
               While VertexOffset < colPtr
 
@@ -4956,9 +4956,9 @@ Public Class MainWin
     Try
       Dim DLCnt As Integer = 0
       Dim FileTreeIndex As Integer = 0
-      ReDim N64DList(- 1)
-      ReDim AnimationEntries(- 1)
-      ReDim LimbEntries(- 1)
+      ReDim N64DList(-1)
+      ReDim AnimationEntries(-1)
+      ReDim LimbEntries(-1)
       AnimParser.ResetAnimation(AnimationStopWatch, ZAnimationCounter)
       AnimParser.StopAnimation(AnimationStopWatch, ZAnimationCounter)
       CurrentFrame.Value = 1
@@ -5032,8 +5032,8 @@ Public Class MainWin
       Dim ObjSetStart As Integer = 0
       Dim CurObjSet As Integer = 0
 
-      ReDim RoomActors(- 1)
-      ReDim UsedGroupIndex(- 1)
+      ReDim RoomActors(-1)
+      ReDim UsedGroupIndex(-1)
 
       ComboBox6.SelectedIndex = 0
       rmActorCount = 0
@@ -7549,9 +7549,9 @@ Public Class MainWin
       Select Case CommandsListbox.SelectedItem
         Case "G_SETCOMBINE"
           If Not CombinerEditor.Visible Then
-            LinkedCommands.EnvColor = FindLinkedCommand(N64DList(DListSelection.SelectedIndex - 1), RDP.G_SETENVCOLOR,
+            LinkedCommands.EnvColor = RDP_Defs.FindLinkedCommand(N64DList(DListSelection.SelectedIndex - 1), RDP.G_SETENVCOLOR,
                                                         CommandsListbox.SelectedIndex)
-            LinkedCommands.PrimColor = FindLinkedCommand(N64DList(DListSelection.SelectedIndex - 1), RDP.G_SETPRIMCOLOR,
+            LinkedCommands.PrimColor = RDP_Defs.FindLinkedCommand(N64DList(DListSelection.SelectedIndex - 1), RDP.G_SETPRIMCOLOR,
                                                          CommandsListbox.SelectedIndex)
           Else
             CombinerEditor.Close()

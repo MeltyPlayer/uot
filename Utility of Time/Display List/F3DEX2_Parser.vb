@@ -1354,7 +1354,7 @@ Public Class F3DEX2_Parser
     End With
 
     If Not PrecompiledCombiner Then
-      PrecompileMUXS(G_COMBINERMUX0, G_COMBINERMUX1)
+      PrecompileMUXS(RDP_Defs.G_COMBINERMUX0, RDP_Defs.G_COMBINERMUX1)
     End If
   End Sub
 
