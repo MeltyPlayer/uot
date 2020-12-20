@@ -17,16 +17,14 @@ Public Class F3DEX2_Parser
   Private PalBank As Integer = 0
   Private PalOff As Integer = 0
   Private Palette16() As Byte
-  Private NewTexture As Boolean = False
   Private N64GeometryMode As UInt32
   Private MultiTexture As Boolean
   Private CurrentTex As Integer
   Private MultiTexCoord As Boolean = False
-  Private TextureCache(- 1) As TCache
+  Private TextureCache As TCache = New TCache()
   Private TexCachePos As Integer
   Private Textures(1) As Texture
-  Private TexCount As Integer = 0
-  Private FragShaderCache(- 1) As ShaderCache
+  Private FragShaderCache(-1) As ShaderCache
   Private PrimColor() As Single = {1.0, 1.0, 1.0, 0.5}
   Private PrimColorLOD As Single = 0
   Private PrimColorM As Single = 0
@@ -462,14 +460,7 @@ Public Class F3DEX2_Parser
   End Function
 
   Private Function SearchTexCache(ByVal Texture As Texture) As Integer
-    Dim texCachePos As Integer = - 1
-    For i As Integer = 0 To TextureCache.Length - 1
-      If TextureCache(i).Texture.Offset = Texture.Offset And TextureCache(i).Texture.ImageBank = Texture.ImageBank Then
-        texCachePos = i
-        Exit For
-      End If
-    Next
-    Return texCachePos
+    Return TextureCache.Find(Texture)
   End Function
 
   Private Sub VTX(ByVal w0 As UInt32, ByVal w1 As UInt32)
@@ -529,7 +520,7 @@ Public Class F3DEX2_Parser
             Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2)
         End Select
       Else
-        Gl.glBindTexture(Gl.GL_TEXTURE_2D, TextureCache(TexCachePos).Texture.ID)
+        Gl.glBindTexture(Gl.GL_TEXTURE_2D, TextureCache(TexCachePos).ID)
       End If
 
       If MultiTexture Then
@@ -554,7 +545,7 @@ Public Class F3DEX2_Parser
               Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2)
           End Select
         Else
-          Gl.glBindTexture(Gl.GL_TEXTURE_2D, TextureCache(TexCachePos).Texture.ID)
+          Gl.glBindTexture(Gl.GL_TEXTURE_2D, TextureCache(TexCachePos).ID)
         End If
         Gl.glDisable(Gl.GL_TEXTURE_2D)
         Gl.glActiveTextureARB(Gl.GL_TEXTURE0_ARB)
@@ -832,12 +823,6 @@ Public Class F3DEX2_Parser
 
   Private Function LoadTex(ByVal Data() As Byte, ByVal Format As Byte, ByVal SourceBank As Integer,
                            ByVal Offset As UInteger, ByVal Size As UInteger, ByVal ID As UInteger) As Integer
-    NewTexture = False
-
-    ReDim Preserve TextureCache(TexCount)
-
-    TextureCache(TexCount).Texture = Textures(ID)
-
     Dim N64TexImg(Size) As Byte
     Dim OGLTexImg() As Byte = {0, &HFF, 0, 0}
 
@@ -906,10 +891,12 @@ Public Class F3DEX2_Parser
              OGLTexImg)
     End Select
 
-    With TextureCache(TexCount)
-      Gl.glGenTextures(1, .Texture.ID)
-      Gl.glBindTexture(Gl.GL_TEXTURE_2D, .Texture.ID)
+    With Textures(ID)
+      Gl.glGenTextures(1, .ID)
+      Gl.glBindTexture(Gl.GL_TEXTURE_2D, .ID)
     End With
+
+    TextureCache.Add(Textures(ID))
 
     Gl.glTexImage2D(Gl.GL_TEXTURE_2D, 0, Gl.GL_RGBA, Textures(ID).RealWidth, Textures(ID).RealHeight, 0, Gl.GL_RGBA,
                     Gl.GL_UNSIGNED_BYTE, OGLTexImg)
@@ -945,7 +932,6 @@ Public Class F3DEX2_Parser
     End If
     Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MIN_FILTER, Gl.GL_LINEAR_MIPMAP_LINEAR)
     Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MAG_FILTER, Gl.GL_LINEAR_MIPMAP_LINEAR)
-    TexCount += 1
   End Function
 
   Private Sub TEXTURE(ByVal w1 As UInt32)
@@ -1301,10 +1287,7 @@ Public Class F3DEX2_Parser
   End Sub
 
   Public Sub KillTexCache()
-    For i As Integer = 0 To TextureCache.Length - 1
-      Gl.glDeleteTextures(1, TextureCache(i).Texture.ID)
-    Next
-    ReDim TextureCache(- 1)
+    TextureCache.Clear()
   End Sub
 
   Public Sub Reset()
