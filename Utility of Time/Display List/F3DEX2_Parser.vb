@@ -70,18 +70,18 @@ Public Class F3DEX2_Parser
         If ParseMode = Parse.EVERYTHING Then
           Select Case .CMDParams(0)
             Case F3DZEX.POPMTX
-              popmatrix:
+popmatrix:
 
             Case RDP.G_SETENVCOLOR
-              setenvironmentcolor:
+setenvironmentcolor:
               ENVCOLOR(.CMDParams)
 
             Case RDP.G_SETPRIMCOLOR
-              setprimitivecolor:
+setprimitivecolor:
               SETPRIMCOLOR(.CMDParams)
 
             Case RDP.G_SETTIMG
-              settextureimg:
+settextureimg:
               Dim pal As Boolean = (DL.Commands(i + 1).CMDParams(0) = RDP.G_RDPTILESYNC)
 
               If DL.Commands(i - 1).CMDParams(0) = RDP.G_SETTILESIZE Then
@@ -101,64 +101,64 @@ Public Class F3DEX2_Parser
               SETTIMG(.CMDHigh, pal)
 
             Case RDP.G_LOADTLUT
-              loadtexturelut:
+loadtexturelut:
               LOADTLUT(.CMDHigh)
 
             Case RDP.G_LOADBLOCK
-              loadtexblock:
+loadtexblock:
 
             Case RDP.G_SETTILESIZE
-              settilesize:
+settilesize:
               SETTILESIZE(.CMDLow, .CMDHigh)
 
             Case RDP.G_SETTILE
-              settile:
+settile:
               If .CMDParams(1) > 0 Then SETTILE(.CMDLow, .CMDHigh)
 
             Case RDP.G_SETCOMBINE
-              setcombiner:
+setcombiner:
               SETCOMBINE(.CMDLow, .CMDHigh)
 
             Case F3DZEX.TEXTURE
-              texture:
+texture:
               TEXTURE(.CMDHigh)
 
             Case F3DZEX.GEOMETRYMODE
-              geometrymode:
+geometrymode:
               GEOMETRYMODE(.CMDLow, .CMDHigh)
 
             Case F3DZEX.SETOTHERMODE_H
-              setothermodehigh:
+setothermodehigh:
               SETOTHERMODE_H(.CMDLow, .CMDHigh)
 
             Case F3DZEX.SETOTHERMODE_L
-              seothtermodelow:
+seothtermodelow:
               SETOTHERMODE_L(.CMDLow, .CMDHigh)
 
             Case F3DZEX.MTX
-              matrix:
+matrix:
               MTX(.CMDLow, .CMDHigh)
 
             Case F3DZEX.VTX
-              vertex:
+vertex:
               If DL.Commands(i + 1).CMDParams(0) <> F3DZEX.CULLDL And DL.Commands(i + 1).CMDParams(0) <> F3DZEX.MTX Then
                 VTX(.CMDLow, .CMDHigh)
               End If
 
             Case F3DZEX.MODIFYVTX
-              modifyvertex:
+modifyvertex:
               MODIFYVTX(VertexCache, .CMDParams)
 
             Case F3DZEX.TRI1
-              onetriangle:
+onetriangle:
               TRI1(.CMDParams)
 
             Case F3DZEX.TRI2
-              twotriangles:
+twotriangles:
               TRI2(.CMDParams)
 
             Case F3DZEX.ENDDL
-              enddisplaylist:
+enddisplaylist:
               Reset()
               Exit Sub
           End Select
@@ -284,7 +284,7 @@ Public Class F3DEX2_Parser
       For j As Integer = 0 To 3
         MatValue(0) = FunctionsCs.ReadUInt16(TempRSPMatrix.N64Mat, MtxPos + 0)
         MatValue(1) = FunctionsCs.ReadUInt16(TempRSPMatrix.N64Mat, MtxPos + 32)
-        TempRSPMatrix.OGLMat(i, j) = ((MatValue(0) << 16) Or MatValue(1))*1.0F/65536.0F
+        TempRSPMatrix.OGLMat(i, j) = ((MatValue(0) << 16) Or MatValue(1)) * 1.0F / 65536.0F
         MtxPos += 2
       Next
     Next
@@ -389,7 +389,7 @@ Public Class F3DEX2_Parser
       Case 3 'rendermode
         If ZMODE_DEC Then
           Gl.glEnable(Gl.GL_POLYGON_OFFSET_FILL)
-          Gl.glPolygonOffset(- 7, - 7)
+          Gl.glPolygonOffset(-7, -7)
         Else
           Gl.glDisable(Gl.GL_POLYGON_OFFSET_FILL)
         End If
@@ -502,7 +502,7 @@ Public Class F3DEX2_Parser
       Gl.glActiveTextureARB(Gl.GL_TEXTURE0_ARB)
       TexCachePos = SearchTexCache(Textures(0))
 
-      If TexCachePos = - 1 Then
+      If TexCachePos = -1 Then
         Select Case Textures(0).ImageBank
           Case CurrentBank
             LoadTex(ZFileBuffer, Textures(0).TexFormat, Textures(0).ImageBank, Textures(0).Offset, Textures(0).TexBytes,
@@ -527,7 +527,7 @@ Public Class F3DEX2_Parser
         Gl.glActiveTextureARB(Gl.GL_TEXTURE1_ARB)
         TexCachePos = SearchTexCache(Textures(1))
 
-        If TexCachePos = - 1 Then
+        If TexCachePos = -1 Then
           Select Case Textures(1).ImageBank
             Case CurrentBank
               LoadTex(ZFileBuffer, Textures(1).TexFormat, Textures(1).ImageBank, Textures(1).Offset,
@@ -563,13 +563,13 @@ Public Class F3DEX2_Parser
         Gl.glBegin(Gl.GL_TRIANGLES)
         For i As Integer = 0 To 2
           If MultiTexCoord Then
-            Gl.glMultiTexCoord2f(Gl.GL_TEXTURE0_ARB, VertexCache.u(Polygons(i))*Textures(0).TextureWRatio,
-                                 VertexCache.v(Polygons(i))*Textures(0).TextureHRatio)
-            Gl.glMultiTexCoord2f(Gl.GL_TEXTURE1_ARB, VertexCache.u(Polygons(i))*Textures(1).TextureWRatio,
-                                 VertexCache.v(Polygons(i))*Textures(1).TextureHRatio)
+            Gl.glMultiTexCoord2f(Gl.GL_TEXTURE0_ARB, VertexCache.u(Polygons(i)) * Textures(0).TextureWRatio,
+                                 VertexCache.v(Polygons(i)) * Textures(0).TextureHRatio)
+            Gl.glMultiTexCoord2f(Gl.GL_TEXTURE1_ARB, VertexCache.u(Polygons(i)) * Textures(1).TextureWRatio,
+                                 VertexCache.v(Polygons(i)) * Textures(1).TextureHRatio)
           Else
-            Gl.glTexCoord2f(VertexCache.u(Polygons(i))*Textures(0).TextureWRatio,
-                            VertexCache.v(Polygons(i))*Textures(0).TextureHRatio)
+            Gl.glTexCoord2f(VertexCache.u(Polygons(i)) * Textures(0).TextureWRatio,
+                            VertexCache.v(Polygons(i)) * Textures(0).TextureHRatio)
           End If
           If EnableLighting Then
             If (Not EnableCombiner) Then Gl.glColor4fv(PrimColor) Else Gl.glColor3f(1, 1, 1)
@@ -608,13 +608,13 @@ Public Class F3DEX2_Parser
         Gl.glBegin(Gl.GL_TRIANGLES)
         For i As Integer = 0 To 5
           If MultiTexCoord Then
-            Gl.glMultiTexCoord2f(Gl.GL_TEXTURE0_ARB, VertexCache.u(Polygons(i))*Textures(0).TextureWRatio,
-                                 VertexCache.v(Polygons(i))*Textures(0).TextureHRatio)
-            Gl.glMultiTexCoord2f(Gl.GL_TEXTURE1_ARB, VertexCache.u(Polygons(i))*Textures(1).TextureWRatio,
-                                 VertexCache.v(Polygons(i))*Textures(1).TextureHRatio)
+            Gl.glMultiTexCoord2f(Gl.GL_TEXTURE0_ARB, VertexCache.u(Polygons(i)) * Textures(0).TextureWRatio,
+                                 VertexCache.v(Polygons(i)) * Textures(0).TextureHRatio)
+            Gl.glMultiTexCoord2f(Gl.GL_TEXTURE1_ARB, VertexCache.u(Polygons(i)) * Textures(1).TextureWRatio,
+                                 VertexCache.v(Polygons(i)) * Textures(1).TextureHRatio)
           Else
-            Gl.glTexCoord2f(VertexCache.u(Polygons(i))*Textures(0).TextureWRatio,
-                            VertexCache.v(Polygons(i))*Textures(0).TextureHRatio)
+            Gl.glTexCoord2f(VertexCache.u(Polygons(i)) * Textures(0).TextureWRatio,
+                            VertexCache.v(Polygons(i)) * Textures(0).TextureHRatio)
           End If
           If EnableLighting Then
             If (Not EnableCombiner) Then Gl.glColor4fv(PrimColor) Else Gl.glColor3f(1, 1, 1)
@@ -675,15 +675,15 @@ Public Class F3DEX2_Parser
     Textures(CurrentTex).LRT = (w1 And &HFFF) >> 2
     Textures(CurrentTex).Width = ((Textures(CurrentTex).LRS - Textures(CurrentTex).ULS) + 1)
     Textures(CurrentTex).Height = ((Textures(CurrentTex).LRT - Textures(CurrentTex).ULT) + 1)
-    Textures(CurrentTex).TexBytes = (Textures(CurrentTex).Width*Textures(CurrentTex).Height)*2
+    Textures(CurrentTex).TexBytes = (Textures(CurrentTex).Width * Textures(CurrentTex).Height) * 2
     If Textures(CurrentTex).TexBytes >> 16 = &HFFFF Then
-      Textures(CurrentTex).TexBytes = (Textures(CurrentTex).TexBytes << 16 >> 16)*2
+      Textures(CurrentTex).TexBytes = (Textures(CurrentTex).TexBytes << 16 >> 16) * 2
     End If
     CalculateTexSize(CurrentTex)
   End Sub
 
   Private Sub LOADTLUT(ByVal w1 As UInt32)
-    Dim PalSize As Integer = ((w1 And &HFFF000) >> 14)*2 + 1
+    Dim PalSize As Integer = ((w1 And &HFFF000) >> 14) * 2 + 1
     ReDim Palette16(PalSize + 2)
     Select Case Textures(0).PalBank
       Case CurrentBank
@@ -747,18 +747,18 @@ Public Class F3DEX2_Parser
     Dim Mask_Height As UInteger = 1 << Textures(id).MaskT
 
     Dim Line_Height As UInteger = 0
-    If Line_Width > 0 Then Line_Height = Min(MaxTexel/Line_Width, Tile_Height)
+    If Line_Width > 0 Then Line_Height = Min(MaxTexel / Line_Width, Tile_Height)
 
-    If Textures(id).MaskS > 0 And ((Mask_Width*Mask_Height) <= MaxTexel) Then
+    If Textures(id).MaskS > 0 And ((Mask_Width * Mask_Height) <= MaxTexel) Then
       Textures(id).Width = Mask_Width
-    ElseIf ((Tile_Width*Tile_Height) <= MaxTexel) Then
+    ElseIf ((Tile_Width * Tile_Height) <= MaxTexel) Then
       Textures(id).Width = Tile_Width
     Else
       Textures(id).Width = Line_Width
     End If
-    If Textures(id).MaskT > 0 And ((Mask_Width*Mask_Height) <= MaxTexel) Then
+    If Textures(id).MaskT > 0 And ((Mask_Width * Mask_Height) <= MaxTexel) Then
       Textures(id).Height = Mask_Height
-    ElseIf ((Tile_Width*Tile_Height) <= MaxTexel) Then
+    ElseIf ((Tile_Width * Tile_Height) <= MaxTexel) Then
       Textures(id).Height = Tile_Height
     Else
       Textures(id).Height = Line_Height
@@ -778,28 +778,28 @@ Public Class F3DEX2_Parser
     End If
 
     If Mask_Width > Textures(id).Width Then
-      Textures(id).MaskS = PowOf(Textures(id).Width)
+      Textures(id).MaskS = FunctionsCs.PowOf(Textures(id).Width)
       Mask_Width = 1 << Textures(id).MaskS
     End If
     If Mask_Height > Textures(id).Height Then
-      Textures(id).MaskT = PowOf(Textures(id).Height)
+      Textures(id).MaskT = FunctionsCs.PowOf(Textures(id).Height)
       Mask_Height = 1 << Textures(id).MaskT
     End If
 
     If Textures(id).CMS = 2 Or Textures(id).CMS = 3 Then
-      Textures(id).RealWidth = Pow2(Clamp_Width)
+      Textures(id).RealWidth = FunctionsCs.Pow2(Clamp_Width)
     ElseIf Textures(id).CMS = 1 Then
-      Textures(id).RealWidth = Pow2(Mask_Width)
+      Textures(id).RealWidth = FunctionsCs.Pow2(Mask_Width)
     Else
-      Textures(id).RealWidth = Pow2(Textures(id).Width)
+      Textures(id).RealWidth = FunctionsCs.Pow2(Textures(id).Width)
     End If
 
     If Textures(id).CMT = 2 Or Textures(id).CMT = 3 Then
-      Textures(id).RealHeight = Pow2(Clamp_Height)
+      Textures(id).RealHeight = FunctionsCs.Pow2(Clamp_Height)
     ElseIf Textures(id).CMT = 1 Then
-      Textures(id).RealHeight = Pow2(Mask_Height)
+      Textures(id).RealHeight = FunctionsCs.Pow2(Mask_Height)
     Else
-      Textures(id).RealHeight = Pow2(Textures(id).Height)
+      Textures(id).RealHeight = FunctionsCs.Pow2(Textures(id).Height)
     End If
 
     Textures(id).ShiftS = 1.0F
@@ -817,8 +817,8 @@ Public Class F3DEX2_Parser
       Textures(id).ShiftT /= (1 << Textures(id).TShiftT)
     End If
 
-    Textures(id).TextureHRatio = ((Textures(id).T_Scale*Textures(id).ShiftT)/32/Textures(id).RealHeight)
-    Textures(id).TextureWRatio = ((Textures(id).S_Scale*Textures(id).ShiftS)/32/Textures(id).RealWidth)
+    Textures(id).TextureHRatio = ((Textures(id).T_Scale * Textures(id).ShiftT) / 32 / Textures(id).RealHeight)
+    Textures(id).TextureWRatio = ((Textures(id).S_Scale * Textures(id).ShiftS) / 32 / Textures(id).RealWidth)
   End Sub
 
   Private Function LoadTex(ByVal Data() As Byte, ByVal Format As Byte, ByVal SourceBank As Integer,
@@ -949,7 +949,7 @@ Public Class F3DEX2_Parser
 
   Private Sub SETCOMBINE(ByVal w0 As UInt32, ByVal w1 As UInt32)
     If GLExtensions.GLFragProg Then
-      Dim ShaderCachePos As Integer = - 1
+      Dim ShaderCachePos As Integer = -1
       EnableCombiner = True
       For i As Integer = 0 To FragShaderCache.Length - 1
         If (w0 = FragShaderCache(i).MUXS0) And (w1 = FragShaderCache(i).MUXS1) Then
@@ -975,33 +975,33 @@ Public Class F3DEX2_Parser
   End Sub
 
   Private Sub SETFOGCOLOR(ByVal CMDParams() As Byte)
-    FogColor(0) = CMDParams(4)/255
-    FogColor(1) = CMDParams(5)/255
-    FogColor(2) = CMDParams(6)/255
-    FogColor(3) = CMDParams(7)/255
+    FogColor(0) = CMDParams(4) / 255
+    FogColor(1) = CMDParams(5) / 255
+    FogColor(2) = CMDParams(6) / 255
+    FogColor(3) = CMDParams(7) / 255
   End Sub
 
   Private Sub ENVCOLOR(ByVal CMDParams() As Byte)
-    EnvironmentColor(0) = CMDParams(4)/255
-    EnvironmentColor(1) = CMDParams(5)/255
-    EnvironmentColor(2) = CMDParams(6)/255
-    EnvironmentColor(3) = CMDParams(7)/255
+    EnvironmentColor(0) = CMDParams(4) / 255
+    EnvironmentColor(1) = CMDParams(5) / 255
+    EnvironmentColor(2) = CMDParams(6) / 255
+    EnvironmentColor(3) = CMDParams(7) / 255
   End Sub
 
   Private Sub SETPRIMCOLOR(ByVal CMDParams() As Byte)
-    PrimColorM = CMDParams(2)/255
-    PrimColorLOD = CMDParams(3)/255
-    PrimColor(0) = CMDParams(4)/255
-    PrimColor(1) = CMDParams(5)/255
-    PrimColor(2) = CMDParams(6)/255
-    PrimColor(3) = CMDParams(7)/255
+    PrimColorM = CMDParams(2) / 255
+    PrimColorLOD = CMDParams(3) / 255
+    PrimColor(0) = CMDParams(4) / 255
+    PrimColor(1) = CMDParams(5) / 255
+    PrimColor(2) = CMDParams(6) / 255
+    PrimColor(3) = CMDParams(7) / 255
   End Sub
 
   Private Sub SETBLENDCOLOR(ByVal CMDParams() As Byte)
-    BlendColor(0) = CMDParams(4)/255
-    BlendColor(1) = CMDParams(5)/255
-    BlendColor(2) = CMDParams(6)/255
-    BlendColor(3) = CMDParams(7)/255
+    BlendColor(0) = CMDParams(4) / 255
+    BlendColor(1) = CMDParams(5) / 255
+    BlendColor(2) = CMDParams(6) / 255
+    BlendColor(3) = CMDParams(7) / 255
   End Sub
 
   Public Sub PrecompileMUXS(ByVal MUXLIST1() As UInteger, ByVal MUXLIST2() As UInteger)

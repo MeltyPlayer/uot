@@ -111,30 +111,12 @@ Module Functions
     Return v * RDP_Defs.FIXED2FLOATRECIP(b - 1)
   End Function
 
-  Public Function Pow2(ByVal val As ULong) As ULong
-    Dim i As Long = 1
-    While i < val
-      i <<= 1
-    End While
-    Return i
-  End Function
-
   Public Function HexOnly(ByVal str As String) As Boolean
     If "0123456789ABCDEF".IndexOf(str) = -1 Then
       Return True
     Else
       Return False
     End If
-  End Function
-
-  Public Function PowOf(ByVal val As ULong) As ULong
-    Dim num As Long = 1
-    Dim i As Long = 0
-    While num < val
-      num <<= 1
-      i += 1
-    End While
-    Return i
   End Function
 
   Public Function GetDir(ByVal fn As String) As String
