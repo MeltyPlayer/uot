@@ -641,6 +641,7 @@ enddisplaylist:
 
 #Region "TEXTURE HANDLING"
 
+  ' TODO: This is where new textures are created!
   Private Sub SETTIMG(ByVal w1 As UInt32, ByVal palMode As Boolean)
     Dim tmpBank As Integer = (w1 >> 24)
     Dim tmpOff As Integer = (w1 << 8 >> 8)
@@ -666,16 +667,23 @@ enddisplaylist:
   End Function
 
   Private Sub SETTILESIZE(ByVal w0 As UInt32, ByVal w1 As UInt32)
-    Textures(CurrentTex).ULS = (w0 And &HFFF000) >> 14
-    Textures(CurrentTex).ULT = (w0 And &HFFF) >> 2
-    Textures(CurrentTex).LRS = (w1 And &HFFF000) >> 14
-    Textures(CurrentTex).LRT = (w1 And &HFFF) >> 2
-    Textures(CurrentTex).Width = ((Textures(CurrentTex).LRS - Textures(CurrentTex).ULS) + 1)
-    Textures(CurrentTex).Height = ((Textures(CurrentTex).LRT - Textures(CurrentTex).ULT) + 1)
-    Textures(CurrentTex).TexBytes = (Textures(CurrentTex).Width * Textures(CurrentTex).Height) * 2
-    If Textures(CurrentTex).TexBytes >> 16 = &HFFFF Then
-      Textures(CurrentTex).TexBytes = (Textures(CurrentTex).TexBytes << 16 >> 16) * 2
-    End If
+    Dim texture = Textures(CurrentTex)
+    With texture
+      .ULS = (w0 And &HFFF000) >> 14
+      .ULT = (w0 And &HFFF) >> 2
+      .LRS = (w1 And &HFFF000) >> 14
+      .LRT = (w1 And &HFFF) >> 2
+      .Width = ((.LRS - .ULS) + 1)
+      .Height = ((.LRT - .ULT) + 1)
+      .TexBytes = (.Width * .Height) * 2
+      If .TexBytes >> 16 = &HFFFF Then
+        .TexBytes = (.TexBytes << 16 >> 16) * 2
+      End If
+    End With
+
+    ' TODO: Remove this struct logic.
+    Textures(CurrentTex) = texture
+
     CalculateTexSize(CurrentTex)
   End Sub
 
@@ -709,113 +717,119 @@ enddisplaylist:
   End Sub
 
   Private Sub CalculateTexSize(ByVal id As Integer)
-    Dim MaxTexel As UInteger = 0
-    Dim Line_Shift As UInteger = 0
-    Select Case Textures(id).TexFormat
-      Case 0, &H40
-        MaxTexel = 4096
-        Line_Shift = 4
-      Case &H60, &H80
-        MaxTexel = 8192
-        Line_Shift = 4
-      Case &H8, &H48
-        MaxTexel = 2048
-        Line_Shift = 3
-      Case &H68, &H88
-        MaxTexel = 4096
-        Line_Shift = 3
-      Case &H10, &H70
-        MaxTexel = 2048
-        Line_Shift = 2
-      Case &H50, &H90
-        MaxTexel = 2048
-        Line_Shift = 0
-      Case &H18
-        MaxTexel = 1024
-        Line_Shift = 2
-    End Select
+    Dim texture = Textures(id)
+    With texture
+      Dim MaxTexel As UInteger = 0
+      Dim Line_Shift As UInteger = 0
+      Select Case .TexFormat
+        Case 0, &H40
+          MaxTexel = 4096
+          Line_Shift = 4
+        Case &H60, &H80
+          MaxTexel = 8192
+          Line_Shift = 4
+        Case &H8, &H48
+          MaxTexel = 2048
+          Line_Shift = 3
+        Case &H68, &H88
+          MaxTexel = 4096
+          Line_Shift = 3
+        Case &H10, &H70
+          MaxTexel = 2048
+          Line_Shift = 2
+        Case &H50, &H90
+          MaxTexel = 2048
+          Line_Shift = 0
+        Case &H18
+          MaxTexel = 1024
+          Line_Shift = 2
+      End Select
 
-    Dim Line_Width As UInteger = Textures(id).LineSize << Line_Shift
+      Dim Line_Width As UInteger = .LineSize << Line_Shift
 
-    Dim Tile_Width As UInteger = Textures(id).LRS - Textures(id).ULS + 1
-    Dim Tile_Height As UInteger = Textures(id).LRT - Textures(id).ULT + 1
+      Dim Tile_Width As UInteger = .LRS - .ULS + 1
+      Dim Tile_Height As UInteger = .LRT - .ULT + 1
 
-    Dim Mask_Width As UInteger = 1 << Textures(id).MaskS
-    Dim Mask_Height As UInteger = 1 << Textures(id).MaskT
+      Dim Mask_Width As UInteger = 1 << .MaskS
+      Dim Mask_Height As UInteger = 1 << .MaskT
 
-    Dim Line_Height As UInteger = 0
-    If Line_Width > 0 Then Line_Height = Min(MaxTexel / Line_Width, Tile_Height)
+      Dim Line_Height As UInteger = 0
+      If Line_Width > 0 Then Line_Height = Min(MaxTexel / Line_Width, Tile_Height)
 
-    If Textures(id).MaskS > 0 And ((Mask_Width * Mask_Height) <= MaxTexel) Then
-      Textures(id).Width = Mask_Width
-    ElseIf ((Tile_Width * Tile_Height) <= MaxTexel) Then
-      Textures(id).Width = Tile_Width
-    Else
-      Textures(id).Width = Line_Width
-    End If
-    If Textures(id).MaskT > 0 And ((Mask_Width * Mask_Height) <= MaxTexel) Then
-      Textures(id).Height = Mask_Height
-    ElseIf ((Tile_Width * Tile_Height) <= MaxTexel) Then
-      Textures(id).Height = Tile_Height
-    Else
-      Textures(id).Height = Line_Height
-    End If
+      If .MaskS > 0 And ((Mask_Width * Mask_Height) <= MaxTexel) Then
+        .Width = Mask_Width
+      ElseIf ((Tile_Width * Tile_Height) <= MaxTexel) Then
+        .Width = Tile_Width
+      Else
+        .Width = Line_Width
+      End If
+      If .MaskT > 0 And ((Mask_Width * Mask_Height) <= MaxTexel) Then
+        .Height = Mask_Height
+      ElseIf ((Tile_Width * Tile_Height) <= MaxTexel) Then
+        .Height = Tile_Height
+      Else
+        .Height = Line_Height
+      End If
 
-    Dim Clamp_Width As UInteger = 0
-    Dim Clamp_Height As UInteger = 0
-    If Textures(id).CMS = 1 Then
-      Clamp_Width = Tile_Width
-    Else
-      Clamp_Width = Textures(id).Width
-    End If
-    If Textures(id).CMT = 1 Then
-      Clamp_Height = Tile_Height
-    Else
-      Clamp_Height = Textures(id).Height
-    End If
+      Dim Clamp_Width As UInteger = 0
+      Dim Clamp_Height As UInteger = 0
+      If .CMS = 1 Then
+        Clamp_Width = Tile_Width
+      Else
+        Clamp_Width = .Width
+      End If
+      If .CMT = 1 Then
+        Clamp_Height = Tile_Height
+      Else
+        Clamp_Height = .Height
+      End If
 
-    If Mask_Width > Textures(id).Width Then
-      Textures(id).MaskS = FunctionsCs.PowOf(Textures(id).Width)
-      Mask_Width = 1 << Textures(id).MaskS
-    End If
-    If Mask_Height > Textures(id).Height Then
-      Textures(id).MaskT = FunctionsCs.PowOf(Textures(id).Height)
-      Mask_Height = 1 << Textures(id).MaskT
-    End If
+      If Mask_Width > .Width Then
+        .MaskS = FunctionsCs.PowOf(.Width)
+        Mask_Width = 1 << .MaskS
+      End If
+      If Mask_Height > .Height Then
+        .MaskT = FunctionsCs.PowOf(.Height)
+        Mask_Height = 1 << .MaskT
+      End If
 
-    If Textures(id).CMS = 2 Or Textures(id).CMS = 3 Then
-      Textures(id).RealWidth = FunctionsCs.Pow2(Clamp_Width)
-    ElseIf Textures(id).CMS = 1 Then
-      Textures(id).RealWidth = FunctionsCs.Pow2(Mask_Width)
-    Else
-      Textures(id).RealWidth = FunctionsCs.Pow2(Textures(id).Width)
-    End If
+      If .CMS = 2 Or .CMS = 3 Then
+        .RealWidth = FunctionsCs.Pow2(Clamp_Width)
+      ElseIf .CMS = 1 Then
+        .RealWidth = FunctionsCs.Pow2(Mask_Width)
+      Else
+        .RealWidth = FunctionsCs.Pow2(.Width)
+      End If
 
-    If Textures(id).CMT = 2 Or Textures(id).CMT = 3 Then
-      Textures(id).RealHeight = FunctionsCs.Pow2(Clamp_Height)
-    ElseIf Textures(id).CMT = 1 Then
-      Textures(id).RealHeight = FunctionsCs.Pow2(Mask_Height)
-    Else
-      Textures(id).RealHeight = FunctionsCs.Pow2(Textures(id).Height)
-    End If
+      If .CMT = 2 Or .CMT = 3 Then
+        .RealHeight = FunctionsCs.Pow2(Clamp_Height)
+      ElseIf .CMT = 1 Then
+        .RealHeight = FunctionsCs.Pow2(Mask_Height)
+      Else
+        .RealHeight = FunctionsCs.Pow2(.Height)
+      End If
 
-    Textures(id).ShiftS = 1.0F
-    Textures(id).ShiftT = 1.0F
+      .ShiftS = 1.0F
+      .ShiftT = 1.0F
 
-    If (Textures(id).TShiftS > 10) Then
-      Textures(id).ShiftS = (1 << (16 - Textures(id).TShiftS))
-    ElseIf (Textures(id).TShiftS > 0) Then
-      Textures(id).ShiftS /= (1 << Textures(id).TShiftS)
-    End If
+      If (.TShiftS > 10) Then
+        .ShiftS = (1 << (16 - .TShiftS))
+      ElseIf (.TShiftS > 0) Then
+        .ShiftS /= (1 << .TShiftS)
+      End If
 
-    If (Textures(id).TShiftT > 10) Then
-      Textures(id).ShiftT = (1 << (16 - Textures(id).TShiftT))
-    ElseIf (Textures(id).TShiftT > 0) Then
-      Textures(id).ShiftT /= (1 << Textures(id).TShiftT)
-    End If
+      If (.TShiftT > 10) Then
+        .ShiftT = (1 << (16 - .TShiftT))
+      ElseIf (.TShiftT > 0) Then
+        .ShiftT /= (1 << .TShiftT)
+      End If
 
-    Textures(id).TextureHRatio = ((Textures(id).T_Scale * Textures(id).ShiftT) / 32 / Textures(id).RealHeight)
-    Textures(id).TextureWRatio = ((Textures(id).S_Scale * Textures(id).ShiftS) / 32 / Textures(id).RealWidth)
+      .TextureHRatio = ((.T_Scale * .ShiftT) / 32 / .RealHeight)
+      .TextureWRatio = ((.S_Scale * .ShiftS) / 32 / .RealWidth)
+    End With
+
+    ' TODO: Remove this struct logic.
+    Textures(id) = texture
   End Sub
 
   Private Function LoadTex(ByVal Data() As Byte, ByVal Format As Byte, ByVal SourceBank As Integer,
