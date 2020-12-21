@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="data\Structs.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="helpers\BetterFilenames.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="scene\SceneFileType.cs" />
     <Compile Include="tao\SimpleOpenGlControl.cs">
@@ -89,5 +90,6 @@
   <ItemGroup>
     <Compile Include="displaylist\RDP_Defs.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -5234,7 +5234,10 @@ Public Class MainWin
         curnamepos += 1
         namebuffpos += 1
       End While
+
       curfilename = System.Text.Encoding.UTF8.GetString(curfilebyte, 0, namebuffpos)
+      Dim betterFilename = BetterFilenames.Get(curfilename)
+
       Select Case curfilename.ToLower
         Case "gameplay_keep"
 
@@ -5266,10 +5269,11 @@ Public Class MainWin
         ReDim Preserve ROMFiles.Objects(objcount)
         With ROMFiles.Objects(objcount)
           .filename = curfilename
+          .betterFilename = betterFilename
           .startoff = tempstart(nameinc)
           .endoff = tempend(nameinc)
         End With
-        FileTree.Nodes(0).Nodes.Add(curfilename)
+        FileTree.Nodes(0).Nodes.Add(betterFilename)
         objcount += 1
         mapcount = 0
         sccount = - 1
@@ -7422,18 +7426,19 @@ Public Class MainWin
     Else
       Select Case CurrentNodeParent
         Case "Actor models"
-          ObjectFilename = ROMFiles.Objects(filename).filename
-          ObjBuffSize = (ROMFiles.Objects(filename).endoff - ROMFiles.Objects(filename).startoff)
+          Dim selectedObject = ROMFiles.Objects(filename)
+
+          ObjectFilename = selectedObject.filename
+          ObjBuffSize = (selectedObject.endoff - selectedObject.startoff)
           ReDim ZFileBuffer(ObjBuffSize - 1)
 
-          ROMFileStream.Position = ROMFiles.Objects(filename).startoff
+          ROMFileStream.Position = selectedObject.startoff
           ROMFileStream.Read(ZFileBuffer, 0, ObjBuffSize)
 
           SetVariables(SceneFileType.ZOBJ)
 
           IndMapFileName = ""
           IndScFileName = ""
-
 
           MapsCombobox.Items.Clear()
           MapsCombobox.Enabled = False

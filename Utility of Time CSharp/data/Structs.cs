@@ -297,6 +297,7 @@ namespace UoT {
     public int startoff;
     public int endoff;
     public string filename;
+    public string betterFilename;
   }
 
   public struct ZCodeFiles {
