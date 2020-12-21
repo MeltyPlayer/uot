@@ -455,8 +455,8 @@ enddisplaylist:
     End Try
   End Function
 
-  Private Function SearchTexCache(ByVal Texture As TextureData) As Integer
-    Return TextureCache.Find(Texture)
+  Private Function SearchTexCache(ByVal textureData As TextureData) As Texture
+    Return TextureCache(textureData)
   End Function
 
   Private Sub VTX(ByVal w0 As UInt32, ByVal w1 As UInt32)
@@ -496,9 +496,9 @@ enddisplaylist:
       Gl.glEnable(Gl.GL_TEXTURE_2D)
 
       Gl.glActiveTextureARB(Gl.GL_TEXTURE0_ARB)
-      Dim texCachePos = SearchTexCache(Textures(0))
+      Dim texture As Texture = SearchTexCache(Textures(0))
 
-      If texCachePos = -1 Then
+      If texture Is Nothing Then
         Select Case Textures(0).ImageBank
           Case CurrentBank
             LoadTex(ZFileBuffer, 0)
@@ -512,14 +512,14 @@ enddisplaylist:
             Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2)
         End Select
       Else
-        Gl.glBindTexture(Gl.GL_TEXTURE_2D, TextureCache(texCachePos).ID)
+        Gl.glBindTexture(Gl.GL_TEXTURE_2D, texture.Data.ID)
       End If
 
       If MultiTexture Then
         Gl.glActiveTextureARB(Gl.GL_TEXTURE1_ARB)
-        texCachePos = SearchTexCache(Textures(1))
+        texture = SearchTexCache(Textures(1))
 
-        If texCachePos = -1 Then
+        If texture Is Nothing Then
           Select Case Textures(1).ImageBank
             Case CurrentBank
               LoadTex(ZFileBuffer, 1)
@@ -533,7 +533,7 @@ enddisplaylist:
               Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2)
           End Select
         Else
-          Gl.glBindTexture(Gl.GL_TEXTURE_2D, TextureCache(texCachePos).ID)
+          Gl.glBindTexture(Gl.GL_TEXTURE_2D, texture.Data.ID)
         End If
         Gl.glDisable(Gl.GL_TEXTURE_2D)
         Gl.glActiveTextureARB(Gl.GL_TEXTURE0_ARB)

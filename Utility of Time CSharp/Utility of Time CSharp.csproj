@@ -63,6 +63,7 @@
     <Compile Include="tao\SimpleOpenGlControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="texture\Texture.cs" />
     <Compile Include="texture\TextureCache.cs" />
     <Compile Include="texture\TextureData.cs" />
     <Compile Include="ui\main\viewer\PickerUtil.cs" />

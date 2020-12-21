@@ -1,4 +1,10 @@
 ﻿namespace UoT {
+  /// <summary>
+  ///   Data needed to generate a texture.
+  ///
+  ///   This *must* be a struct for now, as the parser expects for data to be
+  ///   copied by value instead of by reference.
+  /// </summary>
   public struct TextureData {
     public int ID;
     public int DXT;
