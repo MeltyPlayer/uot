@@ -1,7 +1,5 @@
 Imports Tao.FreeGlut
 Imports Tao.OpenGl
-Imports System.Math
-Imports System.Runtime.InteropServices
 
 Module Functions
   Public Declare Function ShellExecute Lib "shell32.dll" Alias "ShellExecuteA" _
@@ -156,15 +154,8 @@ Module Functions
       End If
     Next
   End Function
+
   'macros for processing n64 dl commands
-  Public Function ShiftR(ByVal v As UInt32, ByVal s As UInt32, ByVal w As UInt32) As UInt32
-    Return (v >> s) And ((1 << w) - 1)
-  End Function
-
-  Public Function ShiftL(ByVal v As UInt32, ByVal s As UInt32, ByVal w As UInt32) As UInt32
-    Return (v And ((1 << w) - 1) << s)
-  End Function
-
   Public Function Hex2(ByVal sHex As String) As Byte()
     Dim n As Long
     Dim nCount As Long

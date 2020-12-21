@@ -1,4 +1,5 @@
 ﻿namespace UoT {
+  // TODO: Split these out into separate files.
   public static class FunctionsCs {
     /// <summary>
     ///   Calculates the nearest power of 2 under a given value. This is useful
@@ -24,6 +25,17 @@
       }
       return i;
     }
+
+
+    // TODO: What is this doing?
+    // TODO: Rename params.
+    public static uint ShiftR(uint v, int s, int w)
+      => (uint) ((v >> s) & ((1 << w) - 1));
+
+    // TODO: What is this doing?
+    // TODO: Rename params.
+    public static uint ShiftL(uint v, int s, int w)
+      => (uint) (v & ((1 << w) - 1) << s);
 
 
     public static ushort ReadUInt16(byte[] buffer, uint offset)

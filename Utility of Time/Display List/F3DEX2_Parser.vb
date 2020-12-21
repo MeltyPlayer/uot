@@ -649,14 +649,14 @@ enddisplaylist:
     Dim texture = Textures(CurrentTex)
     With texture
       .TexFormat = w0 >> 16
-      .TexelSize = ShiftR(w0, 19, 2)
-      .LineSize = ShiftR(w0, 9, 9)
-      .CMT = ShiftR(w1, 18, 2)
-      .CMS = ShiftR(w1, 8, 2)
-      .MaskS = ShiftR(w1, 4, 4)
-      .MaskT = ShiftR(w1, 14, 4)
-      .TShiftS = ShiftR(w1, 0, 4)
-      .TShiftT = ShiftR(w1, 10, 4)
+      .TexelSize = FunctionsCs.ShiftR(w0, 19, 2)
+      .LineSize = FunctionsCs.ShiftR(w0, 9, 9)
+      .CMT = FunctionsCs.ShiftR(w1, 18, 2)
+      .CMS = FunctionsCs.ShiftR(w1, 8, 2)
+      .MaskS = FunctionsCs.ShiftR(w1, 4, 4)
+      .MaskT = FunctionsCs.ShiftR(w1, 14, 4)
+      .TShiftS = FunctionsCs.ShiftR(w1, 0, 4)
+      .TShiftT = FunctionsCs.ShiftR(w1, 10, 4)
     End With
     ' TODO: Remove this struct logic.
     Textures(CurrentTex) = texture
@@ -949,9 +949,11 @@ enddisplaylist:
 
   Private Sub TEXTURE(ByVal w1 As UInt32)
     For i As Integer = 0 To 1
-      If ShiftR(w1, 16, 16) < &HFFFF Then Textures(i).S_Scale = Fixed2Float(ShiftR(w1, 16, 16), 16) Else _
+      If FunctionsCs.ShiftR(w1, 16, 16) < &HFFFF Then _
+        Textures(i).S_Scale = Fixed2Float(FunctionsCs.ShiftR(w1, 16, 16), 16) Else _
         Textures(i).S_Scale = 1.0F
-      If ShiftR(w1, 0, 16) < &HFFFF Then Textures(i).T_Scale = Fixed2Float(ShiftR(w1, 0, 16), 16) Else _
+      If FunctionsCs.ShiftR(w1, 0, 16) < &HFFFF Then _
+        Textures(i).T_Scale = Fixed2Float(FunctionsCs.ShiftR(w1, 0, 16), 16) Else _
         Textures(i).T_Scale = 1.0F
     Next
   End Sub
