@@ -37,6 +37,11 @@
     public static uint ShiftL(uint v, int s, int w)
       => (uint) (v & ((1 << w) - 1) << s);
 
+    // TODO: What is this doing?
+    // TODO: Rename params.
+    public static double Fixed2Float(double v, int b)
+      => v * RDP_Defs.FIXED2FLOATRECIP[b - 1];
+    
 
     public static ushort ReadUInt16(byte[] buffer, uint offset)
       => (ushort) FunctionsCs.ReadUInt(buffer, offset, 2);

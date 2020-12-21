@@ -950,10 +950,10 @@ enddisplaylist:
   Private Sub TEXTURE(ByVal w1 As UInt32)
     For i As Integer = 0 To 1
       If FunctionsCs.ShiftR(w1, 16, 16) < &HFFFF Then _
-        Textures(i).S_Scale = Fixed2Float(FunctionsCs.ShiftR(w1, 16, 16), 16) Else _
+        Textures(i).S_Scale = FunctionsCs.Fixed2Float(FunctionsCs.ShiftR(w1, 16, 16), 16) Else _
         Textures(i).S_Scale = 1.0F
       If FunctionsCs.ShiftR(w1, 0, 16) < &HFFFF Then _
-        Textures(i).T_Scale = Fixed2Float(FunctionsCs.ShiftR(w1, 0, 16), 16) Else _
+        Textures(i).T_Scale = FunctionsCs.Fixed2Float(FunctionsCs.ShiftR(w1, 0, 16), 16) Else _
         Textures(i).T_Scale = 1.0F
     Next
   End Sub

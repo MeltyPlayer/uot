@@ -105,10 +105,6 @@ Module Functions
     Return System.IO.Path.GetFileNameWithoutExtension(FullPath)
   End Function
 
-  Public Function Fixed2Float(ByVal v As Double, ByVal b As Integer) As Double
-    Return v * RDP_Defs.FIXED2FLOATRECIP(b - 1)
-  End Function
-
   Public Function HexOnly(ByVal str As String) As Boolean
     If "0123456789ABCDEF".IndexOf(str) = -1 Then
       Return True
