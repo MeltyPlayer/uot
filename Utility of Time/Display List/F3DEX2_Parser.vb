@@ -501,17 +501,13 @@ enddisplaylist:
       If texCachePos = -1 Then
         Select Case Textures(0).ImageBank
           Case CurrentBank
-            LoadTex(ZFileBuffer, Textures(0).TexFormat, Textures(0).ImageBank, Textures(0).Offset, Textures(0).TexBytes,
-                    0)
+            LoadTex(ZFileBuffer, 0)
           Case 2
-            LoadTex(ZSceneBuffer, Textures(0).TexFormat, Textures(0).ImageBank, Textures(0).Offset, Textures(0).TexBytes,
-                    0)
+            LoadTex(ZSceneBuffer, 0)
           Case 4
-            LoadTex(CommonBanks.Bank4.Banks(CommonBankUse.Bank04).Data, Textures(0).TexFormat, Textures(0).ImageBank,
-                    Textures(0).Offset, Textures(0).TexBytes, 0)
+            LoadTex(CommonBanks.Bank4.Banks(CommonBankUse.Bank04).Data, 0)
           Case 5
-            LoadTex(CommonBanks.Bank5.Banks(CommonBankUse.Bank05).Data, Textures(0).TexFormat, Textures(0).ImageBank,
-                    Textures(0).Offset, Textures(0).TexBytes, 0)
+            LoadTex(CommonBanks.Bank5.Banks(CommonBankUse.Bank05).Data, 0)
           Case Else
             Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2)
         End Select
@@ -526,17 +522,13 @@ enddisplaylist:
         If texCachePos = -1 Then
           Select Case Textures(1).ImageBank
             Case CurrentBank
-              LoadTex(ZFileBuffer, Textures(1).TexFormat, Textures(1).ImageBank, Textures(1).Offset,
-                      Textures(1).TexBytes, 1)
+              LoadTex(ZFileBuffer, 1)
             Case 2
-              LoadTex(ZSceneBuffer, Textures(1).TexFormat, Textures(1).ImageBank, Textures(1).Offset,
-                      Textures(1).TexBytes, 1)
+              LoadTex(ZSceneBuffer, 1)
             Case 4
-              LoadTex(CommonBanks.Bank4.Banks(CommonBankUse.Bank04).Data, Textures(0).TexFormat, Textures(0).ImageBank,
-                      Textures(0).Offset, Textures(0).TexBytes, 0)
+              LoadTex(CommonBanks.Bank4.Banks(CommonBankUse.Bank04).Data, 0)
             Case 5
-              LoadTex(CommonBanks.Bank5.Banks(CommonBankUse.Bank05).Data, Textures(0).TexFormat, Textures(0).ImageBank,
-                      Textures(0).Offset, Textures(0).TexBytes, 0)
+              LoadTex(CommonBanks.Bank5.Banks(CommonBankUse.Bank05).Data, 0)
             Case Else
               Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2)
           End Select
@@ -837,76 +829,80 @@ enddisplaylist:
     Textures(id) = texture
   End Sub
 
-  Private Function LoadTex(ByVal Data() As Byte, ByVal Format As Byte, ByVal SourceBank As Integer,
-                           ByVal Offset As UInteger, ByVal Size As UInteger, ByVal ID As UInteger) As Integer
-    Dim N64TexImg(Size) As Byte
-    Dim OGLTexImg() As Byte = {0, &HFF, 0, 0}
-
-    For i2 As Integer = 0 To (Size) - 1
-      If Offset + i2 < Data.Length Then
-        N64TexImg(i2) = Data(Offset + i2)
-      Else
-        Exit For
-      End If
-    Next
-
+  Private Function LoadTex(ByVal Data() As Byte, ByVal ID As UInteger) As Integer
     Dim texture As TextureData = Textures(ID)
     With texture
+      Dim Format As Byte = .TexFormat
+      Dim SourceBank As Integer = .ImageBank
+      Dim Offset As UInteger = .Offset
+      Dim Size As UInteger = .TexBytes
+
+      Dim N64TexImg(Size) As Byte
+      Dim OGLTexImg() As Byte = {0, &HFF, 0, 0}
+
+      For i2 As Integer = 0 To (Size) - 1
+        If Offset + i2 < Data.Length Then
+          N64TexImg(i2) = Data(Offset + i2)
+        Else
+          Exit For
+        End If
+      Next
+
       Select Case Format
         Case &H18 '32bpp RGBA
           OGLTexImg = N64TexImg
         Case &H0, &H8, &H10 '5R, 5G, 5B, 1A (5551) RGBA 
           RGBA.RGBA16(.RealWidth,
-                      .RealHeight,
-                      .LineSize,
-                      N64TexImg,
-                      OGLTexImg)
+                    .RealHeight,
+                    .LineSize,
+                    N64TexImg,
+                    OGLTexImg)
         Case &H40, &H50 'CI - 5551 RGBA palette with 8bpp array of indices
           CI.CI8(.RealWidth,
-                 .RealHeight,
-                 .LineSize,
-                 N64TexImg,
-                 OGLTexImg,
-                 Textures(0).Palette32)
+               .RealHeight,
+               .LineSize,
+               N64TexImg,
+               OGLTexImg,
+               Textures(0).Palette32)
         Case &H48 'CI - 5551 RGBA palette with 4bpp array of indices
           CI.CI4(.RealWidth,
-                 .RealHeight,
-                 .LineSize,
-                 N64TexImg,
-                 OGLTexImg,
-                 Textures(0).Palette32)
+               .RealHeight,
+               .LineSize,
+               N64TexImg,
+               OGLTexImg,
+               Textures(0).Palette32)
         Case &H70 'IA - 16 bit grayscale with alpha
           IA.IA16(.RealWidth,
-                  .RealHeight,
-                  .LineSize,
-                  N64TexImg,
-                  OGLTexImg)
+                .RealHeight,
+                .LineSize,
+                N64TexImg,
+                OGLTexImg)
 
         Case &H68 'IA - 8 bit grayscale with alpha
           IA.IA8(.RealWidth,
-                 .RealHeight,
-                 .LineSize,
-                 N64TexImg,
-                 OGLTexImg)
-        Case &H60 'IA - 4 bit grayscale with alpha
-          IA.IA4(.RealWidth,
-                 .RealHeight,
-                 .LineSize,
-                 N64TexImg,
-                 OGLTexImg)
-        Case &H80, &H90 'I - 4 bit grayscale with alpha
-          I.I4(.RealWidth,
                .RealHeight,
                .LineSize,
                N64TexImg,
                OGLTexImg)
+        Case &H60 'IA - 4 bit grayscale with alpha
+          IA.IA4(.RealWidth,
+               .RealHeight,
+               .LineSize,
+               N64TexImg,
+               OGLTexImg)
+        Case &H80, &H90 'I - 4 bit grayscale with alpha
+          I.I4(.RealWidth,
+             .RealHeight,
+             .LineSize,
+             N64TexImg,
+             OGLTexImg)
 
         Case &H88 ' I - 8 bit grayscale with alpha
           I.I8(.RealWidth,
-               .RealHeight,
-               .LineSize,
-               N64TexImg,
-               OGLTexImg)
+             .RealHeight,
+             .LineSize,
+             N64TexImg,
+             OGLTexImg)
       End Select
 
       Gl.glGenTextures(1, .ID)
