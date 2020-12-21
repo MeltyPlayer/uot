@@ -5,14 +5,14 @@ namespace UoT {
   ///   Instance of a valid texture.
   /// </summary>
   public class Texture {
-    private TextureData Data { get; }
+    private TextureParams TextureParams { get; }
 
-    public Texture(TextureData data) {
-      this.Data = data;
+    public Texture(TextureParams textureParams) {
+      this.TextureParams = textureParams;
     }
 
     // OpenGL-specific logic.
-    private int GlId => this.Data.ID;
+    private int GlId => this.TextureParams.ID;
 
     public void Bind() => Gl.glBindTexture(Gl.GL_TEXTURE_2D, this.GlId);
 

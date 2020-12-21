@@ -20,24 +20,24 @@ namespace UoT {
     /// <summary>
     ///   O(log(n)) lookup.
     /// </summary>
-    public Texture this[TextureData data] {
+    public Texture this[TextureParams textureParams] {
       get {
-        var uuid = TextureCache.GetUuidForData_(data);
+        var uuid = TextureCache.GetUuidForTextureParams_(textureParams);
         this.impl_.TryGetValue(uuid, out var texture);
         return texture;
       }
     }
 
-    public void Add(TextureData data) {
-      var uuid = TextureCache.GetUuidForData_(data);
+    public void Add(TextureParams textureParams) {
+      var uuid = TextureCache.GetUuidForTextureParams_(textureParams);
       if (!this.impl_.ContainsKey(uuid)) {
-        this.impl_.Add(uuid, new Texture(data));
+        this.impl_.Add(uuid, new Texture(textureParams));
       }
     }
 
-    private static long GetUuidForData_(TextureData data) {
-      long offset = data.Offset;
-      long imageBank = data.ImageBank;
+    private static long GetUuidForTextureParams_(TextureParams textureParams) {
+      long offset = textureParams.Offset;
+      long imageBank = textureParams.ImageBank;
 
       return offset << 32 | imageBank;
     }

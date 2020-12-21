@@ -20,7 +20,7 @@ Public Class F3DEX2_Parser
   Private CurrentTex As Integer
   Private MultiTexCoord As Boolean = False
   Private TextureCache As TextureCache = New TextureCache()
-  Private Textures(1) As TextureData
+  Private Textures(1) As TextureParams
   Private FragShaderCache(-1) As ShaderCache
   Private PrimColor() As Single = {1.0, 1.0, 1.0, 0.5}
   Private PrimColorLOD As Single = 0
@@ -455,7 +455,7 @@ enddisplaylist:
     End Try
   End Function
 
-  Private Function SearchTexCache(ByVal textureData As TextureData) As Texture
+  Private Function SearchTexCache(ByVal textureData As TextureParams) As Texture
     Return TextureCache(textureData)
   End Function
 
@@ -830,7 +830,7 @@ enddisplaylist:
   End Sub
 
   Private Function LoadTex(ByVal Data() As Byte, ByVal ID As UInteger) As Integer
-    Dim texture As TextureData = Textures(ID)
+    Dim texture As TextureParams = Textures(ID)
     With texture
       Dim Format As Byte = .TexFormat
       Dim SourceBank As Integer = .ImageBank

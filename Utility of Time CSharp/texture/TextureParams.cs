@@ -1,11 +1,12 @@
 ﻿namespace UoT {
   /// <summary>
-  ///   Data needed to generate a texture.
+  ///   Params needed to generate a texture.
   ///
   ///   This *must* be a struct for now, as the parser expects for data to be
   ///   copied by value instead of by reference.
   /// </summary>
-  public struct TextureData {
+  public struct TextureParams {
+    // TODO: Get rid of this field.
     public int ID;
     public int DXT;
     public int Height;
