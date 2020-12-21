@@ -655,17 +655,23 @@ enddisplaylist:
   End Sub
 
   Private Function SETTILE(ByVal w0 As UInt32, ByVal w1 As UInt32)
-    Textures(CurrentTex).TexFormat = w0 >> 16
-    Textures(CurrentTex).TexelSize = ShiftR(w0, 19, 2)
-    Textures(CurrentTex).LineSize = ShiftR(w0, 9, 9)
-    Textures(CurrentTex).CMT = ShiftR(w1, 18, 2)
-    Textures(CurrentTex).CMS = ShiftR(w1, 8, 2)
-    Textures(CurrentTex).MaskS = ShiftR(w1, 4, 4)
-    Textures(CurrentTex).MaskT = ShiftR(w1, 14, 4)
-    Textures(CurrentTex).TShiftS = ShiftR(w1, 0, 4)
-    Textures(CurrentTex).TShiftT = ShiftR(w1, 10, 4)
+    Dim texture = Textures(CurrentTex)
+    With texture
+      .TexFormat = w0 >> 16
+      .TexelSize = ShiftR(w0, 19, 2)
+      .LineSize = ShiftR(w0, 9, 9)
+      .CMT = ShiftR(w1, 18, 2)
+      .CMS = ShiftR(w1, 8, 2)
+      .MaskS = ShiftR(w1, 4, 4)
+      .MaskT = ShiftR(w1, 14, 4)
+      .TShiftS = ShiftR(w1, 0, 4)
+      .TShiftT = ShiftR(w1, 10, 4)
+    End With
+    ' TODO: Remove this struct logic.
+    Textures(CurrentTex) = texture
   End Function
 
+  ' TODO: Slow, should only need to run this once!
   Private Sub SETTILESIZE(ByVal w0 As UInt32, ByVal w1 As UInt32)
     Dim texture = Textures(CurrentTex)
     With texture
