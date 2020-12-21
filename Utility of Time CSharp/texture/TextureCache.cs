@@ -11,10 +11,8 @@ namespace UoT {
         new Dictionary<long, Texture>();
 
     public void Clear() {
-      // TODO: Move inside texture class.
-      foreach (var kvp in this.impl_) {
-        var id = kvp.Value.Data.ID;
-        Gl.glDeleteTextures(1, ref id);
+      foreach (var texture in this.impl_.Values) {
+        texture.Destroy();
       }
       this.impl_.Clear();
     }

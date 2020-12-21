@@ -512,7 +512,7 @@ enddisplaylist:
             Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2)
         End Select
       Else
-        Gl.glBindTexture(Gl.GL_TEXTURE_2D, texture.Data.ID)
+        texture.Bind()
       End If
 
       If MultiTexture Then
@@ -533,7 +533,7 @@ enddisplaylist:
               Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2)
           End Select
         Else
-          Gl.glBindTexture(Gl.GL_TEXTURE_2D, texture.Data.ID)
+          texture.Bind()
         End If
         Gl.glDisable(Gl.GL_TEXTURE_2D)
         Gl.glActiveTextureARB(Gl.GL_TEXTURE0_ARB)
