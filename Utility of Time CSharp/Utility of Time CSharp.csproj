@@ -64,7 +64,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="texture\TextureCache.cs" />
-    <Compile Include="texture\Texture.cs" />
+    <Compile Include="texture\TextureData.cs" />
     <Compile Include="ui\main\viewer\PickerUtil.cs" />
   </ItemGroup>
   <ItemGroup>

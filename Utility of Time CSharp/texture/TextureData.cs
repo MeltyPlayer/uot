@@ -1,5 +1,5 @@
 ﻿namespace UoT {
-  public struct Texture {
+  public struct TextureData {
     public int ID;
     public int DXT;
     public int Height;

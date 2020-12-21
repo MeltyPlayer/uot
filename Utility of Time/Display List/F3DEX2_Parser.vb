@@ -20,7 +20,7 @@ Public Class F3DEX2_Parser
   Private CurrentTex As Integer
   Private MultiTexCoord As Boolean = False
   Private TextureCache As TextureCache = New TextureCache()
-  Private Textures(1) As Texture
+  Private Textures(1) As TextureData
   Private FragShaderCache(-1) As ShaderCache
   Private PrimColor() As Single = {1.0, 1.0, 1.0, 0.5}
   Private PrimColorLOD As Single = 0
@@ -249,7 +249,6 @@ enddisplaylist:
     Dim Address As UInteger = (w1 << 8 >> 8)
     Dim Param As Byte = (w1 And &HFF) Xor F3DZEX.MTX_PUSH
 
-
     Dim TempRSPMatrix As New RSPMatrix
 
     With TempRSPMatrix
@@ -456,7 +455,7 @@ enddisplaylist:
     End Try
   End Function
 
-  Private Function SearchTexCache(ByVal Texture As Texture) As Integer
+  Private Function SearchTexCache(ByVal Texture As TextureData) As Integer
     Return TextureCache.Find(Texture)
   End Function
 
@@ -851,7 +850,7 @@ enddisplaylist:
       End If
     Next
 
-    Dim texture As Texture = Textures(ID)
+    Dim texture As TextureData = Textures(ID)
     With texture
       Select Case Format
         Case &H18 '32bpp RGBA

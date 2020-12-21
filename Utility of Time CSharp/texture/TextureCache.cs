@@ -4,7 +4,7 @@ using Tao.OpenGl;
 
 namespace UoT {
   public class TextureCache {
-    private readonly IList<Texture> textures_ = new List<Texture>();
+    private readonly IList<TextureData> textures_ = new List<TextureData>();
 
     public void Clear() {
       // TODO: Move inside texture class.
@@ -15,13 +15,13 @@ namespace UoT {
       this.textures_.Clear();
     }
 
-    public Texture this[int index] => this.textures_[index];
+    public TextureData this[int index] => this.textures_[index];
 
-    public void Add(Texture texture) {
+    public void Add(TextureData texture) {
       this.textures_.Add(texture);
     }
 
-    public int Find(Texture searchTexture) {
+    public int Find(TextureData searchTexture) {
       for (var i = 0; i < this.textures_.Count; ++i) {
         var texture = this.textures_[i];
         if (texture.Offset == searchTexture.Offset &&
