@@ -10,8 +10,10 @@
     public double TextureWRatio;
     public uint TexBytes;
     public int ImageBank;
+    // TODO: Are PAL-specific fields needed?
     public int PalBank;
     public int Offset;
+    // TODO: Are PAL-specific fields needed?
     public int PalOff;
     public int TexFormat;
     public int TexelSize;
