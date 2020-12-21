@@ -3964,7 +3964,7 @@ Public Class MainWin
         CurrLimb = id
       End If
 
-      Dim dlIndex As Integer = - 1
+      Dim dlIndex As Integer = -1
       If .DisplayList > Nothing Then
         dlIndex = SearchDLCache(N64DList, .DisplayList) 'index of limb's requested DL, -1 if none found
       End If
@@ -3977,7 +3977,7 @@ Public Class MainWin
         Gl.glVertex3f(0, 0, 0)
         Gl.glVertex3f(.x, .y, .z)
         Gl.glEnd()
-        Gl.glDepthRange(0, - 0.5)
+        Gl.glDepthRange(0, -0.5)
         Gl.glPointSize(11)
         Gl.glBegin(Gl.GL_POINTS)
         Gl.glColor3f(0, 0, 0)
@@ -4010,11 +4010,11 @@ Public Class MainWin
         End With
       End If
 
-      If dlIndex > - 1 Then
+      If dlIndex > -1 Then
         DrawDL(dlIndex, False)
       End If
 
-      If .c0 > - 1 Then
+      If .c0 > -1 Then
         BoneColorFactor.r = 255
         BoneColorFactor.g = 0
         BoneColorFactor.b = 0
@@ -4027,7 +4027,7 @@ Public Class MainWin
 
       Gl.glPopMatrix()
 
-      If .c1 > - 1 Then
+      If .c1 > -1 Then
         BoneColorFactor.r = 0
         BoneColorFactor.g = 0
         BoneColorFactor.b = 255
