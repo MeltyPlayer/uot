@@ -845,104 +845,105 @@ enddisplaylist:
       End If
     Next
 
-    Select Case Format
-      Case &H18 '32bpp RGBA
-        OGLTexImg = N64TexImg
-      Case &H0, &H8, &H10 '5R, 5G, 5B, 1A (5551) RGBA 
-        RGBA.RGBA16(Textures(ID).RealWidth,
-                    Textures(ID).RealHeight,
-                    Textures(ID).LineSize,
-                    N64TexImg,
-                    OGLTexImg)
-      Case &H40, &H50 'CI - 5551 RGBA palette with 8bpp array of indices
-        CI.CI8(Textures(ID).RealWidth,
-               Textures(ID).RealHeight,
-               Textures(ID).LineSize,
-               N64TexImg,
-               OGLTexImg,
-               Textures(0).Palette32)
-      Case &H48 'CI - 5551 RGBA palette with 4bpp array of indices
-        CI.CI4(Textures(ID).RealWidth,
-               Textures(ID).RealHeight,
-               Textures(ID).LineSize,
-               N64TexImg,
-               OGLTexImg,
-               Textures(0).Palette32)
-      Case &H70 'IA - 16 bit grayscale with alpha
-        IA.IA16(Textures(ID).RealWidth,
-                Textures(ID).RealHeight,
-                Textures(ID).LineSize,
-                N64TexImg,
-                OGLTexImg)
+    Dim texture As Texture = Textures(ID)
+    With texture
+      Select Case Format
+        Case &H18 '32bpp RGBA
+          OGLTexImg = N64TexImg
+        Case &H0, &H8, &H10 '5R, 5G, 5B, 1A (5551) RGBA 
+          RGBA.RGBA16(.RealWidth,
+                      .RealHeight,
+                      .LineSize,
+                      N64TexImg,
+                      OGLTexImg)
+        Case &H40, &H50 'CI - 5551 RGBA palette with 8bpp array of indices
+          CI.CI8(.RealWidth,
+                 .RealHeight,
+                 .LineSize,
+                 N64TexImg,
+                 OGLTexImg,
+                 Textures(0).Palette32)
+        Case &H48 'CI - 5551 RGBA palette with 4bpp array of indices
+          CI.CI4(.RealWidth,
+                 .RealHeight,
+                 .LineSize,
+                 N64TexImg,
+                 OGLTexImg,
+                 Textures(0).Palette32)
+        Case &H70 'IA - 16 bit grayscale with alpha
+          IA.IA16(.RealWidth,
+                  .RealHeight,
+                  .LineSize,
+                  N64TexImg,
+                  OGLTexImg)
 
-      Case &H68 'IA - 8 bit grayscale with alpha
-        IA.IA8(Textures(ID).RealWidth,
-               Textures(ID).RealHeight,
-               Textures(ID).LineSize,
+        Case &H68 'IA - 8 bit grayscale with alpha
+          IA.IA8(.RealWidth,
+                 .RealHeight,
+                 .LineSize,
+                 N64TexImg,
+                 OGLTexImg)
+        Case &H60 'IA - 4 bit grayscale with alpha
+          IA.IA4(.RealWidth,
+                 .RealHeight,
+                 .LineSize,
+                 N64TexImg,
+                 OGLTexImg)
+        Case &H80, &H90 'I - 4 bit grayscale with alpha
+          I.I4(.RealWidth,
+               .RealHeight,
+               .LineSize,
                N64TexImg,
                OGLTexImg)
-      Case &H60 'IA - 4 bit grayscale with alpha
-        IA.IA4(Textures(ID).RealWidth,
-               Textures(ID).RealHeight,
-               Textures(ID).LineSize,
+
+        Case &H88 ' I - 8 bit grayscale with alpha
+          I.I8(.RealWidth,
+               .RealHeight,
+               .LineSize,
                N64TexImg,
                OGLTexImg)
-      Case &H80, &H90 'I - 4 bit grayscale with alpha
-        I.I4(Textures(ID).RealWidth,
-             Textures(ID).RealHeight,
-             Textures(ID).LineSize,
-             N64TexImg,
-             OGLTexImg)
+      End Select
 
-      Case &H88 ' I - 8 bit grayscale with alpha
-        I.I8(Textures(ID).RealWidth,
-             Textures(ID).RealHeight,
-             Textures(ID).LineSize,
-             N64TexImg,
-             OGLTexImg)
-    End Select
-
-    With Textures(ID)
       Gl.glGenTextures(1, .ID)
       Gl.glBindTexture(Gl.GL_TEXTURE_2D, .ID)
+
+      TextureCache.Add(texture)
+
+      Gl.glTexImage2D(Gl.GL_TEXTURE_2D, 0, Gl.GL_RGBA, .RealWidth, .RealHeight, 0, Gl.GL_RGBA,
+                      Gl.GL_UNSIGNED_BYTE, OGLTexImg)
+      Glu.gluBuild2DMipmaps(Gl.GL_TEXTURE_2D, Gl.GL_RGBA, .RealWidth, .RealHeight, Gl.GL_RGBA,
+                            Gl.GL_UNSIGNED_BYTE, OGLTexImg)
+
+      Select Case .CMS
+        Case RDP.G_TX_CLAMP, 3
+          Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_WRAP_S, Gl.GL_CLAMP_TO_EDGE)
+        Case RDP.G_TX_MIRROR
+          Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_WRAP_S, Gl.GL_MIRRORED_REPEAT)
+        Case RDP.G_TX_WRAP
+          Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_WRAP_S, Gl.GL_REPEAT)
+        Case Else
+          Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_WRAP_S, Gl.GL_REPEAT)
+      End Select
+      Select Case .CMT
+        Case RDP.G_TX_CLAMP, 3
+          Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_WRAP_T, Gl.GL_CLAMP_TO_EDGE)
+        Case RDP.G_TX_MIRROR
+          Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_WRAP_T, Gl.GL_MIRRORED_REPEAT)
+        Case RDP.G_TX_WRAP
+          Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_WRAP_T, Gl.GL_REPEAT)
+        Case Else
+          Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_WRAP_T, Gl.GL_REPEAT)
+      End Select
+
+      If RenderToggles.Anisotropic Then
+        Gl.glTexParameterf(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MAX_ANISOTROPY_EXT,
+                           GLExtensions.AnisotropicSamples(GLExtensions.AnisotropicSamples.Length - 1))
+      Else
+        Gl.glTexParameterf(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MAX_ANISOTROPY_EXT, 1.0)
+      End If
+      Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MIN_FILTER, Gl.GL_LINEAR_MIPMAP_LINEAR)
+      Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MAG_FILTER, Gl.GL_LINEAR_MIPMAP_LINEAR)
     End With
-
-    TextureCache.Add(Textures(ID))
-
-    Gl.glTexImage2D(Gl.GL_TEXTURE_2D, 0, Gl.GL_RGBA, Textures(ID).RealWidth, Textures(ID).RealHeight, 0, Gl.GL_RGBA,
-                    Gl.GL_UNSIGNED_BYTE, OGLTexImg)
-    Glu.gluBuild2DMipmaps(Gl.GL_TEXTURE_2D, Gl.GL_RGBA, Textures(ID).RealWidth, Textures(ID).RealHeight, Gl.GL_RGBA,
-                          Gl.GL_UNSIGNED_BYTE, OGLTexImg)
-
-    Select Case Textures(ID).CMS
-      Case RDP.G_TX_CLAMP, 3
-        Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_WRAP_S, Gl.GL_CLAMP_TO_EDGE)
-      Case RDP.G_TX_MIRROR
-        Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_WRAP_S, Gl.GL_MIRRORED_REPEAT)
-      Case RDP.G_TX_WRAP
-        Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_WRAP_S, Gl.GL_REPEAT)
-      Case Else
-        Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_WRAP_S, Gl.GL_REPEAT)
-    End Select
-    Select Case Textures(ID).CMT
-      Case RDP.G_TX_CLAMP, 3
-        Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_WRAP_T, Gl.GL_CLAMP_TO_EDGE)
-      Case RDP.G_TX_MIRROR
-        Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_WRAP_T, Gl.GL_MIRRORED_REPEAT)
-      Case RDP.G_TX_WRAP
-        Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_WRAP_T, Gl.GL_REPEAT)
-      Case Else
-        Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_WRAP_T, Gl.GL_REPEAT)
-    End Select
-
-    If RenderToggles.Anisotropic Then
-      Gl.glTexParameterf(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MAX_ANISOTROPY_EXT,
-                         GLExtensions.AnisotropicSamples(GLExtensions.AnisotropicSamples.Length - 1))
-    Else
-      Gl.glTexParameterf(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MAX_ANISOTROPY_EXT, 1.0)
-    End If
-    Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MIN_FILTER, Gl.GL_LINEAR_MIPMAP_LINEAR)
-    Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MAG_FILTER, Gl.GL_LINEAR_MIPMAP_LINEAR)
   End Function
 
   Private Sub TEXTURE(ByVal w1 As UInt32)
