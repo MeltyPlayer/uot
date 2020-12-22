@@ -51,10 +51,9 @@ namespace UoT {
         ("object_mori_hineri1", "Twisting Hallway"),
         ("object_ms", "Bean Seller"),
         ("object_niw", "Cucco"),
-        ("object_oB1", "Hyrule Castle Town Shopkeeper (w/ Legs"),
         ("object_okuta", "Octorok"),
         ("object_os", "Happy Mask Salesman"),
-        ("object_ossan", "Hyrule Castle Town Shopkeeper (w/o Legs)"),
+        ("object_ossan", "Hyrule Castle Town Shopkeeper"),
         ("object_peehat", "Peahat"),
         ("object_po_field", "Poe (Hyrule Field)"),
         ("object_poh", "Poe"),
@@ -86,6 +85,8 @@ namespace UoT {
         ("object_zf", "Lizalfos"),
         ("object_zl1", "Princess Zelda (child)"),
         ("object_zl2", "Princess Zelda (adult)"),
+        ("object_zl2_anime1", "Animations (1) for Princess Zelda (adult)"),
+        ("object_zl2_anime2", "Animations (2) for Princess Zelda (adult)"),
         ("object_zo", "Zora")
     );
 

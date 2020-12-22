@@ -5334,7 +5334,7 @@ Public Class MainWin
         If _
           (ROMFiles.Objects(i).filename.ToLower.Contains("object_") And
            ROMFiles.Objects(i).filename.ToLower.Contains("_anime")) Then
-          animationbank.Items.Add(ROMFiles.Objects(i).filename)
+          animationbank.Items.Add(ROMFiles.Objects(i).betterFilename)
           ReDim Preserve .Anims.Banks(animBankCnt)
           ReDim .Anims.Banks(animBankCnt).Data(fileSize - 1)
           romFS.Position = ROMFiles.Objects(i).startoff
