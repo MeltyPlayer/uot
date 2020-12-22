@@ -4395,21 +4395,13 @@ Public Class MainWin
     LoadROM.ShowDialog()
   End Sub
 
+  ' TODO: Here is where the form is initialized!
   Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
     Try
       Glut.glutInit()
       Wgl.ReloadFunctions()
       Gl.ReloadFunctions()
       UoTRender.CreateGraphics()
-
-      Dim extstr As String = Gl.glGetString(Gl.GL_EXTENSIONS).ToLower
-
-      GLExtensions.GLMultiTexture = extstr.Contains("gl_arb_multitexture")
-      GLExtensions.GLFragProg = extstr.Contains("gl_arb_fragment_program")
-      GLExtensions.GLAnisotropic = extstr.Contains("gl_ext_texture_filter_anisotropic")
-      GLExtensions.GLSL = extstr.Contains("gl_arb_fragment_shader")
-      GLExtensions.GLMultiSample = extstr.Contains("gl_arb_multisample")
-      WGLExtensions.WGLMultiSample = (Wgl.wglGetProcAddress("WGL_ARB_Multisample") <> Nothing)
 
       Dim blank_tex() As Byte = {&HFF, &HFF, &HFF, &HFF}
       Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2)
@@ -4434,14 +4426,13 @@ Public Class MainWin
         .EdgeB = New ArrayList
       End With
 
-      ReDim CollisionPolies(- 1)
+      ReDim CollisionPolies(-1)
 
 
       If GLExtensions.GLAnisotropic Then
         RenderToggles.Anisotropic = True
-        ReDim GLExtensions.AnisotropicSamples(0)
-        Gl.glGetFloatv(Gl.GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, GLExtensions.AnisotropicSamples)
       End If
+
 
       Dim highlightbytes() As Byte = System.Text.Encoding.ASCII.GetBytes(HighlightShader)
       If GLExtensions.GLFragProg Then
@@ -4524,7 +4515,7 @@ Public Class MainWin
         LoadROM.FileName = DefROM
         Start(False)
       End If
-      ReDim args(- 1)
+      ReDim args(-1)
 
       Me.Show()
       Me.Focus()

@@ -15,20 +15,6 @@ namespace UoT {
     public byte a;
   }
 
-  public struct OpenGLExtensions {
-    public bool GLMultiTexture;
-    public bool GLFragProg;
-    public bool GLAnisotropic;
-    public bool GLMultiSample;
-    public bool GLSL;
-    public float[] AnisotropicSamples;
-  }
-
-  public struct WOGLExtensions {
-    public bool WGLMultiSample;
-    public float[] MultiSampleLevels;
-  }
-
   public struct RendererOptions {
     public bool Textures;
     public bool ColorCombiner;
