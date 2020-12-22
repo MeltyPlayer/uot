@@ -3293,8 +3293,7 @@ Public Class MainWin
   Private CurrFrame As Double = 0
   Private CurrAnimation As Integer = 0
   Private LoopAnimation As Boolean = False
-  Private ShowBones As Boolean = False
-  Private HasLimbs As Boolean = False
+  Private DlManager As New DlManager
 
 #End Region
 
@@ -3932,7 +3931,7 @@ Public Class MainWin
     Else
       DLParser.ParseMode = DLParser.Parse.EVERYTHING
     End If
-    If Not HasLimbs Then
+    If Not DlManager.HasLimbs Then
       For i As Integer = 0 To DLists.Length - 1
         DrawDL(i, SelectionMode)
       Next
@@ -3969,7 +3968,7 @@ Public Class MainWin
         dlIndex = SearchDLCache(N64DList, .DisplayList) 'index of limb's requested DL, -1 if none found
       End If
 
-      If ShowBones Then 'draw bones
+      If DlManager.ShowBones Then 'draw bones
         Gl.glDepthRange(0, 0)
         Gl.glLineWidth(9)
         Gl.glBegin(Gl.GL_LINES)
@@ -4990,18 +4989,18 @@ Public Class MainWin
       Select Case LoadedDataType
         Case FileTypes.MAP
           FindAllDLs(ZFileBuffer, N64DList)
-          HasLimbs = False
+          DlManager.HasLimbs = False
         Case FileTypes.ACTORMODEL
           animationbank.SelectedIndex = 0
           LimbEntries = AnimParser.GetHierarchies(ZFileBuffer, 6)
           If LimbEntries IsNot Nothing Then
-            HasLimbs = True
+            DlManager.HasLimbs = True
             AnimationEntries = AnimParser.GetAnimations(ZFileBuffer, LimbEntries.Length - 1, 6)
             If AnimationEntries IsNot Nothing Then
               AnimationList.SelectedIndex = 0
             End If
           Else
-            HasLimbs = False
+            DlManager.HasLimbs = False
             FindAllDLs(ZFileBuffer, N64DList)
           End If
       End Select
@@ -7438,7 +7437,7 @@ Public Class MainWin
           SetVariables(SceneFileType.ZOBJ)
 
           ' TODO: Pass the new model in.
-          GlobalVars.DlManager.DoSomething()
+          DlManager.DoSomething()
 
           IndMapFileName = ""
           IndScFileName = ""
@@ -7762,7 +7761,7 @@ Public Class MainWin
 
   Private Sub CheckBox2_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
     Handles CheckBox2.CheckedChanged
-    If Not ShowBones Then ShowBones = True Else ShowBones = False
+    DlManager.ShowBones = Not DlManager.ShowBones
   End Sub
 
   Private Sub TexturesToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _

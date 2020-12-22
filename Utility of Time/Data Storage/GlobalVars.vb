@@ -82,8 +82,6 @@ Module GlobalVars
   Public WGLExtensions As New WOGLExtensions
   Public AnimParser As New ZAnimation
   Public DLParser As New F3DEX2_Parser
-  ' TODO: Remove this global variable.
-  Public DlManager As New DlManager
 
   Public CompileDL As New N64DlistAssembler
   Public ParseOBJ As New OBJParser

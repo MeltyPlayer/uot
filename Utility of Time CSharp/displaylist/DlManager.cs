@@ -4,8 +4,12 @@
   ///   creates textures, renders.
   /// </summary>
   public class DlManager {
-    public void DoSomething() {
+    public bool ShowBones { get; set; } = false;
 
+    // TODO: Make this private.
+    public bool HasLimbs { get; set; } = false;
+
+    public void DoSomething() {
     }
   }
 }
