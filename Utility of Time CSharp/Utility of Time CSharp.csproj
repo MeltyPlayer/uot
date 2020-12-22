@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="data\Structs.cs" />
+    <Compile Include="displaylist\DlManager.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="helpers\BetterFilenames.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -64,7 +65,7 @@
     <Compile Include="tao\SimpleOpenGlControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="texture\DlTextureBuilder.cs" />
+    <Compile Include="texture\DlTextureManager.cs" />
     <Compile Include="texture\Texture.cs" />
     <Compile Include="texture\TextureCache.cs" />
     <Compile Include="texture\TextureParams.cs" />

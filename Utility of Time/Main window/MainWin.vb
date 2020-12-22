@@ -7437,6 +7437,9 @@ Public Class MainWin
 
           SetVariables(SceneFileType.ZOBJ)
 
+          ' TODO: Pass the new model in.
+          GlobalVars.DlManager.DoSomething()
+
           IndMapFileName = ""
           IndScFileName = ""
 
