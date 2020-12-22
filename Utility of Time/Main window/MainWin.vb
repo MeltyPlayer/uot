@@ -3816,18 +3816,18 @@ Public Class MainWin
 
       UpdateCamLabels()
 
-      Gl.glPushMatrix()
-      Gl.glLoadIdentity()
-      Gl.glRotatef(CamXRot, 1.0F, 0.0F, 0.0F)
-      Gl.glRotatef(CamYRot, 0.0F, 1.0F, 0.0F)
-      Gl.glRotatef(CamZRot, 0.0F, 0.0F, 1.0F)
-      Gl.glTranslated(CamXPos, CamYPos, CamZPos)
+      ModelViewMatrixTransformer.Push()
+      ModelViewMatrixTransformer.Identity()
+      ModelViewMatrixTransformer.Rotate(CamXRot, 1.0F, 0.0F, 0.0F)
+      ModelViewMatrixTransformer.Rotate(CamYRot, 0.0F, 1.0F, 0.0F)
+      ModelViewMatrixTransformer.Rotate(CamZRot, 0.0F, 0.0F, 1.0F)
+      ModelViewMatrixTransformer.Translate(CamXPos, CamYPos, CamZPos)
 
 
       If LoadedDataType = FileTypes.MAP Then DrawActorBoxes(False)
       If RenderGraphics Then DrawDLArray(GlobalVarsCs.N64DList, ToolID.NONE)
       If RenderCollision Then DrawCollision(CollisionPolies, CollisionVerts, False)
-      Gl.glPopMatrix()
+      ModelViewMatrixTransformer.Pop()
 
       UoTRender.SwapBuffers()
 
@@ -3862,9 +3862,9 @@ Public Class MainWin
       For i As Integer = 0 To RoomActors.Length - 1
         Gl.glPushMatrix()
         Gl.glTranslatef(RoomActors(i).x, RoomActors(i).y + 16, RoomActors(i).z)
-        Gl.glRotatef(RoomActors(i).xr\180, 1.0F, 0.0F, 0.0F)
-        Gl.glRotatef(RoomActors(i).yr\180, 0.0F, 1.0F, 0.0F)
-        Gl.glRotatef(RoomActors(i).zr\180, 0.0F, 0.0F, 1.0F)
+        Gl.glRotatef(RoomActors(i).xr \ 180, 1.0F, 0.0F, 0.0F)
+        Gl.glRotatef(RoomActors(i).yr \ 180, 0.0F, 1.0F, 0.0F)
+        Gl.glRotatef(RoomActors(i).zr \ 180, 0.0F, 0.0F, 1.0F)
         If SelectionMode Then
           If ToolModes.NoDepthTest Then Gl.glDisable(Gl.GL_DEPTH_TEST)
           Gl.glColor3ub(RoomActors(i).pickR, RoomActors(i).pickG, RoomActors(i).pickB)
