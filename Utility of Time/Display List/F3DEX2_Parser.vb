@@ -878,26 +878,26 @@ enddisplaylist:
                 N64TexImg,
                 OGLTexImg)
 
-        Case &H68 'IA - 8 bit grayscale with alpha
+        Case &H68 'IA - 8 bit grayscale w/ alpha
           IA.IA8(.RealWidth,
                .RealHeight,
                .LineSize,
                N64TexImg,
                OGLTexImg)
-        Case &H60 'IA - 4 bit grayscale with alpha
+        Case &H60 'IA - 4 bit grayscale w/ alpha
           IA.IA4(.RealWidth,
                .RealHeight,
                .LineSize,
                N64TexImg,
                OGLTexImg)
-        Case &H80, &H90 'I - 4 bit grayscale with alpha
+        Case &H80, &H90 'I - 4 bit grayscale w/o alpha
           I.I4(.RealWidth,
              .RealHeight,
              .LineSize,
              N64TexImg,
              OGLTexImg)
 
-        Case &H88 ' I - 8 bit grayscale with alpha
+        Case &H88 ' I - 8 bit grayscale w/o alpha
           I.I8(.RealWidth,
              .RealHeight,
              .LineSize,

@@ -84,21 +84,27 @@ namespace UoT {
     }
 
     public class I {
+      private const byte FACTOR = 17;
+
       public object I4(uint Width, uint Height, uint LineSize, byte[] SourceImg, ref byte[] DestImg) {
         DestImg = new byte[(int)(Width * Height * 8L + 1)];
         for (int i = 0, loopTo = (int)(Height - 1L); i <= loopTo; i++) {
           for (int j = 0, loopTo1 = (int)(Width / 2L - 1L); j <= loopTo1; j++) {
-            var IIntensity = SourceImg[SourceTexPos] >> 4;
-            DestImg[DestTexPos] = (byte)(IIntensity * 17);
-            DestImg[DestTexPos + 1] = (byte)(IIntensity * 17);
-            DestImg[DestTexPos + 2] = (byte)(IIntensity * 17);
+            BitMath.Split(SourceImg[SourceTexPos], out var upper4, out var lower4);
+
+            var upperIntensity = (byte) (upper4 * FACTOR);
+            DestImg[DestTexPos] = upperIntensity;
+            DestImg[DestTexPos + 1] = upperIntensity;
+            DestImg[DestTexPos + 2] = upperIntensity;
             DestImg[DestTexPos + 3] = 255;
-            IIntensity = SourceImg[SourceTexPos] << 4 >> 4;
-            DestImg[DestTexPos + 4] = (byte)(IIntensity * 17);
-            DestImg[DestTexPos + 5] = (byte)(IIntensity * 17);
-            DestImg[DestTexPos + 6] = (byte)(IIntensity * 17);
+
+            var lowerIntensity = (byte)(lower4 * FACTOR);
+            DestImg[DestTexPos + 4] = lowerIntensity;
+            DestImg[DestTexPos + 5] = lowerIntensity;
+            DestImg[DestTexPos + 6] = lowerIntensity;
             DestImg[DestTexPos + 7] = 255;
-            SourceTexPos += 1;
+
+            ++SourceTexPos;
             DestTexPos += 8;
           }
 
@@ -114,12 +120,13 @@ namespace UoT {
         DestImg = new byte[(int)(Width * Height * 8L + 1)];
         for (int i = 0, loopTo = (int)(Height - 1L); i <= loopTo; i++) {
           for (int j = 0, loopTo1 = (int)(Width - 1L); j <= loopTo1; j++) {
-            var IIntensity = (byte)(SourceImg[SourceTexPos] / 16);
-            DestImg[DestTexPos] = (byte)(IIntensity * 17);
-            DestImg[DestTexPos + 1] = (byte)(IIntensity * 17);
-            DestImg[DestTexPos + 2] = (byte)(IIntensity * 17);
+            var intensity = SourceImg[SourceTexPos];
+            DestImg[DestTexPos] = intensity;
+            DestImg[DestTexPos + 1] = intensity;
+            DestImg[DestTexPos + 2] = intensity;
             DestImg[DestTexPos + 3] = 255;
-            SourceTexPos += 1;
+
+            ++SourceTexPos;
             DestTexPos += 4;
           }
 
@@ -133,30 +140,37 @@ namespace UoT {
     }
 
     public class IA {
+      private const byte FACTOR = 17;
+
       public object IA4(uint Width, uint Height, uint LineSize, byte[] SourceImg, ref byte[] DestImg) {
         DestImg = new byte[(int)(Width * Height * 8L + 1)];
         for (int i = 0, loopTo = (int)(Height - 1L); i <= loopTo; i++) {
           for (int j = 0, loopTo1 = (int)(Width / 2L - 1L); j <= loopTo1; j++) {
+            BitMath.Split(SourceImg[SourceTexPos], out var upper4, out var lower4);
+
             var IAIntensity = (byte)((SourceImg[SourceTexPos] & 0xF0) >> 4);
             byte IAAlpha;
-            if (Conversions.ToBoolean(IAIntensity & 1))
+            if (Conversions.ToBoolean(upper4 & 1))
               IAAlpha = 255;
             else
               IAAlpha = 0;
-            DestImg[DestTexPos] = (byte)(IAIntensity * 17);
-            DestImg[DestTexPos + 1] = (byte)(IAIntensity * 17);
-            DestImg[DestTexPos + 2] = (byte)(IAIntensity * 17);
+            var upperIntensity = (byte)(upper4 * FACTOR);
+            DestImg[DestTexPos] = upperIntensity;
+            DestImg[DestTexPos + 1] = upperIntensity;
+            DestImg[DestTexPos + 2] = upperIntensity;
             DestImg[DestTexPos + 3] = IAAlpha;
-            IAIntensity = (byte)(SourceImg[SourceTexPos] & 0xF);
-            if (Conversions.ToBoolean(IAIntensity & 1))
+
+            var lowerIntensity = (byte)(lower4 * FACTOR);
+            if (Conversions.ToBoolean(lower4 & 1))
               IAAlpha = 255;
             else
               IAAlpha = 0;
-            DestImg[DestTexPos + 4] = (byte)(IAIntensity * 17);
-            DestImg[DestTexPos + 5] = (byte)(IAIntensity * 17);
-            DestImg[DestTexPos + 6] = (byte)(IAIntensity * 17);
+            DestImg[DestTexPos + 4] = lowerIntensity;
+            DestImg[DestTexPos + 5] = lowerIntensity;
+            DestImg[DestTexPos + 6] = lowerIntensity;
             DestImg[DestTexPos + 7] = IAAlpha;
-            SourceTexPos += 1;
+
+            ++SourceTexPos;
             DestTexPos += 8;
           }
 
@@ -172,13 +186,16 @@ namespace UoT {
         DestImg = new byte[(int)(Width * Height * 8L + 1)];
         for (int i = 0, loopTo = (int)(Height - 1L); i <= loopTo; i++) {
           for (int j = 0, loopTo1 = (int)(Width - 1L); j <= loopTo1; j++) {
-            var IAIntensity = SourceImg[SourceTexPos] >> 4;
-            var IAAlpha = SourceImg[SourceTexPos] << 4 >> 4;
-            DestImg[DestTexPos] = (byte)(IAIntensity * 17);
-            DestImg[DestTexPos + 1] = (byte)(IAIntensity * 17);
-            DestImg[DestTexPos + 2] = (byte)(IAIntensity * 17);
-            DestImg[DestTexPos + 3] = (byte)(IAAlpha * 17);
-            SourceTexPos += 1;
+            BitMath.Split(SourceImg[SourceTexPos], out var upper4, out var lower4);
+            var intensity = (byte)(upper4 * FACTOR);
+            var alpha = (byte)(lower4 * FACTOR);
+
+            DestImg[DestTexPos] = intensity;
+            DestImg[DestTexPos + 1] = intensity;
+            DestImg[DestTexPos + 2] = intensity;
+            DestImg[DestTexPos + 3] = alpha;
+            
+            ++SourceTexPos;
             DestTexPos += 4;
           }
 
@@ -211,6 +228,14 @@ namespace UoT {
         DestTexPos = 0;
         return default;
       }
+    }
+  }
+
+  // TODO: Move somewhere else.
+  public static class BitMath {
+    public static void Split(byte value, out byte upper4, out byte lower4) {
+      upper4 = (byte) (value >> 4);
+      lower4 = (byte) ((byte)(value << 4) >> 4);
     }
   }
 }

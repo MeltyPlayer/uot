@@ -15,8 +15,9 @@ namespace UoT {
       this.TextureParams = textureParams;
       this.rgba_ = rgba;
 
+      var format = textureParams.TexFormat;
       var uuid = textureParams.Uuid;
-      var filename = "R:/Noesis/Output/" + uuid + ".bmp";
+      var filename = "R:/Noesis/Output/" + format + "_" + uuid + ".bmp";
       this.SaveToFile(filename);
     }
 
