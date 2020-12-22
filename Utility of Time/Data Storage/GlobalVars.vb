@@ -76,7 +76,6 @@ Module GlobalVars
   Public ZSceneBuffer As Byte()
   Public CommonBanks As New ObjectExchange
   Public CommonBankUse As New BankSwitch
-  Public N64DList(-1) As N64DisplayList
   Public RenderToggles As New RendererOptions
   Public GLExtensions As New OpenGLExtensions
   Public WGLExtensions As New WOGLExtensions

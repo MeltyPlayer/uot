@@ -3825,7 +3825,7 @@ Public Class MainWin
 
 
       If LoadedDataType = FileTypes.MAP Then DrawActorBoxes(False)
-      If RenderGraphics Then DrawDLArray(N64DList, ToolID.NONE)
+      If RenderGraphics Then DrawDLArray(GlobalVarsCs.N64DList, ToolID.NONE)
       If RenderCollision Then DrawCollision(CollisionPolies, CollisionVerts, False)
       Gl.glPopMatrix()
 
@@ -3965,7 +3965,7 @@ Public Class MainWin
 
       Dim dlIndex As Integer = -1
       If .DisplayList > Nothing Then
-        dlIndex = SearchDLCache(N64DList, .DisplayList) 'index of limb's requested DL, -1 if none found
+        dlIndex = SearchDLCache(GlobalVarsCs.N64DList, .DisplayList) 'index of limb's requested DL, -1 if none found
       End If
 
       If DlManager.ShowBones Then 'draw bones
@@ -4046,25 +4046,25 @@ Public Class MainWin
   End Sub
 
   Private Sub DrawDL(ByVal index As Integer, ByVal SelectionMode As Integer)
-    If Not N64DList(index).Skip Then
+    If Not GlobalVarsCs.N64DList(index).Skip Then
       If SelectionMode = ToolID.NONE Then
-        DLParser.ParseDL(N64DList(index))
-        If N64DList(index).Highlight Then
+        DLParser.ParseDL(GlobalVarsCs.N64DList(index))
+        If GlobalVarsCs.N64DList(index).Highlight Then
           DLParser.ParseMode = DLParser.Parse.GEOMETRY
           Gl.glBindProgramARB(Gl.GL_FRAGMENT_PROGRAM_ARB, HighlightProg)
           Gl.glEnable(Gl.GL_FRAGMENT_PROGRAM_ARB)
           Gl.glEnable(Gl.GL_BLEND)
           Gl.glBlendFunc(Gl.GL_SRC_ALPHA, Gl.GL_ONE_MINUS_SRC_ALPHA)
-          DLParser.ParseDL(N64DList(index))
+          DLParser.ParseDL(GlobalVarsCs.N64DList(index))
           DLParser.ParseMode = DLParser.Parse.EVERYTHING
         End If
       ElseIf SelectionMode = ToolID.DLIST Then
-        Gl.glColor3ub(N64DList(index).PickCol.r, N64DList(index).PickCol.g, N64DList(index).PickCol.b)
-        DLParser.ParseDL(N64DList(index))
+        Gl.glColor3ub(GlobalVarsCs.N64DList(index).PickCol.r, GlobalVarsCs.N64DList(index).PickCol.g, GlobalVarsCs.N64DList(index).PickCol.b)
+        DLParser.ParseDL(GlobalVarsCs.N64DList(index))
         ReadPixel = MousePixelRead(NewMouseX, NewMouseY)
         If _
-          ReadPixel(0) = N64DList(index).PickCol.r And ReadPixel(1) = N64DList(index).PickCol.g And
-          ReadPixel(2) = N64DList(index).PickCol.b Then
+          ReadPixel(0) = GlobalVarsCs.N64DList(index).PickCol.r And ReadPixel(1) = GlobalVarsCs.N64DList(index).PickCol.g And
+          ReadPixel(2) = GlobalVarsCs.N64DList(index).PickCol.b Then
           DListSelection.SelectedIndex = index + 1
           EditingTabs.SelectedTab = EditingTabs.TabPages("DLTab")
           ToolModes.SelectedItemType = ToolID.DLIST
@@ -4978,7 +4978,7 @@ Public Class MainWin
     Try
       Dim DLCnt As Integer = 0
       Dim FileTreeIndex As Integer = 0
-      ReDim N64DList(-1)
+      ReDim GlobalVarsCs.N64DList(-1)
       ReDim AnimationEntries(-1)
       ReDim LimbEntries(-1)
       AnimParser.ResetAnimation(AnimationStopWatch, ZAnimationCounter)
@@ -4988,7 +4988,7 @@ Public Class MainWin
       AnimationList.Items.Clear()
       Select Case LoadedDataType
         Case FileTypes.MAP
-          FindAllDLs(ZFileBuffer, N64DList)
+          FindAllDLs(ZFileBuffer, GlobalVarsCs.N64DList)
           DlManager.HasLimbs = False
         Case FileTypes.ACTORMODEL
           animationbank.SelectedIndex = 0
@@ -5001,7 +5001,7 @@ Public Class MainWin
             End If
           Else
             DlManager.HasLimbs = False
-            FindAllDLs(ZFileBuffer, N64DList)
+            FindAllDLs(ZFileBuffer, GlobalVarsCs.N64DList)
           End If
       End Select
     Catch err As System.Exception
@@ -5359,7 +5359,7 @@ Public Class MainWin
 
   Public Sub Start(ByVal individual As Boolean)
     Try
-      ReDim N64DList(- 1)
+      ReDim GlobalVarsCs.N64DList(-1)
       DLParser.KillTexCache()
       Working = True
       If Not individual Then
@@ -5595,7 +5595,7 @@ Public Class MainWin
         Gl.glEnable(Gl.GL_POLYGON_OFFSET_POINT)
         Gl.glPolygonOffset(- 6, - 6)
         If RenderGraphics Then
-          DrawDLArray(N64DList, ToolID.VERTEX)
+          DrawDLArray(GlobalVarsCs.N64DList, ToolID.VERTEX)
         End If
         If RenderCollision Then
           DrawCollision(CollisionPolies, CollisionVerts, True)
@@ -5613,7 +5613,7 @@ Public Class MainWin
         Gl.glEnable(Gl.GL_POLYGON_OFFSET_FILL)
         Gl.glPolygonOffset(- 7, - 7)
         If RenderGraphics Then
-          DrawDLArray(N64DList, ToolID.DLIST)
+          DrawDLArray(GlobalVarsCs.N64DList, ToolID.DLIST)
         End If
         Gl.glDisable(Gl.GL_POLYGON_OFFSET_FILL)
       Case ToolID.COLTRI
@@ -6704,14 +6704,14 @@ Public Class MainWin
       'start saving to room file buffer...
 
       Dim DLStart As Integer = 0
-      For i As Integer = 0 To N64DList.Length - 1
-        DLStart = N64DList(i).StartPos.Offset
-        For ii As Integer = 0 To N64DList(i).CommandCount - 1
-          N64DList(i).CommandsCopy(ii) = N64DList(i).Commands(ii)
-          ZFileBuffer(DLStart) = N64DList(i).Commands(ii).CMDParams(0)
+      For i As Integer = 0 To GlobalVarsCs.N64DList.Length - 1
+        DLStart = GlobalVarsCs.N64DList(i).StartPos.Offset
+        For ii As Integer = 0 To GlobalVarsCs.N64DList(i).CommandCount - 1
+          GlobalVarsCs.N64DList(i).CommandsCopy(ii) = GlobalVarsCs.N64DList(i).Commands(ii)
+          ZFileBuffer(DLStart) = GlobalVarsCs.N64DList(i).Commands(ii).CMDParams(0)
           DLStart += 1
-          WriteInt24(ZFileBuffer, N64DList(i).Commands(ii).CMDLow, DLStart)
-          WriteInt32(ZFileBuffer, N64DList(i).Commands(ii).CMDHigh, DLStart)
+          WriteInt24(ZFileBuffer, GlobalVarsCs.N64DList(i).Commands(ii).CMDLow, DLStart)
+          WriteInt32(ZFileBuffer, GlobalVarsCs.N64DList(i).Commands(ii).CMDHigh, DLStart)
         Next
       Next
 
@@ -7553,27 +7553,27 @@ Public Class MainWin
       Else
         DisableDLHighlight()
       End If
-      For i As Integer = 0 To N64DList(DListSelection.SelectedIndex - 1).Commands.Length - 1
-        CommandsListbox.Items.Add(N64DList(DListSelection.SelectedIndex - 1).Commands(i).Name)
-        If Not CommandJumpBox.Items.Contains(N64DList(DListSelection.SelectedIndex - 1).Commands(i).Name) Then
-          CommandJumpBox.Items.Add(N64DList(DListSelection.SelectedIndex - 1).Commands(i).Name)
+      For i As Integer = 0 To GlobalVarsCs.N64DList(DListSelection.SelectedIndex - 1).Commands.Length - 1
+        CommandsListbox.Items.Add(GlobalVarsCs.N64DList(DListSelection.SelectedIndex - 1).Commands(i).Name)
+        If Not CommandJumpBox.Items.Contains(GlobalVarsCs.N64DList(DListSelection.SelectedIndex - 1).Commands(i).Name) Then
+          CommandJumpBox.Items.Add(GlobalVarsCs.N64DList(DListSelection.SelectedIndex - 1).Commands(i).Name)
         End If
       Next
     Else
-      For i As Integer = 0 To N64DList.Length - 1
-        N64DList(i).Highlight = False
-        N64DList(i).Skip = False
+      For i As Integer = 0 To GlobalVarsCs.N64DList.Length - 1
+        GlobalVarsCs.N64DList(i).Highlight = False
+        GlobalVarsCs.N64DList(i).Skip = False
       Next
     End If
   End Sub
 
   Private Sub UpdateCommandDisplay()
     CommandCodeText.Text =
-      N64DList(DListSelection.SelectedIndex - 1).Commands(CommandsListbox.SelectedIndex).CMDParams(0).ToString("X2")
+      GlobalVarsCs.N64DList(DListSelection.SelectedIndex - 1).Commands(CommandsListbox.SelectedIndex).CMDParams(0).ToString("X2")
     LowordText.Text =
-      N64DList(DListSelection.SelectedIndex - 1).Commands(CommandsListbox.SelectedIndex).CMDLow.ToString("X6")
+      GlobalVarsCs.N64DList(DListSelection.SelectedIndex - 1).Commands(CommandsListbox.SelectedIndex).CMDLow.ToString("X6")
     HiwordText.Text =
-      N64DList(DListSelection.SelectedIndex - 1).Commands(CommandsListbox.SelectedIndex).CMDHigh.ToString("X8")
+      GlobalVarsCs.N64DList(DListSelection.SelectedIndex - 1).Commands(CommandsListbox.SelectedIndex).CMDHigh.ToString("X8")
     WholeCommandTxt.Text = CommandCodeText.Text & LowordText.Text & HiwordText.Text
   End Sub
 
@@ -7584,9 +7584,9 @@ Public Class MainWin
       Select Case CommandsListbox.SelectedItem
         Case "G_SETCOMBINE"
           If Not CombinerEditor.Visible Then
-            LinkedCommands.EnvColor = RDP_Defs.FindLinkedCommand(N64DList(DListSelection.SelectedIndex - 1), RDP.G_SETENVCOLOR,
+            LinkedCommands.EnvColor = RDP_Defs.FindLinkedCommand(GlobalVarsCs.N64DList(DListSelection.SelectedIndex - 1), RDP.G_SETENVCOLOR,
                                                         CommandsListbox.SelectedIndex)
-            LinkedCommands.PrimColor = RDP_Defs.FindLinkedCommand(N64DList(DListSelection.SelectedIndex - 1), RDP.G_SETPRIMCOLOR,
+            LinkedCommands.PrimColor = RDP_Defs.FindLinkedCommand(GlobalVarsCs.N64DList(DListSelection.SelectedIndex - 1), RDP.G_SETPRIMCOLOR,
                                                          CommandsListbox.SelectedIndex)
           Else
             CombinerEditor.Close()
@@ -7620,29 +7620,29 @@ Public Class MainWin
     CommandCodeText.Text = cmd
     LowordText.Text = lo
     HiwordText.Text = hi
-    UpdateCommand(N64DList(DListSelection.SelectedIndex - 1), CommandsListbox.SelectedIndex, Convert.ToByte(cmd, 16),
+    UpdateCommand(GlobalVarsCs.N64DList(DListSelection.SelectedIndex - 1), CommandsListbox.SelectedIndex, Convert.ToByte(cmd, 16),
                   Convert.ToUInt32(hi, 16), Convert.ToUInt32(lo, 16))
   End Sub
 
   Private Sub EnableDLHighlight()
-    For i As Integer = 0 To N64DList.Length - 1
+    For i As Integer = 0 To GlobalVarsCs.N64DList.Length - 1
       If i = DListSelection.SelectedIndex - 1 Then
-        N64DList(i).Highlight = True
+        GlobalVarsCs.N64DList(i).Highlight = True
       Else
-        N64DList(i).Highlight = False
+        GlobalVarsCs.N64DList(i).Highlight = False
       End If
-      N64DList(i).Skip = False
+      GlobalVarsCs.N64DList(i).Skip = False
     Next
   End Sub
 
   Private Sub DisableDLHighlight()
-    For i As Integer = 0 To N64DList.Length - 1
+    For i As Integer = 0 To GlobalVarsCs.N64DList.Length - 1
       If i = DListSelection.SelectedIndex - 1 Then
-        N64DList(i).Skip = False
+        GlobalVarsCs.N64DList(i).Skip = False
       Else
-        N64DList(i).Skip = True
+        GlobalVarsCs.N64DList(i).Skip = True
       End If
-      N64DList(i).Highlight = False
+      GlobalVarsCs.N64DList(i).Highlight = False
     Next
   End Sub
 
@@ -7722,18 +7722,18 @@ Public Class MainWin
     End If
     RawDLFile = File.Create(RipDL.FileName)
     If RipAllDLs Then
-      For I As Integer = 0 To N64DList.Length - 1
-        WriteDLToFile(N64DList(I), RawDLFile)
+      For I As Integer = 0 To GlobalVarsCs.N64DList.Length - 1
+        WriteDLToFile(GlobalVarsCs.N64DList(I), RawDLFile)
       Next
     Else
-      WriteDLToFile(N64DList(DListSelection.SelectedIndex - 1), RawDLFile)
+      WriteDLToFile(GlobalVarsCs.N64DList(DListSelection.SelectedIndex - 1), RawDLFile)
     End If
     RawDLFile.Dispose()
   End Sub
 
   Private Sub Button13_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    N64DList(DListSelection.SelectedIndex - 1).Commands(CommandsListbox.SelectedIndex) =
-      N64DList(DListSelection.SelectedIndex - 1).CommandsCopy(CommandsListbox.SelectedIndex)
+    GlobalVarsCs.N64DList(DListSelection.SelectedIndex - 1).Commands(CommandsListbox.SelectedIndex) =
+      GlobalVarsCs.N64DList(DListSelection.SelectedIndex - 1).CommandsCopy(CommandsListbox.SelectedIndex)
   End Sub
 
 

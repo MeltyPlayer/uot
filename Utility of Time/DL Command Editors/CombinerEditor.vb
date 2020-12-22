@@ -233,7 +233,7 @@ Public Class CombinerEditor
     Handles CompiledCmbCmd.TextChanged
     MainWin.LowordText.Text = CompiledCmb.CMDLow.ToString("X6")
     MainWin.HiwordText.Text = CompiledCmb.CMDHigh.ToString("X8")
-    UpdateCommand(N64DList(MainWin.DListSelection.SelectedIndex - 1), MainWin.CommandsListbox.SelectedIndex,
+    UpdateCommand(GlobalVarsCs.N64DList(MainWin.DListSelection.SelectedIndex - 1), MainWin.CommandsListbox.SelectedIndex,
                   Convert.ToByte(MainWin.CommandCodeText.Text, 16), Convert.ToUInt32(MainWin.HiwordText.Text, 16),
                   Convert.ToUInt32(MainWin.LowordText.Text, 16))
   End Sub
@@ -241,7 +241,7 @@ Public Class CombinerEditor
   Private Sub PrimR_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PrimR.Click
     If ColorSelector.ShowDialog() = Windows.Forms.DialogResult.OK Then
       LinkedCommands.PrimColor = CompileDL.Compile(UCodes.RDP, RDP.G_SETPRIMCOLOR, ColorSelector.Color)
-      UpdateCommand(N64DList(LinkedCommands.PrimColor.DLPos), LinkedCommands.PrimColor.DLPos,
+      UpdateCommand(GlobalVarsCs.N64DList(LinkedCommands.PrimColor.DLPos), LinkedCommands.PrimColor.DLPos,
                     LinkedCommands.PrimColor.CMDParams(0), LinkedCommands.PrimColor.CMDHigh,
                     LinkedCommands.PrimColor.CMDLow)
       UpdatePrimColor(LinkedCommands.PrimColor)

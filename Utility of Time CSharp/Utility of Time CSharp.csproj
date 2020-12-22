@@ -91,6 +91,8 @@
   <ItemGroup>
     <Compile Include="displaylist\RDP_Defs.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="data\GlobalVars.cs" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

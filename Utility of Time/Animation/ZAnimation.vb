@@ -31,8 +31,8 @@
 
                   If Data(tmpLimbOff + 8) = Bank Then
                     .DisplayList = FunctionsCs.ReadUInt24(Data, tmpLimbOff + 9)
-                    ReDim Preserve N64DList(N64DList.Length)
-                    ReadInDL(Data, N64DList, .DisplayList, N64DList.Length - 1)
+                    ReDim Preserve GlobalVarsCs.N64DList(GlobalVarsCs.N64DList.Length)
+                    ReadInDL(Data, GlobalVarsCs.N64DList, .DisplayList, GlobalVarsCs.N64DList.Length - 1)
                   Else
                     .DisplayList = Nothing
                   End If
