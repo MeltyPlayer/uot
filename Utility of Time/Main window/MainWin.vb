@@ -3937,10 +3937,11 @@ Public Class MainWin
       Next
     Else
       CurrLimb = 0
-      Gl.glPushMatrix()
+
+      ModelViewMatrixTransformer.Push()
       If AnimationEntries IsNot Nothing Then
         With AnimationEntries(CurrAnimation)
-          Gl.glTranslatef(AngleToRad(.Angles(.XTrans)), AngleToRad(.Angles(.YTrans)), AngleToRad(.Angles(.ZTrans)))
+          ModelViewMatrixTransformer.Translate(AngleToRad(.Angles(.XTrans)), AngleToRad(.Angles(.YTrans)), AngleToRad(.Angles(.ZTrans)))
         End With
       End If
       For CurrLimb = 0 To LimbEntries.Length - 1
@@ -3951,7 +3952,7 @@ Public Class MainWin
         End With
         DrawJoint(CurrLimb)
       Next
-      Gl.glPopMatrix()
+      ModelViewMatrixTransformer.Pop()
     End If
   End Sub
 
@@ -3992,9 +3993,8 @@ Public Class MainWin
         Gl.glDepthRange(0, 1)
       End If
 
-      Gl.glPushMatrix()
-
-      Gl.glTranslatef(.x, .y, .z) 'translate to given coordinates
+      ModelViewMatrixTransformer.Push()
+      ModelViewMatrixTransformer.Translate(.x, .y, .z)
 
       If ZAnimationCounter.Advancing Then
         AnimParser.Animate(AnimationEntries, CurrAnimation, LoopAnimation, CurrentFrame)
@@ -4003,9 +4003,9 @@ Public Class MainWin
 
       If AnimationEntries IsNot Nothing Then
         With AnimParser
-          Gl.glRotatef(.GetTrackRot(AnimationEntries(CurrAnimation), ZAnimationCounter, 2, id), 0, 0, 1)
-          Gl.glRotatef(.GetTrackRot(AnimationEntries(CurrAnimation), ZAnimationCounter, 1, id), 0, 1, 0)
-          Gl.glRotatef(.GetTrackRot(AnimationEntries(CurrAnimation), ZAnimationCounter, 0, id), 1, 0, 0)
+          ModelViewMatrixTransformer.Rotate(.GetTrackRot(AnimationEntries(CurrAnimation), ZAnimationCounter, 2, id), 0, 0, 1)
+          ModelViewMatrixTransformer.Rotate(.GetTrackRot(AnimationEntries(CurrAnimation), ZAnimationCounter, 1, id), 0, 1, 0)
+          ModelViewMatrixTransformer.Rotate(.GetTrackRot(AnimationEntries(CurrAnimation), ZAnimationCounter, 0, id), 1, 0, 0)
         End With
       End If
 
@@ -4024,7 +4024,7 @@ Public Class MainWin
         BoneColorFactor.b = 255
       End If
 
-      Gl.glPopMatrix()
+      ModelViewMatrixTransformer.Pop()
 
       If .c1 > -1 Then
         BoneColorFactor.r = 0

@@ -31,10 +31,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MathNet.Numerics, Version=4.12.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Utility of Time\packages\MathNet.Numerics.4.12.0\lib\net461\MathNet.Numerics.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -61,6 +66,7 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="gl\GLExtensions.cs" />
     <Compile Include="helpers\BetterFilenames.cs" />
+    <Compile Include="gl\ModelViewMatrixTransformer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="scene\SceneFileType.cs" />
     <Compile Include="tao\SimpleOpenGlControl.cs">
@@ -95,6 +101,8 @@
   <ItemGroup>
     <Compile Include="data\GlobalVars.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
