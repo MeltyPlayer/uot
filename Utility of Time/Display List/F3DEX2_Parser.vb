@@ -905,16 +905,17 @@ enddisplaylist:
              OGLTexImg)
       End Select
 
+      ' Generates texture.
       Gl.glGenTextures(1, .ID)
       Gl.glBindTexture(Gl.GL_TEXTURE_2D, .ID)
 
-      TextureCache.Add(texture)
-
+      ' Puts pixels into texture.
       Gl.glTexImage2D(Gl.GL_TEXTURE_2D, 0, Gl.GL_RGBA, .RealWidth, .RealHeight, 0, Gl.GL_RGBA,
                       Gl.GL_UNSIGNED_BYTE, OGLTexImg)
       Glu.gluBuild2DMipmaps(Gl.GL_TEXTURE_2D, Gl.GL_RGBA, .RealWidth, .RealHeight, Gl.GL_RGBA,
                             Gl.GL_UNSIGNED_BYTE, OGLTexImg)
 
+      ' Sets texture parameters.
       Select Case .CMS
         Case RDP.G_TX_CLAMP, 3
           Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_WRAP_S, Gl.GL_CLAMP_TO_EDGE)
@@ -944,6 +945,8 @@ enddisplaylist:
       End If
       Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MIN_FILTER, Gl.GL_LINEAR_MIPMAP_LINEAR)
       Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MAG_FILTER, Gl.GL_LINEAR_MIPMAP_LINEAR)
+
+      TextureCache.Add(texture, OGLTexImg)
     End With
   End Function
 

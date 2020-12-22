@@ -22,24 +22,16 @@ namespace UoT {
     /// </summary>
     public Texture this[TextureParams textureParams] {
       get {
-        var uuid = TextureCache.GetUuidForTextureParams_(textureParams);
-        this.impl_.TryGetValue(uuid, out var texture);
+        this.impl_.TryGetValue(textureParams.Uuid, out var texture);
         return texture;
       }
     }
 
-    public void Add(TextureParams textureParams) {
-      var uuid = TextureCache.GetUuidForTextureParams_(textureParams);
+    public void Add(TextureParams textureParams, byte[] rgba) {
+      var uuid = textureParams.Uuid;
       if (!this.impl_.ContainsKey(uuid)) {
-        this.impl_.Add(uuid, new Texture(textureParams));
+        this.impl_.Add(uuid, new Texture(textureParams, rgba));
       }
-    }
-
-    private static long GetUuidForTextureParams_(TextureParams textureParams) {
-      long offset = textureParams.Offset;
-      long imageBank = textureParams.ImageBank;
-
-      return offset << 32 | imageBank;
     }
   }
 }

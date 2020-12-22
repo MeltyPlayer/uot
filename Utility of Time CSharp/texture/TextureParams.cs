@@ -41,5 +41,14 @@
     public int LRT;
     public uint OGLTexObj;
     public Color4UByte[] Palette32;
+
+    public long Uuid {
+      get {
+        long offset = this.Offset;
+        long imageBank = this.ImageBank;
+
+        return offset << 32 | imageBank;
+      }
+    }
   }
 }

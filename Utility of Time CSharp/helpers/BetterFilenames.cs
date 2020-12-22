@@ -15,7 +15,7 @@ namespace UoT {
         ("object_bw", "Torch Slug"),
         ("object_bwall", "Bombable Wall"),
         ("object_cow", "Cow"),
-        ("object_d_hsblock", "Hookshot Pillar"),
+        ("object_d_hsblock", "Misc. Hookshot"),
         ("object_ddan_objects", "Misc. Dodongo's Cavern"),
         ("object_dekunuts", "Deku Scrub"),
         ("object_dekubaba", "Deku Baba"),
