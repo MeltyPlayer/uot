@@ -5,7 +5,7 @@
       If Offset < Data.Length Then
         If Data(Offset) = &HDE Then
           Do Until Data(Offset) <> &HDE
-            Offset = FunctionsCs.ReadUInt24(Data, Offset + 5)
+            Offset = IoUtil.ReadUInt24(Data, Offset + 5)
           Loop
         End If
 
@@ -36,9 +36,9 @@
               .Commands(.CommandCount).CMDParams(i) = Data(EPLoc + i)
             Next
 
-            .Commands(.CommandCount).CMDLow = FunctionsCs.ReadUInt24(Data, EPLoc + 1)
+            .Commands(.CommandCount).CMDLow = IoUtil.ReadUInt24(Data, EPLoc + 1)
 
-            .Commands(.CommandCount).CMDHigh = FunctionsCs.ReadUInt32(Data, EPLoc + 4)
+            .Commands(.CommandCount).CMDHigh = IoUtil.ReadUInt32(Data, EPLoc + 4)
 
             .Commands(.CommandCount).DLPos = .CommandCount
 

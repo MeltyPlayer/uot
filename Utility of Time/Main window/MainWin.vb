@@ -4769,7 +4769,7 @@ Public Class MainWin
             Case &HE
               SceneActorCombobox.Enabled = True
               scActorCount = ZSceneBuffer(mscenePos + 1)
-              scActorPos = FunctionsCs.ReadUInt24(ZSceneBuffer, mscenePos + 5)
+              scActorPos = IoUtil.ReadUInt24(ZSceneBuffer, mscenePos + 5)
               i1 = scActorPos
               ReDim SceneActors(scActorCount - 1)
               ReDim UsedSceneGroupIndex(scActorCount - 1)
@@ -4801,14 +4801,14 @@ Public Class MainWin
               scenePos = mscenePos + 8
             Case 4
               Dim cnt As Integer = ZSceneBuffer(scenePos + 1)
-              Dim pos As Integer = FunctionsCs.ReadUInt24(ZSceneBuffer, scenePos + 5)
+              Dim pos As Integer = IoUtil.ReadUInt24(ZSceneBuffer, scenePos + 5)
               Dim i1 As Integer = pos
               Dim curmap As UInt32 = 0
               ReDim SceneMaps(cnt - 1)
               For i As Integer = 0 To cnt - 1
-                curmap = FunctionsCs.ReadUInt32(ZSceneBuffer, i1)
+                curmap = IoUtil.ReadUInt32(ZSceneBuffer, i1)
                 SceneMaps(i).StartOff = curmap
-                curmap = FunctionsCs.ReadUInt32(ZSceneBuffer, i1 + 4)
+                curmap = IoUtil.ReadUInt32(ZSceneBuffer, i1 + 4)
                 SceneMaps(i).EndOff = curmap
                 i1 += 8
               Next
@@ -4818,12 +4818,12 @@ Public Class MainWin
             Case 19
               ExitCombobox.Enabled = True
               ExitTextBox.Enabled = True
-              Dim ExitOffset As Integer = FunctionsCs.ReadUInt24(ZSceneBuffer, scenePos + 5)
+              Dim ExitOffset As Integer = IoUtil.ReadUInt24(ZSceneBuffer, scenePos + 5)
               Dim ExitCount As Integer = ZSceneBuffer(scenePos + 8)
               ReDim Preserve SceneExits(ExitCount - 1)
               For i As Integer = 0 To ExitCount - 1
                 With SceneExits(i)
-                  .Index = FunctionsCs.ReadUInt16(ZSceneBuffer, ExitOffset)
+                  .Index = IoUtil.ReadUInt16(ZSceneBuffer, ExitOffset)
                   .scOff = ExitOffset
                 End With
                 ExitCombobox.Items.Add(i)
@@ -4833,11 +4833,11 @@ Public Class MainWin
             Case 3
               ColTypeBox.Enabled = True
 
-              Dim colPtr As UInteger = FunctionsCs.ReadUInt24(ZSceneBuffer, scenePos + 5) + 12
+              Dim colPtr As UInteger = IoUtil.ReadUInt24(ZSceneBuffer, scenePos + 5) + 12
 
-              Dim VariableOffset As UInteger = FunctionsCs.ReadUInt24(ZSceneBuffer, colPtr + 17)
-              Dim PolygonOffset As UInteger = FunctionsCs.ReadUInt24(ZSceneBuffer, colPtr + 13)
-              Dim VertexOffset As UInteger = FunctionsCs.ReadUInt24(ZSceneBuffer, colPtr + 5)
+              Dim VariableOffset As UInteger = IoUtil.ReadUInt24(ZSceneBuffer, colPtr + 17)
+              Dim PolygonOffset As UInteger = IoUtil.ReadUInt24(ZSceneBuffer, colPtr + 13)
+              Dim VertexOffset As UInteger = IoUtil.ReadUInt24(ZSceneBuffer, colPtr + 5)
 
               Dim ctCnt As Integer = 0
 
@@ -4846,10 +4846,10 @@ Public Class MainWin
                 ReDim Preserve ColTypes(ctCnt)
                 With ColTypes(ctCnt)
                   .scOff = VariableOffset
-                  .unk1 = FunctionsCs.ReadUInt16(ZSceneBuffer, VariableOffset)
-                  .unk2 = FunctionsCs.ReadUInt16(ZSceneBuffer, VariableOffset + 2)
-                  .unk3 = FunctionsCs.ReadUInt16(ZSceneBuffer, VariableOffset + 4)
-                  .unk4 = FunctionsCs.ReadUInt16(ZSceneBuffer, VariableOffset + 6) >> 4
+                  .unk1 = IoUtil.ReadUInt16(ZSceneBuffer, VariableOffset)
+                  .unk2 = IoUtil.ReadUInt16(ZSceneBuffer, VariableOffset + 2)
+                  .unk3 = IoUtil.ReadUInt16(ZSceneBuffer, VariableOffset + 4)
+                  .unk4 = IoUtil.ReadUInt16(ZSceneBuffer, VariableOffset + 6) >> 4
                   .WalkOnSound = ZSceneBuffer(VariableOffset + 7) << 4 >> 4
 
                   colVar1s.Add(.unk1)
@@ -4874,15 +4874,15 @@ Public Class MainWin
                 ReDim Preserve CollisionPolies(triCount)
                 With CollisionPolies(triCount)
                   .scOff = PolygonOffset
-                  .Param = FunctionsCs.ReadUInt16(ZSceneBuffer, PolygonOffset)
+                  .Param = IoUtil.ReadUInt16(ZSceneBuffer, PolygonOffset)
 
-                  .A = (FunctionsCs.ReadUInt16(ZSceneBuffer, PolygonOffset + 2) And &HFFF)
-                  .B = (FunctionsCs.ReadUInt16(ZSceneBuffer, PolygonOffset + 4) And &HFFF)
-                  .C = (FunctionsCs.ReadUInt16(ZSceneBuffer, PolygonOffset + 6) And &HFFF)
+                  .A = (IoUtil.ReadUInt16(ZSceneBuffer, PolygonOffset + 2) And &HFFF)
+                  .B = (IoUtil.ReadUInt16(ZSceneBuffer, PolygonOffset + 4) And &HFFF)
+                  .C = (IoUtil.ReadUInt16(ZSceneBuffer, PolygonOffset + 6) And &HFFF)
 
-                  .nX = (FunctionsCs.ReadUInt16(ZSceneBuffer, PolygonOffset + 8))
-                  .nY = (FunctionsCs.ReadUInt16(ZSceneBuffer, PolygonOffset + 10))
-                  .nZ = (FunctionsCs.ReadUInt16(ZSceneBuffer, PolygonOffset + 12))
+                  .nX = (IoUtil.ReadUInt16(ZSceneBuffer, PolygonOffset + 8))
+                  .nY = (IoUtil.ReadUInt16(ZSceneBuffer, PolygonOffset + 10))
+                  .nZ = (IoUtil.ReadUInt16(ZSceneBuffer, PolygonOffset + 12))
 
                   .pickR = Rand.Next(0, 255)
                   .pickG = Rand.Next(0, 255)
@@ -4901,11 +4901,11 @@ Public Class MainWin
 
               While VertexOffset < colPtr
 
-                CollisionVerts.x.Add(CShort(FunctionsCs.ReadUInt16(ZSceneBuffer, VertexOffset)))
+                CollisionVerts.x.Add(CShort(IoUtil.ReadUInt16(ZSceneBuffer, VertexOffset)))
 
-                CollisionVerts.y.Add(CShort(FunctionsCs.ReadUInt16(ZSceneBuffer, VertexOffset + 2)))
+                CollisionVerts.y.Add(CShort(IoUtil.ReadUInt16(ZSceneBuffer, VertexOffset + 2)))
 
-                CollisionVerts.z.Add(CShort(FunctionsCs.ReadUInt16(ZSceneBuffer, VertexOffset + 4)))
+                CollisionVerts.z.Add(CShort(IoUtil.ReadUInt16(ZSceneBuffer, VertexOffset + 4)))
 
                 CollisionVerts.VertR.Add(Rand.Next(0, 255))
                 CollisionVerts.VertG.Add(Rand.Next(0, 255))
@@ -5072,7 +5072,7 @@ Public Class MainWin
               RoomActorCombobox.Enabled = True
               ActorVarText.Enabled = True
               ActorNumberText.Enabled = True
-              ActorStart = FunctionsCs.ReadUInt24(ZFileBuffer, HDPos + 5)
+              ActorStart = IoUtil.ReadUInt24(ZFileBuffer, HDPos + 5)
               ActorPointer(2) = ActorStart
               i1 = ActorStart
               ReDim RoomActors(rmActorCount - 1)
@@ -5085,17 +5085,17 @@ Public Class MainWin
 
                   .offset = i1
 
-                  .no = FunctionsCs.ReadUInt16(ZFileBuffer, i1 + 0)
+                  .no = IoUtil.ReadUInt16(ZFileBuffer, i1 + 0)
 
-                  .x = FunctionsCs.ReadUInt16(ZFileBuffer, i1 + 2)
-                  .y = FunctionsCs.ReadUInt16(ZFileBuffer, i1 + 4)
-                  .z = FunctionsCs.ReadUInt16(ZFileBuffer, i1 + 6)
+                  .x = IoUtil.ReadUInt16(ZFileBuffer, i1 + 2)
+                  .y = IoUtil.ReadUInt16(ZFileBuffer, i1 + 4)
+                  .z = IoUtil.ReadUInt16(ZFileBuffer, i1 + 6)
 
-                  .xr = FunctionsCs.ReadUInt16(ZFileBuffer, i1 + 8)
-                  .yr = FunctionsCs.ReadUInt16(ZFileBuffer, i1 + 10)
-                  .zr = FunctionsCs.ReadUInt16(ZFileBuffer, i1 + 12)
+                  .xr = IoUtil.ReadUInt16(ZFileBuffer, i1 + 8)
+                  .yr = IoUtil.ReadUInt16(ZFileBuffer, i1 + 10)
+                  .zr = IoUtil.ReadUInt16(ZFileBuffer, i1 + 12)
 
-                  .var = FunctionsCs.ReadUInt16(ZFileBuffer, i1 + 14)
+                  .var = IoUtil.ReadUInt16(ZFileBuffer, i1 + 14)
 
                 End With
                 i1 += 16
@@ -5105,13 +5105,13 @@ Public Class MainWin
           Case &HB
             ActorGroupText.Enabled = True
             Dim Cnt As UInteger = ZFileBuffer(HDPos + 1)
-            ActorGroupOffset = FunctionsCs.ReadUInt24(ZFileBuffer, HDPos + 5)
+            ActorGroupOffset = IoUtil.ReadUInt24(ZFileBuffer, HDPos + 5)
             CurGr = ActorGroupOffset
             Dim gr As UInteger = 0
             Dim desc As String = "?"
             Dim objind As Integer = 0
             For i As Integer = 0 To Cnt - 1
-              gr = FunctionsCs.ReadUInt16(ZFileBuffer, CurGr)
+              gr = IoUtil.ReadUInt16(ZFileBuffer, CurGr)
               ActorGroups.Add(gr)
               objind = Objects.IndexOf(gr.ToString("X4"))
               desc = "?"
@@ -5128,14 +5128,14 @@ Public Class MainWin
               FileTree.SelectedNode.Nodes.Add("Object Sets")
               FileTree.SelectedNode.Nodes(0).Nodes.Add("1. 0x0")
             End If
-            ObjSetStart = FunctionsCs.ReadUInt24(ZFileBuffer, HDPos + 5)
+            ObjSetStart = IoUtil.ReadUInt24(ZFileBuffer, HDPos + 5)
             ObjSetCnt = ZFileBuffer(HDPos + 15)
             CurObjSet = ObjSetStart
             Dim ObjSetOffset As UInteger = 0
             Dim ObjSetSeg As UInteger = 3
             Dim ObjSetIncr As UInteger = 0
             For i As Integer = 0 To ObjSetCnt - 1
-              ObjSetOffset = FunctionsCs.ReadUInt24(ZFileBuffer, CurObjSet + 1)
+              ObjSetOffset = IoUtil.ReadUInt24(ZFileBuffer, CurObjSet + 1)
               ObjSetSeg = ZFileBuffer(CurObjSet)
 
               If ObjSetSeg <> &H3 And ObjSetOffset > 0 Then
@@ -5199,8 +5199,8 @@ Public Class MainWin
     curnamepos = nameoff
     segbuffpos = segoff
     Do
-      startb = FunctionsCs.ReadUInt32(ROMData, segbuffpos)
-      endb = FunctionsCs.ReadUInt32(ROMData, segbuffpos + 4)
+      startb = IoUtil.ReadUInt32(ROMData, segbuffpos)
+      endb = IoUtil.ReadUInt32(ROMData, segbuffpos + 4)
       If startb = 0 And endb = 0 Then
         Exit Do
       End If
@@ -5442,8 +5442,8 @@ Public Class MainWin
     Dim objtbcnt As Integer = 0
     While tObjectTbl < tObjectTblEnd
       ReDim Preserve ObjectTable(objtbcnt)
-      ObjectTable(objtbcnt).Startoff = FunctionsCs.ReadUInt32(Z64Code, tObjectTbl)
-      ObjectTable(objtbcnt).Endoff = FunctionsCs.ReadUInt32(Z64Code, tObjectTbl + 4)
+      ObjectTable(objtbcnt).Startoff = IoUtil.ReadUInt32(Z64Code, tObjectTbl)
+      ObjectTable(objtbcnt).Endoff = IoUtil.ReadUInt32(Z64Code, tObjectTbl + 4)
       objtbcnt += 1
       tObjectTbl += 8
     End While

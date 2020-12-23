@@ -9,7 +9,7 @@
         If (Data(i) = Bank) And Data(i + 4) > 0 Then
           tBank = Data(i)
           tCnt = Data(i + 4)
-          tOffset = FunctionsCs.ReadUInt24(Data, i + 1)
+          tOffset = IoUtil.ReadUInt24(Data, i + 1)
           If tOffset < Data.Length - 16 Then
             For j = tOffset To (tOffset + (tCnt * 4) - 1) Step 4
               If Data(j) <> tBank Then
@@ -21,16 +21,16 @@
               Dim tmpLimbOff As Integer = 0
               For k As Integer = 0 To tCnt - 1
                 tmpHierarchy(k) = New Limb
-                tmpLimbOff = FunctionsCs.ReadUInt24(Data, tOffset + 1)
+                tmpLimbOff = IoUtil.ReadUInt24(Data, tOffset + 1)
                 With tmpHierarchy(k)
-                  .x = FunctionsCs.ReadUInt16(Data, tmpLimbOff + 0)
-                  .y = FunctionsCs.ReadUInt16(Data, tmpLimbOff + 2)
-                  .z = FunctionsCs.ReadUInt16(Data, tmpLimbOff + 4)
+                  .x = IoUtil.ReadUInt16(Data, tmpLimbOff + 0)
+                  .y = IoUtil.ReadUInt16(Data, tmpLimbOff + 2)
+                  .z = IoUtil.ReadUInt16(Data, tmpLimbOff + 4)
                   .c0 = CSByte(Data(tmpLimbOff + 6))
                   .c1 = CSByte(Data(tmpLimbOff + 7))
 
                   If Data(tmpLimbOff + 8) = Bank Then
-                    .DisplayList = FunctionsCs.ReadUInt24(Data, tmpLimbOff + 9)
+                    .DisplayList = IoUtil.ReadUInt24(Data, tmpLimbOff + 9)
                     ReDim Preserve GlobalVarsCs.N64DList(GlobalVarsCs.N64DList.Length)
                     ReadInDL(Data, GlobalVarsCs.N64DList, .DisplayList, GlobalVarsCs.N64DList.Length - 1)
                   Else
@@ -68,16 +68,16 @@
       MainWin.AnimationList.Items.Clear()
       For i As Integer = 16 To Data.Length - 8 Step 4
         If (Data(i) = Bank And (Data(i + 4) = Bank) And (Data(i - 3) > 0) And Data(i - 4) = 0) Then
-          angleOffset = FunctionsCs.ReadUInt24(Data, i + 1)
+          angleOffset = IoUtil.ReadUInt24(Data, i + 1)
           If angleOffset < Data.Length Then
-            If Data(angleOffset) = 0 And Data(angleOffset + 1) = 0 And FunctionsCs.ReadUInt16(Data, angleOffset + 2) > 0 Then
+            If Data(angleOffset) = 0 And Data(angleOffset + 1) = 0 And IoUtil.ReadUInt16(Data, angleOffset + 2) > 0 Then
               animCnt += 1
               ReDim Preserve tAnimation(animCnt)
               With tAnimation(animCnt)
                 .TrackCount = (LimbCount * 3)
-                .ConstTrackCount = FunctionsCs.ReadUInt16(Data, i + 8)
-                .TrackOffset = FunctionsCs.ReadUInt24(Data, i + 5)
-                .FrameCount = FunctionsCs.ReadUInt16(Data, i - 4)
+                .ConstTrackCount = IoUtil.ReadUInt16(Data, i + 8)
+                .TrackOffset = IoUtil.ReadUInt24(Data, i + 5)
+                .FrameCount = IoUtil.ReadUInt16(Data, i - 4)
                 .AngleCount = ((.TrackOffset - angleOffset) \ 2)
                 If .FrameCount > 0 Then
                   ReDim .Angles(.AngleCount - 1)
@@ -86,19 +86,19 @@
                   MainWin.AnimationList.Items.Add("0x" & Hex(i))
 
                   For i1 As Integer = 0 To .AngleCount - 1
-                    .Angles(i1) = CShort(FunctionsCs.ReadUInt16(Data, angleOffset))
+                    .Angles(i1) = CShort(IoUtil.ReadUInt16(Data, angleOffset))
                     angleOffset += 2
                   Next
 
-                  .XTrans = FunctionsCs.ReadUInt16(Data, .TrackOffset + 0)
-                  .YTrans = FunctionsCs.ReadUInt16(Data, .TrackOffset + 2)
-                  .ZTrans = FunctionsCs.ReadUInt16(Data, .TrackOffset + 4)
+                  .XTrans = IoUtil.ReadUInt16(Data, .TrackOffset + 0)
+                  .YTrans = IoUtil.ReadUInt16(Data, .TrackOffset + 2)
+                  .ZTrans = IoUtil.ReadUInt16(Data, .TrackOffset + 4)
 
                   Dim tTrackOffset As Integer = .TrackOffset + 6
 
                   Dim tTrack As UInteger = 0
                   For i1 As Integer = 0 To .TrackCount - 1
-                    tTrack = FunctionsCs.ReadUInt16(Data, tTrackOffset)
+                    tTrack = IoUtil.ReadUInt16(Data, tTrackOffset)
 
                     If tTrack < .ConstTrackCount Then
                       ReDim .Tracks(i1).Frames(0)

@@ -309,8 +309,8 @@ enddisplaylist:
 
     For i As Integer = 0 To 3
       For j As Integer = 0 To 3
-        MatValue(0) = FunctionsCs.ReadUInt16(TempRSPMatrix.N64Mat, MtxPos + 0)
-        MatValue(1) = FunctionsCs.ReadUInt16(TempRSPMatrix.N64Mat, MtxPos + 32)
+        MatValue(0) = IoUtil.ReadUInt16(TempRSPMatrix.N64Mat, MtxPos + 0)
+        MatValue(1) = IoUtil.ReadUInt16(TempRSPMatrix.N64Mat, MtxPos + 32)
         TempRSPMatrix.OGLMat(i, j) = ((MatValue(0) << 16) Or MatValue(1)) * 1.0F / 65536.0F
         MtxPos += 2
       Next
@@ -341,7 +341,7 @@ enddisplaylist:
   End Sub
 
   Private Sub MODIFYVTX(ByRef VertCache As N64Vertex, ByVal CMDParams() As Byte)
-    Dim Vertex As Integer = (FunctionsCs.ReadUInt16(CMDParams, 2) And &HFFF) / 2
+    Dim Vertex As Integer = (IoUtil.ReadUInt16(CMDParams, 2) And &HFFF) / 2
     Dim Target As Integer = CMDParams(1)
     Select Case Target
       Case &H10
@@ -350,8 +350,8 @@ enddisplaylist:
         VertCache.b(Vertex) = CMDParams(6)
         VertCache.a(Vertex) = CMDParams(7)
       Case &H14
-        VertCache.u(Vertex) = CShort(FunctionsCs.ReadUInt16(CMDParams, 4))
-        VertCache.v(Vertex) = CShort(FunctionsCs.ReadUInt16(CMDParams, 6))
+        VertCache.u(Vertex) = CShort(IoUtil.ReadUInt16(CMDParams, 4))
+        VertCache.v(Vertex) = CShort(IoUtil.ReadUInt16(CMDParams, 6))
     End Select
   End Sub
 
@@ -452,11 +452,11 @@ enddisplaylist:
           Dim b As Byte
           Dim a As Byte
           For i2 As Integer = v0 To (n0 + v0) - 1
-            x = CShort(FunctionsCs.ReadUInt16(Data, Offset))
-            y = CShort(FunctionsCs.ReadUInt16(Data, Offset + 2))
-            z = CShort(FunctionsCs.ReadUInt16(Data, Offset + 4))
-            u = CShort(FunctionsCs.ReadUInt16(Data, Offset + 8))
-            v = CShort(FunctionsCs.ReadUInt16(Data, Offset + 10))
+            x = CShort(IoUtil.ReadUInt16(Data, Offset))
+            y = CShort(IoUtil.ReadUInt16(Data, Offset + 2))
+            z = CShort(IoUtil.ReadUInt16(Data, Offset + 4))
+            u = CShort(IoUtil.ReadUInt16(Data, Offset + 8))
+            v = CShort(IoUtil.ReadUInt16(Data, Offset + 10))
             r = Data(Offset + 12)
             g = Data(Offset + 13)
             b = Data(Offset + 14)
@@ -600,11 +600,11 @@ enddisplaylist:
   '''   an upper-left coordinate and lower-right coordinate.
   ''' </summary>
   Private Sub LOADTILE(w0 As UInt32, w1 As UInt32)
-    Dim uls As UShort = FunctionsCs.ShiftR(w0, 12, 12)
-    Dim ult As UShort = FunctionsCs.ShiftR(w0, 0, 12)
-    Dim tileDescriptorIndex As Byte = FunctionsCs.ShiftR(w1, 24, 3)
-    Dim lrs As UShort = FunctionsCs.ShiftR(w1, 12, 12)
-    Dim lrt As UShort = FunctionsCs.ShiftR(w1, 0, 12)
+    Dim uls As UShort = IoUtil.ShiftR(w0, 12, 12)
+    Dim ult As UShort = IoUtil.ShiftR(w0, 0, 12)
+    Dim tileDescriptorIndex As Byte = IoUtil.ShiftR(w1, 24, 3)
+    Dim lrs As UShort = IoUtil.ShiftR(w1, 12, 12)
+    Dim lrt As UShort = IoUtil.ShiftR(w1, 0, 12)
 
     Dim tileDescriptor As TileDescriptor = TileDescriptors(tileDescriptorIndex)
     tileDescriptor = Tmem.LoadTile(tileDescriptor, uls, ult, lrs, lrt)
@@ -706,18 +706,19 @@ enddisplaylist:
 
   Private Sub SETTIMG(ByVal w1 As UInt32, ByVal paletteMode As Boolean)
     Dim address As UInt32 = w1
-    Dim tmpBank As Integer = (address >> 24)
-    Dim tmpOff As Integer = (address << 8 >> 8)
+    Dim tmpBank As Integer
+    Dim tmpOff As Integer
+    IoUtil.SplitAddress(address, tmpBank, tmpOff)
 
     ' TODO: Delete this. It technically works, but palette is meant to be
     ' looked up through TMEM, not directly from RAM.
     If paletteMode Then
-      Dim tileDescriptor = GetSelectedTileDescriptor(0)
+      Dim tileDescriptor As TileDescriptor = GetSelectedTileDescriptor(0)
       tileDescriptor.PaletteOffset = tmpOff
       tileDescriptor.PaletteBank = tmpBank
       SetSelectedTileDescriptor(0, tileDescriptor)
     Else
-      Dim tileDescriptor = GetSelectedTileDescriptor(CurrentSelectedTileDescriptor)
+      Dim tileDescriptor As TileDescriptor = GetSelectedTileDescriptor(CurrentSelectedTileDescriptor)
       tileDescriptor.Offset = tmpOff
       tileDescriptor.ImageBank = tmpBank
       SetSelectedTileDescriptor(CurrentSelectedTileDescriptor, tileDescriptor)
@@ -726,7 +727,7 @@ enddisplaylist:
 
 
   Private Function SETTILE(ByVal w0 As UInt32, ByVal w1 As UInt32)
-    Dim tileDescriptorIndex As Integer = FunctionsCs.ShiftR(w1, 24, 3)
+    Dim tileDescriptorIndex As Integer = IoUtil.ShiftR(w1, 24, 3)
     Dim tileDescriptor As TileDescriptor = TileDescriptors(tileDescriptorIndex)
     SetTile_(tileDescriptor, w0, w1)
 
@@ -745,17 +746,17 @@ enddisplaylist:
     With tileDescriptor
       ' TODO: Delete this.
       .JankFormat = w0 >> 16
-      .ColorFormat = ColorFormatUtil.Parse(FunctionsCs.ShiftR(w0, 21, 3))
-      .BitSize = BitSizeUtil.Parse(FunctionsCs.ShiftR(w0, 19, 2))
-      .LineSize = FunctionsCs.ShiftR(w0, 9, 9)
-      .TmemOffset = FunctionsCs.ShiftR(w0, 0, 9)
-      .Palette = FunctionsCs.ShiftR(w1, 20, 4)
-      .CMT = FunctionsCs.ShiftR(w1, 18, 2)
-      .CMS = FunctionsCs.ShiftR(w1, 8, 2)
-      .MaskS = FunctionsCs.ShiftR(w1, 4, 4)
-      .MaskT = FunctionsCs.ShiftR(w1, 14, 4)
-      .TShiftS = FunctionsCs.ShiftR(w1, 0, 4)
-      .TShiftT = FunctionsCs.ShiftR(w1, 10, 4)
+      .ColorFormat = ColorFormatUtil.Parse(IoUtil.ShiftR(w0, 21, 3))
+      .BitSize = BitSizeUtil.Parse(IoUtil.ShiftR(w0, 19, 2))
+      .LineSize = IoUtil.ShiftR(w0, 9, 9)
+      .TmemOffset = IoUtil.ShiftR(w0, 0, 9)
+      .Palette = IoUtil.ShiftR(w1, 20, 4)
+      .CMT = IoUtil.ShiftR(w1, 18, 2)
+      .CMS = IoUtil.ShiftR(w1, 8, 2)
+      .MaskS = IoUtil.ShiftR(w1, 4, 4)
+      .MaskT = IoUtil.ShiftR(w1, 14, 4)
+      .TShiftS = IoUtil.ShiftR(w1, 0, 4)
+      .TShiftT = IoUtil.ShiftR(w1, 10, 4)
     End With
 
     ' TODO: GLideN64 does a lookup into the selected tiles here?
@@ -763,7 +764,7 @@ enddisplaylist:
 
 
   Private Sub SETTILESIZE(ByVal w0 As UInt32, ByVal w1 As UInt32)
-    Dim tileDescriptorIndex As Integer = FunctionsCs.ShiftR(w1, 24, 3)
+    Dim tileDescriptorIndex As Integer = IoUtil.ShiftR(w1, 24, 3)
     Dim tileDescriptor As TileDescriptor = TileDescriptors(tileDescriptorIndex)
     SetTileSize_(tileDescriptor, w0, w1)
 
@@ -911,17 +912,17 @@ enddisplaylist:
     Dim tileDescriptor As TileDescriptor = GetSelectedTileDescriptor(0)
 
     With tileDescriptor
-      Dim paletteSizeMinus1 As Integer = FunctionsCs.ShiftR(w1, 12, 12) >> 2
+      Dim paletteSizeMinus1 As Integer = IoUtil.ShiftR(w1, 12, 12) >> 2
 
       Dim palette16(paletteSizeMinus1) As UShort
       Select Case .PaletteBank
         Case CurrentBank
           For i As Integer = 0 To paletteSizeMinus1
-            palette16(i) = FunctionsCs.ReadUInt16(ZFileBuffer, .PaletteOffset + 2 * i)
+            palette16(i) = IoUtil.ReadUInt16(ZFileBuffer, .PaletteOffset + 2 * i)
           Next
         Case 2
           For i As Integer = 0 To paletteSizeMinus1
-            palette16(i) = FunctionsCs.ReadUInt16(ZSceneBuffer, .PaletteOffset + 2 * i)
+            palette16(i) = IoUtil.ReadUInt16(ZSceneBuffer, .PaletteOffset + 2 * i)
           Next
       End Select
 
@@ -1087,11 +1088,11 @@ enddisplaylist:
 
     For i As Integer = 0 To 1
       Dim tileDescriptor = GetSelectedTileDescriptor(i)
-      If FunctionsCs.ShiftR(w1, 16, 16) < &HFFFF Then _
-        tileDescriptor.S_Scale = FunctionsCs.Fixed2Float(FunctionsCs.ShiftR(w1, 16, 16), 16) Else _
+      If IoUtil.ShiftR(w1, 16, 16) < &HFFFF Then _
+        tileDescriptor.S_Scale = IoUtil.Fixed2Float(IoUtil.ShiftR(w1, 16, 16), 16) Else _
         tileDescriptor.S_Scale = 1.0F
-      If FunctionsCs.ShiftR(w1, 0, 16) < &HFFFF Then _
-        tileDescriptor.T_Scale = FunctionsCs.Fixed2Float(FunctionsCs.ShiftR(w1, 0, 16), 16) Else _
+      If IoUtil.ShiftR(w1, 0, 16) < &HFFFF Then _
+        tileDescriptor.T_Scale = IoUtil.Fixed2Float(IoUtil.ShiftR(w1, 0, 16), 16) Else _
         tileDescriptor.T_Scale = 1.0F
       SetSelectedTileDescriptor(i, tileDescriptor)
     Next

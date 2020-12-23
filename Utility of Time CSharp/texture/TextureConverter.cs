@@ -11,7 +11,7 @@ namespace UoT {
         DestImg = new byte[(int)(Width * Height * 8L + 1)];
         for (int i = 0, loopTo = (int)(Height - 1L); i <= loopTo; i++) {
           for (int j = 0, loopTo1 = (int)(Width - 1L); j <= loopTo1; j++) {
-            RGBA5551 = FunctionsCs.ReadUInt16(SourceImg, (uint)SourceTexPos);
+            RGBA5551 = IoUtil.ReadUInt16(SourceImg, (uint)SourceTexPos);
             DestImg[DestTexPos] = (byte)((RGBA5551 & 0xF800) >> 8);
             DestImg[DestTexPos + 1] = (byte)((RGBA5551 & 0x7C0) << 5 >> 8);
             DestImg[DestTexPos + 2] = (byte)((RGBA5551 & 0x3E) << 18 >> 16);
