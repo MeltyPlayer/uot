@@ -513,6 +513,7 @@ enddisplaylist:
           Case 5
             LoadTex(CommonBanks.Bank5.Banks(CommonBankUse.Bank05).Data, 0)
           Case Else
+            ' TODO: Should throw an error for unsupported banks.
             Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2)
         End Select
       Else
@@ -534,6 +535,7 @@ enddisplaylist:
             Case 5
               LoadTex(CommonBanks.Bank5.Banks(CommonBankUse.Bank05).Data, 0)
             Case Else
+              ' TODO: Should throw an error for unsupported banks.
               Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2)
           End Select
         Else
@@ -658,8 +660,10 @@ enddisplaylist:
 #Region "TEXTURE HANDLING"
 
   Private Sub SETTIMG(ByVal w1 As UInt32, ByVal palMode As Boolean)
-    Dim tmpBank As Integer = (w1 >> 24)
-    Dim tmpOff As Integer = (w1 << 8 >> 8)
+    Dim address As UInt32 = w1
+    Dim tmpBank As Integer = (address >> 24)
+    Dim tmpOff As Integer = (address << 8 >> 8)
+
     If palMode Then
       TileDescriptors(0).PalOff = tmpOff
       TileDescriptors(0).PalBank = tmpBank
