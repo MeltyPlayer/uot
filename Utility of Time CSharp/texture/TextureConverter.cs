@@ -32,6 +32,8 @@ namespace UoT {
       }
     }
 
+    // TODO: Where is YUV??
+
     public class CI {
       private byte[] PaletteIndex = new byte[2];
 

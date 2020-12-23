@@ -314,7 +314,7 @@ enddisplaylist:
   End Sub
 
   Private Sub MODIFYVTX(ByRef VertCache As N64Vertex, ByVal CMDParams() As Byte)
-    Dim Vertex As Integer = (FunctionsCs.ReadUInt16(CMDParams, 2) And &HFFF) / 2
+    Dim Vertex As Integer = (FunctionsCs.ReadUInt16(CMDParams, 2) And &HFFF)/2
     Dim Target As Integer = CMDParams(1)
     Select Case Target
       Case &H10
@@ -389,7 +389,7 @@ enddisplaylist:
       Case 3 'rendermode
         If ZMODE_DEC Then
           Gl.glEnable(Gl.GL_POLYGON_OFFSET_FILL)
-          Gl.glPolygonOffset(-7, -7)
+          Gl.glPolygonOffset(- 7, - 7)
         Else
           Gl.glDisable(Gl.GL_POLYGON_OFFSET_FILL)
         End If
@@ -556,8 +556,6 @@ enddisplaylist:
   '''   turns over to a new integer, the scanline increments.
   ''' </summary>
   Private Sub LOADBLOCK()
-    ' TODO: This logic is invalid, handle it different from LOADTILE()
-    LOADTILE()
   End Sub
 
   ''' <summary>
@@ -578,13 +576,13 @@ enddisplaylist:
         Gl.glBegin(Gl.GL_TRIANGLES)
         For i As Integer = 0 To 2
           If MultiTexCoord Then
-            Gl.glMultiTexCoord2f(Gl.GL_TEXTURE0_ARB, VertexCache.u(Polygons(i)) * Textures(0).TextureWRatio,
-                                 VertexCache.v(Polygons(i)) * Textures(0).TextureHRatio)
-            Gl.glMultiTexCoord2f(Gl.GL_TEXTURE1_ARB, VertexCache.u(Polygons(i)) * Textures(1).TextureWRatio,
-                                 VertexCache.v(Polygons(i)) * Textures(1).TextureHRatio)
+            Gl.glMultiTexCoord2f(Gl.GL_TEXTURE0_ARB, VertexCache.u(Polygons(i))*Textures(0).TextureWRatio,
+                                 VertexCache.v(Polygons(i))*Textures(0).TextureHRatio)
+            Gl.glMultiTexCoord2f(Gl.GL_TEXTURE1_ARB, VertexCache.u(Polygons(i))*Textures(1).TextureWRatio,
+                                 VertexCache.v(Polygons(i))*Textures(1).TextureHRatio)
           Else
-            Gl.glTexCoord2f(VertexCache.u(Polygons(i)) * Textures(0).TextureWRatio,
-                            VertexCache.v(Polygons(i)) * Textures(0).TextureHRatio)
+            Gl.glTexCoord2f(VertexCache.u(Polygons(i))*Textures(0).TextureWRatio,
+                            VertexCache.v(Polygons(i))*Textures(0).TextureHRatio)
           End If
           If EnableLighting Then
             If (Not EnableCombiner) Then Gl.glColor4fv(PrimColor) Else Gl.glColor3f(1, 1, 1)
@@ -659,7 +657,6 @@ enddisplaylist:
 
 #Region "TEXTURE HANDLING"
 
-  ' TODO: This is where new textures are created!
   Private Sub SETTIMG(ByVal w1 As UInt32, ByVal palMode As Boolean)
     Dim tmpBank As Integer = (w1 >> 24)
     Dim tmpOff As Integer = (w1 << 8 >> 8)
@@ -673,6 +670,9 @@ enddisplaylist:
   End Sub
 
   Private Function SETTILE(ByVal w0 As UInt32, ByVal w1 As UInt32)
+    ' TODO: Support setting palette.
+    ' TODO: Support setting offset.
+
     Dim texture = Textures(CurrentTex)
     With texture
       .TexFormat = w0 >> 16
@@ -778,18 +778,18 @@ enddisplaylist:
       Dim Mask_Height As UInteger = 1 << .MaskT
 
       Dim Line_Height As UInteger = 0
-      If Line_Width > 0 Then Line_Height = Min(MaxTexel / Line_Width, Tile_Height)
+      If Line_Width > 0 Then Line_Height = Min(MaxTexel/Line_Width, Tile_Height)
 
-      If .MaskS > 0 And ((Mask_Width * Mask_Height) <= MaxTexel) Then
+      If .MaskS > 0 And ((Mask_Width*Mask_Height) <= MaxTexel) Then
         .Width = Mask_Width
-      ElseIf ((Tile_Width * Tile_Height) <= MaxTexel) Then
+      ElseIf ((Tile_Width*Tile_Height) <= MaxTexel) Then
         .Width = Tile_Width
       Else
         .Width = Line_Width
       End If
-      If .MaskT > 0 And ((Mask_Width * Mask_Height) <= MaxTexel) Then
+      If .MaskT > 0 And ((Mask_Width*Mask_Height) <= MaxTexel) Then
         .Height = Mask_Height
-      ElseIf ((Tile_Width * Tile_Height) <= MaxTexel) Then
+      ElseIf ((Tile_Width*Tile_Height) <= MaxTexel) Then
         .Height = Tile_Height
       Else
         .Height = Line_Height
@@ -848,8 +848,8 @@ enddisplaylist:
         .ShiftT /= (1 << .TShiftT)
       End If
 
-      .TextureHRatio = ((.T_Scale * .ShiftT) / 32 / .RealHeight)
-      .TextureWRatio = ((.S_Scale * .ShiftS) / 32 / .RealWidth)
+      .TextureHRatio = ((.T_Scale*.ShiftT)/32/.RealHeight)
+      .TextureWRatio = ((.S_Scale*.ShiftS)/32/.RealWidth)
     End With
 
     ' TODO: Remove this struct logic.
@@ -880,56 +880,56 @@ enddisplaylist:
           OGLTexImg = N64TexImg
         Case &H0, &H8, &H10 '5R, 5G, 5B, 1A (5551) RGBA 
           RGBA.RGBA16(.RealWidth,
-                    .RealHeight,
-                    .LineSize,
-                    N64TexImg,
-                    OGLTexImg)
+                      .RealHeight,
+                      .LineSize,
+                      N64TexImg,
+                      OGLTexImg)
         Case &H40, &H50 'CI - 5551 RGBA palette with 8bpp array of indices
           CI.CI8(.RealWidth,
-               .RealHeight,
-               .LineSize,
-               N64TexImg,
-               OGLTexImg,
-               Textures(0).Palette32)
+                 .RealHeight,
+                 .LineSize,
+                 N64TexImg,
+                 OGLTexImg,
+                 Textures(0).Palette32)
         Case &H48 'CI - 5551 RGBA palette with 4bpp array of indices
           CI.CI4(.RealWidth,
-               .RealHeight,
-               .LineSize,
-               N64TexImg,
-               OGLTexImg,
-               Textures(0).Palette32)
+                 .RealHeight,
+                 .LineSize,
+                 N64TexImg,
+                 OGLTexImg,
+                 Textures(0).Palette32)
         Case &H70 'IA - 16 bit grayscale with alpha
           IA.IA16(.RealWidth,
-                .RealHeight,
-                .LineSize,
-                N64TexImg,
-                OGLTexImg)
+                  .RealHeight,
+                  .LineSize,
+                  N64TexImg,
+                  OGLTexImg)
 
         Case &H68 'IA - 8 bit grayscale w/ alpha
           IA.IA8(.RealWidth,
-               .RealHeight,
-               .LineSize,
-               N64TexImg,
-               OGLTexImg)
+                 .RealHeight,
+                 .LineSize,
+                 N64TexImg,
+                 OGLTexImg)
         Case &H60 'IA - 4 bit grayscale w/ alpha
           IA.IA4(.RealWidth,
+                 .RealHeight,
+                 .LineSize,
+                 N64TexImg,
+                 OGLTexImg)
+        Case &H80, &H90 'I - 4 bit grayscale w/o alpha
+          I.I4(.RealWidth,
                .RealHeight,
                .LineSize,
                N64TexImg,
                OGLTexImg)
-        Case &H80, &H90 'I - 4 bit grayscale w/o alpha
-          I.I4(.RealWidth,
-             .RealHeight,
-             .LineSize,
-             N64TexImg,
-             OGLTexImg)
 
         Case &H88 ' I - 8 bit grayscale w/o alpha
           I.I8(.RealWidth,
-             .RealHeight,
-             .LineSize,
-             N64TexImg,
-             OGLTexImg)
+               .RealHeight,
+               .LineSize,
+               N64TexImg,
+               OGLTexImg)
       End Select
 
       ' Generates texture.
@@ -978,6 +978,9 @@ enddisplaylist:
   End Function
 
   Private Sub TEXTURE(ByVal w1 As UInt32)
+    ' TODO: Support setting max # of mipmap levels.
+    ' TODO: Support enabling/disabling.
+
     For i As Integer = 0 To 1
       If FunctionsCs.ShiftR(w1, 16, 16) < &HFFFF Then _
         Textures(i).S_Scale = FunctionsCs.Fixed2Float(FunctionsCs.ShiftR(w1, 16, 16), 16) Else _
@@ -994,7 +997,7 @@ enddisplaylist:
 
   Private Sub SETCOMBINE(ByVal w0 As UInt32, ByVal w1 As UInt32)
     If GLExtensions.GLFragProg Then
-      Dim ShaderCachePos As Integer = -1
+      Dim ShaderCachePos As Integer = - 1
       EnableCombiner = True
       For i As Integer = 0 To FragShaderCache.Length - 1
         If (w0 = FragShaderCache(i).MUXS0) And (w1 = FragShaderCache(i).MUXS1) Then
@@ -1020,33 +1023,33 @@ enddisplaylist:
   End Sub
 
   Private Sub SETFOGCOLOR(ByVal CMDParams() As Byte)
-    FogColor(0) = CMDParams(4) / 255
-    FogColor(1) = CMDParams(5) / 255
-    FogColor(2) = CMDParams(6) / 255
-    FogColor(3) = CMDParams(7) / 255
+    FogColor(0) = CMDParams(4)/255
+    FogColor(1) = CMDParams(5)/255
+    FogColor(2) = CMDParams(6)/255
+    FogColor(3) = CMDParams(7)/255
   End Sub
 
   Private Sub ENVCOLOR(ByVal CMDParams() As Byte)
-    EnvironmentColor(0) = CMDParams(4) / 255
-    EnvironmentColor(1) = CMDParams(5) / 255
-    EnvironmentColor(2) = CMDParams(6) / 255
-    EnvironmentColor(3) = CMDParams(7) / 255
+    EnvironmentColor(0) = CMDParams(4)/255
+    EnvironmentColor(1) = CMDParams(5)/255
+    EnvironmentColor(2) = CMDParams(6)/255
+    EnvironmentColor(3) = CMDParams(7)/255
   End Sub
 
   Private Sub SETPRIMCOLOR(ByVal CMDParams() As Byte)
-    PrimColorM = CMDParams(2) / 255
-    PrimColorLOD = CMDParams(3) / 255
-    PrimColor(0) = CMDParams(4) / 255
-    PrimColor(1) = CMDParams(5) / 255
-    PrimColor(2) = CMDParams(6) / 255
-    PrimColor(3) = CMDParams(7) / 255
+    PrimColorM = CMDParams(2)/255
+    PrimColorLOD = CMDParams(3)/255
+    PrimColor(0) = CMDParams(4)/255
+    PrimColor(1) = CMDParams(5)/255
+    PrimColor(2) = CMDParams(6)/255
+    PrimColor(3) = CMDParams(7)/255
   End Sub
 
   Private Sub SETBLENDCOLOR(ByVal CMDParams() As Byte)
-    BlendColor(0) = CMDParams(4) / 255
-    BlendColor(1) = CMDParams(5) / 255
-    BlendColor(2) = CMDParams(6) / 255
-    BlendColor(3) = CMDParams(7) / 255
+    BlendColor(0) = CMDParams(4)/255
+    BlendColor(1) = CMDParams(5)/255
+    BlendColor(2) = CMDParams(6)/255
+    BlendColor(3) = CMDParams(7)/255
   End Sub
 
   Public Sub PrecompileMUXS(ByVal MUXLIST1() As UInteger, ByVal MUXLIST2() As UInteger)
