@@ -149,7 +149,7 @@ setcombiner:
 
             Case F3DZEX.TEXTURE
 texture:
-              TEXTURE(.CMDHigh)
+              TEXTURE(.CMDLow, .CMDHigh)
 
             Case F3DZEX.GEOMETRYMODE
 geometrymode:
@@ -714,7 +714,7 @@ enddisplaylist:
 
     TimgArgs.ColorFormat = ColorFormatUtil.Parse(IoUtil.ShiftR(w0, 21, 3))
     TimgArgs.BitSize = BitSizeUtil.Parse(IoUtil.ShiftR(w0, 19, 2))
-    TimgArgs.Width = IoUtil.ShiftR(w0, 0, 12)
+    TimgArgs.Width = IoUtil.ShiftR(w0, 0, 12) + 1
     TimgArgs.Address = address
 
     ' TODO: Delete the below logic.
@@ -772,20 +772,20 @@ enddisplaylist:
   Private Sub SETTILESIZE(ByVal w0 As UInt32, ByVal w1 As UInt32)
     Dim tileDescriptorIndex As Integer = IoUtil.ShiftR(w1, 24, 3)
     Dim tileDescriptor As TileDescriptor = TileDescriptors(tileDescriptorIndex)
-    SetTileSize_(tileDescriptor, w0, w1)
+    SetTileSize_(tileDescriptor, w0, w1, False)
 
     ' TODO: Remove this struct logic.
     TileDescriptors(tileDescriptorIndex) = tileDescriptor
 
     ' TODO: Delete this logic.
     Dim jankTileDescriptor As TileDescriptor = GetSelectedTileDescriptor(CurrentSelectedTileDescriptor)
-    SetTileSize_(jankTileDescriptor, w0, w1)
+    SetTileSize_(jankTileDescriptor, w0, w1, True)
 
     ' TODO: Remove this struct logic.
     SetSelectedTileDescriptor(CurrentSelectedTileDescriptor, jankTileDescriptor)
   End Sub
 
-  Private Sub SetTileSize_(ByRef tileDescriptor As TileDescriptor, w0 As UInt32, w1 As UInt32)
+  Private Sub SetTileSize_(ByRef tileDescriptor As TileDescriptor, w0 As UInt32, w1 As UInt32, calcSize As Boolean)
     With tileDescriptor
       .ULS = (w0 And &HFFF000) >> 14
       .ULT = (w0 And &HFFF) >> 2
@@ -799,7 +799,10 @@ enddisplaylist:
       End If
     End With
 
-    CalculateTexSize_(tileDescriptor)
+    ' TODO: Delete this logic.
+    If calcSize Then
+      CalculateTexSize_(tileDescriptor)
+    End If
   End Sub
 
   Private Sub CalculateTexSize_(ByRef tileDescriptor As TileDescriptor)
@@ -1102,19 +1105,32 @@ enddisplaylist:
     End With
   End Function
 
-  Private Sub TEXTURE(ByVal w1 As UInt32)
+  Private Sub TEXTURE(w0 As UInt32, w1 As UInt32)
     ' TODO: Support setting max # of mipmap levels.
-    ' TODO: Support enabling/disabling.
 
+    Dim tileDescriptorIndex As Integer = IoUtil.ShiftR(w0, 8, 3)
+    Dim tileDescriptor As TileDescriptor = TileDescriptors(tileDescriptorIndex)
+    With tileDescriptor
+      .Enabled = IoUtil.ShiftR(w0, 1, 7) <> 0
+
+      If .Enabled Then
+        .S_Scale = IoUtil.ShiftR(w1, 16, 16)
+        .T_Scale = IoUtil.ShiftR(w1, 0, 16)
+      End If
+    End With
+
+    TileDescriptors(tileDescriptorIndex) = tileDescriptor
+
+    ' TODO: Delete this logic.
     For i As Integer = 0 To 1
-      Dim tileDescriptor = GetSelectedTileDescriptor(i)
+      Dim jankTileDescriptor As TileDescriptor = GetSelectedTileDescriptor(i)
       If IoUtil.ShiftR(w1, 16, 16) < &HFFFF Then _
-        tileDescriptor.S_Scale = IoUtil.Fixed2Float(IoUtil.ShiftR(w1, 16, 16), 16) Else _
-        tileDescriptor.S_Scale = 1.0F
+        jankTileDescriptor.S_Scale = IoUtil.Fixed2Float(IoUtil.ShiftR(w1, 16, 16), 16) Else _
+        jankTileDescriptor.S_Scale = 1.0F
       If IoUtil.ShiftR(w1, 0, 16) < &HFFFF Then _
-        tileDescriptor.T_Scale = IoUtil.Fixed2Float(IoUtil.ShiftR(w1, 0, 16), 16) Else _
-        tileDescriptor.T_Scale = 1.0F
-      SetSelectedTileDescriptor(i, tileDescriptor)
+        jankTileDescriptor.T_Scale = IoUtil.Fixed2Float(IoUtil.ShiftR(w1, 0, 16), 16) Else _
+        jankTileDescriptor.T_Scale = 1.0F
+      SetSelectedTileDescriptor(i, jankTileDescriptor)
     Next
   End Sub
 

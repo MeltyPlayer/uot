@@ -9,6 +9,7 @@
   ///   copied by value instead of by reference.
   /// </summary>
   public struct TileDescriptor {
+    public bool Enabled;
     // TODO: Get rid of this field.
     public int ID;
     public int DXT;
