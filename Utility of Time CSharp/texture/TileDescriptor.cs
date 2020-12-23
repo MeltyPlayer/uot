@@ -20,11 +20,9 @@
     public double TextureWRatio;
     public uint TexBytes;
     public int ImageBank;
-    // TODO: Are PAL-specific fields needed?
-    public int PalBank;
+    public int PaletteBank;
     public int Offset;
-    // TODO: Are PAL-specific fields needed?
-    public int PalOff;
+    public int PaletteOffset;
     // TODO: Delete this.
     public int JankFormat;
     public ColorFormat ColorFormat;
