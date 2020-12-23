@@ -32,10 +32,13 @@ Public Class F3DEX2_Parser
   ''' <summary>
   '''   Tile descriptors for the textures currently selected (AKA in use) by
   '''   the display list.
-  ''' 
+  '''
   '''   Although the RDP supports indexing 8 different tile descriptors, only
   '''   two can be bound at once! Fancier texture effects limit this down even
   '''   further, to a single bound texture.
+  '''
+  '''   Judging from GLideN64's source, these are selected in TEXTURE() as tile
+  '''   and tile+1.
   ''' </summary>
   Private SelectedTileDescriptors(-1) As Integer
   Private MultiTexture As Boolean
@@ -709,9 +712,6 @@ enddisplaylist:
   End Sub
 
   Private Function SETTILE(ByVal w0 As UInt32, ByVal w1 As UInt32)
-    ' TODO: Support setting palette.
-    ' TODO: Support setting offset.
-
     Dim tileDescriptor As TileDescriptor = GetSelectedTileDescriptor(CurrentSelectedTileDescriptor)
     With tileDescriptor
       ' TODO: Delete this.
@@ -719,6 +719,8 @@ enddisplaylist:
       .ColorFormat = ColorFormatUtil.Parse(FunctionsCs.ShiftR(w0, 21, 3))
       .BitSize = BitSizeUtil.Parse(FunctionsCs.ShiftR(w0, 19, 2))
       .LineSize = FunctionsCs.ShiftR(w0, 9, 9)
+      .TmemOffset = FunctionsCs.ShiftR(w0, 0, 9)
+      .Palette = FunctionsCs.ShiftR(w1, 20, 4)
       .CMT = FunctionsCs.ShiftR(w1, 18, 2)
       .CMS = FunctionsCs.ShiftR(w1, 8, 2)
       .MaskS = FunctionsCs.ShiftR(w1, 4, 4)
@@ -726,6 +728,8 @@ enddisplaylist:
       .TShiftS = FunctionsCs.ShiftR(w1, 0, 4)
       .TShiftT = FunctionsCs.ShiftR(w1, 10, 4)
     End With
+
+    ' TODO: GLideN64 does a lookup into the selected tiles here?
 
     ' TODO: Remove this struct logic.
     SetSelectedTileDescriptor(CurrentSelectedTileDescriptor, tileDescriptor)

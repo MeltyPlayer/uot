@@ -20,6 +20,8 @@
     public double TextureWRatio;
     public uint TexBytes;
     public int ImageBank;
+    public ushort TmemOffset;
+    public byte Palette;
     public int PaletteBank;
     public int Offset;
     public int PaletteOffset;
