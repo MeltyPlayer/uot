@@ -20,17 +20,17 @@ namespace UoT {
     /// <summary>
     ///   O(log(n)) lookup.
     /// </summary>
-    public Texture this[TextureParams textureParams] {
+    public Texture this[TileDescriptor tileDescriptor] {
       get {
-        this.impl_.TryGetValue(textureParams.Uuid, out var texture);
+        this.impl_.TryGetValue(tileDescriptor.Uuid, out var texture);
         return texture;
       }
     }
 
-    public void Add(TextureParams textureParams, byte[] rgba) {
-      var uuid = textureParams.Uuid;
+    public void Add(TileDescriptor tileDescriptor, byte[] rgba) {
+      var uuid = tileDescriptor.Uuid;
       if (!this.impl_.ContainsKey(uuid)) {
-        this.impl_.Add(uuid, new Texture(textureParams, rgba));
+        this.impl_.Add(uuid, new Texture(tileDescriptor, rgba));
       }
     }
   }

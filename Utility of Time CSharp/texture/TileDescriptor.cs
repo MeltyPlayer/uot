@@ -1,11 +1,14 @@
 ﻿namespace UoT {
   /// <summary>
-  ///   Params needed to generate a texture.
+  ///   A given "tile descriptor" defined by F3DZEX2 display lists. This can be
+  ///   thought of as the params for a texture. The display lists support
+  ///   indexing 3 bits worth, so it seems that there can be at most 8 tile
+  ///   descriptors active at once.
   ///
   ///   This *must* be a struct for now, as the parser expects for data to be
   ///   copied by value instead of by reference.
   /// </summary>
-  public struct TextureParams {
+  public struct TileDescriptor {
     // TODO: Get rid of this field.
     public int ID;
     public int DXT;

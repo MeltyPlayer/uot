@@ -20,7 +20,7 @@ Public Class F3DEX2_Parser
   Private CurrentTex As Integer
   Private MultiTexCoord As Boolean = False
   Private TextureCache As TextureCache = New TextureCache()
-  Private Textures(1) As TextureParams
+  Private TileDescriptors(1) As TileDescriptor
   Private FragShaderCache(-1) As ShaderCache
   Private PrimColor() As Single = {1.0, 1.0, 1.0, 0.5}
   Private PrimColorLOD As Single = 0
@@ -314,7 +314,7 @@ enddisplaylist:
   End Sub
 
   Private Sub MODIFYVTX(ByRef VertCache As N64Vertex, ByVal CMDParams() As Byte)
-    Dim Vertex As Integer = (FunctionsCs.ReadUInt16(CMDParams, 2) And &HFFF)/2
+    Dim Vertex As Integer = (FunctionsCs.ReadUInt16(CMDParams, 2) And &HFFF) / 2
     Dim Target As Integer = CMDParams(1)
     Select Case Target
       Case &H10
@@ -389,7 +389,7 @@ enddisplaylist:
       Case 3 'rendermode
         If ZMODE_DEC Then
           Gl.glEnable(Gl.GL_POLYGON_OFFSET_FILL)
-          Gl.glPolygonOffset(- 7, - 7)
+          Gl.glPolygonOffset(-7, -7)
         Else
           Gl.glDisable(Gl.GL_POLYGON_OFFSET_FILL)
         End If
@@ -459,8 +459,8 @@ enddisplaylist:
     End Try
   End Function
 
-  Private Function SearchTexCache(ByVal textureData As TextureParams) As Texture
-    Return TextureCache(textureData)
+  Private Function SearchTexCache(ByVal tileDescriptor As TileDescriptor) As Texture
+    Return TextureCache(tileDescriptor)
   End Function
 
   Private Sub VTX(ByVal w0 As UInt32, ByVal w1 As UInt32)
@@ -500,10 +500,10 @@ enddisplaylist:
       Gl.glEnable(Gl.GL_TEXTURE_2D)
 
       Gl.glActiveTextureARB(Gl.GL_TEXTURE0_ARB)
-      Dim texture As Texture = SearchTexCache(Textures(0))
+      Dim texture As Texture = SearchTexCache(TileDescriptors(0))
 
       If texture Is Nothing Then
-        Select Case Textures(0).ImageBank
+        Select Case TileDescriptors(0).ImageBank
           Case CurrentBank
             LoadTex(ZFileBuffer, 0)
           Case 2
@@ -521,10 +521,10 @@ enddisplaylist:
 
       If MultiTexture Then
         Gl.glActiveTextureARB(Gl.GL_TEXTURE1_ARB)
-        texture = SearchTexCache(Textures(1))
+        texture = SearchTexCache(TileDescriptors(1))
 
         If texture Is Nothing Then
-          Select Case Textures(1).ImageBank
+          Select Case TileDescriptors(1).ImageBank
             Case CurrentBank
               LoadTex(ZFileBuffer, 1)
             Case 2
@@ -576,13 +576,13 @@ enddisplaylist:
         Gl.glBegin(Gl.GL_TRIANGLES)
         For i As Integer = 0 To 2
           If MultiTexCoord Then
-            Gl.glMultiTexCoord2f(Gl.GL_TEXTURE0_ARB, VertexCache.u(Polygons(i))*Textures(0).TextureWRatio,
-                                 VertexCache.v(Polygons(i))*Textures(0).TextureHRatio)
-            Gl.glMultiTexCoord2f(Gl.GL_TEXTURE1_ARB, VertexCache.u(Polygons(i))*Textures(1).TextureWRatio,
-                                 VertexCache.v(Polygons(i))*Textures(1).TextureHRatio)
+            Gl.glMultiTexCoord2f(Gl.GL_TEXTURE0_ARB, VertexCache.u(Polygons(i)) * TileDescriptors(0).TextureWRatio,
+                                 VertexCache.v(Polygons(i)) * TileDescriptors(0).TextureHRatio)
+            Gl.glMultiTexCoord2f(Gl.GL_TEXTURE1_ARB, VertexCache.u(Polygons(i)) * TileDescriptors(1).TextureWRatio,
+                                 VertexCache.v(Polygons(i)) * TileDescriptors(1).TextureHRatio)
           Else
-            Gl.glTexCoord2f(VertexCache.u(Polygons(i))*Textures(0).TextureWRatio,
-                            VertexCache.v(Polygons(i))*Textures(0).TextureHRatio)
+            Gl.glTexCoord2f(VertexCache.u(Polygons(i)) * TileDescriptors(0).TextureWRatio,
+                            VertexCache.v(Polygons(i)) * TileDescriptors(0).TextureHRatio)
           End If
           If EnableLighting Then
             If (Not EnableCombiner) Then Gl.glColor4fv(PrimColor) Else Gl.glColor3f(1, 1, 1)
@@ -621,13 +621,13 @@ enddisplaylist:
         Gl.glBegin(Gl.GL_TRIANGLES)
         For i As Integer = 0 To 5
           If MultiTexCoord Then
-            Gl.glMultiTexCoord2f(Gl.GL_TEXTURE0_ARB, VertexCache.u(Polygons(i)) * Textures(0).TextureWRatio,
-                                 VertexCache.v(Polygons(i)) * Textures(0).TextureHRatio)
-            Gl.glMultiTexCoord2f(Gl.GL_TEXTURE1_ARB, VertexCache.u(Polygons(i)) * Textures(1).TextureWRatio,
-                                 VertexCache.v(Polygons(i)) * Textures(1).TextureHRatio)
+            Gl.glMultiTexCoord2f(Gl.GL_TEXTURE0_ARB, VertexCache.u(Polygons(i)) * TileDescriptors(0).TextureWRatio,
+                                 VertexCache.v(Polygons(i)) * TileDescriptors(0).TextureHRatio)
+            Gl.glMultiTexCoord2f(Gl.GL_TEXTURE1_ARB, VertexCache.u(Polygons(i)) * TileDescriptors(1).TextureWRatio,
+                                 VertexCache.v(Polygons(i)) * TileDescriptors(1).TextureHRatio)
           Else
-            Gl.glTexCoord2f(VertexCache.u(Polygons(i)) * Textures(0).TextureWRatio,
-                            VertexCache.v(Polygons(i)) * Textures(0).TextureHRatio)
+            Gl.glTexCoord2f(VertexCache.u(Polygons(i)) * TileDescriptors(0).TextureWRatio,
+                            VertexCache.v(Polygons(i)) * TileDescriptors(0).TextureHRatio)
           End If
           If EnableLighting Then
             If (Not EnableCombiner) Then Gl.glColor4fv(PrimColor) Else Gl.glColor3f(1, 1, 1)
@@ -661,11 +661,11 @@ enddisplaylist:
     Dim tmpBank As Integer = (w1 >> 24)
     Dim tmpOff As Integer = (w1 << 8 >> 8)
     If palMode Then
-      Textures(0).PalOff = tmpOff
-      Textures(0).PalBank = tmpBank
+      TileDescriptors(0).PalOff = tmpOff
+      TileDescriptors(0).PalBank = tmpBank
     Else
-      Textures(CurrentTex).Offset = tmpOff
-      Textures(CurrentTex).ImageBank = tmpBank
+      TileDescriptors(CurrentTex).Offset = tmpOff
+      TileDescriptors(CurrentTex).ImageBank = tmpBank
     End If
   End Sub
 
@@ -673,8 +673,8 @@ enddisplaylist:
     ' TODO: Support setting palette.
     ' TODO: Support setting offset.
 
-    Dim texture = Textures(CurrentTex)
-    With texture
+    Dim tileDescriptor As TileDescriptor = TileDescriptors(CurrentTex)
+    With tileDescriptor
       .TexFormat = w0 >> 16
       .TexelSize = FunctionsCs.ShiftR(w0, 19, 2)
       .LineSize = FunctionsCs.ShiftR(w0, 9, 9)
@@ -686,13 +686,13 @@ enddisplaylist:
       .TShiftT = FunctionsCs.ShiftR(w1, 10, 4)
     End With
     ' TODO: Remove this struct logic.
-    Textures(CurrentTex) = texture
+    TileDescriptors(CurrentTex) = tileDescriptor
   End Function
 
   ' TODO: Slow, should only need to run this once!
   Private Sub SETTILESIZE(ByVal w0 As UInt32, ByVal w1 As UInt32)
-    Dim texture = Textures(CurrentTex)
-    With texture
+    Dim tileDescriptor As TileDescriptor = TileDescriptors(CurrentTex)
+    With tileDescriptor
       .ULS = (w0 And &HFFF000) >> 14
       .ULT = (w0 And &HFFF) >> 2
       .LRS = (w1 And &HFFF000) >> 14
@@ -706,7 +706,7 @@ enddisplaylist:
     End With
 
     ' TODO: Remove this struct logic.
-    Textures(CurrentTex) = texture
+    TileDescriptors(CurrentTex) = tileDescriptor
 
     CalculateTexSize(CurrentTex)
   End Sub
@@ -714,23 +714,23 @@ enddisplaylist:
   Private Sub LOADTLUT(ByVal w1 As UInt32)
     Dim PalSize As Integer = ((w1 And &HFFF000) >> 14) * 2 + 1
     ReDim Palette16(PalSize + 2)
-    Select Case Textures(0).PalBank
+    Select Case TileDescriptors(0).PalBank
       Case CurrentBank
         For i2 As Integer = 0 To PalSize
-          Palette16(i2) = ZFileBuffer(Textures(0).PalOff + i2)
+          Palette16(i2) = ZFileBuffer(TileDescriptors(0).PalOff + i2)
         Next
       Case 2
         For i2 As Integer = 0 To PalSize
-          Palette16(i2) = ZSceneBuffer(Textures(0).PalOff + i2)
+          Palette16(i2) = ZSceneBuffer(TileDescriptors(0).PalOff + i2)
         Next
     End Select
 
-    ReDim Textures(0).Palette32(PalSize)
+    ReDim TileDescriptors(0).Palette32(PalSize)
     Dim curInd As Integer = 0
     For iw As Integer = 0 To PalSize Step 2
       Dim RGBA5551 As UShort = 0
       RGBA5551 = FunctionsCs.ReadUInt16(Palette16, iw)
-      With Textures(0)
+      With TileDescriptors(0)
         .Palette32(curInd).r = (RGBA5551 And &HF800) >> 8
         .Palette32(curInd).g = ((RGBA5551 And &H7C0) << 5) >> 8
         .Palette32(curInd).b = ((RGBA5551 And &H3E) << 18) >> 16
@@ -741,8 +741,8 @@ enddisplaylist:
   End Sub
 
   Private Sub CalculateTexSize(ByVal id As Integer)
-    Dim texture = Textures(id)
-    With texture
+    Dim tileDescriptor As TileDescriptor = TileDescriptors(id)
+    With tileDescriptor
       Dim MaxTexel As UInteger = 0
       Dim Line_Shift As UInteger = 0
       Select Case .TexFormat
@@ -778,18 +778,18 @@ enddisplaylist:
       Dim Mask_Height As UInteger = 1 << .MaskT
 
       Dim Line_Height As UInteger = 0
-      If Line_Width > 0 Then Line_Height = Min(MaxTexel/Line_Width, Tile_Height)
+      If Line_Width > 0 Then Line_Height = Min(MaxTexel / Line_Width, Tile_Height)
 
-      If .MaskS > 0 And ((Mask_Width*Mask_Height) <= MaxTexel) Then
+      If .MaskS > 0 And ((Mask_Width * Mask_Height) <= MaxTexel) Then
         .Width = Mask_Width
-      ElseIf ((Tile_Width*Tile_Height) <= MaxTexel) Then
+      ElseIf ((Tile_Width * Tile_Height) <= MaxTexel) Then
         .Width = Tile_Width
       Else
         .Width = Line_Width
       End If
-      If .MaskT > 0 And ((Mask_Width*Mask_Height) <= MaxTexel) Then
+      If .MaskT > 0 And ((Mask_Width * Mask_Height) <= MaxTexel) Then
         .Height = Mask_Height
-      ElseIf ((Tile_Width*Tile_Height) <= MaxTexel) Then
+      ElseIf ((Tile_Width * Tile_Height) <= MaxTexel) Then
         .Height = Tile_Height
       Else
         .Height = Line_Height
@@ -848,17 +848,17 @@ enddisplaylist:
         .ShiftT /= (1 << .TShiftT)
       End If
 
-      .TextureHRatio = ((.T_Scale*.ShiftT)/32/.RealHeight)
-      .TextureWRatio = ((.S_Scale*.ShiftS)/32/.RealWidth)
+      .TextureHRatio = ((.T_Scale * .ShiftT) / 32 / .RealHeight)
+      .TextureWRatio = ((.S_Scale * .ShiftS) / 32 / .RealWidth)
     End With
 
     ' TODO: Remove this struct logic.
-    Textures(id) = texture
+    TileDescriptors(id) = tileDescriptor
   End Sub
 
   Private Function LoadTex(ByVal Data() As Byte, ByVal ID As UInteger) As Integer
-    Dim texture As TextureParams = Textures(ID)
-    With texture
+    Dim tileDescriptor As TileDescriptor = TileDescriptors(ID)
+    With tileDescriptor
       Dim Format As Byte = .TexFormat
       Dim SourceBank As Integer = .ImageBank
       Dim Offset As UInteger = .Offset
@@ -890,14 +890,14 @@ enddisplaylist:
                  .LineSize,
                  N64TexImg,
                  OGLTexImg,
-                 Textures(0).Palette32)
+                 TileDescriptors(0).Palette32)
         Case &H48 'CI - 5551 RGBA palette with 4bpp array of indices
           CI.CI4(.RealWidth,
                  .RealHeight,
                  .LineSize,
                  N64TexImg,
                  OGLTexImg,
-                 Textures(0).Palette32)
+                 TileDescriptors(0).Palette32)
         Case &H70 'IA - 16 bit grayscale with alpha
           IA.IA16(.RealWidth,
                   .RealHeight,
@@ -973,7 +973,7 @@ enddisplaylist:
       Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MIN_FILTER, Gl.GL_LINEAR_MIPMAP_LINEAR)
       Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MAG_FILTER, Gl.GL_LINEAR_MIPMAP_LINEAR)
 
-      TextureCache.Add(texture, OGLTexImg)
+      TextureCache.Add(tileDescriptor, OGLTexImg)
     End With
   End Function
 
@@ -983,11 +983,11 @@ enddisplaylist:
 
     For i As Integer = 0 To 1
       If FunctionsCs.ShiftR(w1, 16, 16) < &HFFFF Then _
-        Textures(i).S_Scale = FunctionsCs.Fixed2Float(FunctionsCs.ShiftR(w1, 16, 16), 16) Else _
-        Textures(i).S_Scale = 1.0F
+        TileDescriptors(i).S_Scale = FunctionsCs.Fixed2Float(FunctionsCs.ShiftR(w1, 16, 16), 16) Else _
+        TileDescriptors(i).S_Scale = 1.0F
       If FunctionsCs.ShiftR(w1, 0, 16) < &HFFFF Then _
-        Textures(i).T_Scale = FunctionsCs.Fixed2Float(FunctionsCs.ShiftR(w1, 0, 16), 16) Else _
-        Textures(i).T_Scale = 1.0F
+        TileDescriptors(i).T_Scale = FunctionsCs.Fixed2Float(FunctionsCs.ShiftR(w1, 0, 16), 16) Else _
+        TileDescriptors(i).T_Scale = 1.0F
     Next
   End Sub
 
@@ -997,7 +997,7 @@ enddisplaylist:
 
   Private Sub SETCOMBINE(ByVal w0 As UInt32, ByVal w1 As UInt32)
     If GLExtensions.GLFragProg Then
-      Dim ShaderCachePos As Integer = - 1
+      Dim ShaderCachePos As Integer = -1
       EnableCombiner = True
       For i As Integer = 0 To FragShaderCache.Length - 1
         If (w0 = FragShaderCache(i).MUXS0) And (w1 = FragShaderCache(i).MUXS1) Then
@@ -1023,33 +1023,33 @@ enddisplaylist:
   End Sub
 
   Private Sub SETFOGCOLOR(ByVal CMDParams() As Byte)
-    FogColor(0) = CMDParams(4)/255
-    FogColor(1) = CMDParams(5)/255
-    FogColor(2) = CMDParams(6)/255
-    FogColor(3) = CMDParams(7)/255
+    FogColor(0) = CMDParams(4) / 255
+    FogColor(1) = CMDParams(5) / 255
+    FogColor(2) = CMDParams(6) / 255
+    FogColor(3) = CMDParams(7) / 255
   End Sub
 
   Private Sub ENVCOLOR(ByVal CMDParams() As Byte)
-    EnvironmentColor(0) = CMDParams(4)/255
-    EnvironmentColor(1) = CMDParams(5)/255
-    EnvironmentColor(2) = CMDParams(6)/255
-    EnvironmentColor(3) = CMDParams(7)/255
+    EnvironmentColor(0) = CMDParams(4) / 255
+    EnvironmentColor(1) = CMDParams(5) / 255
+    EnvironmentColor(2) = CMDParams(6) / 255
+    EnvironmentColor(3) = CMDParams(7) / 255
   End Sub
 
   Private Sub SETPRIMCOLOR(ByVal CMDParams() As Byte)
-    PrimColorM = CMDParams(2)/255
-    PrimColorLOD = CMDParams(3)/255
-    PrimColor(0) = CMDParams(4)/255
-    PrimColor(1) = CMDParams(5)/255
-    PrimColor(2) = CMDParams(6)/255
-    PrimColor(3) = CMDParams(7)/255
+    PrimColorM = CMDParams(2) / 255
+    PrimColorLOD = CMDParams(3) / 255
+    PrimColor(0) = CMDParams(4) / 255
+    PrimColor(1) = CMDParams(5) / 255
+    PrimColor(2) = CMDParams(6) / 255
+    PrimColor(3) = CMDParams(7) / 255
   End Sub
 
   Private Sub SETBLENDCOLOR(ByVal CMDParams() As Byte)
-    BlendColor(0) = CMDParams(4)/255
-    BlendColor(1) = CMDParams(5)/255
-    BlendColor(2) = CMDParams(6)/255
-    BlendColor(3) = CMDParams(7)/255
+    BlendColor(0) = CMDParams(4) / 255
+    BlendColor(1) = CMDParams(5) / 255
+    BlendColor(2) = CMDParams(6) / 255
+    BlendColor(3) = CMDParams(7) / 255
   End Sub
 
   Public Sub PrecompileMUXS(ByVal MUXLIST1() As UInteger, ByVal MUXLIST2() As UInteger)
@@ -1342,12 +1342,12 @@ enddisplaylist:
 
     Gl.glFinish()
 
-    ReDim Textures(1)
+    ReDim TileDescriptors(1)
 
-    Textures(0).S_Scale = 1.0F
-    Textures(0).T_Scale = 1.0F
-    Textures(1).S_Scale = 1.0F
-    Textures(1).T_Scale = 1.0F
+    TileDescriptors(0).S_Scale = 1.0F
+    TileDescriptors(0).T_Scale = 1.0F
+    TileDescriptors(1).S_Scale = 1.0F
+    TileDescriptors(1).T_Scale = 1.0F
 
     For i As Integer = 0 To 2
       PrimColor(i) = 1

@@ -75,7 +75,7 @@
     <Compile Include="texture\DlTextureManager.cs" />
     <Compile Include="texture\Texture.cs" />
     <Compile Include="texture\TextureCache.cs" />
-    <Compile Include="texture\TextureParams.cs" />
+    <Compile Include="texture\TileDescriptor.cs" />
     <Compile Include="ui\main\viewer\PickerUtil.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -8,21 +8,21 @@ namespace UoT {
   ///   Instance of a valid texture.
   /// </summary>
   public class Texture {
-    private TextureParams TextureParams { get; }
+    private TileDescriptor TileDescriptor { get; }
     private readonly byte[] rgba_;
 
-    public Texture(TextureParams textureParams, byte[] rgba) {
-      this.TextureParams = textureParams;
+    public Texture(TileDescriptor tileDescriptor, byte[] rgba) {
+      this.TileDescriptor = tileDescriptor;
       this.rgba_ = rgba;
 
-      var format = textureParams.TexFormat;
-      var uuid = textureParams.Uuid;
+      var format = tileDescriptor.TexFormat;
+      var uuid = tileDescriptor.Uuid;
       var filename = "R:/Noesis/Output/" + format + "_" + uuid + ".bmp";
       this.SaveToFile(filename);
     }
 
     // OpenGL-specific logic.
-    private int GlId => this.TextureParams.ID;
+    private int GlId => this.TileDescriptor.ID;
 
     public void Bind() => Gl.glBindTexture(Gl.GL_TEXTURE_2D, this.GlId);
 
@@ -36,8 +36,8 @@ namespace UoT {
         return;
       }
 
-      var width = this.TextureParams.RealWidth;
-      var height = this.TextureParams.RealHeight;
+      var width = this.TileDescriptor.RealWidth;
+      var height = this.TileDescriptor.RealHeight;
 
       var rgba = this.rgba_;
 
