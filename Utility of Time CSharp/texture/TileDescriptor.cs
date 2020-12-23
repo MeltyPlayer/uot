@@ -25,8 +25,10 @@
     public int Offset;
     // TODO: Are PAL-specific fields needed?
     public int PalOff;
-    public int TexFormat;
-    public int TexelSize;
+    // TODO: Delete this.
+    public int JankFormat;
+    public ColorFormat ColorFormat;
+    public BitSize BitSize;
     public int CMS;
     public int CMT;
     public double S_Scale;

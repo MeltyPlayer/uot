@@ -37,7 +37,7 @@ namespace UoT {
     public class CI {
       private byte[] PaletteIndex = new byte[2];
 
-      public object CI4(uint Width, uint Height, uint LineSize, byte[] SourceImg, ref byte[] DestImg, Color4UByte[] Palette) {
+      public object CI8(uint Width, uint Height, uint LineSize, byte[] SourceImg, ref byte[] DestImg, Color4UByte[] Palette) {
         DestImg = new byte[(int)(Width * Height * 8L + 1)];
         for (int i = 0, loopTo = (int)(Height - 1L); i <= loopTo; i++) {
           for (int j = 0, loopTo1 = (int)(Width - 1L); j <= loopTo1; j++) {
@@ -58,20 +58,23 @@ namespace UoT {
         return default;
       }
 
-      public object CI8(uint Width, uint Height, uint LineSize, byte[] SourceImg, ref byte[] DestImg, Color4UByte[] Palette) {
+      public object CI4(uint Width, uint Height, uint LineSize, byte[] SourceImg, ref byte[] DestImg, Color4UByte[] Palette) {
         DestImg = new byte[(int)(Width * Height * 8L + 1)];
         for (int i = 0, loopTo = (int)(Height - 1L); i <= loopTo; i++) {
           for (int j = 0, loopTo1 = (int)(Width / 2L - 1L); j <= loopTo1; j++) {
             PaletteIndex[0] = (byte)((SourceImg[SourceTexPos] & 0xF0) >> 4);
             PaletteIndex[1] = (byte)(SourceImg[SourceTexPos] & 0xF);
+            
             DestImg[DestTexPos] = Palette[PaletteIndex[0]].r;
             DestImg[DestTexPos + 1] = Palette[PaletteIndex[0]].g;
             DestImg[DestTexPos + 2] = Palette[PaletteIndex[0]].b;
             DestImg[DestTexPos + 3] = Palette[PaletteIndex[0]].a;
+
             DestImg[DestTexPos + 4] = Palette[PaletteIndex[1]].r;
             DestImg[DestTexPos + 5] = Palette[PaletteIndex[1]].g;
             DestImg[DestTexPos + 6] = Palette[PaletteIndex[1]].b;
             DestImg[DestTexPos + 7] = Palette[PaletteIndex[1]].a;
+            
             SourceTexPos += 1;
             DestTexPos += 8;
           }

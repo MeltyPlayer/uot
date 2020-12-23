@@ -15,9 +15,16 @@ namespace UoT {
       this.TileDescriptor = tileDescriptor;
       this.rgba_ = rgba;
 
-      var format = tileDescriptor.TexFormat;
+      var format = tileDescriptor.ColorFormat;
+      var size = tileDescriptor.BitSize;
       var uuid = tileDescriptor.Uuid;
-      var filename = "R:/Noesis/Output/" + format + "_" + uuid + ".bmp";
+      var filename = "R:/Noesis/Output/" +
+                     format +
+                     "_" +
+                     size +
+                     "_" +
+                     uuid +
+                     ".bmp";
       this.SaveToFile(filename);
     }
 

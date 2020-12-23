@@ -675,8 +675,10 @@ enddisplaylist:
 
     Dim tileDescriptor As TileDescriptor = TileDescriptors(CurrentTex)
     With tileDescriptor
-      .TexFormat = w0 >> 16
-      .TexelSize = FunctionsCs.ShiftR(w0, 19, 2)
+      ' TODO: Delete this.
+      .JankFormat = w0 >> 16
+      .ColorFormat = ColorFormatUtil.Parse(FunctionsCs.ShiftR(w0, 21, 3))
+      .BitSize = BitSizeUtil.Parse(FunctionsCs.ShiftR(w0, 19, 2))
       .LineSize = FunctionsCs.ShiftR(w0, 9, 9)
       .CMT = FunctionsCs.ShiftR(w1, 18, 2)
       .CMS = FunctionsCs.ShiftR(w1, 8, 2)
@@ -745,7 +747,7 @@ enddisplaylist:
     With tileDescriptor
       Dim MaxTexel As UInteger = 0
       Dim Line_Shift As UInteger = 0
-      Select Case .TexFormat
+      Select Case .JankFormat
         Case 0, &H40
           MaxTexel = 4096
           Line_Shift = 4
@@ -859,7 +861,6 @@ enddisplaylist:
   Private Function LoadTex(ByVal Data() As Byte, ByVal ID As UInteger) As Integer
     Dim tileDescriptor As TileDescriptor = TileDescriptors(ID)
     With tileDescriptor
-      Dim Format As Byte = .TexFormat
       Dim SourceBank As Integer = .ImageBank
       Dim Offset As UInteger = .Offset
       Dim Size As UInteger = .TexBytes
@@ -875,61 +876,84 @@ enddisplaylist:
         End If
       Next
 
-      Select Case Format
-        Case &H18 '32bpp RGBA
-          OGLTexImg = N64TexImg
-        Case &H0, &H8, &H10 '5R, 5G, 5B, 1A (5551) RGBA 
-          RGBA.RGBA16(.RealWidth,
+      Select Case .ColorFormat
+        Case ColorFormat.RGBA
+          Select Case .BitSize
+            Case BitSize.S_32B
+              OGLTexImg = N64TexImg
+            Case BitSize.S_16B
+              RGBA.RGBA16(.RealWidth,
+                          .RealHeight,
+                          .LineSize,
+                          N64TexImg,
+                          OGLTexImg)
+            Case Else
+              Throw New NotImplementedException()
+          End Select
+
+        Case ColorFormat.CI
+          Select Case .BitSize
+            Case BitSize.S_8B
+              CI.CI8(.RealWidth,
+                     .RealHeight,
+                     .LineSize,
+                     N64TexImg,
+                     OGLTexImg,
+                     TileDescriptors(0).Palette32)
+            Case BitSize.S_4B
+              CI.CI4(.RealWidth,
+                     .RealHeight,
+                     .LineSize,
+                     N64TexImg,
+                     OGLTexImg,
+                     TileDescriptors(0).Palette32)
+            Case Else
+              Throw New NotImplementedException()
+          End Select
+
+        Case ColorFormat.IA
+          Select Case .BitSize
+            Case BitSize.S_16B
+              IA.IA16(.RealWidth,
                       .RealHeight,
                       .LineSize,
                       N64TexImg,
                       OGLTexImg)
-        Case &H40, &H50 'CI - 5551 RGBA palette with 8bpp array of indices
-          CI.CI8(.RealWidth,
-                 .RealHeight,
-                 .LineSize,
-                 N64TexImg,
-                 OGLTexImg,
-                 TileDescriptors(0).Palette32)
-        Case &H48 'CI - 5551 RGBA palette with 4bpp array of indices
-          CI.CI4(.RealWidth,
-                 .RealHeight,
-                 .LineSize,
-                 N64TexImg,
-                 OGLTexImg,
-                 TileDescriptors(0).Palette32)
-        Case &H70 'IA - 16 bit grayscale with alpha
-          IA.IA16(.RealWidth,
-                  .RealHeight,
-                  .LineSize,
-                  N64TexImg,
-                  OGLTexImg)
+            Case BitSize.S_8B
+              IA.IA8(.RealWidth,
+                     .RealHeight,
+                     .LineSize,
+                     N64TexImg,
+                     OGLTexImg)
+            Case BitSize.S_4B
+              IA.IA4(.RealWidth,
+                     .RealHeight,
+                     .LineSize,
+                     N64TexImg,
+                     OGLTexImg)
+            Case Else
+              Throw New NotImplementedException()
+          End Select
 
-        Case &H68 'IA - 8 bit grayscale w/ alpha
-          IA.IA8(.RealWidth,
-                 .RealHeight,
-                 .LineSize,
-                 N64TexImg,
-                 OGLTexImg)
-        Case &H60 'IA - 4 bit grayscale w/ alpha
-          IA.IA4(.RealWidth,
-                 .RealHeight,
-                 .LineSize,
-                 N64TexImg,
-                 OGLTexImg)
-        Case &H80, &H90 'I - 4 bit grayscale w/o alpha
-          I.I4(.RealWidth,
-               .RealHeight,
-               .LineSize,
-               N64TexImg,
-               OGLTexImg)
-
-        Case &H88 ' I - 8 bit grayscale w/o alpha
-          I.I8(.RealWidth,
-               .RealHeight,
-               .LineSize,
-               N64TexImg,
-               OGLTexImg)
+        Case ColorFormat.I
+          Select Case .BitSize
+            Case BitSize.S_8B
+              I.I8(.RealWidth,
+                   .RealHeight,
+                   .LineSize,
+                   N64TexImg,
+                   OGLTexImg)
+            Case BitSize.S_4B
+              I.I4(.RealWidth,
+                   .RealHeight,
+                   .LineSize,
+                   N64TexImg,
+                   OGLTexImg)
+            Case Else
+              Throw New NotImplementedException()
+          End Select
+        Case Else
+          Throw New NotImplementedException()
       End Select
 
       ' Generates texture.
