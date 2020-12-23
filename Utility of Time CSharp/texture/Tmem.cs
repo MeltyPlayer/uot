@@ -21,7 +21,8 @@
         ushort uls,
         ushort ult,
         ushort lrs,
-        ushort lrt) {
+        ushort lrt,
+        TimgArgs timgArgs) {
       return tileDescriptor;
       // TODO: Implement this method.
       // TODO: To verify behavior, load contents into a new texture and save to

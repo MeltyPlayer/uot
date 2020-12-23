@@ -122,7 +122,7 @@ settextureimg:
                 CurrentSelectedTileDescriptor = 0
               End If
 
-              SETTIMG(.CMDHigh, paletteMode)
+              SETTIMG(.CMDLow, .CMDHigh, paletteMode)
 
             Case RDP.G_LOADTLUT
 loadtexturelut:
@@ -607,7 +607,7 @@ enddisplaylist:
     Dim lrt As UShort = IoUtil.ShiftR(w1, 0, 12)
 
     Dim tileDescriptor As TileDescriptor = TileDescriptors(tileDescriptorIndex)
-    tileDescriptor = Tmem.LoadTile(tileDescriptor, uls, ult, lrs, lrt)
+    tileDescriptor = Tmem.LoadTile(tileDescriptor, uls, ult, lrs, lrt, TimgArgs)
     TileDescriptors(tileDescriptorIndex) = tileDescriptor
   End Sub
 
@@ -704,14 +704,20 @@ enddisplaylist:
 
 #Region "TEXTURE HANDLING"
 
-  Private Sub SETTIMG(ByVal w1 As UInt32, ByVal paletteMode As Boolean)
+  Private TimgArgs As New TimgArgs
+
+  Private Sub SETTIMG(w0 As UInt32, w1 As UInt32, ByVal paletteMode As Boolean)
     Dim address As UInt32 = w1
     Dim tmpBank As Integer
     Dim tmpOff As Integer
     IoUtil.SplitAddress(address, tmpBank, tmpOff)
 
-    ' TODO: Delete this. It technically works, but palette is meant to be
-    ' looked up through TMEM, not directly from RAM.
+    TimgArgs.ColorFormat = ColorFormatUtil.Parse(IoUtil.ShiftR(w0, 21, 3))
+    TimgArgs.BitSize = BitSizeUtil.Parse(IoUtil.ShiftR(w0, 19, 2))
+    TimgArgs.Width = IoUtil.ShiftR(w0, 0, 12)
+    TimgArgs.Address = address
+
+    ' TODO: Delete the below logic.
     If paletteMode Then
       Dim tileDescriptor As TileDescriptor = GetSelectedTileDescriptor(0)
       tileDescriptor.PaletteOffset = tmpOff
