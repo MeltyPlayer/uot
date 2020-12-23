@@ -908,9 +908,24 @@ enddisplaylist:
     End With
   End Sub
 
-  Private Sub LOADTLUT(ByVal w1 As UInt32)
-    Dim tileDescriptor As TileDescriptor = GetSelectedTileDescriptor(0)
 
+  Private Sub LOADTLUT(ByVal w1 As UInt32)
+    Dim tileDescriptorIndex As Integer = IoUtil.ShiftR(w1, 24, 3)
+    Dim tileDescriptor As TileDescriptor = TileDescriptors(tileDescriptorIndex)
+    LoadTlut_(tileDescriptor, w1)
+
+    ' TODO: Remove this struct logic.
+    TileDescriptors(tileDescriptorIndex) = tileDescriptor
+
+    ' TODO: Delete this logic.
+    Dim jankTileDescriptor As TileDescriptor = GetSelectedTileDescriptor(0)
+    LoadTlut_(jankTileDescriptor, w1)
+
+    ' TODO: Remove this struct logic.
+    SetSelectedTileDescriptor(0, jankTileDescriptor)
+  End Sub
+
+  Private Sub LoadTlut_(ByRef tileDescriptor As TileDescriptor, w1 As UInt32)
     With tileDescriptor
       Dim paletteSizeMinus1 As Integer = IoUtil.ShiftR(w1, 12, 12) >> 2
 
@@ -935,9 +950,8 @@ enddisplaylist:
         If RGBA5551 And 1 Then .Palette32(i).a = 255 Else .Palette32(i).a = 0
       Next
     End With
-
-    SetSelectedTileDescriptor(0, tileDescriptor)
   End Sub
+
 
   Private Function LoadTex(ByVal Data() As Byte, ByVal ID As UInteger) As Integer
     Dim tileDescriptor As TileDescriptor = GetSelectedTileDescriptor(ID)
