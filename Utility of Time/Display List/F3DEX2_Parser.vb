@@ -103,6 +103,10 @@ loadtexturelut:
 
             Case RDP.G_LOADBLOCK
 loadtexblock:
+              LOADBLOCK()
+
+            Case RDP.G_LOADTILE
+              LOADTILE()
 
             Case RDP.G_SETTILESIZE
 settilesize:
@@ -540,6 +544,29 @@ enddisplaylist:
       End If
     End If
   End Sub
+
+
+  ''' <summary>
+  '''   Loads a subset of a texture into memory. This *seems* to be specified
+  '''   as a region starting at an upper-left coordinate and going on for n
+  '''   "texels".
+  '''
+  '''   A rate param dxt can also be provided; this specifies the speed at
+  '''   which a counter is increased per 64 bits read. Every time this counter
+  '''   turns over to a new integer, the scanline increments.
+  ''' </summary>
+  Private Sub LOADBLOCK()
+    ' TODO: This logic is invalid, handle it different from LOADTILE()
+    LOADTILE()
+  End Sub
+
+  ''' <summary>
+  '''   Loads a subset of a texture into memory, specified as a region between
+  '''   an upper-left coordinate and lower-right coordinate.
+  ''' </summary>
+  Private Sub LOADTILE()
+  End Sub
+
 
   Private Sub TRI1(ByVal CMDParams() As Byte)
     Try
