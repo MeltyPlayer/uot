@@ -698,6 +698,8 @@ enddisplaylist:
     Dim tmpBank As Integer = (address >> 24)
     Dim tmpOff As Integer = (address << 8 >> 8)
 
+    ' TODO: Delete this. It technically works, but palette is meant to be
+    ' looked up through TMEM, not directly from RAM.
     If paletteMode Then
       Dim tileDescriptor = GetSelectedTileDescriptor(0)
       tileDescriptor.PaletteOffset = tmpOff

@@ -78,6 +78,7 @@
     <Compile Include="texture\Texture.cs" />
     <Compile Include="texture\TextureCache.cs" />
     <Compile Include="texture\TileDescriptor.cs" />
+    <Compile Include="texture\Tmem.cs" />
     <Compile Include="ui\main\viewer\PickerUtil.cs" />
   </ItemGroup>
   <ItemGroup>
