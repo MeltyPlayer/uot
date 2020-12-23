@@ -14,7 +14,6 @@ Public Class F3DEX2_Parser
 
 #Region "SHADERS & TEXTURE RELATED"
 
-  Private Palette16() As Byte
   Private N64GeometryMode As UInt32
   Private MultiTexCoord As Boolean = False
   Private TextureCache As TextureCache = New TextureCache()
@@ -763,29 +762,27 @@ enddisplaylist:
     Dim tileDescriptor As TileDescriptor = GetSelectedTileDescriptor(0)
 
     With tileDescriptor
-      Dim PalSize As Integer = ((w1 And &HFFF000) >> 14) * 2 + 1
-      ReDim Palette16(PalSize + 2)
+      Dim paletteSizeMinus1 As Integer = FunctionsCs.ShiftR(w1, 12, 12) >> 2
+
+      Dim palette16(paletteSizeMinus1) As UShort
       Select Case .PaletteBank
         Case CurrentBank
-          For i2 As Integer = 0 To PalSize
-            Palette16(i2) = ZFileBuffer(.PaletteOffset + i2)
+          For i As Integer = 0 To paletteSizeMinus1
+            palette16(i) = FunctionsCs.ReadUInt16(ZFileBuffer, .PaletteOffset + 2 * i)
           Next
         Case 2
-          For i2 As Integer = 0 To PalSize
-            Palette16(i2) = ZSceneBuffer(.PaletteOffset + i2)
+          For i As Integer = 0 To paletteSizeMinus1
+            palette16(i) = FunctionsCs.ReadUInt16(ZSceneBuffer, .PaletteOffset + 2 * i)
           Next
       End Select
 
-      ReDim .Palette32(PalSize)
-      Dim curInd As Integer = 0
-      For iw As Integer = 0 To PalSize Step 2
-        Dim RGBA5551 As UShort = 0
-        RGBA5551 = FunctionsCs.ReadUInt16(Palette16, iw)
-        .Palette32(curInd).r = (RGBA5551 And &HF800) >> 8
-        .Palette32(curInd).g = ((RGBA5551 And &H7C0) << 5) >> 8
-        .Palette32(curInd).b = ((RGBA5551 And &H3E) << 18) >> 16
-        If RGBA5551 And 1 Then .Palette32(curInd).a = 255 Else .Palette32(curInd).a = 0
-        curInd += 1
+      ReDim .Palette32(paletteSizeMinus1)
+      For i As Integer = 0 To paletteSizeMinus1
+        Dim RGBA5551 As UShort = palette16(i)
+        .Palette32(i).r = (RGBA5551 And &HF800) >> 8
+        .Palette32(i).g = ((RGBA5551 And &H7C0) << 5) >> 8
+        .Palette32(i).b = ((RGBA5551 And &H3E) << 18) >> 16
+        If RGBA5551 And 1 Then .Palette32(i).a = 255 Else .Palette32(i).a = 0
       Next
     End With
 
