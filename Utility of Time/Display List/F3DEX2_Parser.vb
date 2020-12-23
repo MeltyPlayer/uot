@@ -16,7 +16,8 @@ Public Class F3DEX2_Parser
 
   Private N64GeometryMode As UInt32
   Private MultiTexCoord As Boolean = False
-  Private TextureCache As TextureCache = New TextureCache()
+  Private TextureCache As New TextureCache
+  Private Tmem As New Tmem(TextureCache)
 
   ''' <summary>
   '''   All 8 tile descriptors available to the given display list.
@@ -25,6 +26,8 @@ Public Class F3DEX2_Parser
   ''' </summary>
   Private TileDescriptors(TILE_DESCRIPTOR_MAX) As TileDescriptor
   Private Const TILE_DESCRIPTOR_MAX = 7
+
+  Private JankTileDescriptors(-1) As TileDescriptor
 
   ' TODO: Support the second texture being a mipmap in LOD mode.
   ' TODO: Figure out and document how tile selectors are selected.
@@ -130,7 +133,7 @@ loadtexblock:
               LOADBLOCK()
 
             Case RDP.G_LOADTILE
-              LOADTILE()
+              LOADTILE(.CMDLow, .CMDHigh)
 
             Case RDP.G_SETTILESIZE
 settilesize:
@@ -484,11 +487,11 @@ enddisplaylist:
   End Function
 
   Private Function GetSelectedTileDescriptor(index As Integer) As TileDescriptor
-    Return TileDescriptors(SelectedTileDescriptors(index))
+    Return JankTileDescriptors(SelectedTileDescriptors(index))
   End Function
 
   Private Sub SetSelectedTileDescriptor(index As Integer, ByVal tileDescriptor As TileDescriptor)
-    TileDescriptors(SelectedTileDescriptors(index)) = tileDescriptor
+    JankTileDescriptors(SelectedTileDescriptors(index)) = tileDescriptor
   End Sub
 
   Private Function SearchTexCache(ByVal tileDescriptor As TileDescriptor) As Texture
@@ -596,7 +599,16 @@ enddisplaylist:
   '''   Loads a subset of a texture into memory, specified as a region between
   '''   an upper-left coordinate and lower-right coordinate.
   ''' </summary>
-  Private Sub LOADTILE()
+  Private Sub LOADTILE(w0 As UInt32, w1 As UInt32)
+    Dim uls As UShort = FunctionsCs.ShiftR(w0, 12, 12)
+    Dim ult As UShort = FunctionsCs.ShiftR(w0, 0, 12)
+    Dim tileDescriptorIndex As Byte = FunctionsCs.ShiftR(w1, 24, 3)
+    Dim lrs As UShort = FunctionsCs.ShiftR(w1, 12, 12)
+    Dim lrt As UShort = FunctionsCs.ShiftR(w1, 0, 12)
+
+    Dim tileDescriptor As TileDescriptor = TileDescriptors(tileDescriptorIndex)
+    tileDescriptor = Tmem.LoadTile(tileDescriptor, uls, ult, lrs, lrt)
+    TileDescriptors(tileDescriptorIndex) = tileDescriptor
   End Sub
 
   Private Sub BindTextures(ByRef vertexIndex As UInteger)
@@ -1421,8 +1433,11 @@ enddisplaylist:
       TileDescriptors(i).T_Scale = 1.0F
     Next
 
+    ReDim JankTileDescriptors(1)
     ReDim SelectedTileDescriptors(1)
     For i As Integer = 0 To 1
+      JankTileDescriptors(i).S_Scale = 1.0F
+      JankTileDescriptors(i).T_Scale = 1.0F
       SelectedTileDescriptors(i) = i
     Next
 
