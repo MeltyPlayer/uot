@@ -724,8 +724,24 @@ enddisplaylist:
     End If
   End Sub
 
+
   Private Function SETTILE(ByVal w0 As UInt32, ByVal w1 As UInt32)
-    Dim tileDescriptor As TileDescriptor = GetSelectedTileDescriptor(CurrentSelectedTileDescriptor)
+    Dim tileDescriptorIndex As Integer = FunctionsCs.ShiftR(w1, 24, 3)
+    Dim tileDescriptor As TileDescriptor = TileDescriptors(tileDescriptorIndex)
+    SetTile_(tileDescriptor, w0, w1)
+
+    ' TODO: Remove this struct logic.
+    TileDescriptors(tileDescriptorIndex) = tileDescriptor
+
+    ' TODO: Delete this logic.
+    Dim jankTileDescriptor As TileDescriptor = GetSelectedTileDescriptor(CurrentSelectedTileDescriptor)
+    SetTile_(jankTileDescriptor, w0, w1)
+
+    ' TODO: Remove this struct logic.
+    SetSelectedTileDescriptor(CurrentSelectedTileDescriptor, jankTileDescriptor)
+  End Function
+
+  Private Sub SetTile_(ByRef tileDescriptor As TileDescriptor, ByVal w0 As UInt32, ByVal w1 As UInt32)
     With tileDescriptor
       ' TODO: Delete this.
       .JankFormat = w0 >> 16
@@ -743,14 +759,26 @@ enddisplaylist:
     End With
 
     ' TODO: GLideN64 does a lookup into the selected tiles here?
+  End Sub
+
+
+  Private Sub SETTILESIZE(ByVal w0 As UInt32, ByVal w1 As UInt32)
+    Dim tileDescriptorIndex As Integer = FunctionsCs.ShiftR(w1, 24, 3)
+    Dim tileDescriptor As TileDescriptor = TileDescriptors(tileDescriptorIndex)
+    SetTileSize_(tileDescriptor, w0, w1)
 
     ' TODO: Remove this struct logic.
-    SetSelectedTileDescriptor(CurrentSelectedTileDescriptor, tileDescriptor)
-  End Function
+    TileDescriptors(tileDescriptorIndex) = tileDescriptor
 
-  ' TODO: Slow, should only need to run this once!
-  Private Sub SETTILESIZE(ByVal w0 As UInt32, ByVal w1 As UInt32)
-    Dim tileDescriptor As TileDescriptor = GetSelectedTileDescriptor(CurrentSelectedTileDescriptor)
+    ' TODO: Delete this logic.
+    Dim jankTileDescriptor As TileDescriptor = GetSelectedTileDescriptor(CurrentSelectedTileDescriptor)
+    SetTileSize_(jankTileDescriptor, w0, w1)
+
+    ' TODO: Remove this struct logic.
+    SetSelectedTileDescriptor(CurrentSelectedTileDescriptor, jankTileDescriptor)
+  End Sub
+
+  Private Sub SetTileSize_(ByRef tileDescriptor As TileDescriptor, w0 As UInt32, w1 As UInt32)
     With tileDescriptor
       .ULS = (w0 And &HFFF000) >> 14
       .ULT = (w0 And &HFFF) >> 2
@@ -764,45 +792,10 @@ enddisplaylist:
       End If
     End With
 
-    ' TODO: Remove this struct logic.
-    SetSelectedTileDescriptor(CurrentSelectedTileDescriptor, tileDescriptor)
-
-    CalculateTexSize(CurrentSelectedTileDescriptor)
+    CalculateTexSize_(tileDescriptor)
   End Sub
 
-  Private Sub LOADTLUT(ByVal w1 As UInt32)
-    Dim tileDescriptor As TileDescriptor = GetSelectedTileDescriptor(0)
-
-    With tileDescriptor
-      Dim paletteSizeMinus1 As Integer = FunctionsCs.ShiftR(w1, 12, 12) >> 2
-
-      Dim palette16(paletteSizeMinus1) As UShort
-      Select Case .PaletteBank
-        Case CurrentBank
-          For i As Integer = 0 To paletteSizeMinus1
-            palette16(i) = FunctionsCs.ReadUInt16(ZFileBuffer, .PaletteOffset + 2 * i)
-          Next
-        Case 2
-          For i As Integer = 0 To paletteSizeMinus1
-            palette16(i) = FunctionsCs.ReadUInt16(ZSceneBuffer, .PaletteOffset + 2 * i)
-          Next
-      End Select
-
-      ReDim .Palette32(paletteSizeMinus1)
-      For i As Integer = 0 To paletteSizeMinus1
-        Dim RGBA5551 As UShort = palette16(i)
-        .Palette32(i).r = (RGBA5551 And &HF800) >> 8
-        .Palette32(i).g = ((RGBA5551 And &H7C0) << 5) >> 8
-        .Palette32(i).b = ((RGBA5551 And &H3E) << 18) >> 16
-        If RGBA5551 And 1 Then .Palette32(i).a = 255 Else .Palette32(i).a = 0
-      Next
-    End With
-
-    SetSelectedTileDescriptor(0, tileDescriptor)
-  End Sub
-
-  Private Sub CalculateTexSize(ByVal id As Integer)
-    Dim tileDescriptor As TileDescriptor = GetSelectedTileDescriptor(id)
+  Private Sub CalculateTexSize_(ByRef tileDescriptor As TileDescriptor)
     With tileDescriptor
       Dim MaxTexel As UInteger = 0
       Dim Line_Shift As UInteger = 0
@@ -912,9 +905,37 @@ enddisplaylist:
       .TextureHRatio = ((.T_Scale * .ShiftT) / 32 / .RealHeight)
       .TextureWRatio = ((.S_Scale * .ShiftS) / 32 / .RealWidth)
     End With
+  End Sub
 
-    ' TODO: Remove this struct logic.
-    SetSelectedTileDescriptor(id, tileDescriptor)
+  Private Sub LOADTLUT(ByVal w1 As UInt32)
+    Dim tileDescriptor As TileDescriptor = GetSelectedTileDescriptor(0)
+
+    With tileDescriptor
+      Dim paletteSizeMinus1 As Integer = FunctionsCs.ShiftR(w1, 12, 12) >> 2
+
+      Dim palette16(paletteSizeMinus1) As UShort
+      Select Case .PaletteBank
+        Case CurrentBank
+          For i As Integer = 0 To paletteSizeMinus1
+            palette16(i) = FunctionsCs.ReadUInt16(ZFileBuffer, .PaletteOffset + 2 * i)
+          Next
+        Case 2
+          For i As Integer = 0 To paletteSizeMinus1
+            palette16(i) = FunctionsCs.ReadUInt16(ZSceneBuffer, .PaletteOffset + 2 * i)
+          Next
+      End Select
+
+      ReDim .Palette32(paletteSizeMinus1)
+      For i As Integer = 0 To paletteSizeMinus1
+        Dim RGBA5551 As UShort = palette16(i)
+        .Palette32(i).r = (RGBA5551 And &HF800) >> 8
+        .Palette32(i).g = ((RGBA5551 And &H7C0) << 5) >> 8
+        .Palette32(i).b = ((RGBA5551 And &H3E) << 18) >> 16
+        If RGBA5551 And 1 Then .Palette32(i).a = 255 Else .Palette32(i).a = 0
+      Next
+    End With
+
+    SetSelectedTileDescriptor(0, tileDescriptor)
   End Sub
 
   Private Function LoadTex(ByVal Data() As Byte, ByVal ID As UInteger) As Integer
