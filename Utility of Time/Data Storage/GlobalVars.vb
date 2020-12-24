@@ -71,7 +71,6 @@ Module GlobalVars
   Public PickedEntities As New PickedItems
   Public ExternalHierarchy As Byte()
   Public ExternalAnimBank As Byte()
-  Public CommonBankUse As New BankSwitch
   Public RenderToggles As New RendererOptions
   Public AnimParser As New ZAnimation
   Public DLParser As New F3DEX2_Parser

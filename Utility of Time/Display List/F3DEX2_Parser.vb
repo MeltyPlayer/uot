@@ -535,46 +535,41 @@ enddisplaylist:
       Gl.glEnable(Gl.GL_TEXTURE_2D)
 
       Gl.glActiveTextureARB(Gl.GL_TEXTURE0_ARB)
-      Dim texture As Texture = SearchTexCache(GetSelectedTileDescriptor(0))
 
-      If texture Is Nothing Then
-        Select Case GetSelectedTileDescriptor(0).ImageBank
-          Case RamBanks.CurrentBank
-            LoadTex(RamBanks.ZFileBuffer, 0)
-          Case 2
-            LoadTex(RamBanks.ZSceneBuffer, 0)
-          Case 4
-            LoadTex(RamBanks.CommonBanks.Bank4.Banks(CommonBankUse.Bank04).Data, 0)
-          Case 5
-            LoadTex(RamBanks.CommonBanks.Bank5.Banks(CommonBankUse.Bank05).Data, 0)
-          Case Else
-            ' TODO: Should throw an error for unsupported banks.
-            Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2)
-        End Select
+      Dim tileDescriptor0 As TileDescriptor = GetSelectedTileDescriptor(0)
+      Dim texture0 As Texture = SearchTexCache(tileDescriptor0)
+
+      If texture0 Is Nothing Then
+        Dim targetBuffer0() As Byte = RamBanks.GetBankByIndex(tileDescriptor0.ImageBank)
+        If targetBuffer0 IsNot Nothing Then
+          LoadTex(targetBuffer0, 0)
+        Else
+          Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2)
+        End If
       Else
-        texture.Bind()
+          texture0.Bind()
       End If
 
       If MultiTexture Then
         Gl.glActiveTextureARB(Gl.GL_TEXTURE1_ARB)
-        texture = SearchTexCache(GetSelectedTileDescriptor(1))
+        Dim texture1 As Texture = SearchTexCache(GetSelectedTileDescriptor(1))
 
-        If texture Is Nothing Then
+        If texture1 Is Nothing Then
           Select Case GetSelectedTileDescriptor(1).ImageBank
             Case RamBanks.CurrentBank
               LoadTex(RamBanks.ZFileBuffer, 1)
             Case 2
               LoadTex(RamBanks.ZSceneBuffer, 1)
             Case 4
-              LoadTex(RamBanks.CommonBanks.Bank4.Banks(CommonBankUse.Bank04).Data, 0)
+              LoadTex(RamBanks.CommonBanks.Bank4.Banks(RamBanks.CommonBankUse.Bank04).Data, 0)
             Case 5
-              LoadTex(RamBanks.CommonBanks.Bank5.Banks(CommonBankUse.Bank05).Data, 0)
+              LoadTex(RamBanks.CommonBanks.Bank5.Banks(RamBanks.CommonBankUse.Bank05).Data, 0)
             Case Else
               ' TODO: Should throw an error for unsupported banks.
               Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2)
           End Select
         Else
-          texture.Bind()
+          texture1.Bind()
         End If
         Gl.glDisable(Gl.GL_TEXTURE_2D)
         Gl.glActiveTextureARB(Gl.GL_TEXTURE0_ARB)

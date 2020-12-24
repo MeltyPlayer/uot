@@ -5303,9 +5303,13 @@ Public Class MainWin
       ReDim .Bank5.Banks(1)
       ReDim .Anims.Banks(1)
       Dim fileSize As UInteger = 0
-      CommonBankUse.AnimBank = -1
-      CommonBankUse.Bank04 = 0
-      CommonBankUse.Bank05 = 0
+
+      Dim commonBankUse As BankSwitch = RamBanks.CommonBankUse
+      commonBankUse.AnimBank = -1
+      commonBankUse.Bank04 = 0
+      commonBankUse.Bank05 = 0
+      RamBanks.CommonBankUse = commonBankUse
+
       For i As Integer = 0 To ROMFiles.Others.Length - 1
         fileSize = ROMFiles.Others(i).endoff - ROMFiles.Others(i).startoff
         If ROMFiles.Others(i).filename = "gameplay_keep" Then
@@ -7787,11 +7791,14 @@ Public Class MainWin
     Handles animationbank.SelectedIndexChanged
     If LimbEntries IsNot Nothing Then
       If LimbEntries.Length > 0 Then
-        CommonBankUse.AnimBank = animationbank.SelectedIndex - 1
-        If CommonBankUse.AnimBank = UseBank.Inline Then
+        Dim commonBankUse As BankSwitch = RamBanks.CommonBankUse
+        commonBankUse.AnimBank = animationbank.SelectedIndex - 1
+        RamBanks.CommonBankUse = commonBankUse
+
+        If RamBanks.CommonBankUse.AnimBank = UseBank.Inline Then
           AnimationEntries = AnimParser.GetAnimations(RamBanks.ZFileBuffer, LimbEntries.Length, 6)
         Else
-          AnimationEntries = AnimParser.GetAnimations(RamBanks.CommonBanks.Anims.Banks(CommonBankUse.AnimBank).Data,
+          AnimationEntries = AnimParser.GetAnimations(RamBanks.CommonBanks.Anims.Banks(RamBanks.CommonBankUse.AnimBank).Data,
                                                       LimbEntries.Length, 6)
         End If
         If AnimationEntries IsNot Nothing Then
