@@ -991,85 +991,15 @@ enddisplaylist:
         End If
       Next
 
-      Select Case .ColorFormat
-        Case ColorFormat.RGBA
-          Select Case .BitSize
-            Case BitSize.S_32B
-              OGLTexImg = N64TexImg
-            Case BitSize.S_16B
-              RGBA.RGBA16(.LoadWidth,
-                          .LoadHeight,
-                          .LineSize,
-                          N64TexImg,
-                          OGLTexImg)
-            Case Else
-              Throw New NotImplementedException()
-          End Select
 
-        Case ColorFormat.CI
-          Select Case .BitSize
-            Case BitSize.S_8B
-              CI.CI8(.LoadWidth,
-                     .LoadHeight,
-                     .LineSize,
-                     N64TexImg,
-                     OGLTexImg,
-                     GetSelectedTileDescriptor(0).Palette32)
-            Case BitSize.S_4B
-              CI.CI4(.LoadWidth,
-                     .LoadHeight,
-                     .LineSize,
-                     N64TexImg,
-                     OGLTexImg,
-                     GetSelectedTileDescriptor(0).Palette32)
-            Case Else
-              Throw New NotImplementedException()
-          End Select
+      Dim converter As TextureConverter.ITextureConverter = TextureConverter.GetConverter(.ColorFormat, .BitSize)
+      converter.Convert(.LoadWidth,
+             .LoadHeight,
+             .LineSize,
+             N64TexImg,
+             OGLTexImg,
+             GetSelectedTileDescriptor(0).Palette32)
 
-        Case ColorFormat.IA
-          Select Case .BitSize
-            Case BitSize.S_16B
-              IA.IA16(.LoadWidth,
-                      .LoadHeight,
-                      .LineSize,
-                      N64TexImg,
-                      OGLTexImg)
-            Case BitSize.S_8B
-              IA.IA8(.LoadWidth,
-                     .LoadHeight,
-                     .LineSize,
-                     N64TexImg,
-                     OGLTexImg)
-            Case BitSize.S_4B
-              IA.IA4(.LoadWidth,
-                     .LoadHeight,
-                     .LineSize,
-                     N64TexImg,
-                     OGLTexImg)
-            Case Else
-              Throw New NotImplementedException()
-          End Select
-
-        Case ColorFormat.I
-          Select Case .BitSize
-            Case BitSize.S_8B
-              I.I8(.LoadWidth,
-                   .LoadHeight,
-                   .LineSize,
-                   N64TexImg,
-                   OGLTexImg)
-            Case BitSize.S_4B
-              I.I4(.LoadWidth,
-                   .LoadHeight,
-                   .LineSize,
-                   N64TexImg,
-                   OGLTexImg)
-            Case Else
-              Throw New NotImplementedException()
-          End Select
-        Case Else
-          Throw New NotImplementedException()
-      End Select
 
       ' Generates texture.
       Gl.glGenTextures(1, .ID)

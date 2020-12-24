@@ -85,12 +85,4 @@ Module GlobalVars
 
 #End Region
 
-#Region "Texture Converter Class Instances"
-
-  Public RGBA As New TextureUpscaler.RGBA
-  Public CI As New TextureUpscaler.CI
-  Public IA As New TextureUpscaler.IA
-  Public I As New TextureUpscaler.I
-
-#End Region
 End Module
