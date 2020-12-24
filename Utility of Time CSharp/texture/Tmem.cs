@@ -320,11 +320,194 @@ namespace UoT {
     }*/
     }
 
+
+    // TODO: The other method passes in "texels", not "lrs"???
     /// <summary>
     ///   Shamelessly copied from GLideN64's source.
     /// </summary>
-    public void LoadBlock(ref TileDescriptor tileDescriptor) {
+    public void LoadBlock(ref TileDescriptor tileDescriptor, uint uls, uint ult, uint lrs, uint dxt, TimgArgs timgArgs) {
+      tileDescriptor.ULS = (int) uls >> 2;
+      tileDescriptor.ULT = (int) ult >> 2;
+      // TODO: This feels like a bug?
+      tileDescriptor.LRS = (int) lrs >> 2;
+      tileDescriptor.LRT = (int) dxt >> 2;
 
+      var fUls = IoUtil.Fixed2Float(uls >> 2, 2);
+      var fUlt = IoUtil.Fixed2Float(ult >> 2, 2);
+      // TODO: This feels like a bug?
+      var fLrs = IoUtil.Fixed2Float(lrs >> 2, 2);
+      var fLrt = IoUtil.Fixed2Float(dxt >> 2, 2);
+
+      var tmem = tileDescriptor.TmemOffset;
+      var colorFormat = tileDescriptor.ColorFormat;
+      var bitSize = tileDescriptor.BitSize;
+
+      /*if (gSP.DMAOffsets.tex_offset != 0) {
+        if (gSP.DMAOffsets.tex_shift % (((lrs >> 2) + 1) << 3)) {
+          gDP.textureImage.address -= gSP.DMAOffsets.tex_shift;
+          gSP.DMAOffsets.tex_offset = 0;
+          gSP.DMAOffsets.tex_shift = 0;
+          gSP.DMAOffsets.tex_count = 0;
+        } else
+          ++gSP.DMAOffsets.tex_count;
+      }*/
+
+      var timgAddress = timgArgs.Address;
+      var timgBitSize = timgArgs.BitSize;
+      var timgWidth = timgArgs.Width;
+      var timgBpl = timgWidth << (int)timgBitSize >> 1;
+
+
+      IoUtil.SplitAddress(timgAddress, out var bank, out var offset);
+      tileDescriptor.ImageBank = (int) bank;
+      tileDescriptor.Offset = (int) offset;
+
+      var texture = this.cache_[tileDescriptor];
+      if (texture != null) {
+        return;
+      }
+
+      /*gDPLoadTileInfo & info = gDP.loadInfo[gDP.loadTile->tmem];
+      info.texAddress = gDP.loadTile->imageAddress;
+      info.uls = static_cast<u16>(gDP.loadTile->uls);
+      info.ult = static_cast<u16>(gDP.loadTile->ult);
+      info.lrs = static_cast<u16>(gDP.loadTile->lrs);
+      info.lrt = static_cast<u16>(gDP.loadTile->lrt);
+      info.width = static_cast<u16>(gDP.loadTile->lrs);
+      info.dxt = dxt;
+      info.size = static_cast<u8>(gDP.textureImage.size);
+      info.loadType = LOADTYPE_BLOCK;*/
+
+      uint width = (lrs - uls + 1) & 0x0FFF;
+      uint bytes = width << (int) bitSize >> 1;
+      if ((bytes & 7) != 0) {
+        bytes = (bytes & (~7U)) + 8;
+      }
+
+      //info.bytes = bytes;
+      uint address = (uint) (timgAddress + ult * timgBpl + (uls << (int) timgBitSize >> 1));
+
+      /*if (bytes == 0 || (address + bytes) > RDRAMSize) {
+        DebugMsg(DEBUG_NORMAL | DEBUG_ERROR, "// Attempting to load texture block out of range\n");
+        DebugMsg(DEBUG_NORMAL, "gDPLoadBlock( %i, %i, %i, %i, %i );\n", tile, uls, ult, lrs, dxt);
+        return;
+      }*/
+
+      /*
+      gDP.loadTile->frameBufferAddress = 0;
+      CheckForFrameBufferTexture(address, info.width, bytes); // Load data to TMEM even if FB texture is found. See comment to texturedRectDepthBufferCopy
+      */
+      /*var texLowerBound = tileDescriptor.TmemOffset;
+      var texUpperBound = texLowerBound + (bytes >> 3);
+      for (var i = 0; i < tile; ++i) {
+        if (gDP.tiles[i].tmem >= texLowerBound && gDP.tiles[i].tmem < texUpperBound) {
+          gDPLoadTileInfo & info = gDP.loadInfo[gDP.tiles[i].tmem];
+          info.loadType = LOADTYPE_BLOCK;
+        }
+      }*/
+
+      var targetBuffer = RamBanks.GetBankByIndex(bank);
+      if (targetBuffer == null) {
+        return;
+      }
+
+      if (bitSize == BitSize.S_32B) {
+        //gDPLoadBlock32(gDP.loadTile->uls, gDP.loadTile->lrs, dxt);
+      } else if (colorFormat == ColorFormat.YUV) {
+        //memcpy(TMEM, &RDRAM[address], bytes); // HACK!
+      } else {
+        uint tmemAddr = tmem;
+        this.UnswapCopyWrap_(targetBuffer, offset, this.impl_, tmemAddr << 3, 0xFFF, bytes);
+        if (dxt != 0) {
+          uint dxtCounter = 0;
+          uint qwords = (bytes >> 3);
+          uint line = 0;
+          while (true) {
+            do {
+              ++tmemAddr;
+              --qwords;
+              if (qwords == 0)
+                goto end_dxt_test;
+              dxtCounter += dxt;
+            } while ((dxtCounter & 0x800) == 0);
+            do {
+              ++line;
+              --qwords;
+              if (qwords == 0)
+                goto end_dxt_test;
+              dxtCounter += dxt;
+            } while ((dxtCounter & 0x800) != 0);
+            this.DWordInterleaveWrap_(this.impl_, tmemAddr << 1, 0x3FF, line);
+            tmemAddr += line;
+            line = 0;
+          }
+          end_dxt_test:
+          
+          this.DWordInterleaveWrap_(this.impl_, tmemAddr << 1, 0x3FF, line);
+        }
+      }
+    }
+
+
+    private void UnswapCopyWrap_(byte[] src, uint srcIdx, byte[] dest, uint destIdx, uint destMask, uint numBytes) {
+      // copy leading bytes
+      uint leadingBytes = srcIdx & 3;
+      if (leadingBytes != 0) {
+        leadingBytes = 4 - leadingBytes;
+        if (leadingBytes > numBytes)
+          leadingBytes = numBytes;
+        numBytes -= leadingBytes;
+
+        srcIdx ^= 3;
+        for (uint i = 0; i<leadingBytes; i++) {
+          dest[destIdx & destMask] = src[srcIdx];
+          ++destIdx;
+          --srcIdx;
+        }
+        srcIdx += 5;
+      }
+
+      // copy dwords
+      int numDWords = (int) numBytes >> 2;
+      while (numDWords-- > 0) {
+        dest[(destIdx + 3) & destMask] = src[srcIdx++];
+        dest[(destIdx + 2) & destMask] = src[srcIdx++];
+        dest[(destIdx + 1) & destMask] = src[srcIdx++];
+        dest[(destIdx + 0) & destMask] = src[srcIdx++];
+        destIdx += 4;
+      }
+
+      // copy trailing bytes
+      int trailingBytes = (int) numBytes & 3;
+      if (trailingBytes > 0) {
+        srcIdx ^= 3;
+        for (int i = 0; i < trailingBytes; i++) {
+          dest[destIdx & destMask] = src[srcIdx];
+          ++destIdx;
+          --srcIdx;
+        }
+      }
+    }
+
+    private void DWordInterleaveWrap_(byte[] src, uint srcIdx, uint srcMask, uint numQWords) {
+      uint p0; 
+      int idx0, idx1;
+      while (numQWords-- > 0) {
+        idx0 = (int) (srcIdx++ & srcMask);
+        idx1 = (int) (srcIdx++ & srcMask);
+
+        // TODO: Original logic was meant for u32, so we need to think in terms
+        // of ints.
+
+        var offset0 = 4 * idx0;
+        var offset1 = 4 * idx1;
+
+        p0 = IoUtil.ReadUInt32(src, (uint) offset0);
+        var p1 = IoUtil.ReadUInt32(src, (uint) offset1);
+
+        IoUtil.WriteInt32(ref src, p1, ref offset0);
+        IoUtil.WriteInt32(ref src, p0, ref offset1);
+      }
     }
   }
 }

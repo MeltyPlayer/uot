@@ -16,7 +16,6 @@ Public Class F3DEX2_Parser
 
   Private N64GeometryMode As UInt32
   Private MultiTexCoord As Boolean = False
-  Private Tmem As New Tmem(Cache)
 
   ''' <summary>
   '''   All 8 tile descriptors available to the given display list.
@@ -26,6 +25,7 @@ Public Class F3DEX2_Parser
   Private TileDescriptors(TILE_DESCRIPTOR_MAX) As TileDescriptor
   Private Const TILE_DESCRIPTOR_MAX = 7
   Private Cache As New TextureCache
+  Private Tmem As New Tmem(Cache)
 
   Private JankTileDescriptors(-1) As TileDescriptor
   Private JankCache As New TextureCache
@@ -588,14 +588,14 @@ enddisplaylist:
   '''   turns over to a new integer, the scanline increments.
   ''' </summary>
   Private Sub LOADBLOCK(w0 As UInt32, w1 As UInt32)
-    Dim uls As UShort = IoUtil.ShiftR(w0, 12, 12) >> 2
-    Dim ult As UShort = IoUtil.ShiftR(w0, 0, 12) >> 2
+    Dim uls As UShort = IoUtil.ShiftR(w0, 12, 12)
+    Dim ult As UShort = IoUtil.ShiftR(w0, 0, 12)
     Dim tileDescriptorIndex As Byte = IoUtil.ShiftR(w1, 24, 3)
-    Dim texels As UShort = IoUtil.ShiftR(w1, 12, 12) + 1
+    Dim texelsMinusOne As UShort = IoUtil.ShiftR(w1, 12, 12)
     Dim dxt As UShort = IoUtil.ShiftR(w1, 0, 12)
 
     Dim tileDescriptor As TileDescriptor = TileDescriptors(tileDescriptorIndex)
-    Tmem.LoadBlock(tileDescriptor)
+    Tmem.LoadBlock(tileDescriptor, uls, ult, texelsMinusOne, dxt, TimgArgs)
     TileDescriptors(tileDescriptorIndex) = tileDescriptor
   End Sub
 
