@@ -16,8 +16,7 @@ Public Class F3DEX2_Parser
 
   Private N64GeometryMode As UInt32
   Private MultiTexCoord As Boolean = False
-  Private TextureCache As New TextureCache
-  Private Tmem As New Tmem(TextureCache)
+  Private Tmem As New Tmem(Cache)
 
   ''' <summary>
   '''   All 8 tile descriptors available to the given display list.
@@ -26,8 +25,10 @@ Public Class F3DEX2_Parser
   ''' </summary>
   Private TileDescriptors(TILE_DESCRIPTOR_MAX) As TileDescriptor
   Private Const TILE_DESCRIPTOR_MAX = 7
+  Private Cache As New TextureCache
 
   Private JankTileDescriptors(-1) As TileDescriptor
+  Private JankCache As New TextureCache
 
   ' TODO: Support the second texture being a mipmap in LOD mode.
   ' TODO: Figure out and document how tile selectors are selected.
@@ -69,7 +70,6 @@ Public Class F3DEX2_Parser
   Private n0 As Byte = 0
   Private EnableLighting As Boolean = True
   Private VertexCache As N64Vertex
-  Private CycleMode As Integer = 0
   Private FullAlphaCombiner As Boolean = False
   Private ModColorWithAlpha As Boolean = False
 
@@ -130,7 +130,7 @@ loadtexturelut:
 
             Case RDP.G_LOADBLOCK
 loadtexblock:
-              LOADBLOCK()
+              LOADBLOCK(.CMDLow, .CMDHigh)
 
             Case RDP.G_LOADTILE
               LOADTILE(.CMDLow, .CMDHigh)
@@ -389,7 +389,7 @@ enddisplaylist:
     Dim MDSFT As Byte = (32 - (w0 << 4 >> 4) - 1)
     Select Case MDSFT
       Case RDP.G_MDSFT_CYCLETYPE
-        CycleMode = w1 >> RDP.G_MDSFT_CYCLETYPE
+        Gdp.CycleMode = w1 >> RDP.G_MDSFT_CYCLETYPE
       Case Else
     End Select
   End Sub
@@ -495,7 +495,7 @@ enddisplaylist:
   End Sub
 
   Private Function SearchTexCache(ByVal tileDescriptor As TileDescriptor) As Texture
-    Return TextureCache(tileDescriptor)
+    Return JankCache(tileDescriptor)
   End Function
 
   Private Sub VTX(ByVal w0 As UInt32, ByVal w1 As UInt32)
@@ -587,7 +587,16 @@ enddisplaylist:
   '''   which a counter is increased per 64 bits read. Every time this counter
   '''   turns over to a new integer, the scanline increments.
   ''' </summary>
-  Private Sub LOADBLOCK()
+  Private Sub LOADBLOCK(w0 As UInt32, w1 As UInt32)
+    Dim uls As UShort = IoUtil.ShiftR(w0, 12, 12) >> 2
+    Dim ult As UShort = IoUtil.ShiftR(w0, 0, 12) >> 2
+    Dim tileDescriptorIndex As Byte = IoUtil.ShiftR(w1, 24, 3)
+    Dim texels As UShort = IoUtil.ShiftR(w1, 12, 12) + 1
+    Dim dxt As UShort = IoUtil.ShiftR(w1, 0, 12)
+
+    Dim tileDescriptor As TileDescriptor = TileDescriptors(tileDescriptorIndex)
+    Tmem.LoadBlock(tileDescriptor)
+    TileDescriptors(tileDescriptorIndex) = tileDescriptor
   End Sub
 
   ''' <summary>
@@ -1103,7 +1112,7 @@ enddisplaylist:
       Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MIN_FILTER, Gl.GL_LINEAR_MIPMAP_LINEAR)
       Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MAG_FILTER, Gl.GL_LINEAR_MIPMAP_LINEAR)
 
-      TextureCache.Add(tileDescriptor, OGLTexImg)
+      JankCache.Add(tileDescriptor, OGLTexImg)
     End With
   End Function
 
@@ -1480,7 +1489,8 @@ enddisplaylist:
   End Sub
 
   Public Sub KillTexCache()
-    TextureCache.Clear()
+    Cache.Clear()
+    JankCache.Clear()
   End Sub
 
   Public Sub Reset()

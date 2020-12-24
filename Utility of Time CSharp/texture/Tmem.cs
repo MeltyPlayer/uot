@@ -22,7 +22,8 @@ namespace UoT {
     /// <summary>
     ///   Shamelessly copied from GLideN64's source.
     /// </summary>
-    public void LoadTile(ref TileDescriptor tileDescriptor,
+    public void LoadTile(
+        ref TileDescriptor tileDescriptor,
         ushort uls,
         ushort ult,
         ushort lrs,
@@ -45,8 +46,9 @@ namespace UoT {
       var timgImageAddress = timgArgs.Address;
       var timgBitSize = timgArgs.BitSize;
       var timgWidth = timgArgs.Width;
-      var timgBpl = timgWidth << (int) timgBitSize >> 1; 
+      var timgBpl = timgWidth << (int) timgBitSize >> 1;
 
+      var tmem = tileDescriptor.TmemOffset;
       var line = tileDescriptor.LineSize;
       var maskS = tileDescriptor.MaskS;
       var maskT = tileDescriptor.MaskT;
@@ -95,12 +97,12 @@ namespace UoT {
       // Start doing the loading.
       var infoTexAddress = timgImageAddress;
       var infoWidth = (ushort) (maskS != 0
-                                             ? Math.Min(width, 1U << maskS)
-                                             : width);
+                                    ? Math.Min(width, 1U << maskS)
+                                    : width);
       var infoHeight = (ushort) (maskT != 0
-                                              ? Math.Min(height,
-                                                    1U << maskT)
-                                              : height);
+                                     ? Math.Min(height,
+                                                1U << maskT)
+                                     : height);
       var infoTexWidth = timgWidth;
       var infoSize = timgBitSize;
       var infoBytes = bpl * height;
@@ -119,14 +121,15 @@ namespace UoT {
             Math.Max(tileDescriptor.LoadWidth, infoWidth);
       }
       if (maskT == 0) {
-        /*if (gDP.otherMode.cycleType != G_CYC_2CYCLE &&
-            gDP.loadTile->tmem % gDP.loadTile->line == 0) {
-          u16 theight =
-              static_cast<u16>(info.height +
-                               gDP.loadTile->tmem / gDP.loadTile->line);
-          gDP.loadTile->loadHeight = max(gDP.loadTile->loadHeight, theight);
-        } else
-          gDP.loadTile->loadHeight = max(gDP.loadTile->loadHeight, info.height);*/
+        if (Gdp.CycleMode != (int) RdpCycleMode.G_CYC_2CYCLE &&
+            tmem % line == 0) {
+          var theight = (ushort) (infoHeight + tmem / line);
+          tileDescriptor.LoadHeight =
+              Math.Max(tileDescriptor.LoadHeight, theight);
+        } else {
+          tileDescriptor.LoadHeight =
+              Math.Max(tileDescriptor.LoadHeight, infoHeight);
+        }
       }
 
       var address = timgImageAddress +
@@ -148,6 +151,7 @@ namespace UoT {
       if (timgBitSize == BitSize.S_32B) {
         this.LoadTile32b_(ref tileDescriptor, timgArgs);
       } else {
+        ;
         /*u32 tmemAddr = gDP.loadTile->tmem;
         const u32 line = gDP.loadTile->line;
         const u32 qwpr = bpr >> 3;
@@ -183,7 +187,9 @@ namespace UoT {
     /// <summary>
     ///   Shamelessly copied from GLideN64's source.
     /// </summary>
-    private void LoadTile32b_(ref TileDescriptor tileDescriptor, TimgArgs timgArgs) {
+    private void LoadTile32b_(
+        ref TileDescriptor tileDescriptor,
+        TimgArgs timgArgs) {
       var uls = tileDescriptor.ULS;
       var ult = tileDescriptor.ULT;
       var lrs = tileDescriptor.LRS;
@@ -205,11 +211,11 @@ namespace UoT {
         var tline = tbase + line * j;
         var s = ((j + ult) * timgWidth) + uls;
         var xorval = (j & 1) != 0 ? 3 : 1;
-        
+
         for (var i = 0; i < width; ++i) {
           var addr = offset + s + i;
           var c = IoUtil.ReadUInt32(targetBank, (uint) (4 * addr));
-          
+
           var ptr = ((tline + i) ^ xorval) & 0x3ff;
 
           var offset1 = 2 * ptr;
@@ -224,7 +230,8 @@ namespace UoT {
     /// <summary>
     ///   Shamelessly copied from GLideN64's source.
     /// </summary>
-    private void CalcTileSize(ref TileDescriptor tileDescriptor) { //, TileSizes &_sizes, gDPTile* _pLoadTile) {
+    private void CalcTileSize(ref TileDescriptor tileDescriptor) {
+      //, TileSizes &_sizes, gDPTile* _pLoadTile) {
       /*gDPTile* pTile = _t < 2 ? gSP.textureTile[_t] : &gDP.tiles[_t];
       pTile->masks = pTile->originalMaskS;
       pTile->maskt = pTile->originalMaskT;
@@ -311,6 +318,13 @@ namespace UoT {
               _sizes.clampHeight :
               height;
     }*/
+    }
+
+    /// <summary>
+    ///   Shamelessly copied from GLideN64's source.
+    /// </summary>
+    public void LoadBlock(ref TileDescriptor tileDescriptor) {
+
     }
   }
 }

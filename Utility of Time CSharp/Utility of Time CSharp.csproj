@@ -65,6 +65,7 @@
     <Compile Include="displaylist\DlManager.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="gl\GLExtensions.cs" />
+    <Compile Include="graphics\Gdp.cs" />
     <Compile Include="helpers\BetterFilenames.cs" />
     <Compile Include="gl\ModelViewMatrixTransformer.cs" />
     <Compile Include="helpers\IoUtil.cs" />
@@ -110,5 +111,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

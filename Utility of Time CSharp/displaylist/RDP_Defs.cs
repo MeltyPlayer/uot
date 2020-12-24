@@ -99,6 +99,11 @@
     G_ACMUX_0 = 7
   }
 
+  public enum RdpCycleMode {
+    G_CYC_1CYCLE = 0,
+    G_CYC_2CYCLE = 1,
+  }
+
   public static class RDP_Defs {
     public static double[] FIXED2FLOATRECIP = {
         0.5d, 0.25d, 0.125d, 0.0625d, 0.03125d, 0.015625d, 0.0078125d,
