@@ -20,6 +20,7 @@
     public double TextureHRatio;
     public double TextureWRatio;
     public uint TexBytes;
+    public int Address;
     public int ImageBank;
     public ushort TmemOffset;
     public byte Palette;
@@ -50,13 +51,6 @@
     public uint OGLTexObj;
     public Color4UByte[] Palette32;
 
-    public long Uuid {
-      get {
-        long offset = this.Offset;
-        long imageBank = this.ImageBank;
-
-        return offset << 32 | imageBank;
-      }
-    }
+    public long Uuid => this.Address;
   }
 }

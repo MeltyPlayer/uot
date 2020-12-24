@@ -365,6 +365,7 @@ namespace UoT {
 
 
       IoUtil.SplitAddress(timgAddress, out var bank, out var offset);
+      tileDescriptor.Address = (int) timgAddress;
       tileDescriptor.ImageBank = (int) bank;
       tileDescriptor.Offset = (int) offset;
 
@@ -451,6 +452,7 @@ namespace UoT {
           this.impl_[i] = targetBuffer[specOffset + i];
         }
 
+        // TODO: Figure out what the heck this stuff below does.
         /*this.UnswapCopyWrap_(targetBuffer,
                              specOffset,
                              this.impl_,

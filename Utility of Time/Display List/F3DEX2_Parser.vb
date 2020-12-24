@@ -729,6 +729,7 @@ enddisplaylist:
       SetSelectedTileDescriptor(0, tileDescriptor)
     Else
       Dim tileDescriptor As TileDescriptor = GetSelectedTileDescriptor(CurrentSelectedTileDescriptor)
+      tileDescriptor.Address = address
       tileDescriptor.Offset = tmpOff
       tileDescriptor.ImageBank = tmpBank
       SetSelectedTileDescriptor(CurrentSelectedTileDescriptor, tileDescriptor)
