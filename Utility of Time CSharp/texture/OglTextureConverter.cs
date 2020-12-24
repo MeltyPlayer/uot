@@ -6,11 +6,7 @@ namespace UoT {
     public void GenerateAndAddToCache(byte[] data, int offset, ref TileDescriptor tileDescriptor, Color4UByte[] palette32, TextureCache cache, bool save = false) {
       var OGLTexImg = new byte[] { 0, 0xFF, 0, 0 };
 
-      if (tileDescriptor.Uuid == 43774306680838) {
-        ;
-      }
-
-        var converter = TextureConverter.GetConverter(tileDescriptor.ColorFormat, tileDescriptor.BitSize);
+      var converter = TextureConverter.GetConverter(tileDescriptor.ColorFormat, tileDescriptor.BitSize);
       converter.Convert((uint)tileDescriptor.LoadWidth, (uint)tileDescriptor.LoadHeight, (uint)tileDescriptor.LineSize, data, offset, ref OGLTexImg, palette32);
 
 

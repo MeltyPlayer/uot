@@ -400,12 +400,6 @@ namespace UoT {
         bytes = (bytes & (~7U)) + 8;
       }
 
-      if (tileDescriptor.Uuid == 43774306680838) {
-        //throw new Exception();
-      } else {
-        return;
-      }
-
       tileDescriptor.TexBytes = bytes;
       tileDescriptor.LoadWidth = width;
       tileDescriptor.LoadHeight = height;
@@ -446,8 +440,6 @@ namespace UoT {
       if (targetBuffer == null) {
         return;
       }
-
-      bytes <<= 3;
 
       uint tmemAddr = tmem;
       if (bitSize == BitSize.S_32B) {
