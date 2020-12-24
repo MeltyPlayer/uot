@@ -975,75 +975,11 @@ enddisplaylist:
 
   Private Function LoadTex(ByVal Data() As Byte, ByVal ID As UInteger) As Integer
     Dim tileDescriptor As TileDescriptor = GetSelectedTileDescriptor(ID)
-    With tileDescriptor
-      Dim SourceBank As Integer = .ImageBank
-      Dim Offset As UInteger = .Offset
-      Dim Size As UInteger = .TexBytes
 
-      Dim N64TexImg(Size) As Byte
-      Dim OGLTexImg() As Byte = {0, &HFF, 0, 0}
+    Dim generator As New OglTextureConverter
+    generator.GenerateAndAddToCache(Data, tileDescriptor.Offset, tileDescriptor, GetSelectedTileDescriptor(0).Palette32, JankCache)
 
-      For i2 As Integer = 0 To (Size) - 1
-        If Offset + i2 < Data.Length Then
-          N64TexImg(i2) = Data(Offset + i2)
-        Else
-          Exit For
-        End If
-      Next
-
-
-      Dim converter As TextureConverter.ITextureConverter = TextureConverter.GetConverter(.ColorFormat, .BitSize)
-      converter.Convert(.LoadWidth,
-             .LoadHeight,
-             .LineSize,
-             N64TexImg,
-             OGLTexImg,
-             GetSelectedTileDescriptor(0).Palette32)
-
-
-      ' Generates texture.
-      Gl.glGenTextures(1, .ID)
-      Gl.glBindTexture(Gl.GL_TEXTURE_2D, .ID)
-
-      ' Puts pixels into texture.
-      Gl.glTexImage2D(Gl.GL_TEXTURE_2D, 0, Gl.GL_RGBA, .LoadWidth, .LoadHeight, 0, Gl.GL_RGBA,
-                      Gl.GL_UNSIGNED_BYTE, OGLTexImg)
-      Glu.gluBuild2DMipmaps(Gl.GL_TEXTURE_2D, Gl.GL_RGBA, .LoadWidth, .LoadHeight, Gl.GL_RGBA,
-                            Gl.GL_UNSIGNED_BYTE, OGLTexImg)
-
-      ' Sets texture parameters.
-      Select Case .CMS
-        Case RDP.G_TX_CLAMP, 3
-          Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_WRAP_S, Gl.GL_CLAMP_TO_EDGE)
-        Case RDP.G_TX_MIRROR
-          Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_WRAP_S, Gl.GL_MIRRORED_REPEAT)
-        Case RDP.G_TX_WRAP
-          Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_WRAP_S, Gl.GL_REPEAT)
-        Case Else
-          Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_WRAP_S, Gl.GL_REPEAT)
-      End Select
-      Select Case .CMT
-        Case RDP.G_TX_CLAMP, 3
-          Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_WRAP_T, Gl.GL_CLAMP_TO_EDGE)
-        Case RDP.G_TX_MIRROR
-          Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_WRAP_T, Gl.GL_MIRRORED_REPEAT)
-        Case RDP.G_TX_WRAP
-          Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_WRAP_T, Gl.GL_REPEAT)
-        Case Else
-          Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_WRAP_T, Gl.GL_REPEAT)
-      End Select
-
-      If RenderToggles.Anisotropic Then
-        Gl.glTexParameterf(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MAX_ANISOTROPY_EXT,
-                           GLExtensions.AnisotropicSamples(GLExtensions.AnisotropicSamples.Length - 1))
-      Else
-        Gl.glTexParameterf(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MAX_ANISOTROPY_EXT, 1.0)
-      End If
-      Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MIN_FILTER, Gl.GL_LINEAR_MIPMAP_LINEAR)
-      Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MAG_FILTER, Gl.GL_LINEAR_MIPMAP_LINEAR)
-
-      JankCache.Add(tileDescriptor, OGLTexImg)
-    End With
+    SetSelectedTileDescriptor(ID, tileDescriptor)
   End Function
 
   Private Sub TEXTURE(w0 As UInt32, w1 As UInt32)
