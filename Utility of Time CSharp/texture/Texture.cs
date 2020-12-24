@@ -43,8 +43,8 @@ namespace UoT {
         return;
       }
 
-      var width = this.TileDescriptor.RealWidth;
-      var height = this.TileDescriptor.RealHeight;
+      var width = this.TileDescriptor.LoadWidth;
+      var height = this.TileDescriptor.LoadHeight;
 
       var rgba = this.rgba_;
 

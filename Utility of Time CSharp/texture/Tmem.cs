@@ -115,8 +115,8 @@ namespace UoT {
       }
 
       if (maskS == 0) {
-        tileDescriptor.RealWidth =
-            Math.Max(tileDescriptor.RealWidth, infoWidth);
+        tileDescriptor.LoadWidth =
+            Math.Max(tileDescriptor.LoadWidth, infoWidth);
       }
       if (maskT == 0) {
         /*if (gDP.otherMode.cycleType != G_CYC_2CYCLE &&

@@ -547,7 +547,7 @@ enddisplaylist:
           Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2)
         End If
       Else
-          texture0.Bind()
+        texture0.Bind()
       End If
 
       If MultiTexture Then
@@ -754,8 +754,8 @@ enddisplaylist:
       .Palette = IoUtil.ShiftR(w1, 20, 4)
       .CMT = IoUtil.ShiftR(w1, 18, 2)
       .CMS = IoUtil.ShiftR(w1, 8, 2)
-      .MaskS = IoUtil.ShiftR(w1, 4, 4)
-      .MaskT = IoUtil.ShiftR(w1, 14, 4)
+      .MaskS = .OriginalMaskS = IoUtil.ShiftR(w1, 4, 4)
+      .MaskT = .OriginalMaskT = IoUtil.ShiftR(w1, 14, 4)
       .TShiftS = IoUtil.ShiftR(w1, 0, 4)
       .TShiftT = IoUtil.ShiftR(w1, 10, 4)
     End With
@@ -877,19 +877,19 @@ enddisplaylist:
       End If
 
       If .CMS = 2 Or .CMS = 3 Then
-        .RealWidth = FunctionsCs.Pow2(Clamp_Width)
+        .LoadWidth = FunctionsCs.Pow2(Clamp_Width)
       ElseIf .CMS = 1 Then
-        .RealWidth = FunctionsCs.Pow2(Mask_Width)
+        .LoadWidth = FunctionsCs.Pow2(Mask_Width)
       Else
-        .RealWidth = FunctionsCs.Pow2(.Width)
+        .LoadWidth = FunctionsCs.Pow2(.Width)
       End If
 
       If .CMT = 2 Or .CMT = 3 Then
-        .RealHeight = FunctionsCs.Pow2(Clamp_Height)
+        .LoadHeight = FunctionsCs.Pow2(Clamp_Height)
       ElseIf .CMT = 1 Then
-        .RealHeight = FunctionsCs.Pow2(Mask_Height)
+        .LoadHeight = FunctionsCs.Pow2(Mask_Height)
       Else
-        .RealHeight = FunctionsCs.Pow2(.Height)
+        .LoadHeight = FunctionsCs.Pow2(.Height)
       End If
 
       .ShiftS = 1.0F
@@ -907,8 +907,8 @@ enddisplaylist:
         .ShiftT /= (1 << .TShiftT)
       End If
 
-      .TextureHRatio = ((.T_Scale * .ShiftT) / 32 / .RealHeight)
-      .TextureWRatio = ((.S_Scale * .ShiftS) / 32 / .RealWidth)
+      .TextureHRatio = ((.T_Scale * .ShiftT) / 32 / .LoadHeight)
+      .TextureWRatio = ((.S_Scale * .ShiftS) / 32 / .LoadWidth)
     End With
   End Sub
 
@@ -981,8 +981,8 @@ enddisplaylist:
             Case BitSize.S_32B
               OGLTexImg = N64TexImg
             Case BitSize.S_16B
-              RGBA.RGBA16(.RealWidth,
-                          .RealHeight,
+              RGBA.RGBA16(.LoadWidth,
+                          .LoadHeight,
                           .LineSize,
                           N64TexImg,
                           OGLTexImg)
@@ -993,15 +993,15 @@ enddisplaylist:
         Case ColorFormat.CI
           Select Case .BitSize
             Case BitSize.S_8B
-              CI.CI8(.RealWidth,
-                     .RealHeight,
+              CI.CI8(.LoadWidth,
+                     .LoadHeight,
                      .LineSize,
                      N64TexImg,
                      OGLTexImg,
                      GetSelectedTileDescriptor(0).Palette32)
             Case BitSize.S_4B
-              CI.CI4(.RealWidth,
-                     .RealHeight,
+              CI.CI4(.LoadWidth,
+                     .LoadHeight,
                      .LineSize,
                      N64TexImg,
                      OGLTexImg,
@@ -1013,20 +1013,20 @@ enddisplaylist:
         Case ColorFormat.IA
           Select Case .BitSize
             Case BitSize.S_16B
-              IA.IA16(.RealWidth,
-                      .RealHeight,
+              IA.IA16(.LoadWidth,
+                      .LoadHeight,
                       .LineSize,
                       N64TexImg,
                       OGLTexImg)
             Case BitSize.S_8B
-              IA.IA8(.RealWidth,
-                     .RealHeight,
+              IA.IA8(.LoadWidth,
+                     .LoadHeight,
                      .LineSize,
                      N64TexImg,
                      OGLTexImg)
             Case BitSize.S_4B
-              IA.IA4(.RealWidth,
-                     .RealHeight,
+              IA.IA4(.LoadWidth,
+                     .LoadHeight,
                      .LineSize,
                      N64TexImg,
                      OGLTexImg)
@@ -1037,14 +1037,14 @@ enddisplaylist:
         Case ColorFormat.I
           Select Case .BitSize
             Case BitSize.S_8B
-              I.I8(.RealWidth,
-                   .RealHeight,
+              I.I8(.LoadWidth,
+                   .LoadHeight,
                    .LineSize,
                    N64TexImg,
                    OGLTexImg)
             Case BitSize.S_4B
-              I.I4(.RealWidth,
-                   .RealHeight,
+              I.I4(.LoadWidth,
+                   .LoadHeight,
                    .LineSize,
                    N64TexImg,
                    OGLTexImg)
@@ -1060,9 +1060,9 @@ enddisplaylist:
       Gl.glBindTexture(Gl.GL_TEXTURE_2D, .ID)
 
       ' Puts pixels into texture.
-      Gl.glTexImage2D(Gl.GL_TEXTURE_2D, 0, Gl.GL_RGBA, .RealWidth, .RealHeight, 0, Gl.GL_RGBA,
+      Gl.glTexImage2D(Gl.GL_TEXTURE_2D, 0, Gl.GL_RGBA, .LoadWidth, .LoadHeight, 0, Gl.GL_RGBA,
                       Gl.GL_UNSIGNED_BYTE, OGLTexImg)
-      Glu.gluBuild2DMipmaps(Gl.GL_TEXTURE_2D, Gl.GL_RGBA, .RealWidth, .RealHeight, Gl.GL_RGBA,
+      Glu.gluBuild2DMipmaps(Gl.GL_TEXTURE_2D, Gl.GL_RGBA, .LoadWidth, .LoadHeight, Gl.GL_RGBA,
                             Gl.GL_UNSIGNED_BYTE, OGLTexImg)
 
       ' Sets texture parameters.

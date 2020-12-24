@@ -15,8 +15,8 @@
     public int DXT;
     public int Height;
     public int Width;
-    public int RealWidth;
-    public int RealHeight;
+    public int LoadWidth;
+    public int LoadHeight;
     public double TextureHRatio;
     public double TextureWRatio;
     public uint TexBytes;
@@ -38,6 +38,8 @@
     public double ShiftT;
     public double TShiftS;
     public double TShiftT;
+    public int OriginalMaskS;
+    public int OriginalMaskT;
     public int MaskS;
     public int MaskT;
     public int LineSize;
