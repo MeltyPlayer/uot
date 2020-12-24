@@ -3,22 +3,15 @@
 namespace UoT {
   // TODO: Come up w/ better name.
   public class OglTextureConverter {
-    public void GenerateAndAddToCache(byte[] data, uint offset, ref TileDescriptor tileDescriptor, Color4UByte[] palette32, TextureCache cache, bool save = false) {
-      uint Size = tileDescriptor.TexBytes;
-      var N64TexImg = new byte[(int)(Size + 1)];
+    public void GenerateAndAddToCache(byte[] data, int offset, ref TileDescriptor tileDescriptor, Color4UByte[] palette32, TextureCache cache, bool save = false) {
       var OGLTexImg = new byte[] { 0, 0xFF, 0, 0 };
 
-      for (var i = 0; i < Size; ++i) {
-        if (offset + i < data.Length) {
-          N64TexImg[i] = data[(int)(offset + i)];
-        } else {
-          // TODO: This should throw an error.
-          break;
-        }
+      if (tileDescriptor.Uuid == 43774306680838) {
+        ;
       }
 
-      var converter = TextureConverter.GetConverter(tileDescriptor.ColorFormat, tileDescriptor.BitSize);
-      converter.Convert((uint)tileDescriptor.LoadWidth, (uint)tileDescriptor.LoadHeight, (uint)tileDescriptor.LineSize, N64TexImg, ref OGLTexImg, palette32);
+        var converter = TextureConverter.GetConverter(tileDescriptor.ColorFormat, tileDescriptor.BitSize);
+      converter.Convert((uint)tileDescriptor.LoadWidth, (uint)tileDescriptor.LoadHeight, (uint)tileDescriptor.LineSize, data, offset, ref OGLTexImg, palette32);
 
 
       // Generates texture.

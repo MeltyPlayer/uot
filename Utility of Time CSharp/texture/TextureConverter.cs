@@ -4,10 +4,6 @@ using Microsoft.VisualBasic.CompilerServices;
 
 namespace UoT {
   public class TextureConverter {
-    private static int SourceTexPos = 0;
-    private static int DestTexPos = 0;
-
-
     public static ITextureConverter GetConverter(
         ColorFormat colorFormat,
         BitSize bitSize) {
@@ -67,6 +63,7 @@ namespace UoT {
           uint Height,
           uint LineSize,
           byte[] SourceImg,
+          int sourceOffset,
           ref byte[] DestImg,
           Color4UByte[] Palette);
     }
@@ -77,8 +74,11 @@ namespace UoT {
           uint Height,
           uint LineSize,
           byte[] SourceImg,
+          int SourceTexPos,
           ref byte[] DestImg,
           Color4UByte[] _) {
+        var DestTexPos = 0;
+
         ushort RGBA5551 = 0;
         DestImg = new byte[(int) (Width * Height * 8L + 1)];
         for (var i = 0; i < Height; ++i) {
@@ -97,9 +97,6 @@ namespace UoT {
 
           SourceTexPos = (int) (SourceTexPos + (LineSize * 4L - Width));
         }
-
-        SourceTexPos = 0;
-        DestTexPos = 0;
       }
     }
 
@@ -115,8 +112,11 @@ namespace UoT {
           uint Height,
           uint LineSize,
           byte[] SourceImg,
+          int SourceTexPos,
           ref byte[] DestImg,
           Color4UByte[] Palette) {
+        var DestTexPos = 0;
+
         DestImg = new byte[(int) (Width * Height * 8L + 1)];
         for (var i = 0; i < Height; ++i) {
           for (var j = 0; j < Width; ++j) {
@@ -131,9 +131,6 @@ namespace UoT {
 
           SourceTexPos = (int) (SourceTexPos + (LineSize * 8L - Width));
         }
-
-        SourceTexPos = 0;
-        DestTexPos = 0;
       }
     }
 
@@ -145,8 +142,11 @@ namespace UoT {
           uint Height,
           uint LineSize,
           byte[] SourceImg,
+          int SourceTexPos,
           ref byte[] DestImg,
           Color4UByte[] Palette) {
+        var DestTexPos = 0;
+
         DestImg = new byte[(int) (Width * Height * 8L + 1)];
         for (int i = 0, loopTo = (int) (Height - 1L); i <= loopTo; i++) {
           for (int j = 0, loopTo1 = (int) (Width / 2L - 1L);
@@ -171,9 +171,6 @@ namespace UoT {
 
           SourceTexPos = (int) (SourceTexPos + (LineSize * 8L - Width / 2L));
         }
-
-        SourceTexPos = 0;
-        DestTexPos = 0;
       }
     }
 
@@ -186,8 +183,11 @@ namespace UoT {
           uint Height,
           uint LineSize,
           byte[] SourceImg,
+          int SourceTexPos,
           ref byte[] DestImg,
           Color4UByte[] _) {
+        var DestTexPos = 0;
+
         DestImg = new byte[(int) (Width * Height * 8L + 1)];
         for (int i = 0, loopTo = (int) (Height - 1L); i <= loopTo; i++) {
           for (int j = 0, loopTo1 = (int) (Width - 1L); j <= loopTo1; j++) {
@@ -203,9 +203,6 @@ namespace UoT {
 
           SourceTexPos = (int) (SourceTexPos + (LineSize * 8L - Width));
         }
-
-        SourceTexPos = 0;
-        DestTexPos = 0;
       }
     }
 
@@ -217,8 +214,11 @@ namespace UoT {
           uint Height,
           uint LineSize,
           byte[] SourceImg,
+          int SourceTexPos,
           ref byte[] DestImg,
           Color4UByte[] _) {
+        var DestTexPos = 0;
+
         DestImg = new byte[(int) (Width * Height * 8L + 1)];
         for (int i = 0, loopTo = (int) (Height - 1L); i <= loopTo; i++) {
           for (int j = 0, loopTo1 = (int) (Width / 2L - 1L);
@@ -246,9 +246,6 @@ namespace UoT {
 
           SourceTexPos = (int) (SourceTexPos + (LineSize * 8L - Width / 2L));
         }
-
-        SourceTexPos = 0;
-        DestTexPos = 0;
       }
     }
 
@@ -261,8 +258,11 @@ namespace UoT {
           uint Height,
           uint LineSize,
           byte[] SourceImg,
+          int SourceTexPos,
           ref byte[] DestImg,
           Color4UByte[] _) {
+        var DestTexPos = 0;
+
         DestImg = new byte[(int) (Width * Height * 8L + 1)];
         for (int i = 0, loopTo = (int) (Height - 1L); i <= loopTo; i++) {
           for (int j = 0, loopTo1 = (int) (Width - 1L); j <= loopTo1; j++) {
@@ -278,9 +278,6 @@ namespace UoT {
 
           SourceTexPos = (int) (SourceTexPos + (LineSize * 4L - Width));
         }
-
-        SourceTexPos = 0;
-        DestTexPos = 0;
       }
     }
 
@@ -292,8 +289,11 @@ namespace UoT {
           uint Height,
           uint LineSize,
           byte[] SourceImg,
+          int SourceTexPos,
           ref byte[] DestImg,
           Color4UByte[] _) {
+        var DestTexPos = 0;
+
         DestImg = new byte[(int) (Width * Height * 8L + 1)];
         for (int i = 0, loopTo = (int) (Height - 1L); i <= loopTo; i++) {
           for (int j = 0, loopTo1 = (int) (Width - 1L); j <= loopTo1; j++) {
@@ -314,9 +314,6 @@ namespace UoT {
 
           SourceTexPos = (int) (SourceTexPos + (LineSize * 8L - Width));
         }
-
-        SourceTexPos = 0;
-        DestTexPos = 0;
       }
     }
 
@@ -328,8 +325,11 @@ namespace UoT {
           uint Height,
           uint LineSize,
           byte[] SourceImg,
+          int SourceTexPos,
           ref byte[] DestImg,
           Color4UByte[] _) {
+        var DestTexPos = 0;
+
         DestImg = new byte[(int) (Width * Height * 8L + 1)];
         for (int i = 0, loopTo = (int) (Height - 1L); i <= loopTo; i++) {
           for (int j = 0, loopTo1 = (int) (Width / 2L - 1L);
@@ -367,9 +367,6 @@ namespace UoT {
 
           SourceTexPos = (int) (SourceTexPos + (LineSize * 8L - Width / 2L));
         }
-
-        SourceTexPos = 0;
-        DestTexPos = 0;
       }
     }
   }

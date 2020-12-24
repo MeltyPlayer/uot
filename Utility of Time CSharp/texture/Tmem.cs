@@ -410,6 +410,9 @@ namespace UoT {
       tileDescriptor.LoadWidth = width;
       tileDescriptor.LoadHeight = height;
 
+      // TODO: How is this set?
+      tileDescriptor.LineSize = width << (int)bitSize >> 1 >> 3;
+
 
 
       //info.bytes = bytes;
@@ -444,19 +447,25 @@ namespace UoT {
         return;
       }
 
+      bytes <<= 3;
+
       uint tmemAddr = tmem;
       if (bitSize == BitSize.S_32B) {
         //gDPLoadBlock32(gDP.loadTile->uls, gDP.loadTile->lrs, dxt);
       } else if (colorFormat == ColorFormat.YUV) {
         //memcpy(TMEM, &RDRAM[address], bytes); // HACK!
       } else {
-        this.UnswapCopyWrap_(targetBuffer,
+        for (var i = 0; i < bytes; ++i) {
+          this.impl_[i] = targetBuffer[specOffset + i];
+        }
+
+        /*this.UnswapCopyWrap_(targetBuffer,
                              specOffset,
                              this.impl_,
                              tmemAddr << 3,
                              0xFFF,
-                             bytes);
-        if (dxt != 0) {
+                             bytes);*/
+        /*if (dxt != 0) {
           uint dxtCounter = 0;
           uint qwords = (bytes >> 3);
           uint line = 0;
@@ -482,12 +491,12 @@ namespace UoT {
           end_dxt_test:
 
           this.DWordInterleaveWrap_(this.impl_, tmemAddr << 1, 0x3FF, line);
-        }
+        }*/
       }
 
       var generator = new OglTextureConverter();
       generator.GenerateAndAddToCache(this.impl_,
-                                      (uint) tmem << 3,
+                                      tmem << 3,
                                       ref tileDescriptor,
                                       tileDescriptor.Palette32,
                                       this.cache_,
