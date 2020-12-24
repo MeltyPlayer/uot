@@ -600,14 +600,14 @@ enddisplaylist:
   '''   an upper-left coordinate and lower-right coordinate.
   ''' </summary>
   Private Sub LOADTILE(w0 As UInt32, w1 As UInt32)
-    Dim uls As UShort = IoUtil.ShiftR(w0, 12, 12)
-    Dim ult As UShort = IoUtil.ShiftR(w0, 0, 12)
+    Dim uls As UShort = IoUtil.ShiftR(w0, 12, 12) >> 2
+    Dim ult As UShort = IoUtil.ShiftR(w0, 0, 12) >> 2
     Dim tileDescriptorIndex As Byte = IoUtil.ShiftR(w1, 24, 3)
-    Dim lrs As UShort = IoUtil.ShiftR(w1, 12, 12)
-    Dim lrt As UShort = IoUtil.ShiftR(w1, 0, 12)
+    Dim lrs As UShort = IoUtil.ShiftR(w1, 12, 12) >> 2
+    Dim lrt As UShort = IoUtil.ShiftR(w1, 0, 12) >> 2
 
     Dim tileDescriptor As TileDescriptor = TileDescriptors(tileDescriptorIndex)
-    tileDescriptor = Tmem.LoadTile(tileDescriptor, uls, ult, lrs, lrt, TimgArgs)
+    Tmem.LoadTile(tileDescriptor, uls, ult, lrs, lrt, TimgArgs)
     TileDescriptors(tileDescriptorIndex) = tileDescriptor
   End Sub
 
