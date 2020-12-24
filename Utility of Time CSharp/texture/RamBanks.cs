@@ -10,7 +10,7 @@ namespace UoT {
 
     public static ObjectExchange CommonBanks { get; set; }
 
-    public static byte[] GetBankByIndex(int bankIndex) {
+    public static byte[] GetBankByIndex(uint bankIndex) {
       if (bankIndex == RamBanks.CurrentBank) {
         return RamBanks.ZFileBuffer;
       }

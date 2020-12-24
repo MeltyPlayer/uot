@@ -1,4 +1,6 @@
-﻿namespace UoT {
+﻿using System;
+
+namespace UoT {
   public static class IoUtil {
     public static void SplitAddress(uint address, out uint bank, out uint offset) {
       bank = address >> 24;
@@ -42,6 +44,29 @@
         total += buffer[offset + i] * byteFactor;
       }
       return total;
+    }
+
+
+    public static void WriteInt16(ref byte[] buffer, ref int offset, ushort data)
+      => IoUtil.WriteInt(ref buffer, data, ref offset, 2);
+
+    public static void WriteInt24(ref byte[] buffer, uint data, ref int offset)
+      => IoUtil.WriteInt(ref buffer, data, ref offset, 3);
+
+    public static void WriteInt32(ref byte[] buffer, uint data, ref int offset)
+      => IoUtil.WriteInt(ref buffer, data, ref offset, 4);
+
+    private static void WriteInt(ref byte[] buffer, uint data, ref int offset, int byteNum) {
+      if (offset >= buffer.Length - 1) {
+        Array.Resize(ref buffer, (int) (offset + byteNum + 1));
+      }
+
+      for (var i = 0; i < byteNum; ++i) {
+        var shift = (byte) ((byteNum - 1 - i) * 8);
+        buffer[offset + i] = (byte)(data >> shift & 0xFFL);
+      }
+
+      offset += byteNum;
     }
   }
 }

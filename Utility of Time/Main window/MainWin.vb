@@ -6709,31 +6709,31 @@ Public Class MainWin
           GlobalVarsCs.N64DList(i).CommandsCopy(ii) = GlobalVarsCs.N64DList(i).Commands(ii)
           RamBanks.ZFileBuffer(DLStart) = GlobalVarsCs.N64DList(i).Commands(ii).CMDParams(0)
           DLStart += 1
-          WriteInt24(RamBanks.ZFileBuffer, GlobalVarsCs.N64DList(i).Commands(ii).CMDLow, DLStart)
-          WriteInt32(RamBanks.ZFileBuffer, GlobalVarsCs.N64DList(i).Commands(ii).CMDHigh, DLStart)
+          IoUtil.WriteInt24(RamBanks.ZFileBuffer, GlobalVarsCs.N64DList(i).Commands(ii).CMDLow, DLStart)
+          IoUtil.WriteInt32(RamBanks.ZFileBuffer, GlobalVarsCs.N64DList(i).Commands(ii).CMDHigh, DLStart)
         Next
       Next
 
       Dim AGrOff As Integer = ActorGroupOffset
       For i As Integer = 0 To ActorGroups.Count - 1
-        WriteInt16(RamBanks.ZFileBuffer, AGrOff, ActorGroups(i))
+        IoUtil.WriteInt16(RamBanks.ZFileBuffer, AGrOff, ActorGroups(i))
       Next
 
       If rmActorCount > 0 Then
         Dim ActorStart As Integer = RoomActors(0).offset
 
         For i As Integer = 0 To RoomActors.Length - 1
-          WriteInt16(RamBanks.ZFileBuffer, ActorStart, RoomActors(i).no)
+          IoUtil.WriteInt16(RamBanks.ZFileBuffer, ActorStart, RoomActors(i).no)
 
-          WriteInt16(RamBanks.ZFileBuffer, ActorStart, RoomActors(i).x)
-          WriteInt16(RamBanks.ZFileBuffer, ActorStart, RoomActors(i).y)
-          WriteInt16(RamBanks.ZFileBuffer, ActorStart, RoomActors(i).z)
+          IoUtil.WriteInt16(RamBanks.ZFileBuffer, ActorStart, RoomActors(i).x)
+          IoUtil.WriteInt16(RamBanks.ZFileBuffer, ActorStart, RoomActors(i).y)
+          IoUtil.WriteInt16(RamBanks.ZFileBuffer, ActorStart, RoomActors(i).z)
 
-          WriteInt16(RamBanks.ZFileBuffer, ActorStart, RoomActors(i).xr)
-          WriteInt16(RamBanks.ZFileBuffer, ActorStart, RoomActors(i).yr)
-          WriteInt16(RamBanks.ZFileBuffer, ActorStart, RoomActors(i).zr)
+          IoUtil.WriteInt16(RamBanks.ZFileBuffer, ActorStart, RoomActors(i).xr)
+          IoUtil.WriteInt16(RamBanks.ZFileBuffer, ActorStart, RoomActors(i).yr)
+          IoUtil.WriteInt16(RamBanks.ZFileBuffer, ActorStart, RoomActors(i).zr)
 
-          WriteInt16(RamBanks.ZFileBuffer, ActorStart, RoomActors(i).var)
+          IoUtil.WriteInt16(RamBanks.ZFileBuffer, ActorStart, RoomActors(i).var)
         Next
       End If
       'start saving to scene file buffer...
@@ -6741,18 +6741,18 @@ Public Class MainWin
       Dim ExitOffset As Integer = 0
       For i As Integer = 0 To SceneExits.Length - 1
         ExitOffset = SceneExits(i).scOff
-        WriteInt16(RamBanks.ZSceneBuffer, ExitOffset, SceneExits(i).Index)
+        IoUtil.WriteInt16(RamBanks.ZSceneBuffer, ExitOffset, SceneExits(i).Index)
       Next
 
       Dim ColTypeOff As Integer = 0
       For i As Integer = 0 To ColTypes.Length - 1
         ColTypeOff = ColTypes(i).scOff
 
-        WriteInt16(RamBanks.ZSceneBuffer, ColTypeOff, ColTypes(i).unk1)
+        IoUtil.WriteInt16(RamBanks.ZSceneBuffer, ColTypeOff, ColTypes(i).unk1)
 
-        WriteInt16(RamBanks.ZSceneBuffer, ColTypeOff, ColTypes(i).unk2)
+        IoUtil.WriteInt16(RamBanks.ZSceneBuffer, ColTypeOff, ColTypes(i).unk2)
 
-        WriteInt16(RamBanks.ZSceneBuffer, ColTypeOff, ColTypes(i).unk3)
+        IoUtil.WriteInt16(RamBanks.ZSceneBuffer, ColTypeOff, ColTypes(i).unk3)
 
         RamBanks.ZSceneBuffer(ColTypeOff) = ColTypes(i).unk4 >> 8
         RamBanks.ZSceneBuffer(ColTypeOff + 1) = ((ColTypes(i).unk4 << 8 >> 4) + ColTypes(i).WalkOnSound)
@@ -6762,7 +6762,7 @@ Public Class MainWin
         Dim ColParamOff As Integer = 0
         For i As Integer = 0 To CollisionPolies.Length - 1
           ColParamOff = CollisionPolies(i).scOff
-          WriteInt16(RamBanks.ZSceneBuffer, ColParamOff, CollisionPolies(i).Param)
+          IoUtil.WriteInt16(RamBanks.ZSceneBuffer, ColParamOff, CollisionPolies(i).Param)
         Next
       End If
 
@@ -6776,15 +6776,15 @@ Public Class MainWin
 
           ActorStart += 4
 
-          WriteInt16(RamBanks.ZSceneBuffer, ActorStart, SceneActors(i).no)
+          IoUtil.WriteInt16(RamBanks.ZSceneBuffer, ActorStart, SceneActors(i).no)
 
-          WriteInt16(RamBanks.ZSceneBuffer, ActorStart, SceneActors(i).x)
-          WriteInt16(RamBanks.ZSceneBuffer, ActorStart, SceneActors(i).y)
-          WriteInt16(RamBanks.ZSceneBuffer, ActorStart, SceneActors(i).z)
+          IoUtil.WriteInt16(RamBanks.ZSceneBuffer, ActorStart, SceneActors(i).x)
+          IoUtil.WriteInt16(RamBanks.ZSceneBuffer, ActorStart, SceneActors(i).y)
+          IoUtil.WriteInt16(RamBanks.ZSceneBuffer, ActorStart, SceneActors(i).z)
 
-          WriteInt16(RamBanks.ZSceneBuffer, ActorStart, SceneActors(i).yr)
+          IoUtil.WriteInt16(RamBanks.ZSceneBuffer, ActorStart, SceneActors(i).yr)
 
-          WriteInt16(RamBanks.ZSceneBuffer, ActorStart, SceneActors(i).var)
+          IoUtil.WriteInt16(RamBanks.ZSceneBuffer, ActorStart, SceneActors(i).var)
         Next
       End If
 

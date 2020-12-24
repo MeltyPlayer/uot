@@ -70,36 +70,6 @@ Module Functions
            ((Flip And &HFF00) << 8) Or ((Flip And &HFF) << 24)
   End Function
 
-  Public Function WriteInt16(ByRef Buffer() As Byte, ByRef Offset As Short, ByVal Data As Short)
-    If Offset >= (Buffer.Length - 1) Then
-      ReDim Preserve Buffer(Offset + 2)
-    End If
-    Buffer(Offset + 0) = (Data >> 8) And &HFF
-    Buffer(Offset + 1) = (Data >> 0) And &HFF
-    Offset += 2
-  End Function
-
-  Public Function WriteInt32(ByRef Buffer() As Byte, ByVal Data As UInteger, ByRef Offset As Integer)
-    If Offset >= (Buffer.Length - 1) Then
-      ReDim Preserve Buffer(Offset + 4)
-    End If
-    Buffer(Offset + 0) = (Data >> 24) And &HFF
-    Buffer(Offset + 1) = (Data >> 16) And &HFF
-    Buffer(Offset + 2) = (Data >> 8) And &HFF
-    Buffer(Offset + 3) = (Data >> 0) And &HFF
-    Offset += 4
-  End Function
-
-  Public Function WriteInt24(ByRef Buffer() As Byte, ByVal Data As UInteger, ByRef Offset As Integer)
-    If Offset >= (Buffer.Length - 1) Then
-      ReDim Preserve Buffer(Offset + 3)
-    End If
-    Buffer(Offset + 0) = (Data >> 16) And &HFF
-    Buffer(Offset + 1) = (Data >> 8) And &HFF
-    Buffer(Offset + 2) = (Data >> 0) And &HFF
-    Offset += 3
-  End Function
-
   Public Function NoExt(ByVal FullPath _
                          As String) As String
     Return System.IO.Path.GetFileNameWithoutExtension(FullPath)
@@ -254,8 +224,8 @@ Module Functions
       .CMDLow = newLW
       .CMDParams(0) = newCmd
       .DLPos = CmdPos
-      WriteInt24(.CMDParams, newLW, 1)
-      WriteInt32(.CMDParams, newHW, 4)
+      IoUtil.WriteInt24(.CMDParams, newLW, 1)
+      IoUtil.WriteInt32(.CMDParams, newHW, 4)
     End With
   End Sub
 End Module

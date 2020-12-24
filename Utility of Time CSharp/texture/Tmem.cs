@@ -9,7 +9,11 @@ namespace UoT {
   /// </summary>
   public class Tmem {
     private readonly TextureCache cache_;
-    private readonly ulong[] impl_ = new ulong[512];
+
+    private const int TMEM_WORD_COUNT = 512;
+    private const int TMEM_BYTE_COUNT = TMEM_WORD_COUNT * 8;
+
+    private readonly byte[] impl_ = new byte[TMEM_BYTE_COUNT];
 
     public Tmem(TextureCache cache) {
       this.cache_ = cache;
@@ -190,23 +194,31 @@ namespace UoT {
 
       var line = tileDescriptor.LineSize << 2;
       var tbase = tileDescriptor.TmemOffset << 2;
-      var addr = timgArgs.Address >> 2;
 
-      /*const u32* src = reinterpret_cast <const u32*> (RDRAM);
-      u16* tmem16 = reinterpret_cast<u16*>(TMEM);
-      u32 c, ptr, tline, s, xorval;
+      IoUtil.SplitAddress(timgArgs.Address, out var bank, out var offset);
 
-      for (u32 j = 0; j < height; ++j) {
-        tline = tbase + line * j;
-        s = ((j + ult) * gDP.textureImage.width) + uls;
-        xorval = (j & 1) ? 3 : 1;
-        for (u32 i = 0; i < width; ++i) {
-          c = src[addr + s + i];
-          ptr = ((tline + i) ^ xorval) & 0x3ff;
-          tmem16[ptr] = c >> 16;
-          tmem16[ptr | 0x400] = c & 0xffff;
+      var targetBank = RamBanks.GetBankByIndex(bank);
+
+      var timgWidth = timgArgs.Width;
+
+      for (var j = 0; j < height; ++j) {
+        var tline = tbase + line * j;
+        var s = ((j + ult) * timgWidth) + uls;
+        var xorval = (j & 1) != 0 ? 3 : 1;
+        
+        for (var i = 0; i < width; ++i) {
+          var addr = offset + s + i;
+          var c = IoUtil.ReadUInt32(targetBank, (uint) (4 * addr));
+          
+          var ptr = ((tline + i) ^ xorval) & 0x3ff;
+
+          var offset1 = 2 * ptr;
+          IoUtil.WriteInt16(ref targetBank, ref offset1, (ushort) (c >> 16));
+
+          var offset2 = 2 * (ptr | 0x400);
+          IoUtil.WriteInt16(ref targetBank, ref offset2, (ushort) (c & 0xffff));
         }
-      }*/
+      }
     }
 
     /// <summary>
