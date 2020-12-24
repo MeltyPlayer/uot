@@ -11,21 +11,23 @@ namespace UoT {
     private TileDescriptor TileDescriptor { get; }
     private readonly byte[] rgba_;
 
-    public Texture(TileDescriptor tileDescriptor, byte[] rgba) {
+    public Texture(TileDescriptor tileDescriptor, byte[] rgba, bool save = false) {
       this.TileDescriptor = tileDescriptor;
       this.rgba_ = rgba;
 
-      var format = tileDescriptor.ColorFormat;
-      var size = tileDescriptor.BitSize;
-      var uuid = tileDescriptor.Uuid;
-      var filename = "R:/Noesis/Output/" +
-                     format +
-                     "_" +
-                     size +
-                     "_" +
-                     uuid +
-                     ".bmp";
-      this.SaveToFile(filename);
+      if (save) {
+        var format = tileDescriptor.ColorFormat;
+        var size = tileDescriptor.BitSize;
+        var uuid = tileDescriptor.Uuid;
+        var filename = "R:/Noesis/Output/" +
+                       format +
+                       "_" +
+                       size +
+                       "_" +
+                       uuid +
+                       ".bmp";
+        this.SaveToFile(filename);
+      }
     }
 
     // OpenGL-specific logic.

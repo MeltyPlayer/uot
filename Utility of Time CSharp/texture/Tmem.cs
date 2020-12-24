@@ -325,7 +325,13 @@ namespace UoT {
     /// <summary>
     ///   Shamelessly copied from GLideN64's source.
     /// </summary>
-    public void LoadBlock(ref TileDescriptor tileDescriptor, uint uls, uint ult, uint lrs, uint dxt, TimgArgs timgArgs) {
+    public void LoadBlock(
+        ref TileDescriptor tileDescriptor,
+        uint uls,
+        uint ult,
+        uint lrs,
+        uint dxt,
+        TimgArgs timgArgs) {
       tileDescriptor.ULS = (int) uls >> 2;
       tileDescriptor.ULT = (int) ult >> 2;
       // TODO: This feels like a bug?
@@ -355,7 +361,7 @@ namespace UoT {
       var timgAddress = timgArgs.Address;
       var timgBitSize = timgArgs.BitSize;
       var timgWidth = timgArgs.Width;
-      var timgBpl = timgWidth << (int)timgBitSize >> 1;
+      var timgBpl = timgWidth << (int) timgBitSize >> 1;
 
 
       IoUtil.SplitAddress(timgAddress, out var bank, out var offset);
@@ -378,14 +384,41 @@ namespace UoT {
       info.size = static_cast<u8>(gDP.textureImage.size);
       info.loadType = LOADTYPE_BLOCK;*/
 
-      uint width = (lrs - uls + 1) & 0x0FFF;
-      uint bytes = width << (int) bitSize >> 1;
+      // TODO: Throw an error if we can't figure out the size.
+
+      var maskS = tileDescriptor.MaskS;
+      var maskT = tileDescriptor.MaskT;
+
+      // TODO: Might not always be provided.
+      var width = (int) Math.Pow(2, maskS);
+      var height = (int)Math.Pow(2, maskT);
+
+      // TODO: This doesn't look right?
+      uint jankWidth = (lrs - uls + 1) & 0x0FFF;
+      uint bytes = jankWidth << (int) bitSize >> 1;
       if ((bytes & 7) != 0) {
         bytes = (bytes & (~7U)) + 8;
       }
 
+      if (tileDescriptor.Uuid == 43774306680838) {
+        //throw new Exception();
+      } else {
+        return;
+      }
+
+      tileDescriptor.TexBytes = bytes;
+      tileDescriptor.LoadWidth = width;
+      tileDescriptor.LoadHeight = height;
+
+
+
       //info.bytes = bytes;
-      uint address = (uint) (timgAddress + ult * timgBpl + (uls << (int) timgBitSize >> 1));
+      uint address = (uint) (timgAddress +
+                             ult * timgBpl +
+                             (uls << (int) timgBitSize >> 1));
+      IoUtil.SplitAddress(address, out var specBank, out var specOffset);
+
+
 
       /*if (bytes == 0 || (address + bytes) > RDRAMSize) {
         DebugMsg(DEBUG_NORMAL | DEBUG_ERROR, "// Attempting to load texture block out of range\n");
@@ -406,18 +439,23 @@ namespace UoT {
         }
       }*/
 
-      var targetBuffer = RamBanks.GetBankByIndex(bank);
+      var targetBuffer = RamBanks.GetBankByIndex(specBank);
       if (targetBuffer == null) {
         return;
       }
 
+      uint tmemAddr = tmem;
       if (bitSize == BitSize.S_32B) {
         //gDPLoadBlock32(gDP.loadTile->uls, gDP.loadTile->lrs, dxt);
       } else if (colorFormat == ColorFormat.YUV) {
         //memcpy(TMEM, &RDRAM[address], bytes); // HACK!
       } else {
-        uint tmemAddr = tmem;
-        this.UnswapCopyWrap_(targetBuffer, offset, this.impl_, tmemAddr << 3, 0xFFF, bytes);
+        this.UnswapCopyWrap_(targetBuffer,
+                             specOffset,
+                             this.impl_,
+                             tmemAddr << 3,
+                             0xFFF,
+                             bytes);
         if (dxt != 0) {
           uint dxtCounter = 0;
           uint qwords = (bytes >> 3);
@@ -442,14 +480,28 @@ namespace UoT {
             line = 0;
           }
           end_dxt_test:
-          
+
           this.DWordInterleaveWrap_(this.impl_, tmemAddr << 1, 0x3FF, line);
         }
       }
+
+      var generator = new OglTextureConverter();
+      generator.GenerateAndAddToCache(this.impl_,
+                                      (uint) tmem << 3,
+                                      ref tileDescriptor,
+                                      tileDescriptor.Palette32,
+                                      this.cache_,
+                                      true);
     }
 
 
-    private void UnswapCopyWrap_(byte[] src, uint srcIdx, byte[] dest, uint destIdx, uint destMask, uint numBytes) {
+    private void UnswapCopyWrap_(
+        byte[] src,
+        uint srcIdx,
+        byte[] dest,
+        uint destIdx,
+        uint destMask,
+        uint numBytes) {
       // copy leading bytes
       uint leadingBytes = srcIdx & 3;
       if (leadingBytes != 0) {
@@ -459,7 +511,7 @@ namespace UoT {
         numBytes -= leadingBytes;
 
         srcIdx ^= 3;
-        for (uint i = 0; i<leadingBytes; i++) {
+        for (uint i = 0; i < leadingBytes; i++) {
           dest[destIdx & destMask] = src[srcIdx];
           ++destIdx;
           --srcIdx;
@@ -489,8 +541,12 @@ namespace UoT {
       }
     }
 
-    private void DWordInterleaveWrap_(byte[] src, uint srcIdx, uint srcMask, uint numQWords) {
-      uint p0; 
+    private void DWordInterleaveWrap_(
+        byte[] src,
+        uint srcIdx,
+        uint srcMask,
+        uint numQWords) {
+      uint p0;
       int idx0, idx1;
       while (numQWords-- > 0) {
         idx0 = (int) (srcIdx++ & srcMask);

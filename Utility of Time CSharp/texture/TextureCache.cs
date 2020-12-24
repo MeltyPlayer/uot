@@ -25,10 +25,10 @@ namespace UoT {
       }
     }
 
-    public void Add(TileDescriptor tileDescriptor, byte[] rgba) {
+    public void Add(TileDescriptor tileDescriptor, byte[] rgba, bool save = false) {
       var uuid = tileDescriptor.Uuid;
       if (!this.impl_.ContainsKey(uuid)) {
-        this.impl_.Add(uuid, new Texture(tileDescriptor, rgba));
+        this.impl_.Add(uuid, new Texture(tileDescriptor, rgba, save));
       }
     }
   }

@@ -3,7 +3,7 @@
 namespace UoT {
   // TODO: Come up w/ better name.
   public class OglTextureConverter {
-    public void GenerateAndAddToCache(byte[] data, uint offset, ref TileDescriptor tileDescriptor, Color4UByte[] palette32, TextureCache cache) {
+    public void GenerateAndAddToCache(byte[] data, uint offset, ref TileDescriptor tileDescriptor, Color4UByte[] palette32, TextureCache cache, bool save = false) {
       uint Size = tileDescriptor.TexBytes;
       var N64TexImg = new byte[(int)(Size + 1)];
       var OGLTexImg = new byte[] { 0, 0xFF, 0, 0 };
@@ -85,7 +85,7 @@ namespace UoT {
       Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MIN_FILTER, Gl.GL_LINEAR_MIPMAP_LINEAR);
       Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MAG_FILTER, Gl.GL_LINEAR_MIPMAP_LINEAR);
 
-      cache.Add(tileDescriptor, OGLTexImg);
+      cache.Add(tileDescriptor, OGLTexImg, save);
     }
   }
 }
