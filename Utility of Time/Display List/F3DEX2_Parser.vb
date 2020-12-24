@@ -754,8 +754,15 @@ enddisplaylist:
       .Palette = IoUtil.ShiftR(w1, 20, 4)
       .CMT = IoUtil.ShiftR(w1, 18, 2)
       .CMS = IoUtil.ShiftR(w1, 8, 2)
-      .MaskS = .OriginalMaskS = IoUtil.ShiftR(w1, 4, 4)
-      .MaskT = .OriginalMaskT = IoUtil.ShiftR(w1, 14, 4)
+
+      Dim maskS As Integer = IoUtil.ShiftR(w1, 4, 4)
+      .MaskS = maskS
+      .OriginalMaskS = maskS
+
+      Dim maskT As Integer = IoUtil.ShiftR(w1, 14, 4)
+      .MaskT = maskT
+      .OriginalMaskT = maskT
+
       .TShiftS = IoUtil.ShiftR(w1, 0, 4)
       .TShiftT = IoUtil.ShiftR(w1, 10, 4)
     End With
