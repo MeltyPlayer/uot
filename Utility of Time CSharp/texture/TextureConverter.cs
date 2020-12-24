@@ -28,7 +28,7 @@ namespace UoT {
             case BitSize.S_8B:
               return new Ci8();
             case BitSize.S_4B:
-              return new Ci8();
+              return new Ci4();
             default:
               throw new NotSupportedException();
           }
