@@ -69,12 +69,8 @@ Module GlobalVars
 #Region "Key data handlers"
 
   Public PickedEntities As New PickedItems
-  Public CurrentBank As Integer = 0
-  Public ZFileBuffer As Byte()
   Public ExternalHierarchy As Byte()
   Public ExternalAnimBank As Byte()
-  Public ZSceneBuffer As Byte()
-  Public CommonBanks As New ObjectExchange
   Public CommonBankUse As New BankSwitch
   Public RenderToggles As New RendererOptions
   Public AnimParser As New ZAnimation

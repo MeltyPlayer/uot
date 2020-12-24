@@ -4763,13 +4763,13 @@ Public Class MainWin
         Dim colVar4s As ISet(Of UInteger) = New HashSet(Of UInteger)
         Dim colWalkSounds As ISet(Of Byte) = New HashSet(Of Byte)
 
-        While scenePos < ZSceneBuffer.Length
+        While scenePos < RamBanks.ZSceneBuffer.Length
           mscenePos = scenePos
-          Select Case ZSceneBuffer(mscenePos)
+          Select Case RamBanks.ZSceneBuffer(mscenePos)
             Case &HE
               SceneActorCombobox.Enabled = True
-              scActorCount = ZSceneBuffer(mscenePos + 1)
-              scActorPos = IoUtil.ReadUInt24(ZSceneBuffer, mscenePos + 5)
+              scActorCount = RamBanks.ZSceneBuffer(mscenePos + 1)
+              scActorPos = IoUtil.ReadUInt24(RamBanks.ZSceneBuffer, mscenePos + 5)
               i1 = scActorPos
               ReDim SceneActors(scActorCount - 1)
               ReDim UsedSceneGroupIndex(scActorCount - 1)
@@ -4779,20 +4779,20 @@ Public Class MainWin
                   .pickG = Rand.Next(0, 255)
                   .pickB = Rand.Next(0, 255)
 
-                  .loadMapFront = ZSceneBuffer(i1)
+                  .loadMapFront = RamBanks.ZSceneBuffer(i1)
 
-                  .loadMapBack = ZSceneBuffer(i1 + 2)
+                  .loadMapBack = RamBanks.ZSceneBuffer(i1 + 2)
 
                   .offset = i1
 
-                  .no = (ZSceneBuffer(i1 + 4) * &H100) + (ZSceneBuffer(i1 + 5))
+                  .no = (RamBanks.ZSceneBuffer(i1 + 4) * &H100) + (RamBanks.ZSceneBuffer(i1 + 5))
 
-                  .x = (ZSceneBuffer(i1 + 6) * &H100) + (ZSceneBuffer(i1 + 7))
-                  .y = (ZSceneBuffer(i1 + 8) * &H100) + (ZSceneBuffer(i1 + 9))
-                  .z = (ZSceneBuffer(i1 + 10) * &H100) + (ZSceneBuffer(i1 + 11))
+                  .x = (RamBanks.ZSceneBuffer(i1 + 6) * &H100) + (RamBanks.ZSceneBuffer(i1 + 7))
+                  .y = (RamBanks.ZSceneBuffer(i1 + 8) * &H100) + (RamBanks.ZSceneBuffer(i1 + 9))
+                  .z = (RamBanks.ZSceneBuffer(i1 + 10) * &H100) + (RamBanks.ZSceneBuffer(i1 + 11))
 
-                  .yr = (ZSceneBuffer(i1 + 12) * &H100) + (ZSceneBuffer(i1 + 13))
-                  .var = (ZSceneBuffer(i1 + 14) * &H100) + (ZSceneBuffer(i1 + 15))
+                  .yr = (RamBanks.ZSceneBuffer(i1 + 12) * &H100) + (RamBanks.ZSceneBuffer(i1 + 13))
+                  .var = (RamBanks.ZSceneBuffer(i1 + 14) * &H100) + (RamBanks.ZSceneBuffer(i1 + 15))
                 End With
                 i1 += 16
 
@@ -4800,15 +4800,15 @@ Public Class MainWin
               Next
               scenePos = mscenePos + 8
             Case 4
-              Dim cnt As Integer = ZSceneBuffer(scenePos + 1)
-              Dim pos As Integer = IoUtil.ReadUInt24(ZSceneBuffer, scenePos + 5)
+              Dim cnt As Integer = RamBanks.ZSceneBuffer(scenePos + 1)
+              Dim pos As Integer = IoUtil.ReadUInt24(RamBanks.ZSceneBuffer, scenePos + 5)
               Dim i1 As Integer = pos
               Dim curmap As UInt32 = 0
               ReDim SceneMaps(cnt - 1)
               For i As Integer = 0 To cnt - 1
-                curmap = IoUtil.ReadUInt32(ZSceneBuffer, i1)
+                curmap = IoUtil.ReadUInt32(RamBanks.ZSceneBuffer, i1)
                 SceneMaps(i).StartOff = curmap
-                curmap = IoUtil.ReadUInt32(ZSceneBuffer, i1 + 4)
+                curmap = IoUtil.ReadUInt32(RamBanks.ZSceneBuffer, i1 + 4)
                 SceneMaps(i).EndOff = curmap
                 i1 += 8
               Next
@@ -4818,12 +4818,12 @@ Public Class MainWin
             Case 19
               ExitCombobox.Enabled = True
               ExitTextBox.Enabled = True
-              Dim ExitOffset As Integer = IoUtil.ReadUInt24(ZSceneBuffer, scenePos + 5)
-              Dim ExitCount As Integer = ZSceneBuffer(scenePos + 8)
+              Dim ExitOffset As Integer = IoUtil.ReadUInt24(RamBanks.ZSceneBuffer, scenePos + 5)
+              Dim ExitCount As Integer = RamBanks.ZSceneBuffer(scenePos + 8)
               ReDim Preserve SceneExits(ExitCount - 1)
               For i As Integer = 0 To ExitCount - 1
                 With SceneExits(i)
-                  .Index = IoUtil.ReadUInt16(ZSceneBuffer, ExitOffset)
+                  .Index = IoUtil.ReadUInt16(RamBanks.ZSceneBuffer, ExitOffset)
                   .scOff = ExitOffset
                 End With
                 ExitCombobox.Items.Add(i)
@@ -4833,11 +4833,11 @@ Public Class MainWin
             Case 3
               ColTypeBox.Enabled = True
 
-              Dim colPtr As UInteger = IoUtil.ReadUInt24(ZSceneBuffer, scenePos + 5) + 12
+              Dim colPtr As UInteger = IoUtil.ReadUInt24(RamBanks.ZSceneBuffer, scenePos + 5) + 12
 
-              Dim VariableOffset As UInteger = IoUtil.ReadUInt24(ZSceneBuffer, colPtr + 17)
-              Dim PolygonOffset As UInteger = IoUtil.ReadUInt24(ZSceneBuffer, colPtr + 13)
-              Dim VertexOffset As UInteger = IoUtil.ReadUInt24(ZSceneBuffer, colPtr + 5)
+              Dim VariableOffset As UInteger = IoUtil.ReadUInt24(RamBanks.ZSceneBuffer, colPtr + 17)
+              Dim PolygonOffset As UInteger = IoUtil.ReadUInt24(RamBanks.ZSceneBuffer, colPtr + 13)
+              Dim VertexOffset As UInteger = IoUtil.ReadUInt24(RamBanks.ZSceneBuffer, colPtr + 5)
 
               Dim ctCnt As Integer = 0
 
@@ -4846,11 +4846,11 @@ Public Class MainWin
                 ReDim Preserve ColTypes(ctCnt)
                 With ColTypes(ctCnt)
                   .scOff = VariableOffset
-                  .unk1 = IoUtil.ReadUInt16(ZSceneBuffer, VariableOffset)
-                  .unk2 = IoUtil.ReadUInt16(ZSceneBuffer, VariableOffset + 2)
-                  .unk3 = IoUtil.ReadUInt16(ZSceneBuffer, VariableOffset + 4)
-                  .unk4 = IoUtil.ReadUInt16(ZSceneBuffer, VariableOffset + 6) >> 4
-                  .WalkOnSound = ZSceneBuffer(VariableOffset + 7) << 4 >> 4
+                  .unk1 = IoUtil.ReadUInt16(RamBanks.ZSceneBuffer, VariableOffset)
+                  .unk2 = IoUtil.ReadUInt16(RamBanks.ZSceneBuffer, VariableOffset + 2)
+                  .unk3 = IoUtil.ReadUInt16(RamBanks.ZSceneBuffer, VariableOffset + 4)
+                  .unk4 = IoUtil.ReadUInt16(RamBanks.ZSceneBuffer, VariableOffset + 6) >> 4
+                  .WalkOnSound = RamBanks.ZSceneBuffer(VariableOffset + 7) << 4 >> 4
 
                   colVar1s.Add(.unk1)
                   colVar2s.Add(.unk2)
@@ -4874,15 +4874,15 @@ Public Class MainWin
                 ReDim Preserve CollisionPolies(triCount)
                 With CollisionPolies(triCount)
                   .scOff = PolygonOffset
-                  .Param = IoUtil.ReadUInt16(ZSceneBuffer, PolygonOffset)
+                  .Param = IoUtil.ReadUInt16(RamBanks.ZSceneBuffer, PolygonOffset)
 
-                  .A = (IoUtil.ReadUInt16(ZSceneBuffer, PolygonOffset + 2) And &HFFF)
-                  .B = (IoUtil.ReadUInt16(ZSceneBuffer, PolygonOffset + 4) And &HFFF)
-                  .C = (IoUtil.ReadUInt16(ZSceneBuffer, PolygonOffset + 6) And &HFFF)
+                  .A = (IoUtil.ReadUInt16(RamBanks.ZSceneBuffer, PolygonOffset + 2) And &HFFF)
+                  .B = (IoUtil.ReadUInt16(RamBanks.ZSceneBuffer, PolygonOffset + 4) And &HFFF)
+                  .C = (IoUtil.ReadUInt16(RamBanks.ZSceneBuffer, PolygonOffset + 6) And &HFFF)
 
-                  .nX = (IoUtil.ReadUInt16(ZSceneBuffer, PolygonOffset + 8))
-                  .nY = (IoUtil.ReadUInt16(ZSceneBuffer, PolygonOffset + 10))
-                  .nZ = (IoUtil.ReadUInt16(ZSceneBuffer, PolygonOffset + 12))
+                  .nX = (IoUtil.ReadUInt16(RamBanks.ZSceneBuffer, PolygonOffset + 8))
+                  .nY = (IoUtil.ReadUInt16(RamBanks.ZSceneBuffer, PolygonOffset + 10))
+                  .nZ = (IoUtil.ReadUInt16(RamBanks.ZSceneBuffer, PolygonOffset + 12))
 
                   .pickR = Rand.Next(0, 255)
                   .pickG = Rand.Next(0, 255)
@@ -4901,11 +4901,11 @@ Public Class MainWin
 
               While VertexOffset < colPtr
 
-                CollisionVerts.x.Add(CShort(IoUtil.ReadUInt16(ZSceneBuffer, VertexOffset)))
+                CollisionVerts.x.Add(CShort(IoUtil.ReadUInt16(RamBanks.ZSceneBuffer, VertexOffset)))
 
-                CollisionVerts.y.Add(CShort(IoUtil.ReadUInt16(ZSceneBuffer, VertexOffset + 2)))
+                CollisionVerts.y.Add(CShort(IoUtil.ReadUInt16(RamBanks.ZSceneBuffer, VertexOffset + 2)))
 
-                CollisionVerts.z.Add(CShort(IoUtil.ReadUInt16(ZSceneBuffer, VertexOffset + 4)))
+                CollisionVerts.z.Add(CShort(IoUtil.ReadUInt16(RamBanks.ZSceneBuffer, VertexOffset + 4)))
 
                 CollisionVerts.VertR.Add(Rand.Next(0, 255))
                 CollisionVerts.VertG.Add(Rand.Next(0, 255))
@@ -4959,7 +4959,7 @@ Public Class MainWin
       If Buffer(i) = &HE7 And Buffer(i + 1) = 0 And Buffer(i + 2) = 0 _
          And Buffer(i + 3) = 0 And Buffer(i + 4) = 0 And Buffer(i + 5) = 0 _
          And Buffer(i + 6) = 0 And Buffer(i + 7) = 0 Then
-        i = ReadInDL(ZFileBuffer, DL, i, DLCnt)
+        i = ReadInDL(RamBanks.ZFileBuffer, DL, i, DLCnt)
         DLCnt += 1
       End If
     Next
@@ -4979,20 +4979,20 @@ Public Class MainWin
       AnimationList.Items.Clear()
       Select Case LoadedDataType
         Case FileTypes.MAP
-          FindAllDLs(ZFileBuffer, GlobalVarsCs.N64DList)
+          FindAllDLs(RamBanks.ZFileBuffer, GlobalVarsCs.N64DList)
           DlManager.HasLimbs = False
         Case FileTypes.ACTORMODEL
           animationbank.SelectedIndex = 0
-          LimbEntries = AnimParser.GetHierarchies(ZFileBuffer, 6)
+          LimbEntries = AnimParser.GetHierarchies(RamBanks.ZFileBuffer, 6)
           If LimbEntries IsNot Nothing Then
             DlManager.HasLimbs = True
-            AnimationEntries = AnimParser.GetAnimations(ZFileBuffer, LimbEntries.Length - 1, 6)
+            AnimationEntries = AnimParser.GetAnimations(RamBanks.ZFileBuffer, LimbEntries.Length - 1, 6)
             If AnimationEntries IsNot Nothing Then
               AnimationList.SelectedIndex = 0
             End If
           Else
             DlManager.HasLimbs = False
-            FindAllDLs(ZFileBuffer, GlobalVarsCs.N64DList)
+            FindAllDLs(RamBanks.ZFileBuffer, GlobalVarsCs.N64DList)
           End If
       End Select
     Catch err As System.Exception
@@ -5062,17 +5062,17 @@ Public Class MainWin
       RoomActorCombobox.SelectedIndex = 0
       RoomActorCombobox.Enabled = False
 
-      While ZFileBuffer(HDPos) <> &H14
-        Select Case ZFileBuffer(HDPos)
+      While RamBanks.ZFileBuffer(HDPos) <> &H14
+        Select Case RamBanks.ZFileBuffer(HDPos)
           Case 1
-            rmActorCount = ZFileBuffer(HDPos + 1)
+            rmActorCount = RamBanks.ZFileBuffer(HDPos + 1)
             ActorPointer(0) = HDPos
             ActorPointer(1) = rmActorCount
             If rmActorCount > 0 Then
               RoomActorCombobox.Enabled = True
               ActorVarText.Enabled = True
               ActorNumberText.Enabled = True
-              ActorStart = IoUtil.ReadUInt24(ZFileBuffer, HDPos + 5)
+              ActorStart = IoUtil.ReadUInt24(RamBanks.ZFileBuffer, HDPos + 5)
               ActorPointer(2) = ActorStart
               i1 = ActorStart
               ReDim RoomActors(rmActorCount - 1)
@@ -5085,17 +5085,17 @@ Public Class MainWin
 
                   .offset = i1
 
-                  .no = IoUtil.ReadUInt16(ZFileBuffer, i1 + 0)
+                  .no = IoUtil.ReadUInt16(RamBanks.ZFileBuffer, i1 + 0)
 
-                  .x = IoUtil.ReadUInt16(ZFileBuffer, i1 + 2)
-                  .y = IoUtil.ReadUInt16(ZFileBuffer, i1 + 4)
-                  .z = IoUtil.ReadUInt16(ZFileBuffer, i1 + 6)
+                  .x = IoUtil.ReadUInt16(RamBanks.ZFileBuffer, i1 + 2)
+                  .y = IoUtil.ReadUInt16(RamBanks.ZFileBuffer, i1 + 4)
+                  .z = IoUtil.ReadUInt16(RamBanks.ZFileBuffer, i1 + 6)
 
-                  .xr = IoUtil.ReadUInt16(ZFileBuffer, i1 + 8)
-                  .yr = IoUtil.ReadUInt16(ZFileBuffer, i1 + 10)
-                  .zr = IoUtil.ReadUInt16(ZFileBuffer, i1 + 12)
+                  .xr = IoUtil.ReadUInt16(RamBanks.ZFileBuffer, i1 + 8)
+                  .yr = IoUtil.ReadUInt16(RamBanks.ZFileBuffer, i1 + 10)
+                  .zr = IoUtil.ReadUInt16(RamBanks.ZFileBuffer, i1 + 12)
 
-                  .var = IoUtil.ReadUInt16(ZFileBuffer, i1 + 14)
+                  .var = IoUtil.ReadUInt16(RamBanks.ZFileBuffer, i1 + 14)
 
                 End With
                 i1 += 16
@@ -5104,18 +5104,18 @@ Public Class MainWin
             End If
           Case &HB
             ActorGroupText.Enabled = True
-            Dim Cnt As UInteger = ZFileBuffer(HDPos + 1)
-            ActorGroupOffset = IoUtil.ReadUInt24(ZFileBuffer, HDPos + 5)
+            Dim Cnt As UInteger = RamBanks.ZFileBuffer(HDPos + 1)
+            ActorGroupOffset = IoUtil.ReadUInt24(RamBanks.ZFileBuffer, HDPos + 5)
             CurGr = ActorGroupOffset
             Dim gr As UInteger = 0
             Dim desc As String = "?"
             Dim objind As Integer = 0
             For i As Integer = 0 To Cnt - 1
-              gr = IoUtil.ReadUInt16(ZFileBuffer, CurGr)
+              gr = IoUtil.ReadUInt16(RamBanks.ZFileBuffer, CurGr)
               ActorGroups.Add(gr)
               objind = Objects.IndexOf(gr.ToString("X4"))
               desc = "?"
-              If objind > - 1 Then
+              If objind > -1 Then
                 desc = ObjectsDesc(objind)
               End If
               'Group.Items.Add((i + 1).ToString & " - " & desc)
@@ -5128,21 +5128,21 @@ Public Class MainWin
               FileTree.SelectedNode.Nodes.Add("Object Sets")
               FileTree.SelectedNode.Nodes(0).Nodes.Add("1. 0x0")
             End If
-            ObjSetStart = IoUtil.ReadUInt24(ZFileBuffer, HDPos + 5)
-            ObjSetCnt = ZFileBuffer(HDPos + 15)
+            ObjSetStart = IoUtil.ReadUInt24(RamBanks.ZFileBuffer, HDPos + 5)
+            ObjSetCnt = RamBanks.ZFileBuffer(HDPos + 15)
             CurObjSet = ObjSetStart
             Dim ObjSetOffset As UInteger = 0
             Dim ObjSetSeg As UInteger = 3
             Dim ObjSetIncr As UInteger = 0
             For i As Integer = 0 To ObjSetCnt - 1
-              ObjSetOffset = IoUtil.ReadUInt24(ZFileBuffer, CurObjSet + 1)
-              ObjSetSeg = ZFileBuffer(CurObjSet)
+              ObjSetOffset = IoUtil.ReadUInt24(RamBanks.ZFileBuffer, CurObjSet + 1)
+              ObjSetSeg = RamBanks.ZFileBuffer(CurObjSet)
 
               If ObjSetSeg <> &H3 And ObjSetOffset > 0 Then
                 Exit For
               End If
 
-              If IndMapFileName = "" And ObjSetOffset > 0 And ZFileBuffer(ObjSetOffset) = &H16 Then
+              If IndMapFileName = "" And ObjSetOffset > 0 And RamBanks.ZFileBuffer(ObjSetOffset) = &H16 Then
                 FileTree.SelectedNode.Nodes(0).Nodes.Add((ObjSetIncr + 2).ToString & ". 0x" & Hex(ObjSetOffset))
                 ObjSetIncr += 1
               End If
@@ -5290,18 +5290,20 @@ Public Class MainWin
       End If
       nameinc += 1
     End While
-    PopulateCommonBanks(CommonBanks)
+    PopulateCommonBanks()
     Reshape()
   End Sub
 
-  Public Sub PopulateCommonBanks(ByRef Banks As ObjectExchange)
+  Public Sub PopulateCommonBanks()
+    Dim Banks As ObjectExchange = RamBanks.CommonBanks
+
     Dim romFS As FileStream = New FileStream(DefROM, FileMode.Open)
     With Banks
       ReDim .Bank4.Banks(0)
       ReDim .Bank5.Banks(1)
       ReDim .Anims.Banks(1)
       Dim fileSize As UInteger = 0
-      CommonBankUse.AnimBank = - 1
+      CommonBankUse.AnimBank = -1
       CommonBankUse.Bank04 = 0
       CommonBankUse.Bank05 = 0
       For i As Integer = 0 To ROMFiles.Others.Length - 1
@@ -5346,6 +5348,8 @@ Public Class MainWin
       Next
     End With
     romFS.Dispose()
+
+    RamBanks.CommonBanks = Banks
   End Sub
 
   Public Sub Start(ByVal individual As Boolean)
@@ -6614,7 +6618,7 @@ Public Class MainWin
     DLParser.Initialize()
     Select Case ftype
       Case SceneFileType.ZSCENE
-        CurrentBank = &H3
+        RamBanks.CurrentBank = &H3
         RenderGraphics = True
         RenderCollision = True
         LoadedDataType = FileTypes.MAP
@@ -6631,7 +6635,7 @@ Public Class MainWin
         ProcessSceneHeader()
         GetEntryPoints()
       Case SceneFileType.ZOBJ
-        CurrentBank = &H6
+        RamBanks.CurrentBank = &H6
         RenderGraphics = True
         RenderCollision = False
         SwitchTool(ToolID.CAMERA)
@@ -6699,33 +6703,33 @@ Public Class MainWin
         DLStart = GlobalVarsCs.N64DList(i).StartPos.Offset
         For ii As Integer = 0 To GlobalVarsCs.N64DList(i).CommandCount - 1
           GlobalVarsCs.N64DList(i).CommandsCopy(ii) = GlobalVarsCs.N64DList(i).Commands(ii)
-          ZFileBuffer(DLStart) = GlobalVarsCs.N64DList(i).Commands(ii).CMDParams(0)
+          RamBanks.ZFileBuffer(DLStart) = GlobalVarsCs.N64DList(i).Commands(ii).CMDParams(0)
           DLStart += 1
-          WriteInt24(ZFileBuffer, GlobalVarsCs.N64DList(i).Commands(ii).CMDLow, DLStart)
-          WriteInt32(ZFileBuffer, GlobalVarsCs.N64DList(i).Commands(ii).CMDHigh, DLStart)
+          WriteInt24(RamBanks.ZFileBuffer, GlobalVarsCs.N64DList(i).Commands(ii).CMDLow, DLStart)
+          WriteInt32(RamBanks.ZFileBuffer, GlobalVarsCs.N64DList(i).Commands(ii).CMDHigh, DLStart)
         Next
       Next
 
       Dim AGrOff As Integer = ActorGroupOffset
       For i As Integer = 0 To ActorGroups.Count - 1
-        WriteInt16(ZFileBuffer, AGrOff, ActorGroups(i))
+        WriteInt16(RamBanks.ZFileBuffer, AGrOff, ActorGroups(i))
       Next
 
       If rmActorCount > 0 Then
         Dim ActorStart As Integer = RoomActors(0).offset
 
         For i As Integer = 0 To RoomActors.Length - 1
-          WriteInt16(ZFileBuffer, ActorStart, RoomActors(i).no)
+          WriteInt16(RamBanks.ZFileBuffer, ActorStart, RoomActors(i).no)
 
-          WriteInt16(ZFileBuffer, ActorStart, RoomActors(i).x)
-          WriteInt16(ZFileBuffer, ActorStart, RoomActors(i).y)
-          WriteInt16(ZFileBuffer, ActorStart, RoomActors(i).z)
+          WriteInt16(RamBanks.ZFileBuffer, ActorStart, RoomActors(i).x)
+          WriteInt16(RamBanks.ZFileBuffer, ActorStart, RoomActors(i).y)
+          WriteInt16(RamBanks.ZFileBuffer, ActorStart, RoomActors(i).z)
 
-          WriteInt16(ZFileBuffer, ActorStart, RoomActors(i).xr)
-          WriteInt16(ZFileBuffer, ActorStart, RoomActors(i).yr)
-          WriteInt16(ZFileBuffer, ActorStart, RoomActors(i).zr)
+          WriteInt16(RamBanks.ZFileBuffer, ActorStart, RoomActors(i).xr)
+          WriteInt16(RamBanks.ZFileBuffer, ActorStart, RoomActors(i).yr)
+          WriteInt16(RamBanks.ZFileBuffer, ActorStart, RoomActors(i).zr)
 
-          WriteInt16(ZFileBuffer, ActorStart, RoomActors(i).var)
+          WriteInt16(RamBanks.ZFileBuffer, ActorStart, RoomActors(i).var)
         Next
       End If
       'start saving to scene file buffer...
@@ -6733,28 +6737,28 @@ Public Class MainWin
       Dim ExitOffset As Integer = 0
       For i As Integer = 0 To SceneExits.Length - 1
         ExitOffset = SceneExits(i).scOff
-        WriteInt16(ZSceneBuffer, ExitOffset, SceneExits(i).Index)
+        WriteInt16(RamBanks.ZSceneBuffer, ExitOffset, SceneExits(i).Index)
       Next
 
       Dim ColTypeOff As Integer = 0
       For i As Integer = 0 To ColTypes.Length - 1
         ColTypeOff = ColTypes(i).scOff
 
-        WriteInt16(ZSceneBuffer, ColTypeOff, ColTypes(i).unk1)
+        WriteInt16(RamBanks.ZSceneBuffer, ColTypeOff, ColTypes(i).unk1)
 
-        WriteInt16(ZSceneBuffer, ColTypeOff, ColTypes(i).unk2)
+        WriteInt16(RamBanks.ZSceneBuffer, ColTypeOff, ColTypes(i).unk2)
 
-        WriteInt16(ZSceneBuffer, ColTypeOff, ColTypes(i).unk3)
+        WriteInt16(RamBanks.ZSceneBuffer, ColTypeOff, ColTypes(i).unk3)
 
-        ZSceneBuffer(ColTypeOff) = ColTypes(i).unk4 >> 8
-        ZSceneBuffer(ColTypeOff + 1) = ((ColTypes(i).unk4 << 8 >> 4) + ColTypes(i).WalkOnSound)
+        RamBanks.ZSceneBuffer(ColTypeOff) = ColTypes(i).unk4 >> 8
+        RamBanks.ZSceneBuffer(ColTypeOff + 1) = ((ColTypes(i).unk4 << 8 >> 4) + ColTypes(i).WalkOnSound)
       Next
 
       If CollisionPolies.Length > 0 Then
         Dim ColParamOff As Integer = 0
         For i As Integer = 0 To CollisionPolies.Length - 1
           ColParamOff = CollisionPolies(i).scOff
-          WriteInt16(ZSceneBuffer, ColParamOff, CollisionPolies(i).Param)
+          WriteInt16(RamBanks.ZSceneBuffer, ColParamOff, CollisionPolies(i).Param)
         Next
       End If
 
@@ -6762,21 +6766,21 @@ Public Class MainWin
         Dim ActorStart As Integer = SceneActors(0).offset
         For i As Integer = 0 To SceneActors.Length - 1
 
-          ZSceneBuffer(ActorStart + 0) = SceneActors(i).loadMapFront
+          RamBanks.ZSceneBuffer(ActorStart + 0) = SceneActors(i).loadMapFront
 
-          ZSceneBuffer(ActorStart + 2) = SceneActors(i).loadMapBack
+          RamBanks.ZSceneBuffer(ActorStart + 2) = SceneActors(i).loadMapBack
 
           ActorStart += 4
 
-          WriteInt16(ZSceneBuffer, ActorStart, SceneActors(i).no)
+          WriteInt16(RamBanks.ZSceneBuffer, ActorStart, SceneActors(i).no)
 
-          WriteInt16(ZSceneBuffer, ActorStart, SceneActors(i).x)
-          WriteInt16(ZSceneBuffer, ActorStart, SceneActors(i).y)
-          WriteInt16(ZSceneBuffer, ActorStart, SceneActors(i).z)
+          WriteInt16(RamBanks.ZSceneBuffer, ActorStart, SceneActors(i).x)
+          WriteInt16(RamBanks.ZSceneBuffer, ActorStart, SceneActors(i).y)
+          WriteInt16(RamBanks.ZSceneBuffer, ActorStart, SceneActors(i).z)
 
-          WriteInt16(ZSceneBuffer, ActorStart, SceneActors(i).yr)
+          WriteInt16(RamBanks.ZSceneBuffer, ActorStart, SceneActors(i).yr)
 
-          WriteInt16(ZSceneBuffer, ActorStart, SceneActors(i).var)
+          WriteInt16(RamBanks.ZSceneBuffer, ActorStart, SceneActors(i).var)
         Next
       End If
 
@@ -6788,11 +6792,11 @@ Public Class MainWin
       If DefROM <> "" Then
         ROMFileStream = New FileStream(fn, FileMode.Open)
         ROMFileStream.Position = MapSt
-        ROMFileStream.Write(ZFileBuffer, 0, ZFileBuffer.Length)
+        ROMFileStream.Write(RamBanks.ZFileBuffer, 0, RamBanks.ZFileBuffer.Length)
 
         If LoadedDataType = FileTypes.MAP Then
           ROMFileStream.Position = SceneSt
-          ROMFileStream.Write(ZSceneBuffer, 0, ZSceneBuffer.Length)
+          ROMFileStream.Write(RamBanks.ZSceneBuffer, 0, RamBanks.ZSceneBuffer.Length)
         End If
 
         ROMFileStream.Close()
@@ -6803,8 +6807,8 @@ Public Class MainWin
       End If
       MsgBox("ROM saved!", MsgBoxStyle.Information, "Save")
     Else 'write to individually loaded files
-      If ZFileBuffer IsNot Nothing Then File.WriteAllBytes(IndMapFileName, ZFileBuffer)
-      If ZSceneBuffer IsNot Nothing Then File.WriteAllBytes(IndScFileName, ZSceneBuffer)
+      If RamBanks.ZFileBuffer IsNot Nothing Then File.WriteAllBytes(IndMapFileName, RamBanks.ZFileBuffer)
+      If RamBanks.ZSceneBuffer IsNot Nothing Then File.WriteAllBytes(IndScFileName, RamBanks.ZSceneBuffer)
       MsgBox("Individual file(s) saved!", MsgBoxStyle.Information, "Save")
     End If
   End Sub
@@ -7084,20 +7088,20 @@ Public Class MainWin
     Handles LoadIndividual.FileOk
     If LoadIndividual.FileName.Contains(".zscene") Then
       IndScFileName = LoadIndividual.FileName
-      ZSceneBuffer = File.ReadAllBytes(IndScFileName)
+      RamBanks.ZSceneBuffer = File.ReadAllBytes(IndScFileName)
       MapsCombobox.Items.Clear()
       MapsCombobox.Enabled = True
       Dim tScPos As Integer = 0
       Dim MapCount As Integer = 0
       Dim MapPos As Integer = 0
-      While ZSceneBuffer(tScPos) <> &H14
-        Select Case ZSceneBuffer(tScPos)
+      While RamBanks.ZSceneBuffer(tScPos) <> &H14
+        Select Case RamBanks.ZSceneBuffer(tScPos)
           Case &H4
-            MapCount = ZSceneBuffer(tScPos + 1)
-            MapPos = ZSceneBuffer(tScPos + 5)*&H10000 + ZSceneBuffer(tScPos + 6)*&H100 + ZSceneBuffer(tScPos + 7)
+            MapCount = RamBanks.ZSceneBuffer(tScPos + 1)
+            MapPos = RamBanks.ZSceneBuffer(tScPos + 5) * &H10000 + RamBanks.ZSceneBuffer(tScPos + 6) * &H100 + RamBanks.ZSceneBuffer(tScPos + 7)
             For i As Integer = 0 To MapCount - 1
-              MapsCombobox.Items.Add(ZSceneBuffer(MapPos).ToString("X2") & ZSceneBuffer(MapPos + 1).ToString("X2") &
-                                     ZSceneBuffer(MapPos + 2).ToString("X2") & ZSceneBuffer(MapPos + 3).ToString("X2"))
+              MapsCombobox.Items.Add(RamBanks.ZSceneBuffer(MapPos).ToString("X2") & RamBanks.ZSceneBuffer(MapPos + 1).ToString("X2") &
+                                     RamBanks.ZSceneBuffer(MapPos + 2).ToString("X2") & RamBanks.ZSceneBuffer(MapPos + 3).ToString("X2"))
               MapPos += 8
             Next
         End Select
@@ -7114,8 +7118,8 @@ Public Class MainWin
       EditingTabs.SelectedTab = EditingTabs.TabPages("DLTab")
       Me.Text = "Utility of Time - " & LoadIndividual.FileName
       IndMapFileName = LoadIndividual.FileName
-      ZFileBuffer = File.ReadAllBytes(IndMapFileName)
-      ZSceneBuffer = Nothing
+      RamBanks.ZFileBuffer = File.ReadAllBytes(IndMapFileName)
+      RamBanks.ZSceneBuffer = Nothing
       SetVariables(SceneFileType.ZOBJ)
     End If
   End Sub
@@ -7126,7 +7130,7 @@ Public Class MainWin
     For i As Integer = 0 To Files.Length - 1
       If Files(i).Contains(MapsCombobox.SelectedItem.ToString) Then
         IndMapFileName = Files(i)
-        ZFileBuffer = File.ReadAllBytes(IndMapFileName)
+        RamBanks.ZFileBuffer = File.ReadAllBytes(IndMapFileName)
         Start(True)
         Exit Sub
       End If
@@ -7301,14 +7305,14 @@ Public Class MainWin
     End With
     RoomActorCombobox.Items.Add((rmActorCount).ToString & " - " & IdentifyActor(0, rmActorCount))
     RoomActorCombobox.SelectedIndex = rmActorCount + 1
-    ReDim Preserve ZFileBuffer(ZFileBuffer.Length - 1 + (rmActorCount*&H16))
+    ReDim Preserve RamBanks.ZFileBuffer(RamBanks.ZFileBuffer.Length - 1 + (rmActorCount * &H16))
     rmActorCount += 1
   End Sub
 
   Private Sub Button6_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
     If Not RelocateActorPtr Then
       If MsgBox("Relocate actors to end of file?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
-        ActorPointer(2) = ZFileBuffer.Length - 1
+        ActorPointer(2) = RamBanks.ZFileBuffer.Length - 1
         RelocateActorPtr = True
       End If
     End If
@@ -7397,13 +7401,13 @@ Public Class MainWin
       MapFilename = ROMFiles.Levels(filetype).Maps(filename).filename
       ScFilename = ROMFiles.Levels(filetype).filename
 
-      ReDim ZSceneBuffer(ScBuffSize - 1)
+      ReDim RamBanks.ZSceneBuffer(ScBuffSize - 1)
       ROMFileStream.Position = SceneSt
-      ROMFileStream.Read(ZSceneBuffer, 0, ScBuffSize)
+      ROMFileStream.Read(RamBanks.ZSceneBuffer, 0, ScBuffSize)
 
-      ReDim ZFileBuffer(MapBuffSize - 1)
+      ReDim RamBanks.ZFileBuffer(MapBuffSize - 1)
       ROMFileStream.Position = MapSt
-      ROMFileStream.Read(ZFileBuffer, 0, MapBuffSize)
+      ROMFileStream.Read(RamBanks.ZFileBuffer, 0, MapBuffSize)
 
       SetVariables(SceneFileType.ZSCENE)
 
@@ -7420,10 +7424,10 @@ Public Class MainWin
 
           ObjectFilename = selectedObject.filename
           ObjBuffSize = (selectedObject.endoff - selectedObject.startoff)
-          ReDim ZFileBuffer(ObjBuffSize - 1)
+          ReDim RamBanks.ZFileBuffer(ObjBuffSize - 1)
 
           ROMFileStream.Position = selectedObject.startoff
-          ROMFileStream.Read(ZFileBuffer, 0, ObjBuffSize)
+          ROMFileStream.Read(RamBanks.ZFileBuffer, 0, ObjBuffSize)
 
           SetVariables(SceneFileType.ZOBJ)
 
@@ -7443,10 +7447,10 @@ Public Class MainWin
         Case "Actor Code"
           ActorFilename = ROMFiles.ActorCode(filename).filename
           ActorBuffSize = (ROMFiles.ActorCode(filename).endoff - ROMFiles.ActorCode(filename).startoff)
-          ReDim ZFileBuffer(ActorBuffSize - 1)
+          ReDim RamBanks.ZFileBuffer(ActorBuffSize - 1)
 
           ROMFileStream.Position = ROMFiles.ActorCode(filename).startoff
-          ROMFileStream.Read(ZFileBuffer, 0, ActorBuffSize)
+          ROMFileStream.Read(RamBanks.ZFileBuffer, 0, ActorBuffSize)
 
           'RSPInterpreter.Parse(ZFileBuffer)
 
@@ -7460,7 +7464,7 @@ Public Class MainWin
 
           Exit Sub
         Case "Others"
-          CurrentBank = 1
+          RamBanks.CurrentBank = 1
           RenderGraphics = True
           RenderCollision = False
           If ToolModes.CurrentTool = ToolID.ACTOR Then
@@ -7785,9 +7789,9 @@ Public Class MainWin
       If LimbEntries.Length > 0 Then
         CommonBankUse.AnimBank = animationbank.SelectedIndex - 1
         If CommonBankUse.AnimBank = UseBank.Inline Then
-          AnimationEntries = AnimParser.GetAnimations(ZFileBuffer, LimbEntries.Length, 6)
+          AnimationEntries = AnimParser.GetAnimations(RamBanks.ZFileBuffer, LimbEntries.Length, 6)
         Else
-          AnimationEntries = AnimParser.GetAnimations(CommonBanks.Anims.Banks(CommonBankUse.AnimBank).Data,
+          AnimationEntries = AnimParser.GetAnimations(RamBanks.CommonBanks.Anims.Banks(CommonBankUse.AnimBank).Data,
                                                       LimbEntries.Length, 6)
         End If
         If AnimationEntries IsNot Nothing Then

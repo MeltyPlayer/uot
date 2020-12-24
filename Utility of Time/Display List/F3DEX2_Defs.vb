@@ -19,7 +19,7 @@
         With DisplayList(Index)
           .StartPos = New ZSegment
           .StartPos.Offset = Offset
-          .StartPos.Bank = CurrentBank
+          .StartPos.Bank = RamBanks.CurrentBank
           .Skip = False
 
           .PickCol = New Color3UByte

@@ -76,6 +76,7 @@
     <Compile Include="texture\BitSize.cs" />
     <Compile Include="texture\ColorFormat.cs" />
     <Compile Include="texture\DlTextureManager.cs" />
+    <Compile Include="texture\RamBanks.cs" />
     <Compile Include="texture\Texture.cs" />
     <Compile Include="texture\TextureCache.cs" />
     <Compile Include="texture\TileDescriptor.cs" />

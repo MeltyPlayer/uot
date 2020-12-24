@@ -291,13 +291,13 @@ enddisplaylist:
     Dim MtxPos As UInteger
 
     Select Case MtxSegment
-      Case CurrentBank
+      Case RamBanks.CurrentBank
         For i As Integer = 0 To &H3F
-          TempRSPMatrix.N64Mat(i) = ZFileBuffer(Address + i)
+          TempRSPMatrix.N64Mat(i) = RamBanks.ZFileBuffer(Address + i)
         Next
       Case 2
         For i As Integer = 0 To &H3F
-          TempRSPMatrix.N64Mat(i) = ZSceneBuffer(Address + i)
+          TempRSPMatrix.N64Mat(i) = RamBanks.ZSceneBuffer(Address + i)
         Next
       Case &H80
         Gl.glPopMatrix()
@@ -441,7 +441,7 @@ enddisplaylist:
                                    ByVal Offset As Integer, ByVal n0 As Integer, ByVal v0 As Integer)
     Try
       Select Case DataSource
-        Case CurrentBank
+        Case RamBanks.CurrentBank
           Dim x As Short
           Dim y As Short
           Dim z As Short
@@ -505,11 +505,11 @@ enddisplaylist:
     Dim VertexSeg As UInteger = w1 >> 24
 
     Select Case VertexSeg
-      Case CurrentBank
-        FillVertexCache(ZFileBuffer, VertexCache, VertexSeg, VertBufferOff, n0, v0)
+      Case RamBanks.CurrentBank
+        FillVertexCache(RamBanks.ZFileBuffer, VertexCache, VertexSeg, VertBufferOff, n0, v0)
 
       Case 2
-        FillVertexCache(ZSceneBuffer, VertexCache, VertexSeg, VertBufferOff, n0, v0)
+        FillVertexCache(RamBanks.ZSceneBuffer, VertexCache, VertexSeg, VertBufferOff, n0, v0)
       Case 4
 
       Case 5
@@ -539,14 +539,14 @@ enddisplaylist:
 
       If texture Is Nothing Then
         Select Case GetSelectedTileDescriptor(0).ImageBank
-          Case CurrentBank
-            LoadTex(ZFileBuffer, 0)
+          Case RamBanks.CurrentBank
+            LoadTex(RamBanks.ZFileBuffer, 0)
           Case 2
-            LoadTex(ZSceneBuffer, 0)
+            LoadTex(RamBanks.ZSceneBuffer, 0)
           Case 4
-            LoadTex(CommonBanks.Bank4.Banks(CommonBankUse.Bank04).Data, 0)
+            LoadTex(RamBanks.CommonBanks.Bank4.Banks(CommonBankUse.Bank04).Data, 0)
           Case 5
-            LoadTex(CommonBanks.Bank5.Banks(CommonBankUse.Bank05).Data, 0)
+            LoadTex(RamBanks.CommonBanks.Bank5.Banks(CommonBankUse.Bank05).Data, 0)
           Case Else
             ' TODO: Should throw an error for unsupported banks.
             Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2)
@@ -561,14 +561,14 @@ enddisplaylist:
 
         If texture Is Nothing Then
           Select Case GetSelectedTileDescriptor(1).ImageBank
-            Case CurrentBank
-              LoadTex(ZFileBuffer, 1)
+            Case RamBanks.CurrentBank
+              LoadTex(RamBanks.ZFileBuffer, 1)
             Case 2
-              LoadTex(ZSceneBuffer, 1)
+              LoadTex(RamBanks.ZSceneBuffer, 1)
             Case 4
-              LoadTex(CommonBanks.Bank4.Banks(CommonBankUse.Bank04).Data, 0)
+              LoadTex(RamBanks.CommonBanks.Bank4.Banks(CommonBankUse.Bank04).Data, 0)
             Case 5
-              LoadTex(CommonBanks.Bank5.Banks(CommonBankUse.Bank05).Data, 0)
+              LoadTex(RamBanks.CommonBanks.Bank5.Banks(CommonBankUse.Bank05).Data, 0)
             Case Else
               ' TODO: Should throw an error for unsupported banks.
               Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2)
@@ -940,13 +940,13 @@ enddisplaylist:
 
       Dim palette16(paletteSizeMinus1) As UShort
       Select Case .PaletteBank
-        Case CurrentBank
+        Case RamBanks.CurrentBank
           For i As Integer = 0 To paletteSizeMinus1
-            palette16(i) = IoUtil.ReadUInt16(ZFileBuffer, .PaletteOffset + 2 * i)
+            palette16(i) = IoUtil.ReadUInt16(RamBanks.ZFileBuffer, .PaletteOffset + 2 * i)
           Next
         Case 2
           For i As Integer = 0 To paletteSizeMinus1
-            palette16(i) = IoUtil.ReadUInt16(ZSceneBuffer, .PaletteOffset + 2 * i)
+            palette16(i) = IoUtil.ReadUInt16(RamBanks.ZSceneBuffer, .PaletteOffset + 2 * i)
           Next
       End Select
 
