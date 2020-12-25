@@ -533,6 +533,13 @@ enddisplaylist:
   End Sub
 
 
+  ''' <summary>
+  '''   Prepares to draw a triangle by setting GL params and loading any
+  '''   pending textures. This was previously called in VTX(), but it turns out
+  '''   it MUST be called before the TRI() methods to fix textures!
+  '''
+  '''   (This idea was shamefully taken from GLideN64.)
+  ''' </summary>
   Private Sub PrepareDrawTriangle_()
     If ParseMode = Parse.EVERYTHING Then
       If EnableCombiner Then
