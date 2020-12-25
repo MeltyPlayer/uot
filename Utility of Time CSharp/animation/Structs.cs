@@ -9,12 +9,12 @@
   }
 
   public struct AnimTrack {
-    public short[] Frames;
     public int Type; // 0 = constant, 1 = keyframe
+    public ushort[] Frames;
   }
 
   public struct Animation {
-    public short[] Angles;
+    public ushort[] Angles;
     public AnimTrack[] Tracks;
     public uint XTrans;
     public uint YTrans;

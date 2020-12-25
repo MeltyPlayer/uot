@@ -78,6 +78,7 @@
                 .TrackCount = (LimbCount * 3)
                 .ConstTrackCount = IoUtil.ReadUInt16(Data, i + 8)
                 .TrackOffset = IoUtil.ReadUInt24(Data, i + 5)
+                ' TODO: Why negative index, why isn't this starting at the beginning?
                 .FrameCount = IoUtil.ReadUInt16(Data, i - 4)
                 .AngleCount = ((.TrackOffset - angleOffset) \ 2)
                 If .FrameCount > 0 Then
@@ -87,7 +88,7 @@
                   MainWin.AnimationList.Items.Add("0x" & Hex(i))
 
                   For i1 As Integer = 0 To .AngleCount - 1
-                    .Angles(i1) = CShort(IoUtil.ReadUInt16(Data, angleOffset))
+                    .Angles(i1) = IoUtil.ReadUInt16(Data, angleOffset)
                     angleOffset += 2
                   Next
 
@@ -102,15 +103,17 @@
                     tTrack = IoUtil.ReadUInt16(Data, tTrackOffset)
 
                     If tTrack < .ConstTrackCount Then
+                      ' Constant (single value)
+                      .Tracks(i1).Type = 0
                       ReDim .Tracks(i1).Frames(0)
                       .Tracks(i1).Frames(0) = .Angles(tTrack)
-                      .Tracks(i1).Type = 0
                     Else
+                      ' Keyframes
+                      .Tracks(i1).Type = 1
                       ReDim .Tracks(i1).Frames(.FrameCount - 1)
                       For i2 As Integer = 0 To .FrameCount - 1
                         .Tracks(i1).Frames(i2) = .Angles(tTrack + i2)
                       Next
-                      .Tracks(i1).Type = 1
                     End If
 
                     tTrackOffset += 2
@@ -191,10 +194,16 @@
       .DeltaTime = .ElapsedSeconds - .LastUpdateTime
 
       .FramesAdvanced = .FrameDelta + .DeltaTime * .FPS
-      .FramesAdvancedInt = CInt(.FramesAdvanced)
+      .FramesAdvancedInt = Math.Floor(.FramesAdvanced)
 
       .FrameNo += .FramesAdvancedInt
-      .FrameDelta = .FramesAdvanced - CDbl(.FramesAdvancedInt)
+      .FrameDelta = .FramesAdvanced - .FramesAdvancedInt
+
+      If Counter.FrameDelta < 0 Then
+        Throw New Exception("Less than 0")
+      ElseIf Counter.FrameDelta > 1 Then
+        Throw New Exception("More than 1")
+      End If
 
       .LastUpdateTime = AnimationStopWatch.Elapsed.TotalSeconds
     End With

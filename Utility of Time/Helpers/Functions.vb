@@ -32,8 +32,8 @@ Module Functions
     Gl.glPopAttrib()
   End Function
 
-  Public Function AngleToRad(ByVal angle As Short) As Double
-    Return (angle / 32768.0F) * 180.0F
+  Public Function AngleToRad(ByVal angle As UShort) As Double
+    Return (angle / &HFFFF) * 360.0
   End Function
 
   Public Function SearchDLCache(ByVal N64DList() As N64DisplayList, ByVal Offset As UInteger) As Integer
