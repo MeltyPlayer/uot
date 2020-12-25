@@ -72,7 +72,10 @@ Public Class F3DEX2_Parser
   Private v0 As Byte = 0
   Private n0 As Byte = 0
   Private EnableLighting As Boolean = True
+
+  Private VERTEX_CACHE_MAX = 31
   Private VertexCache As N64Vertex
+
   Private FullAlphaCombiner As Boolean = False
   Private ModColorWithAlpha As Boolean = False
 
@@ -440,6 +443,51 @@ enddisplaylist:
     End Select
   End Function
 
+  Private Function GetSelectedTileDescriptor(index As Integer) As TileDescriptor
+    If UseJank Then
+      Return JankTileDescriptors(SelectedTileDescriptors(index))
+    Else
+      Return TileDescriptors((SelectedTileDescriptor + index) Mod 8)
+    End If
+  End Function
+
+  Private Sub SetSelectedTileDescriptor(index As Integer, ByVal tileDescriptor As TileDescriptor)
+    If UseJank Then
+      JankTileDescriptors(SelectedTileDescriptors(index)) = tileDescriptor
+    Else
+      TileDescriptors((SelectedTileDescriptor + index) Mod 8) = tileDescriptor
+    End If
+  End Sub
+
+  Private Function SearchTexCache(ByVal tileDescriptor As TileDescriptor) As Texture
+    If UseJank Then
+      Return JankCache(tileDescriptor)
+    Else
+      Return Cache(tileDescriptor)
+    End If
+  End Function
+
+  Private Sub VTX(ByVal w0 As UInt32, ByVal w1 As UInt32)
+    Dim n0 As UInteger = IoUtil.ShiftR(w0, 12, 8)
+    Dim v0 As UInteger = (IoUtil.ShiftR(w0, 0, 8) >> 1) - n0
+
+    Dim VertBufferOff As UInteger
+    Dim VertexSeg As UInteger
+    IoUtil.SplitAddress(w1, VertexSeg, VertBufferOff)
+
+    Select Case VertexSeg
+      Case RamBanks.CurrentBank
+        FillVertexCache(RamBanks.ZFileBuffer, VertexCache, VertexSeg, VertBufferOff, n0, v0)
+
+      Case 2
+        FillVertexCache(RamBanks.ZSceneBuffer, VertexCache, VertexSeg, VertBufferOff, n0, v0)
+      Case 4
+
+      Case 5
+
+    End Select
+  End Sub
+
   Private Function FillVertexCache(ByVal Data() As Byte, ByRef Cache As N64Vertex, ByVal DataSource As Byte,
                                    ByVal Offset As Integer, ByVal n0 As Integer, ByVal v0 As Integer)
     Try
@@ -454,7 +502,7 @@ enddisplaylist:
           Dim g As Byte
           Dim b As Byte
           Dim a As Byte
-          For i2 As Integer = v0 To (n0 + v0) - 1
+          For i2 As Integer = v0 To (v0 + n0) - 1
             x = CShort(IoUtil.ReadUInt16(Data, Offset))
             y = CShort(IoUtil.ReadUInt16(Data, Offset + 2))
             z = CShort(IoUtil.ReadUInt16(Data, Offset + 4))
@@ -488,50 +536,6 @@ enddisplaylist:
     Catch err As Exception
     End Try
   End Function
-
-  Private Function GetSelectedTileDescriptor(index As Integer) As TileDescriptor
-    If UseJank Then
-      Return JankTileDescriptors(SelectedTileDescriptors(index))
-    Else
-      Return TileDescriptors((SelectedTileDescriptor + index) Mod 8)
-    End If
-  End Function
-
-  Private Sub SetSelectedTileDescriptor(index As Integer, ByVal tileDescriptor As TileDescriptor)
-    If UseJank Then
-      JankTileDescriptors(SelectedTileDescriptors(index)) = tileDescriptor
-    Else
-      TileDescriptors((SelectedTileDescriptor + index) Mod 8) = tileDescriptor
-    End If
-  End Sub
-
-  Private Function SearchTexCache(ByVal tileDescriptor As TileDescriptor) As Texture
-    If UseJank Then
-      Return JankCache(tileDescriptor)
-    Else
-      Return Cache(tileDescriptor)
-    End If
-  End Function
-
-  Private Sub VTX(ByVal w0 As UInt32, ByVal w1 As UInt32)
-    Dim n0 As UInteger = (w0 And &HFFF) >> 1
-    Dim v0 As UInteger = n0 - ((w0 And &HFFF000) >> 12)
-    Dim VertBufferOff As UInteger = w1 << 8 >> 8
-    Dim VertexSeg As UInteger = w1 >> 24
-
-    Select Case VertexSeg
-      Case RamBanks.CurrentBank
-        FillVertexCache(RamBanks.ZFileBuffer, VertexCache, VertexSeg, VertBufferOff, n0, v0)
-
-      Case 2
-        FillVertexCache(RamBanks.ZSceneBuffer, VertexCache, VertexSeg, VertBufferOff, n0, v0)
-      Case 4
-
-      Case 5
-
-    End Select
-  End Sub
-
 
   ''' <summary>
   '''   Prepares to draw a triangle by setting GL params and loading any
@@ -663,6 +667,8 @@ enddisplaylist:
       Polygons(1) = CMDParams(2) >> 1
       Polygons(2) = CMDParams(3) >> 1
 
+      ' TODO: Handle reordering based on value of flag.
+
       If ParseMode = Parse.EVERYTHING Then
         Gl.glBegin(Gl.GL_TRIANGLES)
         For i As Integer = 0 To 2
@@ -702,6 +708,8 @@ enddisplaylist:
       Polygons(3) = CMDParams(5) >> 1
       Polygons(4) = CMDParams(6) >> 1
       Polygons(5) = CMDParams(7) >> 1
+
+      ' TODO: Handle reordering based on value of flag.
 
       If ParseMode = Parse.EVERYTHING Then
         Gl.glBegin(Gl.GL_TRIANGLES)
@@ -1447,15 +1455,15 @@ enddisplaylist:
     EnableLighting = True
 
     With VertexCache
-      ReDim .x(63)
-      ReDim .y(63)
-      ReDim .z(63)
-      ReDim .u(63)
-      ReDim .v(63)
-      ReDim .r(63)
-      ReDim .g(63)
-      ReDim .b(63)
-      ReDim .a(63)
+      ReDim .x(VERTEX_CACHE_MAX)
+      ReDim .y(VERTEX_CACHE_MAX)
+      ReDim .z(VERTEX_CACHE_MAX)
+      ReDim .u(VERTEX_CACHE_MAX)
+      ReDim .v(VERTEX_CACHE_MAX)
+      ReDim .r(VERTEX_CACHE_MAX)
+      ReDim .g(VERTEX_CACHE_MAX)
+      ReDim .b(VERTEX_CACHE_MAX)
+      ReDim .a(VERTEX_CACHE_MAX)
     End With
 
     If Not PrecompiledCombiner Then
