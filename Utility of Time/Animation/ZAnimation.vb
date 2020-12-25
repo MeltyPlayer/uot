@@ -193,17 +193,12 @@
       .ElapsedMilliseconds = AnimationStopWatch.Elapsed.Milliseconds
       .DeltaTime = .ElapsedSeconds - .LastUpdateTime
 
+      ' TODO: Delete unneeded fields.
       .FramesAdvanced = .FrameDelta + .DeltaTime * .FPS
       .FramesAdvancedInt = Math.Floor(.FramesAdvanced)
 
       .FrameNo += .FramesAdvancedInt
       .FrameDelta = .FramesAdvanced - .FramesAdvancedInt
-
-      If Counter.FrameDelta < 0 Then
-        Throw New Exception("Less than 0")
-      ElseIf Counter.FrameDelta > 1 Then
-        Throw New Exception("More than 1")
-      End If
 
       .LastUpdateTime = AnimationStopWatch.Elapsed.TotalSeconds
     End With
