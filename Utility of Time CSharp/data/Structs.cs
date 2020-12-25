@@ -44,8 +44,8 @@ namespace UoT {
     public short x;
     public short y;
     public short z;
-    public sbyte c0;
-    public sbyte c1;
+    public sbyte firstChild;
+    public sbyte nextSibling;
     public uint DisplayList;
     public uint DisplayListLow;
   }

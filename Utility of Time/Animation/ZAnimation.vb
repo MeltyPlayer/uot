@@ -26,8 +26,8 @@
                   .x = IoUtil.ReadUInt16(Data, tmpLimbOff + 0)
                   .y = IoUtil.ReadUInt16(Data, tmpLimbOff + 2)
                   .z = IoUtil.ReadUInt16(Data, tmpLimbOff + 4)
-                  .c0 = CSByte(Data(tmpLimbOff + 6))
-                  .c1 = CSByte(Data(tmpLimbOff + 7))
+                  .firstChild = CSByte(Data(tmpLimbOff + 6))
+                  .nextSibling = CSByte(Data(tmpLimbOff + 7))
 
                   If Data(tmpLimbOff + 8) = Bank Then
                     .DisplayList = IoUtil.ReadUInt24(Data, tmpLimbOff + 9)

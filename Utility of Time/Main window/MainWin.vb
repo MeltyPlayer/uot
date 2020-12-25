@@ -3263,7 +3263,7 @@ Public Class MainWin
   Private SceneActors() As Door
   Private rmActorCount As Integer = 0
   Private scActorCount As Integer = 0
-  Private CopyActor() As Integer = {- 1, - 1, - 1, - 1, - 1, - 1, - 1, - 1} _
+  Private CopyActor() As Integer = {-1, -1, -1, -1, -1, -1, -1, -1} _
   'x pos, y pos, z pos, x rot, y rot, z rot, number, variable
   Private ActorPointer() As UInteger = {0, 0, 0} 'header pos, count, pointer
   Private RelocateActorPtr As Boolean = False
@@ -3284,8 +3284,8 @@ Public Class MainWin
 
 #Region "ANIMATION & HEIRARCHY"
 
-  Private AnimationEntries(- 1) As Animation
-  Private LimbEntries(- 1) As Limb
+  Private AnimationEntries(-1) As Animation
+  Private LimbEntries(-1) As Limb
   Private CurrLimb As Integer = 0
   Private BoneColorFactor As New Color3UByte
   Private CurrParent As Integer = 0
@@ -3441,7 +3441,7 @@ Public Class MainWin
   Private viewport(3) As Integer
   Private identity As String
   Private AppExit As Boolean = False
-  Private PIRad As Double = PI/180
+  Private PIRad As Double = PI / 180
 
 #End Region
 
@@ -3523,13 +3523,13 @@ Public Class MainWin
   Private Sub SyncCameraToActor(ByVal ActorType As Integer, ByVal Actor As Integer)
     Select Case ActorType
       Case 0
-        CamXPos = - RoomActors(Actor).x
-        CamYPos = - RoomActors(Actor).y - 1000
-        CamZPos = - RoomActors(Actor).z - 1000
+        CamXPos = -RoomActors(Actor).x
+        CamYPos = -RoomActors(Actor).y - 1000
+        CamZPos = -RoomActors(Actor).z - 1000
       Case 1
-        CamXPos = - SceneActors(Actor).x
-        CamYPos = - SceneActors(Actor).y - 1000
-        CamZPos = - SceneActors(Actor).z - 1000
+        CamXPos = -SceneActors(Actor).x
+        CamYPos = -SceneActors(Actor).y - 1000
+        CamZPos = -SceneActors(Actor).z - 1000
     End Select
     CamXRot = 45
   End Sub
@@ -3543,16 +3543,16 @@ Public Class MainWin
       NewMouseX = LocalMouse.X
       NewMouseY = LocalMouse.Y
 
-      CamXRotd = CamXRot*PIRad
-      CamYRotd = CamYRot*PIRad
+      CamXRotd = CamXRot * PIRad
+      CamYRotd = CamYRot * PIRad
 
       Dim MouseChanged As Boolean = False
       If NewMouseX <> OldMouseX Then
-        Dx = (NewMouseX - OldMouseX)*ToolSensitivity
+        Dx = (NewMouseX - OldMouseX) * ToolSensitivity
         MouseChanged = True
       End If
       If NewMouseY <> OldMouseY Then
-        Dy = (NewMouseY - OldMouseY)*ToolSensitivity
+        Dy = (NewMouseY - OldMouseY) * ToolSensitivity
         MouseChanged = True
       End If
       If MouseChanged Then
@@ -3560,7 +3560,7 @@ Public Class MainWin
           If OldMouseX < NewMouseX Then
             '(MOUSE MOVE RIGHT)
             If ToolModes.SelectedItemType = ToolID.NONE Then
-              CamYRot += (NewMouseX - OldMouseX)*0.5
+              CamYRot += (NewMouseX - OldMouseX) * 0.5
               If CamYRot > 360 Then
                 CamYRot = 0
               End If
@@ -3572,18 +3572,18 @@ Public Class MainWin
                 If OnSceneActor Then
                   For i As Integer = 0 To SelectedSceneActors.Count - 1
                     i1 = SelectedSceneActors(i)
-                    SceneActors(i1).x += Cos(CamYRotd)*Dx
-                    SceneActors(i1).z += Sin(CamYRotd)*Dx
+                    SceneActors(i1).x += Cos(CamYRotd) * Dx
+                    SceneActors(i1).z += Sin(CamYRotd) * Dx
                   Next
                 Else
                   For i As Integer = 0 To SelectedRoomActors.Count - 1
                     i1 = SelectedRoomActors(i)
-                    RoomActors(i1).x += Cos(CamYRotd)*Dx
-                    RoomActors(i1).z += Sin(CamYRotd)*Dx
+                    RoomActors(i1).x += Cos(CamYRotd) * Dx
+                    RoomActors(i1).z += Sin(CamYRotd) * Dx
                   Next
                 End If
-                CamXPos += - Cos(CamYRotd)*Dx
-                CamZPos += - Sin(CamYRotd)*Dx
+                CamXPos += -Cos(CamYRotd) * Dx
+                CamZPos += -Sin(CamYRotd) * Dx
                 UpdateActorPos()
               ElseIf ToolModes.SelectedItemType = ToolID.VERTEX Then
                 If RenderGraphics Then
@@ -3591,20 +3591,20 @@ Public Class MainWin
                 End If
                 If RenderCollision Then
                   For i2 = 0 To SelectedCollisionVert.Count - 1
-                    CollisionVerts.x(SelectedCollisionVert(i2)) += Cos(CamYRotd)*Dx
-                    CollisionVerts.z(SelectedCollisionVert(i2)) += Sin(CamYRotd)*Dx
+                    CollisionVerts.x(SelectedCollisionVert(i2)) += Cos(CamYRotd) * Dx
+                    CollisionVerts.z(SelectedCollisionVert(i2)) += Sin(CamYRotd) * Dx
                   Next
                 End If
-                CamXPos += - Cos(CamYRotd)*Dx
-                CamZPos += - Sin(CamYRotd)*Dx
+                CamXPos += -Cos(CamYRotd) * Dx
+                CamZPos += -Sin(CamYRotd) * Dx
               End If
             End If
           End If
           If OldMouseX > NewMouseX Then
             '(MOUSE MOVE LEFT) 
             If ToolModes.SelectedItemType = ToolID.NONE Then
-              CamYRot -= (OldMouseX - NewMouseX)*0.5
-              If CamYRot < - 360 Then
+              CamYRot -= (OldMouseX - NewMouseX) * 0.5
+              If CamYRot < -360 Then
                 CamYRot = 0
               End If
             End If
@@ -3615,18 +3615,18 @@ Public Class MainWin
                 If OnSceneActor Then
                   For i As Integer = 0 To SelectedSceneActors.Count - 1
                     i1 = SelectedSceneActors(i)
-                    SceneActors(i1).x += Cos(CamYRotd)*Dx
-                    SceneActors(i1).z += Sin(CamYRotd)*Dx
+                    SceneActors(i1).x += Cos(CamYRotd) * Dx
+                    SceneActors(i1).z += Sin(CamYRotd) * Dx
                   Next
                 Else
                   For i As Integer = 0 To SelectedRoomActors.Count - 1
                     i1 = SelectedRoomActors(i)
-                    RoomActors(i1).x += Cos(CamYRotd)*Dx
-                    RoomActors(i1).z += Sin(CamYRotd)*Dx
+                    RoomActors(i1).x += Cos(CamYRotd) * Dx
+                    RoomActors(i1).z += Sin(CamYRotd) * Dx
                   Next
                 End If
-                CamXPos -= Cos(CamYRotd)*Dx
-                CamZPos -= Sin(CamYRotd)*Dx
+                CamXPos -= Cos(CamYRotd) * Dx
+                CamZPos -= Sin(CamYRotd) * Dx
                 UpdateActorPos()
               ElseIf ToolModes.SelectedItemType = ToolID.VERTEX Then
                 If RenderGraphics Then
@@ -3634,22 +3634,22 @@ Public Class MainWin
                 End If
                 If RenderCollision Then
                   For i2 = 0 To SelectedCollisionVert.Count - 1
-                    CollisionVerts.x(SelectedCollisionVert(i2)) += Cos(CamYRotd)*Dx
-                    CollisionVerts.z(SelectedCollisionVert(i2)) += Sin(CamYRotd)*Dx
+                    CollisionVerts.x(SelectedCollisionVert(i2)) += Cos(CamYRotd) * Dx
+                    CollisionVerts.z(SelectedCollisionVert(i2)) += Sin(CamYRotd) * Dx
                   Next
                 End If
-                CamXPos -= Cos(CamYRotd)*Dx
-                CamZPos -= Sin(CamYRotd)*Dx
+                CamXPos -= Cos(CamYRotd) * Dx
+                CamZPos -= Sin(CamYRotd) * Dx
               End If
             End If
           End If
           If OldMouseY > NewMouseY Then
             '(MOUSE MOVE UP) 
             If ToolModes.SelectedItemType = ToolID.NONE Then
-              If CamXRot <= - 90 Then
-                CamXRot = - 90
+              If CamXRot <= -90 Then
+                CamXRot = -90
               Else
-                CamXRot += (Dy\ToolSensitivity)*0.5
+                CamXRot += (Dy \ ToolSensitivity) * 0.5
               End If
             End If
             If _
@@ -3686,7 +3686,7 @@ Public Class MainWin
               If CamXRot >= 90 Then
                 CamXRot = 90
               Else
-                CamXRot += (Dy\ToolSensitivity)*0.5
+                CamXRot += (Dy \ ToolSensitivity) * 0.5
               End If
             End If
             If _
@@ -3721,46 +3721,46 @@ Public Class MainWin
           If OldMouseY < NewMouseY Then
             '(MOUSE MOVE DOWN) 
             If ToolModes.SelectedItemType = ToolID.NONE Then
-              CamYPos += (OldMouseY - NewMouseY)*(CameraCoef/8)
+              CamYPos += (OldMouseY - NewMouseY) * (CameraCoef / 8)
             ElseIf ToolModes.SelectedItemType = ToolID.ACTOR Then
               If OnSceneActor Then
                 For i As Integer = 0 To SelectedSceneActors.Count - 1
                   i1 = SelectedSceneActors(i)
-                  SceneActors(i1).x += Sin(CamYRotd)*Dy
-                  SceneActors(i1).z -= Cos(CamYRotd)*Dy
+                  SceneActors(i1).x += Sin(CamYRotd) * Dy
+                  SceneActors(i1).z -= Cos(CamYRotd) * Dy
                 Next
               Else
                 For i As Integer = 0 To SelectedRoomActors.Count - 1
                   i1 = SelectedRoomActors(i)
-                  RoomActors(i1).x += Sin(CamYRotd)*Dy
-                  RoomActors(i1).z -= Cos(CamYRotd)*Dy
+                  RoomActors(i1).x += Sin(CamYRotd) * Dy
+                  RoomActors(i1).z -= Cos(CamYRotd) * Dy
                 Next
               End If
-              CamXPos -= Sin(CamYRotd)*Dy
-              CamZPos += Cos(CamYRotd)*Dy
+              CamXPos -= Sin(CamYRotd) * Dy
+              CamZPos += Cos(CamYRotd) * Dy
               UpdateActorPos()
             End If
           End If
           If OldMouseY > NewMouseY Then
             '(MOUSE MOVE DOWN) 
             If ToolModes.SelectedItemType = ToolID.NONE Then
-              CamYPos -= (NewMouseY - OldMouseY)*(CameraCoef/8)
+              CamYPos -= (NewMouseY - OldMouseY) * (CameraCoef / 8)
             ElseIf ToolModes.SelectedItemType = ToolID.ACTOR Then
               If OnSceneActor Then
                 For i As Integer = 0 To SelectedSceneActors.Count - 1
                   i1 = SelectedSceneActors(i)
-                  SceneActors(i1).x += Sin(CamYRotd)*Dy
-                  SceneActors(i1).z -= Cos(CamYRotd)*Dy
+                  SceneActors(i1).x += Sin(CamYRotd) * Dy
+                  SceneActors(i1).z -= Cos(CamYRotd) * Dy
                 Next
               Else
                 For i As Integer = 0 To SelectedRoomActors.Count - 1
                   i1 = SelectedRoomActors(i)
-                  RoomActors(i1).x += Sin(CamYRotd)*Dy
-                  RoomActors(i1).z -= Cos(CamYRotd)*Dy
+                  RoomActors(i1).x += Sin(CamYRotd) * Dy
+                  RoomActors(i1).z -= Cos(CamYRotd) * Dy
                 Next
               End If
-              CamXPos -= Sin(CamYRotd)*Dy
-              CamZPos += Cos(CamYRotd)*Dy
+              CamXPos -= Sin(CamYRotd) * Dy
+              CamZPos += Cos(CamYRotd) * Dy
               UpdateActorPos()
             End If
           End If
@@ -3778,7 +3778,7 @@ Public Class MainWin
           Case ToolID.DLIST
             curColor = Color.Blue
         End Select
-        GLPrint2D("+", UoTRender.PointToClient(Cursor.Position), curColor, Glut.GLUT_BITMAP_TIMES_ROMAN_24, - 10, - 15,
+        GLPrint2D("+", UoTRender.PointToClient(Cursor.Position), curColor, Glut.GLUT_BITMAP_TIMES_ROMAN_24, -10, -15,
                   True)
       End If
       If PrintTool Then
@@ -3788,30 +3788,30 @@ Public Class MainWin
                   0, True)
       End If
       If key_w Then
-        If CamXRot >= 90 Or CamXRot <= - 90 Then
-          CamYPos += Sin(CamXRotd)*CameraCoef
+        If CamXRot >= 90 Or CamXRot <= -90 Then
+          CamYPos += Sin(CamXRotd) * CameraCoef
         Else
-          CamXPos -= Sin(CamYRotd)*CameraCoef
-          CamZPos += Cos(CamYRotd)*CameraCoef
-          CamYPos += Sin(CamXRotd)*CameraCoef
+          CamXPos -= Sin(CamYRotd) * CameraCoef
+          CamZPos += Cos(CamYRotd) * CameraCoef
+          CamYPos += Sin(CamXRotd) * CameraCoef
         End If
       End If
       If key_s Then
-        If CamXRot >= 90 Or CamXRot <= - 90 Then
-          CamYPos -= Sin(CamXRotd)*CameraCoef
+        If CamXRot >= 90 Or CamXRot <= -90 Then
+          CamYPos -= Sin(CamXRotd) * CameraCoef
         Else
-          CamXPos += Sin(CamYRotd)*CameraCoef
-          CamZPos -= Cos(CamYRotd)*CameraCoef
-          CamYPos -= Sin(CamXRotd)*CameraCoef
+          CamXPos += Sin(CamYRotd) * CameraCoef
+          CamZPos -= Cos(CamYRotd) * CameraCoef
+          CamYPos -= Sin(CamXRotd) * CameraCoef
         End If
       End If
       If key_d Then
-        CamXPos -= Cos(CamYRotd)*CameraCoef
-        CamZPos -= Sin(CamYRotd)*CameraCoef
+        CamXPos -= Cos(CamYRotd) * CameraCoef
+        CamZPos -= Sin(CamYRotd) * CameraCoef
       End If
       If key_a Then
-        CamXPos += Cos(CamYRotd)*CameraCoef
-        CamZPos += Sin(CamYRotd)*CameraCoef
+        CamXPos += Cos(CamYRotd) * CameraCoef
+        CamZPos += Sin(CamYRotd) * CameraCoef
       End If
 
       UpdateCamLabels()
@@ -3895,7 +3895,7 @@ Public Class MainWin
       For i As Integer = 0 To SceneActors.Length - 1
         Gl.glPushMatrix()
         Gl.glTranslatef(SceneActors(i).x, SceneActors(i).y + 16, SceneActors(i).z)
-        Gl.glRotatef(SceneActors(i).yr\180, 0.0F, 1.0F, 0.0F)
+        Gl.glRotatef(SceneActors(i).yr \ 180, 0.0F, 1.0F, 0.0F)
         If SelectionMode Then
           Gl.glColor3ub(SceneActors(i).pickR, SceneActors(i).pickG, SceneActors(i).pickB)
           Glut.glutSolidCube(ActorScaleP)
@@ -4013,11 +4013,11 @@ Public Class MainWin
         DrawDL(dlIndex, False)
       End If
 
-      If .c0 > -1 Then
+      If .firstChild > -1 Then
         BoneColorFactor.r = 255
         BoneColorFactor.g = 0
         BoneColorFactor.b = 0
-        DrawJoint(.c0)
+        DrawJoint(.firstChild)
       Else
         BoneColorFactor.r = 255
         BoneColorFactor.g = 255
@@ -4026,11 +4026,11 @@ Public Class MainWin
 
       ModelViewMatrixTransformer.Pop()
 
-      If .c1 > -1 Then
+      If .nextSibling > -1 Then
         BoneColorFactor.r = 0
         BoneColorFactor.g = 0
         BoneColorFactor.b = 255
-        DrawJoint(.c1)
+        DrawJoint(.nextSibling)
       Else
         BoneColorFactor.r = 255
         BoneColorFactor.g = 255
@@ -4087,7 +4087,7 @@ Public Class MainWin
       Gl.glEnable(Gl.GL_POLYGON_OFFSET_LINE)
       Gl.glPolygonMode(Gl.GL_FRONT_AND_BACK, Gl.GL_LINE)
 
-      Gl.glPolygonOffset(- 5.0, - 5.0)
+      Gl.glPolygonOffset(-5.0, -5.0)
 
       Gl.glBegin(Gl.GL_TRIANGLES)
       Gl.glColor3f(0, 0, 0)
@@ -4108,7 +4108,7 @@ Public Class MainWin
       Gl.glDisable(Gl.GL_POLYGON_OFFSET_LINE)
       Gl.glPolygonMode(Gl.GL_FRONT_AND_BACK, Gl.GL_FILL)
 
-      Gl.glPolygonOffset(- 6, - 6)
+      Gl.glPolygonOffset(-6, -6)
       Gl.glEnable(Gl.GL_POLYGON_OFFSET_FILL)
       Gl.glBegin(Gl.GL_TRIANGLES)
       For i As Integer = 0 To Polygons.Length - 1
@@ -4159,7 +4159,7 @@ Public Class MainWin
           Dim curedge As Integer = 0
           Gl.glEnable(Gl.GL_POLYGON_OFFSET_LINE)
           Gl.glPolygonMode(Gl.GL_FRONT_AND_BACK, Gl.GL_LINE)
-          Gl.glPolygonOffset(- 8.0, - 8.0)
+          Gl.glPolygonOffset(-8.0, -8.0)
           Gl.glLineWidth(10)
           Gl.glBegin(Gl.GL_TRIANGLES)
           For i As Integer = 0 To Vertices.EdgeR.Count - 1
@@ -4174,7 +4174,7 @@ Public Class MainWin
           Gl.glDisable(Gl.GL_POLYGON_OFFSET_LINE)
           Gl.glPolygonMode(Gl.GL_FRONT_AND_BACK, Gl.GL_FILL)
         Case ToolID.COLTRI
-          Gl.glPolygonOffset(- 8, - 8)
+          Gl.glPolygonOffset(-8, -8)
           Gl.glEnable(Gl.GL_POLYGON_OFFSET_FILL)
           Gl.glBegin(Gl.GL_TRIANGLES)
           For i As Integer = 0 To Polygons.Length - 1
@@ -4325,17 +4325,17 @@ Public Class MainWin
     Gl.glBegin(Gl.GL_LINES)
     Gl.glColor3f(0, 0, 1)
     Gl.glVertex3f(420, 0.1, 0.1)
-    Gl.glVertex3f(- 420, 0.1, 0.1)
+    Gl.glVertex3f(-420, 0.1, 0.1)
     Gl.glEnd()
     Gl.glBegin(Gl.GL_LINES)
     Gl.glColor3f(1, 0, 0)
     Gl.glVertex3f(0.1, 420, 0.1)
-    Gl.glVertex3f(0.1, - 420, 0.1)
+    Gl.glVertex3f(0.1, -420, 0.1)
     Gl.glEnd()
     Gl.glBegin(Gl.GL_LINES)
     Gl.glColor3f(0, 1, 0)
     Gl.glVertex3f(0.1, 0.1, 420)
-    Gl.glVertex3f(0.1, 0.1, - 420)
+    Gl.glVertex3f(0.1, 0.1, -420)
     Gl.glVertex3f(0.1, 0.1, 420)
     Gl.glEnd()
     Gl.glEndList()
@@ -4347,40 +4347,40 @@ Public Class MainWin
     Gl.glBegin(Gl.GL_QUADS)
     'top
     Gl.glColor3f(1, 1, 1)
-    Gl.glVertex3f(1.0F, 1.0F, - 1.0F)
-    Gl.glVertex3f(- 1.0F, 1.0F, - 1.0F)
-    Gl.glVertex3f(- 1.0F, 1.0F, 1.0F)
+    Gl.glVertex3f(1.0F, 1.0F, -1.0F)
+    Gl.glVertex3f(-1.0F, 1.0F, -1.0F)
+    Gl.glVertex3f(-1.0F, 1.0F, 1.0F)
     Gl.glVertex3f(1.0F, 1.0F, 1.0F)
     'bottom
     Gl.glColor3f(0, 0, 0)
-    Gl.glVertex3f(1.0F, - 1.0F, 1.0F)
-    Gl.glVertex3f(- 1.0F, - 1.0F, 1.0F)
-    Gl.glVertex3f(- 1.0F, - 1.0F, - 1.0F)
-    Gl.glVertex3f(1.0F, - 1.0F, - 1.0F)
+    Gl.glVertex3f(1.0F, -1.0F, 1.0F)
+    Gl.glVertex3f(-1.0F, -1.0F, 1.0F)
+    Gl.glVertex3f(-1.0F, -1.0F, -1.0F)
+    Gl.glVertex3f(1.0F, -1.0F, -1.0F)
     'front
     Gl.glColor3f(1, 0, 0)
     Gl.glVertex3f(1.0F, 1.0F, 1.0F)
-    Gl.glVertex3f(- 1.0F, 1.0F, 1.0F)
-    Gl.glVertex3f(- 1.0F, - 1.0F, 1.0F)
-    Gl.glVertex3f(1.0F, - 1.0F, 1.0F)
+    Gl.glVertex3f(-1.0F, 1.0F, 1.0F)
+    Gl.glVertex3f(-1.0F, -1.0F, 1.0F)
+    Gl.glVertex3f(1.0F, -1.0F, 1.0F)
     'back
     Gl.glColor3f(0, 1, 0)
-    Gl.glVertex3f(1.0F, - 1.0F, - 1.0F)
-    Gl.glVertex3f(- 1.0F, - 1.0F, - 1.0F)
-    Gl.glVertex3f(- 1.0F, 1.0F, - 1.0F)
-    Gl.glVertex3f(1.0F, 1.0F, - 1.0F)
+    Gl.glVertex3f(1.0F, -1.0F, -1.0F)
+    Gl.glVertex3f(-1.0F, -1.0F, -1.0F)
+    Gl.glVertex3f(-1.0F, 1.0F, -1.0F)
+    Gl.glVertex3f(1.0F, 1.0F, -1.0F)
     'left
     Gl.glColor3f(1, 1, 0)
-    Gl.glVertex3f(- 1.0F, 1.0F, 1.0F)
-    Gl.glVertex3f(- 1.0F, 1.0F, - 1.0F)
-    Gl.glVertex3f(- 1.0F, - 1.0F, - 1.0F)
-    Gl.glVertex3f(- 1.0F, - 1.0F, 1.0F)
+    Gl.glVertex3f(-1.0F, 1.0F, 1.0F)
+    Gl.glVertex3f(-1.0F, 1.0F, -1.0F)
+    Gl.glVertex3f(-1.0F, -1.0F, -1.0F)
+    Gl.glVertex3f(-1.0F, -1.0F, 1.0F)
     'right
     Gl.glColor3f(0, 0, 1)
-    Gl.glVertex3f(1.0F, 1.0F, - 1.0F)
+    Gl.glVertex3f(1.0F, 1.0F, -1.0F)
     Gl.glVertex3f(1.0F, 1.0F, 1.0F)
-    Gl.glVertex3f(1.0F, - 1.0F, 1.0F)
-    Gl.glVertex3f(1.0F, - 1.0F, - 1.0F)
+    Gl.glVertex3f(1.0F, -1.0F, 1.0F)
+    Gl.glVertex3f(1.0F, -1.0F, -1.0F)
     Gl.glEnd()
     Gl.glEndList()
   End Sub
@@ -4541,8 +4541,8 @@ Public Class MainWin
       Dim nextTokens() As String
       Dim actorCnt As Integer = 0
       Dim varCnt As Integer = 0
-      ReDim tDB(- 1)
-      readMain: While tReader.Peek <> - 1
+      ReDim tDB(-1)
+readMain: While tReader.Peek <> -1
         Tokens = tReader.ReadLine.Split(" ")
         If Tokens.Length > 1 Then
           Dim testOne As String = Tokens(0)
@@ -4550,10 +4550,10 @@ Public Class MainWin
           If Int32.TryParse(testOne, intTest) Then
             GoTo readActor
           Else
-            GoTo readmain
+            GoTo readMain
           End If
 
-          readActor: ReDim Preserve tDB(actorCnt)
+readActor: ReDim Preserve tDB(actorCnt)
           With tDB(actorCnt)
             .no = Int32.Parse(Tokens(0), Globalization.NumberStyles.HexNumber)
 
@@ -4573,7 +4573,7 @@ Public Class MainWin
           End With
           nextTokens = tReader.ReadLine.Split(" ")
           If nextTokens.Length > 1 Then
-            readVars: While nextTokens(0) = "" And nextTokens(1) = "-"
+readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
 
               ReDim Preserve tDB(actorCnt).var(varCnt)
               With tDB(actorCnt).var(varCnt)
@@ -4581,7 +4581,7 @@ Public Class MainWin
                 Int32.TryParse(nextTokens(2), .var)
 
                 .desc = ""
-                If .var > - 1 And nextTokens(3) = "=" Then
+                If .var > -1 And nextTokens(3) = "=" Then
                   For I As Integer = 4 To nextTokens.Length - 1
                     .desc += nextTokens(I) & " "
                   Next
@@ -4596,7 +4596,7 @@ Public Class MainWin
           End If
           varCnt = 0
         Else
-          GoTo readmain
+          GoTo readMain
         End If
         actorCnt += 1
       End While
@@ -4626,7 +4626,7 @@ Public Class MainWin
     If File.Exists(AppDirectory & ExtraDataPrefix & "\oot_actors_human.txt") Then
       ActorDataBase = ReadActorDBHuman(AppDirectory & ExtraDataPrefix & "\oot_actors_human.txt")
     Else
-      ReDim ActorDataBase(- 1)
+      ReDim ActorDataBase(-1)
     End If
 
     ActorDBGroups.Clear()
@@ -4638,7 +4638,7 @@ Public Class MainWin
     ObjectsDesc.Clear()
     If File.Exists(AppDirectory & ExtraDataPrefix & "\objlist.txt") Then
       Dim objfile As New StreamReader(AppDirectory & ExtraDataPrefix & "\objlist.txt")
-      While objfile.Peek <> - 1
+      While objfile.Peek <> -1
         curline = objfile.ReadLine
         Objects.Add(Mid(curline, 1, 4))
         ObjectsDesc.Add(Mid(curline, 28))
@@ -4648,7 +4648,7 @@ Public Class MainWin
   End Sub
 
   Private Sub ScanCollisionPresets()
-    ReDim ColPresets(- 1)
+    ReDim ColPresets(-1)
     Dim curline As String = ""
     If File.Exists(AppDirectory & ExtraDataPrefix & "\CollisionPresets.txt") Then
       Dim presLines(2) As String
@@ -4656,7 +4656,7 @@ Public Class MainWin
       Dim endpos As Integer = 0
       Dim no As Integer = 0
       Dim type As String = ""
-      While colpres.Peek <> - 1
+      While colpres.Peek <> -1
         curline = colpres.ReadLine
         presLines = curline.Split(ControlChars.Tab)
         If presLines(0) = "g" Then
@@ -4705,11 +4705,11 @@ Public Class MainWin
       Dim scActorPos As Integer = 0
       Dim scRoomCnt As Integer = 0
       Dim scRoomPos As Integer = 0
-      ReDim CollisionTriColor(- 1)
-      ReDim SceneActors(- 1)
-      ReDim ColTypes(- 1)
-      ReDim SceneExits(- 1)
-      ReDim CollisionPolies(- 1)
+      ReDim CollisionTriColor(-1)
+      ReDim SceneActors(-1)
+      ReDim ColTypes(-1)
+      ReDim SceneExits(-1)
+      ReDim CollisionPolies(-1)
 
       scActorCount = 0
 
@@ -5175,13 +5175,13 @@ Public Class MainWin
     Dim curnamepos As Integer = 0
     Dim cursegpos As Integer = 0
     Dim curfilename As String = ""
-    Dim sccount As Integer = - 1
+    Dim sccount As Integer = -1
     Dim codecount As Integer = 0
     Dim othercount As Integer = 0
     Dim mapcount As Integer = 0
     Dim objcount As Integer = 0
     Dim scinc As Integer = 0
-    Dim scfile As Integer = - 1
+    Dim scfile As Integer = -1
     Dim done As Boolean = False
     Dim endb As UInteger = 0
     Dim startb As UInteger = 0
@@ -5266,7 +5266,7 @@ Public Class MainWin
         FileTree.Nodes(0).Nodes.Add(betterFilename)
         objcount += 1
         mapcount = 0
-        sccount = - 1
+        sccount = -1
       ElseIf Mid(curfilename, 1, 4).ToLower = "ovl_" Then
         ReDim Preserve ROMFiles.ActorCode(codecount)
         With ROMFiles.ActorCode(codecount)
@@ -5286,7 +5286,7 @@ Public Class MainWin
         FileTree.Nodes(3).Nodes.Add(curfilename)
         othercount += 1
         mapcount = 0
-        sccount = - 1
+        sccount = -1
       End If
       nameinc += 1
     End While
@@ -5396,11 +5396,11 @@ Public Class MainWin
             tSegOff = i + &H20
 
             Dim CodeOff As Integer = 0
-            ReDim Z64Code(- 1)
+            ReDim Z64Code(-1)
             Select Case BuildDate
               Case "00-07-31 17:04:16"
                 DebugROM = False
-                tNameOff = - 1
+                tNameOff = -1
                 ROMType = "Majora's Mask (U)"
                 SwitchGame(1)
               Case "03-02-21 00:16:31"
@@ -5425,7 +5425,7 @@ Public Class MainWin
         Next
         GetROMFileTable(tSegOff, tNameOff, DebugROM)
         Me.Text = "Utility of Time R8 - " & LoadROM.FileName & " - " & ROMType
-        ReDim ROMData(- 1)
+        ReDim ROMData(-1)
         IndMapFileName = ""
         IndScFileName = ""
       Else
@@ -5465,7 +5465,7 @@ Public Class MainWin
     Gl.glViewport(0, 0, UoTRender.Width, UoTRender.Height)
     Gl.glMatrixMode(Gl.GL_PROJECTION)
     Gl.glLoadIdentity()
-    Glu.gluPerspective(45.0F, UoTRender.Width/UoTRender.Height, 1.0F, 999999)
+    Glu.gluPerspective(45.0F, UoTRender.Width / UoTRender.Height, 1.0F, 999999)
     Gl.glMatrixMode(Gl.GL_MODELVIEW)
     Gl.glLoadIdentity()
   End Sub
@@ -5592,7 +5592,7 @@ Public Class MainWin
         PrintTool = False
       Case ToolID.VERTEX
         Gl.glEnable(Gl.GL_POLYGON_OFFSET_POINT)
-        Gl.glPolygonOffset(- 6, - 6)
+        Gl.glPolygonOffset(-6, -6)
         If RenderGraphics Then
           DrawDLArray(GlobalVarsCs.N64DList, ToolID.VERTEX)
         End If
@@ -5610,7 +5610,7 @@ Public Class MainWin
         End If
       Case ToolID.DLIST
         Gl.glEnable(Gl.GL_POLYGON_OFFSET_FILL)
-        Gl.glPolygonOffset(- 7, - 7)
+        Gl.glPolygonOffset(-7, -7)
         If RenderGraphics Then
           DrawDLArray(GlobalVarsCs.N64DList, ToolID.DLIST)
         End If
@@ -6095,8 +6095,8 @@ Public Class MainWin
 
   Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) _
     Handles ActorInputTimer.Tick, ActorInputTimer.Tick
-    CosYRot = Cos(CamYRotd)*ToolSensitivity
-    SinYRot = Sin(CamYRotd)*ToolSensitivity
+    CosYRot = Cos(CamYRotd) * ToolSensitivity
+    SinYRot = Sin(CamYRotd) * ToolSensitivity
     Select Case ToolModes.CurrentTool
       Case ToolID.ACTOR
         Select Case ButtonPress
@@ -7042,7 +7042,7 @@ Public Class MainWin
   Private Sub AnimationList_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
     Handles AnimationList.SelectedIndexChanged
     If AnimationEntries IsNot Nothing Then
-      If AnimationList.SelectedIndex > - 1 Then
+      If AnimationList.SelectedIndex > -1 Then
         CurrAnimation = AnimationList.SelectedIndex
         CurrentFrame.Maximum = AnimationEntries(CurrAnimation).FrameCount - 1
         AnimParser.ResetAnimation(AnimationStopWatch, ZAnimationCounter)
@@ -7055,7 +7055,7 @@ Public Class MainWin
   End Sub
 
   Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
-    If AnimationEntries IsNot Nothing And AnimationList.SelectedIndex > - 1 Then
+    If AnimationEntries IsNot Nothing And AnimationList.SelectedIndex > -1 Then
       AnimParser.StartAnimation(AnimationStopWatch, ZAnimationCounter)
     End If
   End Sub
@@ -7245,7 +7245,7 @@ Public Class MainWin
     PasteToolStripMenuItem.Enabled = False
     PasteToolStripMenuItem.Text = "Paste attributes"
     For i As Integer = 0 To 7
-      CopyActor(i) = - 1
+      CopyActor(i) = -1
     Next
     ClearClipboardToolStripMenuItem.Enabled = False
   End Sub
@@ -7295,8 +7295,8 @@ Public Class MainWin
     ReDim Preserve UsedGroupIndex(rmActorCount)
     With RoomActors(rmActorCount)
       .y = y + CamYRotd
-      .x = - x + Sin(CamYRotd)*640
-      .z = - z - Cos(CamYRotd)*640
+      .x = -x + Sin(CamYRotd) * 640
+      .z = -z - Cos(CamYRotd) * 640
       .xr = CamXRot
       .yr = CamYRot
       .zr = CamZRot
@@ -7512,10 +7512,10 @@ Public Class MainWin
     CopyActor(0) = CollisionVerts.x(SelectedCollisionVert(0))
     CopyActor(1) = CollisionVerts.y(SelectedCollisionVert(0))
     CopyActor(2) = CollisionVerts.z(SelectedCollisionVert(0))
-    CopyActor(3) = - 1
-    CopyActor(4) = - 1
-    CopyActor(5) = - 1
-    CopyActor(6) = - 1
+    CopyActor(3) = -1
+    CopyActor(4) = -1
+    CopyActor(5) = -1
+    CopyActor(6) = -1
     CopyActor(7) = 1
 
     PasteToolStripMenuItem.Enabled = True
@@ -7686,7 +7686,7 @@ Public Class MainWin
       st = CommandsListbox.SelectedIndex - 1
     End If
 
-    For i As Integer = st To 0 Step - 1
+    For i As Integer = st To 0 Step -1
       If CommandsListbox.Items(i).ToString = CommandJumpBox.SelectedItem.ToString Then
         CommandsListbox.SelectedIndex = i
         Exit Sub
@@ -7810,7 +7810,7 @@ Public Class MainWin
 
   Private Sub TrackBar1_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
     Handles TrackBar1.ValueChanged
-    CameraCoef = TrackBar1.Value*8
+    CameraCoef = TrackBar1.Value * 8
   End Sub
 
   Private Sub TrackBar4_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
