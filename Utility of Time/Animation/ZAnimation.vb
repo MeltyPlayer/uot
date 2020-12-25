@@ -66,6 +66,7 @@
       Dim angleOffset As UInteger = 0
       Dim tAnimation(-1) As Animation
       MainWin.AnimationList.Items.Clear()
+
       For i As Integer = 16 To Data.Length - 8 Step 4
         If (Data(i) = Bank And (Data(i + 4) = Bank) And (Data(i - 3) > 0) And Data(i - 4) = 0) Then
           angleOffset = IoUtil.ReadUInt24(Data, i + 1)
@@ -188,10 +189,13 @@
       .ElapsedSeconds = AnimationStopWatch.Elapsed.TotalSeconds
       .ElapsedMilliseconds = AnimationStopWatch.Elapsed.Milliseconds
       .DeltaTime = .ElapsedSeconds - .LastUpdateTime
+
       .FramesAdvanced = .FrameDelta + .DeltaTime * .FPS
       .FramesAdvancedInt = CInt(.FramesAdvanced)
-      .FrameNo += .FramesAdvanced
+
+      .FrameNo += .FramesAdvancedInt
       .FrameDelta = .FramesAdvanced - CDbl(.FramesAdvancedInt)
+
       .LastUpdateTime = AnimationStopWatch.Elapsed.TotalSeconds
     End With
   End Function

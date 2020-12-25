@@ -54,16 +54,16 @@ namespace UoT {
     public bool Advancing;
     public uint FrameNo;
     public uint CurrFrame;
-    public float Frames;
-    public float CurrentTime;
-    public float LastUpdateTime;
-    public float ElapsedSeconds;
-    public float ElapsedMilliseconds;
-    public float DeltaTime;
-    public float FramesAdvanced;
+    public double Frames;
+    public double CurrentTime;
+    public double LastUpdateTime;
+    public double ElapsedSeconds;
+    public double ElapsedMilliseconds;
+    public double DeltaTime;
+    public double FramesAdvanced;
     public int FramesAdvancedInt;
-    public float FrameDelta;
-    public float FPS;
+    public double FrameDelta;
+    public double FPS;
   }
   /* TODO ERROR: Skipped EndRegionDirectiveTrivia */
   /* TODO ERROR: Skipped RegionDirectiveTrivia */

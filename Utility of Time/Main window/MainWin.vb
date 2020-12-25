@@ -4407,7 +4407,7 @@ Public Class MainWin
       Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2)
       Gl.glTexImage2D(Gl.GL_TEXTURE_2D, 0, Gl.GL_RGBA, 1, 1, 0, Gl.GL_RGBA, Gl.GL_UNSIGNED_BYTE, blank_tex)
 
-      AnimationFPS.Value = 30
+      AnimationFPS.Value = 20
 
       With CollisionVerts
         .x = New ArrayList
