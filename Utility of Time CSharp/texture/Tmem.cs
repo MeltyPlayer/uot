@@ -53,10 +53,10 @@ namespace UoT {
       var maskS = tileDescriptor.MaskS;
       var maskT = tileDescriptor.MaskT;
 
-      uint imageBank;
+      byte imageBank;
       uint offset;
       IoUtil.SplitAddress(timgImageAddress, out imageBank, out offset);
-      tileDescriptor.ImageBank = (int) imageBank;
+      tileDescriptor.ImageBank = imageBank;
       tileDescriptor.Offset = (int) offset;
 
       var texture = this.cache_[tileDescriptor];

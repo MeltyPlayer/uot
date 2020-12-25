@@ -2,8 +2,8 @@
 
 namespace UoT {
   public static class IoUtil {
-    public static void SplitAddress(uint address, out uint bank, out uint offset) {
-      bank = address >> 24;
+    public static void SplitAddress(uint address, out byte bank, out uint offset) {
+      bank = (byte) (address >> 24);
       offset = address << 8 >> 8;
     }
 
