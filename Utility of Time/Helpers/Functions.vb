@@ -33,7 +33,7 @@ Module Functions
   End Function
 
   Public Function AngleToRad(ByVal angle As Short) As Double
-    Return angle * 180.0F / 32768.0F
+    Return (angle / 32768.0F) * 180.0F
   End Function
 
   Public Function SearchDLCache(ByVal N64DList() As N64DisplayList, ByVal Offset As UInteger) As Integer

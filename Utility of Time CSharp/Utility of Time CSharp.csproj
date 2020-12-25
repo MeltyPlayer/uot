@@ -71,6 +71,7 @@
     <Compile Include="helpers\BetterFilenames.cs" />
     <Compile Include="gl\ModelViewMatrixTransformer.cs" />
     <Compile Include="helpers\IoUtil.cs" />
+    <Compile Include="math\trig\Interpolation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="scene\SceneFileType.cs" />
     <Compile Include="tao\SimpleOpenGlControl.cs">
