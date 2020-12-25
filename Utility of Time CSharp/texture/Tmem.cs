@@ -338,12 +338,6 @@ namespace UoT {
       tileDescriptor.LRS = (int) lrs >> 2;
       tileDescriptor.LRT = (int) dxt >> 2;
 
-      var fUls = IoUtil.Fixed2Float(uls >> 2, 2);
-      var fUlt = IoUtil.Fixed2Float(ult >> 2, 2);
-      // TODO: This feels like a bug?
-      var fLrs = IoUtil.Fixed2Float(lrs >> 2, 2);
-      var fLrt = IoUtil.Fixed2Float(dxt >> 2, 2);
-
       var tmem = tileDescriptor.TmemOffset;
       var colorFormat = tileDescriptor.ColorFormat;
       var bitSize = tileDescriptor.BitSize;
@@ -385,29 +379,12 @@ namespace UoT {
       info.size = static_cast<u8>(gDP.textureImage.size);
       info.loadType = LOADTYPE_BLOCK;*/
 
-      // TODO: Throw an error if we can't figure out the size.
-
-      var maskS = tileDescriptor.MaskS;
-      var maskT = tileDescriptor.MaskT;
-
-      // TODO: Might not always be provided.
-      var width = (int) Math.Pow(2, maskS);
-      var height = (int)Math.Pow(2, maskT);
-
       // TODO: This doesn't look right?
       uint jankWidth = (lrs - uls + 1) & 0x0FFF;
       uint bytes = jankWidth << (int) bitSize >> 1;
       if ((bytes & 7) != 0) {
         bytes = (bytes & (~7U)) + 8;
       }
-
-      tileDescriptor.TexBytes = bytes;
-      tileDescriptor.LoadWidth = width;
-      tileDescriptor.LoadHeight = height;
-
-      // TODO: How is this set?
-      tileDescriptor.LineSize = width << (int)bitSize >> 1 >> 3;
-
 
 
       //info.bytes = bytes;
@@ -487,6 +464,27 @@ namespace UoT {
           this.DWordInterleaveWrap_(this.impl_, tmemAddr << 1, 0x3FF, line);
         }*/
       }
+    }
+
+
+    public void LoadTexture(ref TileDescriptor tileDescriptor) {
+      var tmem = tileDescriptor.TmemOffset;
+      var maskS = tileDescriptor.MaskS;
+      var maskT = tileDescriptor.MaskT;
+      var bitSize = tileDescriptor.BitSize;
+
+      // TODO: Throw an error if we can't figure out the size.
+      // TODO: Might not always work w/ maskS/maskT, if 0.
+      var width = (int)Math.Pow(2, maskS);
+      var height = (int)Math.Pow(2, maskT);
+
+      //tileDescriptor.TexBytes = bytes;
+      tileDescriptor.LoadWidth = width;
+      tileDescriptor.LoadHeight = height;
+
+      // TODO: This might need to be set from the original?
+      // TODO: How is this set?
+      tileDescriptor.LineSize = width << (int)bitSize >> 1 >> 3;
 
       var generator = new OglTextureConverter();
       generator.GenerateAndAddToCache(this.impl_,

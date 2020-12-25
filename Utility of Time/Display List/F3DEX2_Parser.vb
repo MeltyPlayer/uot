@@ -26,6 +26,9 @@ Public Class F3DEX2_Parser
   Private Const TILE_DESCRIPTOR_MAX = 7
   Private Cache As New TextureCache
   Private Tmem As New Tmem(Cache)
+  Private SelectedTileDescriptor As Integer = 0
+
+  Private UseJank As Boolean = True
 
   Private JankTileDescriptors(-1) As TileDescriptor
   Private JankCache As New TextureCache
@@ -487,15 +490,27 @@ enddisplaylist:
   End Function
 
   Private Function GetSelectedTileDescriptor(index As Integer) As TileDescriptor
-    Return JankTileDescriptors(SelectedTileDescriptors(index))
+    If UseJank Then
+      Return JankTileDescriptors(SelectedTileDescriptors(index))
+    Else
+      Return TileDescriptors((SelectedTileDescriptor + index) Mod 8)
+    End If
   End Function
 
   Private Sub SetSelectedTileDescriptor(index As Integer, ByVal tileDescriptor As TileDescriptor)
-    JankTileDescriptors(SelectedTileDescriptors(index)) = tileDescriptor
+    If UseJank Then
+      JankTileDescriptors(SelectedTileDescriptors(index)) = tileDescriptor
+    Else
+      TileDescriptors((SelectedTileDescriptor + index) Mod 8) = tileDescriptor
+    End If
   End Sub
 
   Private Function SearchTexCache(ByVal tileDescriptor As TileDescriptor) As Texture
-    Return JankCache(tileDescriptor)
+    If UseJank Then
+      Return JankCache(tileDescriptor)
+    Else
+      Return Cache(tileDescriptor)
+    End If
   End Function
 
   Private Sub VTX(ByVal w0 As UInt32, ByVal w1 As UInt32)
@@ -515,7 +530,10 @@ enddisplaylist:
       Case 5
 
     End Select
+  End Sub
 
+
+  Private Sub PrepareDrawTriangle_()
     If ParseMode = Parse.EVERYTHING Then
       If EnableCombiner Then
         Gl.glEnable(Gl.GL_FRAGMENT_PROGRAM_ARB)
@@ -533,7 +551,6 @@ enddisplaylist:
       End If
 
       Gl.glEnable(Gl.GL_TEXTURE_2D)
-
       Gl.glActiveTextureARB(Gl.GL_TEXTURE0_ARB)
 
       Dim tileDescriptor0 As TileDescriptor = GetSelectedTileDescriptor(0)
@@ -632,6 +649,8 @@ enddisplaylist:
 
 
   Private Sub TRI1(ByVal CMDParams() As Byte)
+    PrepareDrawTriangle_()
+
     Try
       Polygons(0) = CMDParams(1) >> 1
       Polygons(1) = CMDParams(2) >> 1
@@ -667,6 +686,8 @@ enddisplaylist:
   End Sub
 
   Private Sub TRI2(ByVal CMDParams() As Byte)
+    PrepareDrawTriangle_()
+
     Try
       Polygons(0) = CMDParams(1) >> 1
       Polygons(1) = CMDParams(2) >> 1
@@ -722,17 +743,19 @@ enddisplaylist:
     TimgArgs.Address = address
 
     ' TODO: Delete the below logic.
-    If paletteMode Then
-      Dim tileDescriptor As TileDescriptor = GetSelectedTileDescriptor(0)
-      tileDescriptor.PaletteOffset = tmpOff
-      tileDescriptor.PaletteBank = tmpBank
-      SetSelectedTileDescriptor(0, tileDescriptor)
-    Else
-      Dim tileDescriptor As TileDescriptor = GetSelectedTileDescriptor(CurrentSelectedTileDescriptor)
-      tileDescriptor.Address = address
-      tileDescriptor.Offset = tmpOff
-      tileDescriptor.ImageBank = tmpBank
-      SetSelectedTileDescriptor(CurrentSelectedTileDescriptor, tileDescriptor)
+    If UseJank Then
+      If paletteMode Then
+        Dim tileDescriptor As TileDescriptor = GetSelectedTileDescriptor(0)
+        tileDescriptor.PaletteOffset = tmpOff
+        tileDescriptor.PaletteBank = tmpBank
+        SetSelectedTileDescriptor(0, tileDescriptor)
+      Else
+        Dim tileDescriptor As TileDescriptor = GetSelectedTileDescriptor(CurrentSelectedTileDescriptor)
+        tileDescriptor.Address = address
+        tileDescriptor.Offset = tmpOff
+        tileDescriptor.ImageBank = tmpBank
+        SetSelectedTileDescriptor(CurrentSelectedTileDescriptor, tileDescriptor)
+      End If
     End If
   End Sub
 
@@ -746,11 +769,13 @@ enddisplaylist:
     TileDescriptors(tileDescriptorIndex) = tileDescriptor
 
     ' TODO: Delete this logic.
-    Dim jankTileDescriptor As TileDescriptor = GetSelectedTileDescriptor(CurrentSelectedTileDescriptor)
-    SetTile_(jankTileDescriptor, w0, w1)
+    If UseJank Then
+      Dim jankTileDescriptor As TileDescriptor = GetSelectedTileDescriptor(CurrentSelectedTileDescriptor)
+      SetTile_(jankTileDescriptor, w0, w1)
 
-    ' TODO: Remove this struct logic.
-    SetSelectedTileDescriptor(CurrentSelectedTileDescriptor, jankTileDescriptor)
+      ' TODO: Remove this struct logic.
+      SetSelectedTileDescriptor(CurrentSelectedTileDescriptor, jankTileDescriptor)
+    End If
   End Function
 
   Private Sub SetTile_(ByRef tileDescriptor As TileDescriptor, ByVal w0 As UInt32, ByVal w1 As UInt32)
@@ -790,11 +815,13 @@ enddisplaylist:
     TileDescriptors(tileDescriptorIndex) = tileDescriptor
 
     ' TODO: Delete this logic.
-    Dim jankTileDescriptor As TileDescriptor = GetSelectedTileDescriptor(CurrentSelectedTileDescriptor)
-    SetTileSize_(jankTileDescriptor, w0, w1, True)
+    If UseJank Then
+      Dim jankTileDescriptor As TileDescriptor = GetSelectedTileDescriptor(CurrentSelectedTileDescriptor)
+      SetTileSize_(jankTileDescriptor, w0, w1, True)
 
-    ' TODO: Remove this struct logic.
-    SetSelectedTileDescriptor(CurrentSelectedTileDescriptor, jankTileDescriptor)
+      ' TODO: Remove this struct logic.
+      SetSelectedTileDescriptor(CurrentSelectedTileDescriptor, jankTileDescriptor)
+    End If
   End Sub
 
   Private Sub SetTileSize_(ByRef tileDescriptor As TileDescriptor, w0 As UInt32, w1 As UInt32, calcSize As Boolean)
@@ -939,11 +966,14 @@ enddisplaylist:
     TileDescriptors(tileDescriptorIndex) = tileDescriptor
 
     ' TODO: Delete this logic.
-    Dim jankTileDescriptor As TileDescriptor = GetSelectedTileDescriptor(0)
-    LoadTlut_(jankTileDescriptor, w1)
+    If UseJank Then
+      ' TODO: Delete this logic.
+      Dim jankTileDescriptor As TileDescriptor = GetSelectedTileDescriptor(0)
+      LoadTlut_(jankTileDescriptor, w1)
 
-    ' TODO: Remove this struct logic.
-    SetSelectedTileDescriptor(0, jankTileDescriptor)
+      ' TODO: Remove this struct logic.
+      SetSelectedTileDescriptor(0, jankTileDescriptor)
+    End If
   End Sub
 
   Private Sub LoadTlut_(ByRef tileDescriptor As TileDescriptor, w1 As UInt32)
@@ -977,8 +1007,12 @@ enddisplaylist:
   Private Function LoadTex(ByVal Data() As Byte, ByVal ID As UInteger) As Integer
     Dim tileDescriptor As TileDescriptor = GetSelectedTileDescriptor(ID)
 
-    Dim generator As New OglTextureConverter
-    generator.GenerateAndAddToCache(Data, tileDescriptor.Offset, tileDescriptor, GetSelectedTileDescriptor(0).Palette32, JankCache)
+    If UseJank Then
+      Dim generator As New OglTextureConverter
+      generator.GenerateAndAddToCache(Data, tileDescriptor.Offset, tileDescriptor, GetSelectedTileDescriptor(0).Palette32, JankCache)
+    Else
+      Tmem.LoadTexture(tileDescriptor)
+    End If
 
     SetSelectedTileDescriptor(ID, tileDescriptor)
   End Function
@@ -999,17 +1033,21 @@ enddisplaylist:
 
     TileDescriptors(tileDescriptorIndex) = tileDescriptor
 
+    SelectedTileDescriptor = tileDescriptorIndex
+
     ' TODO: Delete this logic.
-    For i As Integer = 0 To 1
-      Dim jankTileDescriptor As TileDescriptor = GetSelectedTileDescriptor(i)
-      If IoUtil.ShiftR(w1, 16, 16) < &HFFFF Then _
-        jankTileDescriptor.S_Scale = IoUtil.Fixed2Float(IoUtil.ShiftR(w1, 16, 16), 16) Else _
-        jankTileDescriptor.S_Scale = 1.0F
-      If IoUtil.ShiftR(w1, 0, 16) < &HFFFF Then _
-        jankTileDescriptor.T_Scale = IoUtil.Fixed2Float(IoUtil.ShiftR(w1, 0, 16), 16) Else _
-        jankTileDescriptor.T_Scale = 1.0F
-      SetSelectedTileDescriptor(i, jankTileDescriptor)
-    Next
+    If UseJank Then
+      For i As Integer = 0 To 1
+        Dim jankTileDescriptor As TileDescriptor = GetSelectedTileDescriptor(i)
+        If IoUtil.ShiftR(w1, 16, 16) < &HFFFF Then _
+          jankTileDescriptor.S_Scale = IoUtil.Fixed2Float(IoUtil.ShiftR(w1, 16, 16), 16) Else _
+          jankTileDescriptor.S_Scale = 1.0F
+        If IoUtil.ShiftR(w1, 0, 16) < &HFFFF Then _
+          jankTileDescriptor.T_Scale = IoUtil.Fixed2Float(IoUtil.ShiftR(w1, 0, 16), 16) Else _
+          jankTileDescriptor.T_Scale = 1.0F
+        SetSelectedTileDescriptor(i, jankTileDescriptor)
+      Next
+    End If
   End Sub
 
 #End Region
