@@ -28,6 +28,7 @@ namespace UoT {
         ("object_ei", "Stinger"),
         ("object_firefly", "Keese (Fire)"),
         ("object_ganon2", "Ganon"),
+        ("object_gndd", "Ganondorf"),
         ("object_gol", "Ghoma Larva"),
         ("object_goroiwa", "Boulder"),
         ("object_goma", "Ghoma"),
