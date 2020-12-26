@@ -67,7 +67,6 @@
   Public Function GetAnimations(ByVal Data() As Byte, ByVal LimbCount As Integer, ByVal Bank As Byte) As Animation()
     Try
       Dim animCnt As Integer = -1
-      Dim angleOffset As UInteger = 0
       Dim tAnimation(-1) As Animation
       MainWin.AnimationList.Items.Clear()
 
@@ -75,62 +74,90 @@
       ' address and track address have the same bank as the param at the top.
       ' TODO: Is this robust enough?
       For i As Integer = 16 To Data.Length - 8 Step 4
-        If (Data(i) = Bank And (Data(i + 4) = Bank) And (Data(i - 3) > 0) And Data(i - 4) = 0) Then
-          angleOffset = IoUtil.ReadUInt24(Data, i + 1)
-          If angleOffset < Data.Length Then
-            If Data(angleOffset) = 0 And Data(angleOffset + 1) = 0 And IoUtil.ReadUInt16(Data, angleOffset + 2) > 0 Then
-              animCnt += 1
-              ReDim Preserve tAnimation(animCnt)
-              With tAnimation(animCnt)
-                .FrameCount = IoUtil.ReadUInt16(Data, i - 4)
-                .TrackOffset = IoUtil.ReadUInt24(Data, i + 5)
-                .ConstTrackCount = IoUtil.ReadUInt16(Data, i + 8)
+        Dim attemptOffset = i - 4
 
-                .TrackCount = (LimbCount * 3)
-                .AngleCount = ((.TrackOffset - angleOffset) \ 2)
+        Dim frameCount As UShort = IoUtil.ReadUInt16(Data, attemptOffset)
+        Dim rotationValuesAddress As UInt32 = IoUtil.ReadUInt32(Data, attemptOffset + 4)
+        Dim rotationIndicesAddress As UInt32 = IoUtil.ReadUInt32(Data, attemptOffset + 8)
 
-                If .FrameCount > 0 Then
-                  ReDim .Angles(.AngleCount - 1)
-                  ReDim .Tracks(.TrackCount - 1)
+        Dim rotationValuesBank As Byte
+        Dim rotationValuesOffset As UInt32
+        IoUtil.SplitAddress(rotationValuesAddress, rotationValuesBank, rotationValuesOffset)
 
-                  MainWin.AnimationList.Items.Add("0x" & Hex(i))
+        Dim rotationIndicesBank As Byte
+        Dim rotationIndicesOffset As UInt32
+        IoUtil.SplitAddress(rotationIndicesAddress, rotationIndicesBank, rotationIndicesOffset)
 
-                  For i1 As Integer = 0 To .AngleCount - 1
-                    .Angles(i1) = IoUtil.ReadUInt16(Data, angleOffset)
-                    angleOffset += 2
-                  Next
+        Dim sameRotationValuesBank As Boolean = rotationValuesBank = Bank
+        Dim sameRotationIndicesBank As Boolean = rotationIndicesBank = Bank
+        Dim validAttemptOffset As Boolean = sameRotationValuesBank And sameRotationIndicesBank
 
-                  .XTrans = IoUtil.ReadUInt16(Data, .TrackOffset + 0)
-                  .YTrans = IoUtil.ReadUInt16(Data, .TrackOffset + 2)
-                  .ZTrans = IoUtil.ReadUInt16(Data, .TrackOffset + 4)
+        Dim validRotationValuesOffset As Boolean = rotationValuesOffset < Data.Length
+        Dim validRotationIndicesOffset As Boolean = rotationIndicesOffset < Data.Length
+        Dim validRotationOffsets As Boolean = validRotationValuesOffset And validRotationIndicesOffset
 
-                  Dim tTrackOffset As Integer = .TrackOffset + 6
+        Dim angleCount As UInteger = (rotationIndicesOffset - rotationValuesOffset) \ 2
+        Dim validAngleCount As Boolean = rotationIndicesOffset > rotationValuesOffset And angleCount > 0
 
-                  Dim tTrack As UInteger = 0
-                  For i1 As Integer = 0 To .TrackCount - 1
-                    tTrack = IoUtil.ReadUInt16(Data, tTrackOffset)
+        If validAttemptOffset And validRotationOffsets And validAngleCount Then
+          Dim limit As UShort = IoUtil.ReadUInt16(Data, attemptOffset + 12)
 
-                    If tTrack < .ConstTrackCount Then
-                      ' Constant (single value)
-                      .Tracks(i1).Type = 0
-                      ReDim .Tracks(i1).Frames(0)
-                      .Tracks(i1).Frames(0) = .Angles(tTrack)
-                    Else
-                      ' Keyframes
-                      .Tracks(i1).Type = 1
-                      ReDim .Tracks(i1).Frames(.FrameCount - 1)
-                      For i2 As Integer = 0 To .FrameCount - 1
-                        .Tracks(i1).Frames(i2) = .Angles(tTrack + i2)
-                      Next
-                    End If
+          Dim hasZeroes As Boolean = IoUtil.ReadUInt16(Data, attemptOffset + 2) = 0 And IoUtil.ReadUInt16(Data, attemptOffset + 14) = 0
+          ' TODO: Assumes 0 is one of the angles, is this valid?
+          'Dim validAngles As Boolean = IoUtil.ReadUInt16(Data, rotationValuesOffset) = 0 And IoUtil.ReadUInt16(Data, rotationValuesOffset + 2) > 0
 
-                    tTrackOffset += 2
-                  Next
-                Else
-                  ReDim Preserve tAnimation(animCnt - 1)
-                End If
-              End With
-            End If
+          If hasZeroes Then
+            animCnt += 1
+            ReDim Preserve tAnimation(animCnt)
+            With tAnimation(animCnt)
+              .FrameCount = frameCount
+              .TrackOffset = rotationIndicesOffset
+              .ConstTrackCount = limit
+
+              .TrackCount = (LimbCount * 3)
+              .AngleCount = angleCount
+
+              If .FrameCount > 0 Then
+                ReDim .Angles(.AngleCount - 1)
+                ReDim .Tracks(.TrackCount - 1)
+
+                MainWin.AnimationList.Items.Add("0x" & Hex(i))
+
+                For i1 As Integer = 0 To .AngleCount - 1
+                  .Angles(i1) = IoUtil.ReadUInt16(Data, rotationValuesOffset)
+                  rotationValuesOffset += 2
+                Next
+
+                .XTrans = IoUtil.ReadUInt16(Data, .TrackOffset + 0)
+                .YTrans = IoUtil.ReadUInt16(Data, .TrackOffset + 2)
+                .ZTrans = IoUtil.ReadUInt16(Data, .TrackOffset + 4)
+
+                Dim tTrackOffset As Integer = .TrackOffset + 6
+
+                Dim tTrack As UInteger = 0
+                For i1 As Integer = 0 To .TrackCount - 1
+                  tTrack = IoUtil.ReadUInt16(Data, tTrackOffset)
+
+                  If tTrack < .ConstTrackCount Then
+                    ' Constant (single value)
+                    .Tracks(i1).Type = 0
+                    ReDim .Tracks(i1).Frames(0)
+                    .Tracks(i1).Frames(0) = .Angles(tTrack)
+                  Else
+                    ' Keyframes
+                    .Tracks(i1).Type = 1
+                    ReDim .Tracks(i1).Frames(.FrameCount - 1)
+                    For i2 As Integer = 0 To .FrameCount - 1
+                      .Tracks(i1).Frames(i2) = .Angles(tTrack + i2)
+                    Next
+                  End If
+
+                  tTrackOffset += 2
+                Next
+              Else
+                ReDim Preserve tAnimation(animCnt - 1)
+              End If
+            End With
           End If
         End If
       Next
