@@ -5,20 +5,18 @@
   public struct NormalAnimation : IAnimation {
     public ushort[] Angles;
     public NormalAnimationTrack[] Tracks;
-    public uint XTrans;
-    public uint YTrans;
-    public uint ZTrans;
     public uint TrackOffset;
     public uint AngleCount;
 
     public ushort FrameCount { get; set; }
 
-    public int TrackCount { get; set; }
+    public int TrackCount => this.Tracks.Length;
     public IAnimationTrack GetTrack(int i) => this.Tracks[i];
-  }
 
-  public struct NormalAnimationHeader {
-
+    // TODO: Support these fields.
+    public short XTrans => 0;
+    public short YTrans => 0;
+    public short ZTrans => 0;
   }
 
   public struct NormalAnimationTrack : IAnimationTrack {

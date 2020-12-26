@@ -1,4 +1,6 @@
-﻿Public Class ZAnimation
+﻿Imports System.Linq
+
+Public Class ZAnimation
   Public Function GetHierarchies(ByVal Data() As Byte, ByVal Bank As Byte) As Limb()
     Try
       Dim tOffset As Integer = 0
@@ -64,7 +66,9 @@
   '''   Parses a set of animations according to the spec at:
   '''   https://wiki.cloudmodding.com/oot/Animation_Format#Normal_Animations
   ''' </summary>
-  Public Function GetCommonAnimations(ByVal Data() As Byte, ByVal LimbCount As Integer, ByVal Bank As Byte) As NormalAnimation()
+  Public Function GetCommonAnimations(ByVal Data() As Byte, ByVal LimbCount As Integer, ByVal Bank As Byte) As IList(Of IAnimation)
+    ' TODO: Figure out why some animations are still failing to load. Are we handling rotation indices correct?
+
     Dim animCnt As Integer = -1
     Dim tAnimation(-1) As NormalAnimation
     MainWin.AnimationList.Items.Clear()
@@ -112,12 +116,12 @@
             .FrameCount = frameCount
             .TrackOffset = rotationIndicesOffset
 
-            .TrackCount = (LimbCount * 3)
+            Dim trackCount As UInteger = LimbCount * 3
             .AngleCount = angleCount
 
             If .FrameCount > 0 Then
               ReDim .Angles(.AngleCount - 1)
-              ReDim .Tracks(.TrackCount - 1)
+              ReDim .Tracks(trackCount - 1)
 
               MainWin.AnimationList.Items.Add("0x" & Hex(i))
 
@@ -126,14 +130,15 @@
                 rotationValuesOffset += 2
               Next
 
-              .XTrans = IoUtil.ReadUInt16(Data, .TrackOffset + 0)
-              .YTrans = IoUtil.ReadUInt16(Data, .TrackOffset + 2)
-              .ZTrans = IoUtil.ReadUInt16(Data, .TrackOffset + 4)
+              ' TODO: Support these values.
+              '.XTrans = IoUtil.ReadUInt16(Data, .TrackOffset + 0)
+              '.YTrans = IoUtil.ReadUInt16(Data, .TrackOffset + 2)
+              '.ZTrans = IoUtil.ReadUInt16(Data, .TrackOffset + 4)
 
               Dim tTrackOffset As Integer = .TrackOffset + 6
 
               Dim tTrack As UInteger = 0
-              For i1 As Integer = 0 To .TrackCount - 1
+              For i1 As Integer = 0 To trackCount - 1
                 tTrack = IoUtil.ReadUInt16(Data, tTrackOffset)
 
                 If tTrack < limit Then
@@ -160,7 +165,73 @@
       End If
     Next
     If tAnimation.Length > 0 Then
-      Return tAnimation
+      Dim outList As New List(Of IAnimation)
+      For Each animation As NormalAnimation In tAnimation
+        outList.Add(animation)
+      Next
+      Return outList
+    End If
+    Return Nothing
+  End Function
+
+  ''' <summary>
+  '''   Parses a set of animations according to the spec at:
+  '''   https://wiki.cloudmodding.com/oot/Animation_Format#C_code
+  ''' </summary>
+  Public Function GetLinkAnimations(HeaderData() As Byte, ByVal LimbCount As Integer, animationData() As Byte) As IList(Of IAnimation)
+    Dim animCnt As Integer = -1
+    Dim animations(-1) As LinkAnimetion
+    MainWin.AnimationList.Items.Clear()
+
+    ' Guesstimating the index by looking for an spot where the header's angle
+    ' address and track address have the same bank as the param at the top.
+    ' TODO: Is this robust enough?
+    For i As Integer = &H2310 To &H34F8 Step 4
+      Dim frameCount As UShort = IoUtil.ReadUInt16(HeaderData, i)
+      Dim animationAddress As UInt32 = IoUtil.ReadUInt32(HeaderData, i + 4)
+
+      Dim animationBank As Byte
+      Dim animationOffset As UInt32
+      IoUtil.SplitAddress(animationAddress, animationBank, animationOffset)
+
+      Dim validAnimationBank As Boolean = animationBank = 7 ' Corresponds to link_animetions.
+      Dim hasZeroes As Boolean = IoUtil.ReadUInt16(HeaderData, i + 2) = 0
+
+      If validAnimationBank And hasZeroes Then
+        animCnt += 1
+        ReDim Preserve animations(animCnt)
+        With animations(animCnt)
+          .FrameCount = frameCount
+
+          If .FrameCount > 0 Then
+            Dim trackCount As UInteger = LimbCount * 3
+            ReDim .Tracks(trackCount - 1)
+
+            Dim frameSize = 2 * 3 * (1 + frameCount) + 2
+
+            For f As Integer = 0 To .FrameCount - 1
+              Dim frameOffset As UInteger = animationOffset + f * frameSize
+
+              For t As Integer = 0 To .TrackCount - 1
+                Dim trackOffset As UInteger = frameOffset + 2 * 3 * (1 + t)
+
+                .Tracks(t).Frames(f) = IoUtil.ReadUInt16(animationData, trackOffset)
+              Next
+            Next
+
+            MainWin.AnimationList.Items.Add("0x" & Hex(i))
+          Else
+            ReDim Preserve animations(animCnt - 1)
+          End If
+        End With
+      End If
+    Next
+    If animations.Length > 0 Then
+      Dim outList As New List(Of IAnimation)
+      For Each animation As LinkAnimetion In animations
+        outList.Add(animation)
+      Next
+      Return outList
     End If
     Return Nothing
   End Function

@@ -3284,7 +3284,7 @@ Public Class MainWin
 
 #Region "ANIMATION & HEIRARCHY"
 
-  Private AnimationEntries(-1) As NormalAnimation
+  Private AnimationEntries As IList(Of IAnimation)
   Private LimbEntries(-1) As Limb
   Private CurrLimb As Integer = 0
   Private BoneColorFactor As New Color3UByte
@@ -3941,7 +3941,7 @@ Public Class MainWin
       ModelViewMatrixTransformer.Push()
       If AnimationEntries IsNot Nothing Then
         With AnimationEntries(CurrAnimation)
-          ModelViewMatrixTransformer.Translate(AngleToRad(.Angles(.XTrans)), AngleToRad(.Angles(.YTrans)), AngleToRad(.Angles(.ZTrans)))
+          ModelViewMatrixTransformer.Translate(.XTrans, .YTrans, .ZTrans)
         End With
       End If
       For CurrLimb = 0 To LimbEntries.Length - 1
@@ -4970,7 +4970,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       Dim DLCnt As Integer = 0
       Dim FileTreeIndex As Integer = 0
       ReDim GlobalVarsCs.N64DList(-1)
-      ReDim AnimationEntries(-1)
+      AnimationEntries = Nothing
       ReDim LimbEntries(-1)
       AnimParser.ResetAnimation(AnimationStopWatch, ZAnimationCounter)
       AnimParser.StopAnimation(AnimationStopWatch, ZAnimationCounter)
@@ -5335,6 +5335,21 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       Dim animBankCnt As Integer = 0
       animationbank.Items.Clear()
       animationbank.Items.Add("Inline with model")
+
+      For i As Integer = 0 To ROMFiles.Others.Length - 1
+        fileSize = ROMFiles.Others(i).endoff - ROMFiles.Others(i).startoff
+        If ROMFiles.Others(i).filename = "link_animetion" Then
+          animationbank.Items.Add(ROMFiles.Others(i).filename)
+          ReDim Preserve .Anims.Banks(animBankCnt)
+          ReDim .Anims.Banks(animBankCnt).Data(fileSize - 1)
+          romFS.Position = ROMFiles.Others(i).startoff
+          romFS.Read(.Anims.Banks(animBankCnt).Data, 0, fileSize)
+          .Anims.Banks(animBankCnt).StartOffset = ROMFiles.Others(i).startoff
+          .Anims.Banks(animBankCnt).EndOffset = ROMFiles.Others(i).endoff
+          animBankCnt += 1
+        End If
+      Next
+
       For i As Integer = 0 To ROMFiles.Objects.Length - 1
         fileSize = ROMFiles.Objects(i).endoff - ROMFiles.Objects(i).startoff
         If _
@@ -7798,9 +7813,15 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
         If RamBanks.CommonBankUse.AnimBank = UseBank.Inline Then
           AnimationEntries = AnimParser.GetCommonAnimations(RamBanks.ZFileBuffer, LimbEntries.Length, 6)
         Else
-          AnimationEntries = AnimParser.GetCommonAnimations(RamBanks.CommonBanks.Anims.Banks(RamBanks.CommonBankUse.AnimBank).Data,
+          If animationbank.SelectedText = "link_animetion" Then
+            ' TODO: Get Link animations.
+          Else
+            ' Normal animations.
+            AnimationEntries = AnimParser.GetCommonAnimations(RamBanks.CommonBanks.Anims.Banks(RamBanks.CommonBankUse.AnimBank).Data,
                                                       LimbEntries.Length, 6)
+          End If
         End If
+
         If AnimationEntries IsNot Nothing Then
           AnimationList.SelectedIndex = 0
         End If

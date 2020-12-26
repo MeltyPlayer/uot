@@ -6,6 +6,11 @@ namespace UoT {
 
     int TrackCount { get; }
     IAnimationTrack GetTrack(int i);
+
+    // TODO: This might need to be per frame?
+    short XTrans { get; }
+    short YTrans { get; }
+    short ZTrans { get; }
   }
 
   public interface IAnimationTrack {
