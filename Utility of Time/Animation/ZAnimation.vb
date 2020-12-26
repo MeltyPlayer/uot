@@ -64,10 +64,10 @@
   '''   Parses a set of animations according to the spec at:
   '''   https://wiki.cloudmodding.com/oot/Animation_Format#Normal_Animations
   ''' </summary>
-  Public Function GetCommonAnimations(ByVal Data() As Byte, ByVal LimbCount As Integer, ByVal Bank As Byte) As CommonAnimation()
+  Public Function GetCommonAnimations(ByVal Data() As Byte, ByVal LimbCount As Integer, ByVal Bank As Byte) As NormalAnimation()
     Try
       Dim animCnt As Integer = -1
-      Dim tAnimation(-1) As CommonAnimation
+      Dim tAnimation(-1) As NormalAnimation
       MainWin.AnimationList.Items.Clear()
 
       ' Guesstimating the index by looking for an spot where the header's angle
@@ -170,7 +170,7 @@
     End Try
   End Function
 
-  Public Function GetTrackRot(ByVal Animation As CommonAnimation, ByVal Counter As FrameAdvancer, ByVal axis As Integer,
+  Public Function GetTrackRot(ByVal Animation As NormalAnimation, ByVal Counter As FrameAdvancer, ByVal axis As Integer,
                               ByVal Track As Integer) As Single
     'thanks to euler for some of this logic
     Dim tTrack As Integer = Track * 3 + axis

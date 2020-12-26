@@ -3284,7 +3284,7 @@ Public Class MainWin
 
 #Region "ANIMATION & HEIRARCHY"
 
-  Private AnimationEntries(-1) As CommonAnimation
+  Private AnimationEntries(-1) As NormalAnimation
   Private LimbEntries(-1) As Limb
   Private CurrLimb As Integer = 0
   Private BoneColorFactor As New Color3UByte

@@ -2,9 +2,9 @@
   // Based on the structs at:
   // https://wiki.cloudmodding.com/oot/Animation_Format#Normal_Animations
 
-  public struct CommonAnimation : IAnimation {
+  public struct NormalAnimation : IAnimation {
     public ushort[] Angles;
-    public CommonAnimationTrack[] Tracks;
+    public NormalAnimationTrack[] Tracks;
     public uint XTrans;
     public uint YTrans;
     public uint ZTrans;
@@ -18,11 +18,11 @@
     public IAnimationTrack GetTrack(int i) => this.Tracks[i];
   }
 
-  public struct CommonAnimationHeader {
+  public struct NormalAnimationHeader {
 
   }
 
-  public struct CommonAnimationTrack : IAnimationTrack {
+  public struct NormalAnimationTrack : IAnimationTrack {
     public int Type { get; set; } // 0 = constant, 1 = keyframe
     public ushort[] Frames { get; set; }
   }

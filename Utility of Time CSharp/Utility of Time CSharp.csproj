@@ -62,8 +62,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="animation\Interfaces.cs" />
-    <Compile Include="animation\link\Structs.cs" />
-    <Compile Include="animation\Structs.cs" />
+    <Compile Include="animation\link\LinkAnimetionStructs.cs" />
+    <Compile Include="animation\NormalAnimationStructs.cs" />
     <Compile Include="data\Structs.cs" />
     <Compile Include="displaylist\DlManager.cs" />
     <Compile Include="GlobalSuppressions.cs" />
