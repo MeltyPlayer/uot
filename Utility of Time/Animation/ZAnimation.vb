@@ -112,7 +112,6 @@
             With tAnimation(animCnt)
               .FrameCount = frameCount
               .TrackOffset = rotationIndicesOffset
-              .ConstTrackCount = limit
 
               .TrackCount = (LimbCount * 3)
               .AngleCount = angleCount
@@ -138,7 +137,7 @@
                 For i1 As Integer = 0 To .TrackCount - 1
                   tTrack = IoUtil.ReadUInt16(Data, tTrackOffset)
 
-                  If tTrack < .ConstTrackCount Then
+                  If tTrack < limit Then
                     ' Constant (single value)
                     .Tracks(i1).Type = 0
                     ReDim .Tracks(i1).Frames(0)
@@ -170,12 +169,12 @@
     End Try
   End Function
 
-  Public Function GetTrackRot(ByVal Animation As NormalAnimation, ByVal Counter As FrameAdvancer, ByVal axis As Integer,
+  Public Function GetTrackRot(animation As IAnimation, ByVal Counter As FrameAdvancer, ByVal axis As Integer,
                               ByVal Track As Integer) As Single
     'thanks to euler for some of this logic
     Dim tTrack As Integer = Track * 3 + axis
 
-    If tTrack > Animation.Tracks.Length - 1 Then
+    If tTrack > animation.TrackCount - 1 Then
       tTrack = 0
     End If
 
@@ -185,7 +184,7 @@
     Dim tFrame0 As Double = 0.0F
     Dim tFrame1 As Double = 0.0F
 
-    With Animation.Tracks(tTrack)
+    With animation.GetTrack(tTrack)
       If .Type = 1 Then
         tFrame0 = .Frames(Frame)
         If NextFrame >= .Frames.Length Then
@@ -204,13 +203,13 @@
     Return Interpolation.Degrees(tFrame0, tFrame1, Counter.FrameDelta)
   End Function
 
-  Public Function Animate(ByVal Animation As IAnimation, ByVal LoopAnimation As Boolean,
+  Public Function Animate(animation As IAnimation, LoopAnimation As Boolean,
                           ByRef CurrentFrame As TrackBar)
     CountFrames(AnimationStopWatch, ZAnimationCounter)
-    If ZAnimationCounter.FrameNo < Animation.FrameCount - 1 Then
+    If ZAnimationCounter.FrameNo < animation.FrameCount - 1 Then
       ZAnimationCounter.CurrFrame = ZAnimationCounter.FrameNo
       CurrentFrame.Value = ZAnimationCounter.CurrFrame + 1
-    ElseIf ZAnimationCounter.FrameNo = Animation.FrameCount - 1 And Not LoopAnimation Then
+    ElseIf ZAnimationCounter.FrameNo = animation.FrameCount - 1 And Not LoopAnimation Then
       ResetAnimation(AnimationStopWatch, ZAnimationCounter)
       StopAnimation(AnimationStopWatch, ZAnimationCounter)
       CurrentFrame.Value = 1

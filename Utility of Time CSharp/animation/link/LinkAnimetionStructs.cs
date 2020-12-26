@@ -1,13 +1,18 @@
 ﻿namespace UoT {
-  // Structs that store animations from the "link_animetion" file.
+  // Structs that store animations from the "link_animetion" (sic) file.
   //
   // Based on the structs at:
   // https://wiki.cloudmodding.com/oot/Animation_Format#C_code
 
   public struct LinkAnimetion : IAnimation {
+    // TODO: Support animating translation.
+    // TODO: Support animating face.
+
     public LinkAnimetionHeader Header;
 
     public ushort FrameCount => this.Header.FrameCount;
+
+    public int TrackCount => -1;
     public IAnimationTrack GetTrack(int i) => null;
   }
 

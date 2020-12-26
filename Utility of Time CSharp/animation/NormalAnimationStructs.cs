@@ -8,13 +8,12 @@
     public uint XTrans;
     public uint YTrans;
     public uint ZTrans;
-    public uint FrameOffset;
     public uint TrackOffset;
     public uint AngleCount;
-    public uint TrackCount;
-    public int ConstTrackCount;
 
     public ushort FrameCount { get; set; }
+
+    public int TrackCount { get; set; }
     public IAnimationTrack GetTrack(int i) => this.Tracks[i];
   }
 
