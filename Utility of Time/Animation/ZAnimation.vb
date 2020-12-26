@@ -60,6 +60,10 @@
     End Try
   End Function
 
+  ''' <summary>
+  '''   Parses a set of animations according to the spec at:
+  '''   https://wiki.cloudmodding.com/oot/Animation_Format#Normal_Animations
+  ''' </summary>
   Public Function GetAnimations(ByVal Data() As Byte, ByVal LimbCount As Integer, ByVal Bank As Byte) As Animation()
     Try
       Dim animCnt As Integer = -1
@@ -67,6 +71,9 @@
       Dim tAnimation(-1) As Animation
       MainWin.AnimationList.Items.Clear()
 
+      ' Guesstimating the index by looking for an spot where the header's angle
+      ' address and track address have the same bank as the param at the top.
+      ' TODO: Is this robust enough?
       For i As Integer = 16 To Data.Length - 8 Step 4
         If (Data(i) = Bank And (Data(i + 4) = Bank) And (Data(i - 3) > 0) And Data(i - 4) = 0) Then
           angleOffset = IoUtil.ReadUInt24(Data, i + 1)
@@ -75,12 +82,13 @@
               animCnt += 1
               ReDim Preserve tAnimation(animCnt)
               With tAnimation(animCnt)
-                .TrackCount = (LimbCount * 3)
-                .ConstTrackCount = IoUtil.ReadUInt16(Data, i + 8)
-                .TrackOffset = IoUtil.ReadUInt24(Data, i + 5)
-                ' TODO: Why negative index, why isn't this starting at the beginning?
                 .FrameCount = IoUtil.ReadUInt16(Data, i - 4)
+                .TrackOffset = IoUtil.ReadUInt24(Data, i + 5)
+                .ConstTrackCount = IoUtil.ReadUInt16(Data, i + 8)
+
+                .TrackCount = (LimbCount * 3)
                 .AngleCount = ((.TrackOffset - angleOffset) \ 2)
+
                 If .FrameCount > 0 Then
                   ReDim .Angles(.AngleCount - 1)
                   ReDim .Tracks(.TrackCount - 1)
