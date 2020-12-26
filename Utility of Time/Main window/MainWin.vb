@@ -3941,10 +3941,17 @@ Public Class MainWin
       ModelViewMatrixTransformer.Push()
       If AnimationEntries IsNot Nothing Then
         With AnimationEntries(CurrAnimation)
-          Dim position As Vec3s = .GetPosition(ZAnimationCounter.CurrFrame)
+          Dim startPos As Vec3s = .GetPosition(ZAnimationCounter.CurrFrame)
+          Dim endPos As Vec3s = .GetPosition((ZAnimationCounter.CurrFrame + 1) Mod .FrameCount)
 
-          ' TODO: Handle interpolation!
-          ModelViewMatrixTransformer.Translate(position.X, position.Y, position.Z)
+          Dim f As Double = ZAnimationCounter.FrameDelta
+
+          ' TODO: Move this out.
+          Dim x As Double = startPos.X * (1 - f) + endPos.X * f
+          Dim y As Double = startPos.Y * (1 - f) + endPos.Y * f
+          Dim z As Double = startPos.Z * (1 - f) + endPos.Z * f
+
+          ModelViewMatrixTransformer.Translate(x, y, z)
         End With
       End If
       For CurrLimb = 0 To LimbEntries.Length - 1
