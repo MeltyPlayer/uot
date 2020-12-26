@@ -60,8 +60,6 @@ namespace UoT {
     public double ElapsedSeconds;
     public double ElapsedMilliseconds;
     public double DeltaTime;
-    public double FramesAdvanced;
-    public int FramesAdvancedInt;
     public double FrameDelta;
     public double FPS;
   }

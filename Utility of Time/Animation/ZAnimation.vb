@@ -305,11 +305,11 @@ Public Class ZAnimation
       .DeltaTime = .ElapsedSeconds - .LastUpdateTime
 
       ' TODO: Delete unneeded fields.
-      .FramesAdvanced = .FrameDelta + .DeltaTime * .FPS
-      .FramesAdvancedInt = Math.Floor(.FramesAdvanced)
+      Dim framesAdvanced As Double = .FrameDelta + .DeltaTime * .FPS
+      Dim frameAdvancedInt As Integer = Math.Floor(framesAdvanced)
 
-      .FrameNo += .FramesAdvancedInt
-      .FrameDelta = .FramesAdvanced - .FramesAdvancedInt
+      .FrameNo += frameAdvancedInt
+      .FrameDelta = framesAdvanced Mod 1
 
       .LastUpdateTime = AnimationStopWatch.Elapsed.TotalSeconds
     End With
@@ -320,8 +320,6 @@ Public Class ZAnimation
       .CurrFrame = 0
       .FrameNo = 0
       .FrameDelta = 0
-      .FramesAdvanced = 0
-      .FramesAdvancedInt = 0
       .ElapsedMilliseconds = 0
       .ElapsedSeconds = 0
       .LastUpdateTime = 0

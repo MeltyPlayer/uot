@@ -4051,7 +4051,7 @@ Public Class MainWin
 
   Private Sub UpdateAnimationTab()
     FrameNo.Text = (ZAnimationCounter.CurrFrame).ToString & "/" & CurrentFrame.Maximum
-    AnimationElapse.Text = CInt(ZAnimationCounter.ElapsedSeconds.ToString) & ":" &
+    AnimationElapse.Text = CInt(Math.Floor(ZAnimationCounter.ElapsedSeconds)).ToString & ":" &
                            CInt(ZAnimationCounter.ElapsedMilliseconds.ToString) & "s"
   End Sub
 
