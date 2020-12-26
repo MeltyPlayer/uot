@@ -23,7 +23,7 @@ namespace UoT {
 
   public static class ModelViewMatrixTransformer {
     private static IModelViewMatrixTransformer INSTANCE =
-        new SoftwareModelViewMatrixTransformer();
+        new GlModelViewMatrixTransformer();
 
     public static IModelViewMatrixTransformer Push()
       => ModelViewMatrixTransformer.INSTANCE.Push();

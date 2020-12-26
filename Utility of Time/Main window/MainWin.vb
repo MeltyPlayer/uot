@@ -1,11 +1,9 @@
 Imports Tao.OpenGl
 Imports Tao.Platform.Windows
-Imports Tao.DevIl
 Imports System.Math
 Imports System.IO
 Imports Tao.FreeGlut
-Imports System.Runtime.InteropServices
-Imports UoT.Tao.Platform.Windows
+Imports System.Numerics
 
 Public Class MainWin
 
@@ -3561,9 +3559,7 @@ Public Class MainWin
             '(MOUSE MOVE RIGHT)
             If ToolModes.SelectedItemType = ToolID.NONE Then
               CamYRot += (NewMouseX - OldMouseX) * 0.5
-              If CamYRot > 360 Then
-                CamYRot = 0
-              End If
+              CamYRot = CamYRot Mod 360
             End If
             If _
               (ToolModes.Axis = ToolID.NOLOCK Or ToolModes.Axis = ToolID.LOCKTOX) And
@@ -3604,9 +3600,7 @@ Public Class MainWin
             '(MOUSE MOVE LEFT) 
             If ToolModes.SelectedItemType = ToolID.NONE Then
               CamYRot -= (OldMouseX - NewMouseX) * 0.5
-              If CamYRot < -360 Then
-                CamYRot = 0
-              End If
+              CamYRot = CamYRot Mod 360
             End If
             If _
               (ToolModes.Axis = ToolID.NOLOCK Or ToolModes.Axis = ToolID.LOCKTOX) And Not ToolModes.Axis = ToolID.NOMOVE _
@@ -4012,11 +4006,11 @@ Public Class MainWin
       End If
 
       If AnimationEntries IsNot Nothing Then
-        With AnimParser
-          ModelViewMatrixTransformer.Rotate(.GetTrackRot(AnimationEntries(CurrAnimation), ZAnimationCounter, 2, id), 0, 0, 1)
-          ModelViewMatrixTransformer.Rotate(.GetTrackRot(AnimationEntries(CurrAnimation), ZAnimationCounter, 1, id), 0, 1, 0)
-          ModelViewMatrixTransformer.Rotate(.GetTrackRot(AnimationEntries(CurrAnimation), ZAnimationCounter, 0, id), 1, 0, 0)
-        End With
+        Dim q As Quaternion = AnimParser.GetTrackRot(AnimationEntries(CurrAnimation), ZAnimationCounter, id)
+        q = Quaternion.Normalize(q)
+
+        ApplyQuaternion1(q)
+        ' ApplyQuaternion2(q)
       End If
 
       If dlIndex > -1 Then
@@ -4047,6 +4041,64 @@ Public Class MainWin
         BoneColorFactor.b = 255
       End If
     End With
+  End Sub
+
+  Private Sub ApplyQuaternion2(q As Quaternion)
+    Dim m4 As Matrix4x4 = Matrix4x4.CreateFromQuaternion(q)
+
+    Dim m(15) As Double
+
+    m(0) = m4.M11
+    m(1) = m4.M12
+    m(2) = m4.M13
+    m(3) = m4.M14
+
+    m(4) = m4.M21
+    m(5) = m4.M22
+    m(6) = m4.M23
+    m(7) = m4.M24
+
+    m(8) = m4.M31
+    m(9) = m4.M32
+    m(10) = m4.M33
+    m(11) = m4.M34
+
+    m(12) = m4.M41
+    m(13) = m4.M42
+    m(14) = m4.M43
+    m(15) = m4.M44
+
+    Gl.glMultMatrixd(m)
+  End Sub
+
+  Private Sub ApplyQuaternion1(q As Quaternion)
+    Dim qx As Single = q.X
+    Dim qy As Single = q.Y
+    Dim qz As Single = q.Z
+    Dim qw As Single = q.W
+
+    Dim m(15) As Double
+    m(0) = 1.0F - 2.0F * qy * qy - 2.0F * qz * qz
+    m(4) = 2.0F * qx * qy - 2.0F * qz * qw
+    m(8) = 2.0F * qx * qz + 2.0F * qy * qw
+    m(12) = 0.0F
+
+    m(1) = 2.0F * qx * qy + 2.0F * qz * qw
+    m(5) = 1.0F - 2.0F * qx * qx - 2.0F * qz * qz
+    m(9) = 2.0F * qy * qz - 2.0F * qx * qw
+    m(13) = 0.0F
+
+    m(2) = 2.0F * qx * qz - 2.0F * qy * qw
+    m(6) = 2.0F * qy * qz + 2.0F * qx * qw
+    m(10) = 1.0F - 2.0F * qx * qx - 2.0F * qy * qy
+    m(14) = 0.0F
+
+    m(3) = 0
+    m(7) = 0
+    m(11) = 0
+    m(15) = 1
+
+    Gl.glMultMatrixd(m)
   End Sub
 
   Private Sub UpdateAnimationTab()

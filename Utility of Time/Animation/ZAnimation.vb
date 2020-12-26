@@ -1,4 +1,4 @@
-﻿Imports System.Linq
+﻿Imports System.Numerics
 
 Public Class ZAnimation
   Public Function GetHierarchies(ByVal Data() As Byte, ByVal Bank As Byte) As Limb()
@@ -246,38 +246,74 @@ Public Class ZAnimation
     Return Nothing
   End Function
 
-  Public Function GetTrackRot(animation As IAnimation, ByVal Counter As FrameAdvancer, ByVal axis As Integer,
-                              ByVal Track As Integer) As Single
+  Public Function GetTrackRot(animation As IAnimation, ByVal Counter As FrameAdvancer, ByVal Track As Integer) As Quaternion
     'thanks to euler for some of this logic
-    Dim tTrack As Integer = Track * 3 + axis
 
+    Dim tTrack As Integer = Track * 3
+
+    ' TODO: This doesn't look like it should be needed.
     If tTrack > animation.TrackCount - 1 Then
       tTrack = 0
     End If
 
-    Dim Frame As Integer = Counter.CurrFrame
-    Dim NextFrame As Integer = Counter.CurrFrame + 1
+    Dim xTrack As IAnimationTrack = animation.GetTrack(tTrack)
+    Dim yTrack As IAnimationTrack = animation.GetTrack(tTrack + 1)
+    Dim zTrack As IAnimationTrack = animation.GetTrack(tTrack + 2)
 
-    Dim tFrame0 As UShort
-    Dim tFrame1 As UShort
+    Dim xFrames As UShort() = xTrack.Frames
+    Dim yFrames As UShort() = yTrack.Frames
+    Dim zFrames As UShort() = zTrack.Frames
 
-    With animation.GetTrack(tTrack)
-      If .Type = 1 Then
-        tFrame0 = .Frames(Frame)
-        If NextFrame >= .Frames.Length Then
-          NextFrame = 0
-        End If
-        tFrame1 = .Frames(NextFrame)
-      ElseIf .Type = 0 Then
-        tFrame0 = .Frames(0)
-        tFrame1 = .Frames(0)
-      End If
-    End With
+    Dim frame As Integer = Counter.CurrFrame
+    Dim xFrame, nextXFrame As Integer
+    Dim yFrame, nextYFrame As Integer
+    Dim zFrame, nextZFrame As Integer
 
-    Dim aFrame0 As Double = AngleToRad(tFrame0)
-    Dim aFrame1 As Double = AngleToRad(tFrame1)
+    GetFrameAndNext(xTrack, frame, xFrame, nextXFrame)
+    GetFrameAndNext(yTrack, frame, yFrame, nextYFrame)
+    GetFrameAndNext(zTrack, frame, zFrame, nextZFrame)
 
-    Return Interpolation.Degrees(aFrame0, aFrame1, Counter.FrameDelta)
+    Dim r2d = Math.PI / 180
+    Dim x1 As Double = AngleToRad(xFrames(xFrame)) * r2d
+    Dim y1 As Double = AngleToRad(yFrames(yFrame)) * r2d
+    Dim z1 As Double = AngleToRad(zFrames(zFrame)) * r2d
+
+    Dim q1 As Quaternion = GetQuaternion(x1, y1, z1)
+
+    Dim x2 As Double = AngleToRad(xFrames(nextXFrame)) * r2d
+    Dim y2 As Double = AngleToRad(yFrames(nextYFrame)) * r2d
+    Dim z2 As Double = AngleToRad(zFrames(nextZFrame)) * r2d
+
+    Dim q2 As Quaternion = GetQuaternion(x2, y2, z2)
+
+    If Quaternion.Dot(q1, q2) < 0 Then
+      q2 = -q2
+    End If
+
+    Dim interp As Quaternion = Quaternion.Slerp(q1, q2, Counter.FrameDelta)
+    Return Quaternion.Normalize(interp)
+  End Function
+
+  Private Function GetQuaternion(x As Double, y As Double, z As Double) As Quaternion
+    ' The quaternion has to be multiplied in the same order the rotations were
+    ' applied in OpenGL: z, y, x!
+    Dim qz As Quaternion = Quaternion.CreateFromYawPitchRoll(0, 0, z)
+    Dim qy As Quaternion = Quaternion.CreateFromYawPitchRoll(y, 0, 0)
+    Dim qx As Quaternion = Quaternion.CreateFromYawPitchRoll(0, x, 0)
+
+    Return Quaternion.Normalize(qz * qy * qx)
+  End Function
+
+  Private Function GetFrameAndNext(track As IAnimationTrack, frame As UInteger, ByRef trackFrame As UInteger, ByRef nextTrackFrame As UInteger)
+    Dim frameCount As UInteger = track.Frames.Length
+
+    If track.Type = 1 Then
+      trackFrame = frame Mod (frameCount - 1)
+      nextTrackFrame = (trackFrame + 1) Mod (frameCount - 1)
+    ElseIf track.Type = 0 Then
+      trackFrame = 0
+      nextTrackFrame = 0
+    End If
   End Function
 
   Public Function Animate(animation As IAnimation, LoopAnimation As Boolean,
