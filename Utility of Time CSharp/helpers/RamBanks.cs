@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace UoT {
+﻿namespace UoT {
   public static class RamBanks {
     public static byte[] ZFileBuffer { get; set; }
     public static byte[] ZSceneBuffer { get; set; }
@@ -24,6 +22,7 @@ namespace UoT {
         case 5:
           return RamBanks.CommonBanks.Bank5.Banks[RamBanks.CommonBankUse.Bank05]
                          .Data;
+
         default:
           // TODO: Should throw an error for unsupported banks.
           return null;

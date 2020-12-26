@@ -7813,8 +7813,10 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
         If RamBanks.CommonBankUse.AnimBank = UseBank.Inline Then
           AnimationEntries = AnimParser.GetCommonAnimations(RamBanks.ZFileBuffer, LimbEntries.Length, 6)
         Else
-          If animationbank.SelectedText = "link_animetion" Then
-            ' TODO: Get Link animations.
+          If animationbank.SelectedItem = "link_animetion" Then
+            Dim animationData() As Byte = RamBanks.CommonBanks.Anims.Banks(RamBanks.CommonBankUse.AnimBank).Data
+            AnimationEntries = AnimParser.GetLinkAnimations(RamBanks.GetBankByIndex(4),
+                                                              LimbEntries.Length, animationData)
           Else
             ' Normal animations.
             AnimationEntries = AnimParser.GetCommonAnimations(RamBanks.CommonBanks.Anims.Banks(RamBanks.CommonBankUse.AnimBank).Data,

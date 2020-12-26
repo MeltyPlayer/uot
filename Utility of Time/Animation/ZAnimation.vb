@@ -183,9 +183,9 @@ Public Class ZAnimation
     Dim animations(-1) As LinkAnimetion
     MainWin.AnimationList.Items.Clear()
 
-    ' Guesstimating the index by looking for an spot where the header's angle
-    ' address and track address have the same bank as the param at the top.
-    ' TODO: Is this robust enough?
+    Dim trackCount As UInteger = LimbCount * 3
+    Dim frameSize = 2 * (3 + trackCount) + 2
+
     For i As Integer = &H2310 To &H34F8 Step 4
       Dim frameCount As UShort = IoUtil.ReadUInt16(HeaderData, i)
       Dim animationAddress As UInt32 = IoUtil.ReadUInt32(HeaderData, i + 4)
@@ -197,23 +197,28 @@ Public Class ZAnimation
       Dim validAnimationBank As Boolean = animationBank = 7 ' Corresponds to link_animetions.
       Dim hasZeroes As Boolean = IoUtil.ReadUInt16(HeaderData, i + 2) = 0
 
-      If validAnimationBank And hasZeroes Then
+      ' TODO: Is this really needed?
+      Dim validOffset As Boolean = animationOffset + frameSize * frameCount < animationData.Length
+
+      If validAnimationBank And hasZeroes And validOffset Then
         animCnt += 1
         ReDim Preserve animations(animCnt)
         With animations(animCnt)
           .FrameCount = frameCount
 
-          If .FrameCount > 0 Then
-            Dim trackCount As UInteger = LimbCount * 3
+          If frameCount > 0 Then
             ReDim .Tracks(trackCount - 1)
 
-            Dim frameSize = 2 * 3 * (1 + frameCount) + 2
+            For t As Integer = 0 To trackCount - 1
+              .Tracks(t).Type = 1
+              ReDim .Tracks(t).Frames(frameCount - 1)
+            Next
 
-            For f As Integer = 0 To .FrameCount - 1
+            For f As Integer = 0 To frameCount - 1
               Dim frameOffset As UInteger = animationOffset + f * frameSize
 
-              For t As Integer = 0 To .TrackCount - 1
-                Dim trackOffset As UInteger = frameOffset + 2 * 3 * (1 + t)
+              For t As Integer = 0 To trackCount - 1
+                Dim trackOffset As UInteger = frameOffset + 2 * (3 + t)
 
                 .Tracks(t).Frames(f) = IoUtil.ReadUInt16(animationData, trackOffset)
               Next

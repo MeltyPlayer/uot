@@ -201,6 +201,7 @@ namespace UoT {
   public struct ObjectExchange {
     public Bank04 Bank4;
     public Bank05 Bank5;
+
     public AnimBank Anims;
   }
 
