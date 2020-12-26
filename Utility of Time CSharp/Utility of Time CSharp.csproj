@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="animation\Interfaces.cs" />
     <Compile Include="animation\link\Structs.cs" />
     <Compile Include="animation\Structs.cs" />
     <Compile Include="data\Structs.cs" />

@@ -3284,7 +3284,7 @@ Public Class MainWin
 
 #Region "ANIMATION & HEIRARCHY"
 
-  Private AnimationEntries(-1) As Animation
+  Private AnimationEntries(-1) As CommonAnimation
   Private LimbEntries(-1) As Limb
   Private CurrLimb As Integer = 0
   Private BoneColorFactor As New Color3UByte
@@ -3997,7 +3997,7 @@ Public Class MainWin
       ModelViewMatrixTransformer.Translate(.x, .y, .z)
 
       If ZAnimationCounter.Advancing Then
-        AnimParser.Animate(AnimationEntries, CurrAnimation, LoopAnimation, CurrentFrame)
+        AnimParser.Animate(AnimationEntries(CurrAnimation), LoopAnimation, CurrentFrame)
         UpdateAnimationTab()
       End If
 
@@ -4986,7 +4986,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
           LimbEntries = AnimParser.GetHierarchies(RamBanks.ZFileBuffer, 6)
           If LimbEntries IsNot Nothing Then
             DlManager.HasLimbs = True
-            AnimationEntries = AnimParser.GetAnimations(RamBanks.ZFileBuffer, LimbEntries.Length - 1, 6)
+            AnimationEntries = AnimParser.GetCommonAnimations(RamBanks.ZFileBuffer, LimbEntries.Length - 1, 6)
             If AnimationEntries IsNot Nothing Then
               AnimationList.SelectedIndex = 0
             End If
@@ -7796,9 +7796,9 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
         RamBanks.CommonBankUse = commonBankUse
 
         If RamBanks.CommonBankUse.AnimBank = UseBank.Inline Then
-          AnimationEntries = AnimParser.GetAnimations(RamBanks.ZFileBuffer, LimbEntries.Length, 6)
+          AnimationEntries = AnimParser.GetCommonAnimations(RamBanks.ZFileBuffer, LimbEntries.Length, 6)
         Else
-          AnimationEntries = AnimParser.GetAnimations(RamBanks.CommonBanks.Anims.Banks(RamBanks.CommonBankUse.AnimBank).Data,
+          AnimationEntries = AnimParser.GetCommonAnimations(RamBanks.CommonBanks.Anims.Banks(RamBanks.CommonBankUse.AnimBank).Data,
                                                       LimbEntries.Length, 6)
         End If
         If AnimationEntries IsNot Nothing Then

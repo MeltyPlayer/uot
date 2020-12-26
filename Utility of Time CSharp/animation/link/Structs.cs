@@ -4,6 +4,13 @@
   // Based on the structs at:
   // https://wiki.cloudmodding.com/oot/Animation_Format#C_code
 
+  public struct LinkAnimetion : IAnimation {
+    public LinkAnimetionHeader Header;
+
+    public ushort FrameCount => this.Header.FrameCount;
+    public IAnimationTrack GetTrack(int i) => null;
+  }
+
   public struct LinkAnimetionHeader {
     public ushort FrameCount;
     public uint Address;
