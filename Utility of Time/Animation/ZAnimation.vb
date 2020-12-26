@@ -258,8 +258,8 @@ Public Class ZAnimation
     Dim Frame As Integer = Counter.CurrFrame
     Dim NextFrame As Integer = Counter.CurrFrame + 1
 
-    Dim tFrame0 As Double = 0.0F
-    Dim tFrame1 As Double = 0.0F
+    Dim tFrame0 As UShort
+    Dim tFrame1 As UShort
 
     With animation.GetTrack(tTrack)
       If .Type = 1 Then
@@ -274,10 +274,10 @@ Public Class ZAnimation
       End If
     End With
 
-    tFrame0 = AngleToRad(tFrame0)
-    tFrame1 = AngleToRad(tFrame1)
+    Dim aFrame0 As Double = AngleToRad(tFrame0)
+    Dim aFrame1 As Double = AngleToRad(tFrame1)
 
-    Return Interpolation.Degrees(tFrame0, tFrame1, Counter.FrameDelta)
+    Return Interpolation.Degrees(aFrame0, aFrame1, Counter.FrameDelta)
   End Function
 
   Public Function Animate(animation As IAnimation, LoopAnimation As Boolean,
