@@ -26,6 +26,13 @@ namespace UoT {
       => v * RDP_Defs.FIXED2FLOATRECIP[b - 1];
 
 
+    private static readonly short[] int16Buffer_ = new short[1];
+
+    public static short ReadInt16(byte[] buffer, uint offset) {
+      Buffer.BlockCopy(buffer, (int) offset, IoUtil.int16Buffer_, 0, 2);
+      return IoUtil.int16Buffer_[0];
+    }
+
     public static ushort ReadUInt16(byte[] buffer, uint offset)
       => (ushort)IoUtil.ReadUInt(buffer, offset, 2);
 

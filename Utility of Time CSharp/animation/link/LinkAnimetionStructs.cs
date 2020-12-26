@@ -12,13 +12,13 @@
 
     public ushort FrameCount { get; set; }
 
-    public int TrackCount => this.Tracks.Length;
-    public IAnimationTrack GetTrack(int i) => this.Tracks[i];
 
     // TODO: Support these fields.
-    public short XTrans => 0;
-    public short YTrans => 0;
-    public short ZTrans => 0;
+    public Vec3s[] Positions;
+    public Vec3s GetPosition(int i) => this.Positions[i];
+
+    public int TrackCount => this.Tracks.Length;
+    public IAnimationTrack GetTrack(int i) => this.Tracks[i];
   }
 
   public struct LinkAnimetionTrack : IAnimationTrack {
@@ -27,14 +27,7 @@
   }
 
   // TODO: Use below structs instead.
-
-  /*public struct Vec3s {
-    public short X;
-    public short Y;
-    public short Z;
-  }
-
-  public struct LinkAnimetionFace {
+  /*public struct LinkAnimetionFace {
     public byte Mouth;
     public byte Eyes;
   }

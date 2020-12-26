@@ -10,13 +10,11 @@
 
     public ushort FrameCount { get; set; }
 
+    public Vec3s Position;
+    public Vec3s GetPosition(int _) => this.Position;
+
     public int TrackCount => this.Tracks.Length;
     public IAnimationTrack GetTrack(int i) => this.Tracks[i];
-
-    // TODO: Support these fields.
-    public short XTrans => 0;
-    public short YTrans => 0;
-    public short ZTrans => 0;
   }
 
   public struct NormalAnimationTrack : IAnimationTrack {

@@ -130,10 +130,9 @@ Public Class ZAnimation
                 rotationValuesOffset += 2
               Next
 
-              ' TODO: Support these values.
-              '.XTrans = IoUtil.ReadUInt16(Data, .TrackOffset + 0)
-              '.YTrans = IoUtil.ReadUInt16(Data, .TrackOffset + 2)
-              '.ZTrans = IoUtil.ReadUInt16(Data, .TrackOffset + 4)
+              .Position.X = IoUtil.ReadInt16(Data, .TrackOffset + 0)
+              .Position.Y = IoUtil.ReadInt16(Data, .TrackOffset + 2)
+              .Position.Z = IoUtil.ReadInt16(Data, .TrackOffset + 4)
 
               Dim tTrackOffset As Integer = .TrackOffset + 6
 
@@ -207,8 +206,9 @@ Public Class ZAnimation
           .FrameCount = frameCount
 
           If frameCount > 0 Then
-            ReDim .Tracks(trackCount - 1)
+            ReDim .Positions(frameCount - 1)
 
+            ReDim .Tracks(trackCount - 1)
             For t As Integer = 0 To trackCount - 1
               .Tracks(t).Type = 1
               ReDim .Tracks(t).Frames(frameCount - 1)
@@ -216,6 +216,11 @@ Public Class ZAnimation
 
             For f As Integer = 0 To frameCount - 1
               Dim frameOffset As UInteger = animationOffset + f * frameSize
+
+              Dim position As Vec3s
+              .Positions(f).X = IoUtil.ReadUInt16(animationData, frameOffset + 0)
+              .Positions(f).Y = IoUtil.ReadUInt16(animationData, frameOffset + 2)
+              .Positions(f).Z = IoUtil.ReadUInt16(animationData, frameOffset + 4)
 
               For t As Integer = 0 To trackCount - 1
                 Dim trackOffset As UInteger = frameOffset + 2 * (3 + t)
