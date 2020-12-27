@@ -223,5 +223,14 @@ namespace UoT {
       }
       Gl.glLoadMatrixd(GlMatrixUtil.glBuffer_);
     }
+
+    public static void Get(Matrix<double> m) {
+      Gl.glGetDoublev(Gl.GL_MODELVIEW_MATRIX, GlMatrixUtil.glBuffer_);
+      for (var r = 0; r < 4; ++r) {
+        for (var c = 0; c < 4; ++c) {
+          m[r, c] = GlMatrixUtil.glBuffer_[4 * c + r];
+        }
+      }
+    }
   }
 }
