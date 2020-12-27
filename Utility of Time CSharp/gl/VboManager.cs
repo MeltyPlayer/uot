@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 namespace UoT {
-  public class VboManager{
+  public class VboManager {
     // TODO: Prune unused values.
     // TODO: Split out vertices into separately indexed position/uv/color arrays.
 
