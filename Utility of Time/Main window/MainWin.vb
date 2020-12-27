@@ -4,6 +4,7 @@ Imports System.Math
 Imports System.IO
 Imports Tao.FreeGlut
 Imports System.Numerics
+Imports MathNet.Numerics.LinearAlgebra.Double
 
 Public Class MainWin
 
@@ -4077,28 +4078,49 @@ Public Class MainWin
     Dim qz As Single = q.Z
     Dim qw As Single = q.W
 
-    Dim m(15) As Double
-    m(0) = 1.0F - 2.0F * qy * qy - 2.0F * qz * qz
-    m(4) = 2.0F * qx * qy - 2.0F * qz * qw
-    m(8) = 2.0F * qx * qz + 2.0F * qy * qw
-    m(12) = 0.0F
+    'Dim m(15) As Double
+    'm(0) = 1.0F - 2.0F * qy * qy - 2.0F * qz * qz
+    'm(4) = 2.0F * qx * qy - 2.0F * qz * qw
+    'm(8) = 2.0F * qx * qz + 2.0F * qy * qw
+    'm(12) = 0.0F
 
-    m(1) = 2.0F * qx * qy + 2.0F * qz * qw
-    m(5) = 1.0F - 2.0F * qx * qx - 2.0F * qz * qz
-    m(9) = 2.0F * qy * qz - 2.0F * qx * qw
-    m(13) = 0.0F
+    'm(1) = 2.0F * qx * qy + 2.0F * qz * qw
+    'm(5) = 1.0F - 2.0F * qx * qx - 2.0F * qz * qz
+    'm(9) = 2.0F * qy * qz - 2.0F * qx * qw
+    'm(13) = 0.0F
 
-    m(2) = 2.0F * qx * qz - 2.0F * qy * qw
-    m(6) = 2.0F * qy * qz + 2.0F * qx * qw
-    m(10) = 1.0F - 2.0F * qx * qx - 2.0F * qy * qy
-    m(14) = 0.0F
+    'm(2) = 2.0F * qx * qz - 2.0F * qy * qw
+    'm(6) = 2.0F * qy * qz + 2.0F * qx * qw
+    'm(10) = 1.0F - 2.0F * qx * qx - 2.0F * qy * qy
+    'm(14) = 0.0F
 
-    m(3) = 0
-    m(7) = 0
-    m(11) = 0
-    m(15) = 1
+    'm(3) = 0
+    'm(7) = 0
+    'm(11) = 0
+    'm(15) = 1
 
-    Gl.glMultMatrixd(m)
+    Dim m As New DenseMatrix(4, 4)
+    m(0, 0) = 1.0F - 2.0F * qy * qy - 2.0F * qz * qz
+    m(0, 1) = 2.0F * qx * qy - 2.0F * qz * qw
+    m(0, 2) = 2.0F * qx * qz + 2.0F * qy * qw
+    m(0, 3) = 0.0F
+
+    m(1, 0) = 2.0F * qx * qy + 2.0F * qz * qw
+    m(1, 1) = 1.0F - 2.0F * qx * qx - 2.0F * qz * qz
+    m(1, 2) = 2.0F * qy * qz - 2.0F * qx * qw
+    m(1, 3) = 0.0F
+
+    m(2, 0) = 2.0F * qx * qz - 2.0F * qy * qw
+    m(2, 1) = 2.0F * qy * qz + 2.0F * qx * qw
+    m(2, 2) = 1.0F - 2.0F * qx * qx - 2.0F * qy * qy
+    m(2, 3) = 0.0F
+
+    m(3, 0) = 0
+    m(3, 1) = 0
+    m(3, 2) = 0
+    m(3, 3) = 1
+
+    ModelViewMatrixTransformer.MultMatrix(m)
   End Sub
 
   Private Sub UpdateAnimationTab()
@@ -5588,11 +5610,13 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
   End Sub
 
   Private Sub PickItem(ByVal CurrentTool As Integer, ByVal Button As Windows.Forms.MouseButtons)
-    Gl.glPushMatrix()
-    Gl.glRotatef(CamXRot, 1.0F, 0.0F, 0.0F)
-    Gl.glRotatef(CamYRot, 0.0F, 1.0F, 0.0F)
-    Gl.glRotatef(CamZRot, 0.0F, 0.0F, 1.0F)
-    Gl.glTranslatef(CamXPos, CamYPos, CamZPos)
+    ModelViewMatrixTransformer.Push()
+
+    ModelViewMatrixTransformer.Rotate(CamXRot, 1.0F, 0.0F, 0.0F)
+    ModelViewMatrixTransformer.Rotate(CamYRot, 0.0F, 1.0F, 0.0F)
+    ModelViewMatrixTransformer.Rotate(CamZRot, 0.0F, 0.0F, 1.0F)
+    ModelViewMatrixTransformer.Translate(CamXPos, CamYPos, CamZPos)
+
     Select Case CurrentTool
       Case ToolID.ACTOR
         If LoadedDataType = FileTypes.MAP Then
@@ -5722,7 +5746,8 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
         End If
         PrintTool = False
     End Select
-    Gl.glPopMatrix()
+
+    ModelViewMatrixTransformer.Pop()
   End Sub
 
   Private Function MousePixelRead(ByVal x As Integer, ByVal y As Integer) As Byte()

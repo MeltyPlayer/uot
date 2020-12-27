@@ -11,7 +11,7 @@ namespace UoT {
     IModelViewMatrixTransformer Pop();
 
     IModelViewMatrixTransformer Identity();
-    
+
     IModelViewMatrixTransformer Translate(double x, double y, double z);
 
     IModelViewMatrixTransformer Rotate(
@@ -19,11 +19,13 @@ namespace UoT {
         double x,
         double y,
         double z);
+
+    IModelViewMatrixTransformer MultMatrix(Matrix<double> m);
   }
 
   public static class ModelViewMatrixTransformer {
     private static IModelViewMatrixTransformer INSTANCE =
-        new GlModelViewMatrixTransformer();
+        new SoftwareModelViewMatrixTransformer();
 
     public static IModelViewMatrixTransformer Push()
       => ModelViewMatrixTransformer.INSTANCE.Push();
@@ -44,6 +46,9 @@ namespace UoT {
         double x,
         double y,
         double z) => ModelViewMatrixTransformer.INSTANCE.Rotate(angle, x, y, z);
+
+    public static IModelViewMatrixTransformer MultMatrix(Matrix<double> m)
+      => ModelViewMatrixTransformer.INSTANCE.MultMatrix(m);
   }
 
 
@@ -76,6 +81,9 @@ namespace UoT {
       Gl.glRotated(angle, x, y, z);
       return this;
     }
+
+    public IModelViewMatrixTransformer MultMatrix(Matrix<double> m)
+      => throw new NotImplementedException();
   }
 
   public class
@@ -183,6 +191,15 @@ namespace UoT {
 
 
       this.current_.Multiply(this.rhsBuffer_, this.resultBuffer_);
+
+      this.resultBuffer_.CopyTo(this.current_);
+      this.UpdateGl_();
+
+      return this;
+    }
+
+    public IModelViewMatrixTransformer MultMatrix(Matrix<double> m) {
+      this.current_.Multiply(m, this.resultBuffer_);
 
       this.resultBuffer_.CopyTo(this.current_);
       this.UpdateGl_();
