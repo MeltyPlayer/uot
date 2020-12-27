@@ -69,6 +69,7 @@
     <Compile Include="animation\NormalAnimationStructs.cs" />
     <Compile Include="data\Structs.cs" />
     <Compile Include="displaylist\DlManager.cs" />
+    <Compile Include="displaylist\DlShaderManager.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="gl\GLExtensions.cs" />
     <Compile Include="gl\StaticDlModel.cs" />

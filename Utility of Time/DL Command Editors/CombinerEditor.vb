@@ -6,7 +6,7 @@ Public Class CombinerEditor
   Private CompiledCmb As New DLCommand
 
   Private Sub Decode(ByVal MUXS0 As UInteger, ByVal MUXS1 As UInteger)
-    DLParser.UnpackMUX(MUXS0, MUXS1, CombinerColors)
+    DLParser.ShaderManager.UnpackMUX(MUXS0, MUXS1, CombinerColors)
     With CombinerColors
       cA0.SelectedIndex = .cA(0)
       cA1.SelectedIndex = .cA(1)

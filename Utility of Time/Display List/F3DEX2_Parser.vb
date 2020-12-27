@@ -10,7 +10,7 @@ Public Class F3DEX2_Parser
     EVERYTHING = 0
   End Enum
 
-  Public ParseMode As Integer = -1
+  Public ParseMode As Integer = - 1
 
 #Region "SHADERS & TEXTURE RELATED"
 
@@ -31,7 +31,7 @@ Public Class F3DEX2_Parser
 
   Private UseJank As Boolean = True
 
-  Private JankTileDescriptors(-1) As TileDescriptor
+  Private JankTileDescriptors(- 1) As TileDescriptor
   Private JankCache As New TextureCache
 
   ' TODO: Support the second texture being a mipmap in LOD mode.
@@ -47,23 +47,10 @@ Public Class F3DEX2_Parser
   '''   Judging from GLideN64's source, these are selected in TEXTURE() as tile
   '''   and tile+1.
   ''' </summary>
-  Private SelectedTileDescriptors(-1) As Integer
-
-  Private MultiTexture As Boolean
+  Private SelectedTileDescriptors(- 1) As Integer
 
   ' TODO: Delete this field?
   Private CurrentSelectedTileDescriptor As Integer
-
-  Private FragShaderCache(-1) As ShaderCache
-  Private PrimColor() As Single = {1.0, 1.0, 1.0, 0.5}
-  Private PrimColorLOD As Single = 0
-  Private PrimColorM As Single = 0
-  Private EnvironmentColor() As Single = {1.0, 1.0, 1.0, 0.5}
-  Private BlendColor() As Single = {1.0, 1.0, 1.0, 0.5}
-  Private FogColor() As Single = {1.0, 1.0, 1.0, 0.5}
-  Private CombArg As New UnpackedCombiner
-  Private PrecompiledCombiner As Boolean = False
-  Private EnableCombiner As Boolean = False
 
 #End Region
 
@@ -73,13 +60,14 @@ Public Class F3DEX2_Parser
   Private Polygons(5) As UInteger
   Private v0 As Byte = 0
   Private n0 As Byte = 0
-  Private EnableLighting As Boolean = True
 
   Private VERTEX_CACHE_MAX = 31
   Private VertexCache As N64Vertex
 
   Private FullAlphaCombiner As Boolean = False
   Private ModColorWithAlpha As Boolean = False
+
+  Public ShaderManager As New DlShaderManager
 
   Structure RSPMatrix
     Dim N64Mat() As Byte
@@ -123,9 +111,9 @@ settextureimg:
                 Else
                   MultiTexCoord = False
                 End If
-                MultiTexture = True
+                ShaderManager.MultiTexture = True
               Else
-                MultiTexture = False
+                ShaderManager.MultiTexture = False
                 MultiTexCoord = False
                 CurrentSelectedTileDescriptor = 0
                 DlModel.UpdateTexture(1, Nothing)
@@ -383,11 +371,11 @@ enddisplaylist:
     End If
     If ParseMode = Parse.EVERYTHING Then
       If N64GeometryMode And RDP.G_LIGHTING Then
-        EnableLighting = True
+        ShaderManager.EnableLighting = True
         Gl.glEnable(Gl.GL_NORMALIZE)
         Gl.glEnable(Gl.GL_LIGHTING)
       Else
-        EnableLighting = False
+        ShaderManager.EnableLighting = False
         Gl.glDisable(Gl.GL_NORMALIZE)
         Gl.glDisable(Gl.GL_LIGHTING)
       End If
@@ -560,19 +548,23 @@ enddisplaylist:
   ''' </summary>
   Private Sub PrepareDrawTriangle_()
     If ParseMode = Parse.EVERYTHING Then
-      If EnableCombiner Then
+      ' TODO: Move into shaderManager.
+      If ShaderManager.EnableCombiner Then
         Gl.glEnable(Gl.GL_FRAGMENT_PROGRAM_ARB)
-        Gl.glProgramEnvParameter4fvARB(Gl.GL_FRAGMENT_PROGRAM_ARB, 0, EnvironmentColor)
-        Gl.glProgramEnvParameter4fvARB(Gl.GL_FRAGMENT_PROGRAM_ARB, 1, PrimColor)
-        Gl.glProgramEnvParameter4fvARB(Gl.GL_FRAGMENT_PROGRAM_ARB, 3, BlendColor)
-        Gl.glProgramEnvParameter4fARB(Gl.GL_FRAGMENT_PROGRAM_ARB, 2, PrimColorLOD, PrimColorLOD, PrimColorLOD,
-                                      PrimColorLOD)
+        Gl.glProgramEnvParameter4fvARB(Gl.GL_FRAGMENT_PROGRAM_ARB, 0, ShaderManager.EnvironmentColor)
+        Gl.glProgramEnvParameter4fvARB(Gl.GL_FRAGMENT_PROGRAM_ARB, 1, ShaderManager.PrimColor)
+        Gl.glProgramEnvParameter4fvARB(Gl.GL_FRAGMENT_PROGRAM_ARB, 3, ShaderManager.BlendColor)
+        Gl.glProgramEnvParameter4fARB(Gl.GL_FRAGMENT_PROGRAM_ARB, 2, ShaderManager.PrimColorLOD,
+                                      ShaderManager.PrimColorLOD, ShaderManager.PrimColorLOD,
+                                      ShaderManager.PrimColorLOD)
       Else
         Gl.glDisable(Gl.GL_FRAGMENT_PROGRAM_ARB)
         Gl.glEnable(Gl.GL_LIGHTING)
         Gl.glEnable(Gl.GL_NORMALIZE)
-        MultiTexture = False
-        EnableLighting = True
+        ShaderManager.MultiTexture = False
+        ShaderManager.EnableLighting = True
+
+        DlModel.UpdateTexture(1, Nothing)
       End If
 
       Gl.glEnable(Gl.GL_TEXTURE_2D)
@@ -597,7 +589,7 @@ enddisplaylist:
         Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2)
       End If
 
-      If MultiTexture Then
+      If ShaderManager.MultiTexture Then
         Gl.glActiveTextureARB(Gl.GL_TEXTURE1_ARB)
         Dim texture1 As Texture = SearchTexCache(GetSelectedTileDescriptor(1))
 
@@ -674,13 +666,13 @@ enddisplaylist:
     Dim tileDescriptor1 As TileDescriptor = GetSelectedTileDescriptor(1)
 
     If MultiTexCoord Then
-      Gl.glMultiTexCoord2f(Gl.GL_TEXTURE0_ARB, VertexCache.u(vertexIndex)*tileDescriptor0.TextureWRatio,
-                           VertexCache.v(vertexIndex)*tileDescriptor0.TextureHRatio)
-      Gl.glMultiTexCoord2f(Gl.GL_TEXTURE1_ARB, VertexCache.u(vertexIndex)*tileDescriptor1.TextureWRatio,
-                           VertexCache.v(vertexIndex)*tileDescriptor1.TextureHRatio)
+      Gl.glMultiTexCoord2f(Gl.GL_TEXTURE0_ARB, VertexCache.u(vertexIndex) * tileDescriptor0.TextureWRatio,
+                           VertexCache.v(vertexIndex) * tileDescriptor0.TextureHRatio)
+      Gl.glMultiTexCoord2f(Gl.GL_TEXTURE1_ARB, VertexCache.u(vertexIndex) * tileDescriptor1.TextureWRatio,
+                           VertexCache.v(vertexIndex) * tileDescriptor1.TextureHRatio)
     Else
-      Gl.glTexCoord2f(VertexCache.u(vertexIndex)*tileDescriptor0.TextureWRatio,
-                      VertexCache.v(vertexIndex)*tileDescriptor0.TextureHRatio)
+      Gl.glTexCoord2f(VertexCache.u(vertexIndex) * tileDescriptor0.TextureWRatio,
+                      VertexCache.v(vertexIndex) * tileDescriptor0.TextureHRatio)
     End If
   End Sub
 
@@ -701,8 +693,8 @@ enddisplaylist:
         For i As Integer = 0 To 2
           BindTextures(Polygons(i))
 
-          If EnableLighting Then
-            If (Not EnableCombiner) Then Gl.glColor4fv(PrimColor) Else Gl.glColor3f(1, 1, 1)
+          If ShaderManager.EnableLighting Then
+            If (Not ShaderManager.EnableCombiner) Then Gl.glColor4fv(ShaderManager.PrimColor) Else Gl.glColor3f(1, 1, 1)
             Gl.glNormal3b(CByte(VertexCache.r(Polygons(i))), CByte(VertexCache.g(Polygons(i))),
                           CByte(VertexCache.b(Polygons(i))))
           Else
@@ -745,8 +737,8 @@ enddisplaylist:
         For i As Integer = 0 To 5
           BindTextures(Polygons(i))
 
-          If EnableLighting Then
-            If (Not EnableCombiner) Then Gl.glColor4fv(PrimColor) Else Gl.glColor3f(1, 1, 1)
+          If ShaderManager.EnableLighting Then
+            If (Not ShaderManager.EnableCombiner) Then Gl.glColor4fv(ShaderManager.PrimColor) Else Gl.glColor3f(1, 1, 1)
             Gl.glNormal3b(CByte(VertexCache.r(Polygons(i))), CByte(VertexCache.g(Polygons(i))),
                           CByte(VertexCache.b(Polygons(i))))
           Else
@@ -876,9 +868,9 @@ enddisplaylist:
       .LRT = (w1 And &HFFF) >> 2
       .Width = ((.LRS - .ULS) + 1)
       .Height = ((.LRT - .ULT) + 1)
-      .TexBytes = (.Width*.Height)*2
+      .TexBytes = (.Width * .Height) * 2
       If .TexBytes >> 16 = &HFFFF Then
-        .TexBytes = (.TexBytes << 16 >> 16)*2
+        .TexBytes = (.TexBytes << 16 >> 16) * 2
       End If
     End With
 
@@ -925,18 +917,18 @@ enddisplaylist:
       Dim Mask_Height As UInteger = 1 << .MaskT
 
       Dim Line_Height As UInteger = 0
-      If Line_Width > 0 Then Line_Height = Min(MaxTexel/Line_Width, Tile_Height)
+      If Line_Width > 0 Then Line_Height = Min(MaxTexel / Line_Width, Tile_Height)
 
-      If .MaskS > 0 And ((Mask_Width*Mask_Height) <= MaxTexel) Then
+      If .MaskS > 0 And ((Mask_Width * Mask_Height) <= MaxTexel) Then
         .Width = Mask_Width
-      ElseIf ((Tile_Width*Tile_Height) <= MaxTexel) Then
+      ElseIf ((Tile_Width * Tile_Height) <= MaxTexel) Then
         .Width = Tile_Width
       Else
         .Width = Line_Width
       End If
-      If .MaskT > 0 And ((Mask_Width*Mask_Height) <= MaxTexel) Then
+      If .MaskT > 0 And ((Mask_Width * Mask_Height) <= MaxTexel) Then
         .Height = Mask_Height
-      ElseIf ((Tile_Width*Tile_Height) <= MaxTexel) Then
+      ElseIf ((Tile_Width * Tile_Height) <= MaxTexel) Then
         .Height = Tile_Height
       Else
         .Height = Line_Height
@@ -995,8 +987,8 @@ enddisplaylist:
         .ShiftT /= (1 << .TShiftT)
       End If
 
-      .TextureHRatio = ((.T_Scale*.ShiftT)/32/.LoadHeight)
-      .TextureWRatio = ((.S_Scale*.ShiftS)/32/.LoadWidth)
+      .TextureHRatio = ((.T_Scale * .ShiftT) / 32 / .LoadHeight)
+      .TextureWRatio = ((.S_Scale * .ShiftS) / 32 / .LoadWidth)
     End With
   End Sub
 
@@ -1028,11 +1020,11 @@ enddisplaylist:
       Select Case .PaletteBank
         Case RamBanks.CurrentBank
           For i As Integer = 0 To paletteSizeMinus1
-            palette16(i) = IoUtil.ReadUInt16(RamBanks.ZFileBuffer, .PaletteOffset + 2*i)
+            palette16(i) = IoUtil.ReadUInt16(RamBanks.ZFileBuffer, .PaletteOffset + 2 * i)
           Next
         Case 2
           For i As Integer = 0 To paletteSizeMinus1
-            palette16(i) = IoUtil.ReadUInt16(RamBanks.ZSceneBuffer, .PaletteOffset + 2*i)
+            palette16(i) = IoUtil.ReadUInt16(RamBanks.ZSceneBuffer, .PaletteOffset + 2 * i)
           Next
       End Select
 
@@ -1100,19 +1092,7 @@ enddisplaylist:
 #Region "Color Combiner"
 
   Private Sub SETCOMBINE(ByVal w0 As UInt32, ByVal w1 As UInt32)
-    If GLExtensions.GLFragProg Then
-      Dim ShaderCachePos As Integer = - 1
-      EnableCombiner = True
-      For i As Integer = 0 To FragShaderCache.Length - 1
-        If (w0 = FragShaderCache(i).MUXS0) And (w1 = FragShaderCache(i).MUXS1) Then
-          Gl.glBindProgramARB(Gl.GL_FRAGMENT_PROGRAM_ARB, FragShaderCache(i).FragShader)
-          Exit Sub
-        End If
-      Next
-      DecodeMUX(w0, w1, FragShaderCache, FragShaderCache.Length)
-    Else
-      EnableCombiner = False
-    End If
+    ShaderManager.SetCombine(w0, w1)
   End Sub
 
   Private Sub ForceBlending(ByVal c1 As UInteger, ByVal c2 As UInteger)
@@ -1127,306 +1107,33 @@ enddisplaylist:
   End Sub
 
   Private Sub SETFOGCOLOR(ByVal CMDParams() As Byte)
-    FogColor(0) = CMDParams(4)/255
-    FogColor(1) = CMDParams(5)/255
-    FogColor(2) = CMDParams(6)/255
-    FogColor(3) = CMDParams(7)/255
+    ShaderManager.SetFogColor(CMDParams(4) / 255,
+                              CMDParams(5) / 255,
+                              CMDParams(6) / 255,
+                              CMDParams(7) / 255)
   End Sub
 
   Private Sub ENVCOLOR(ByVal CMDParams() As Byte)
-    EnvironmentColor(0) = CMDParams(4)/255
-    EnvironmentColor(1) = CMDParams(5)/255
-    EnvironmentColor(2) = CMDParams(6)/255
-    EnvironmentColor(3) = CMDParams(7)/255
+    ShaderManager.SetEnvironmentColor(CMDParams(4) / 255,
+                                      CMDParams(5) / 255,
+                                      CMDParams(6) / 255,
+                                      CMDParams(7) / 255)
   End Sub
 
   Private Sub SETPRIMCOLOR(ByVal CMDParams() As Byte)
-    PrimColorM = CMDParams(2)/255
-    PrimColorLOD = CMDParams(3)/255
-    PrimColor(0) = CMDParams(4)/255
-    PrimColor(1) = CMDParams(5)/255
-    PrimColor(2) = CMDParams(6)/255
-    PrimColor(3) = CMDParams(7)/255
+    ShaderManager.SetPrimaryColor(CMDParams(2) / 255,
+                                  CMDParams(3) / 255,
+                                  CMDParams(4) / 255,
+                                  CMDParams(5) / 255,
+                                  CMDParams(6) / 255,
+                                  CMDParams(7) / 255)
   End Sub
 
   Private Sub SETBLENDCOLOR(ByVal CMDParams() As Byte)
-    BlendColor(0) = CMDParams(4)/255
-    BlendColor(1) = CMDParams(5)/255
-    BlendColor(2) = CMDParams(6)/255
-    BlendColor(3) = CMDParams(7)/255
-  End Sub
-
-  Public Sub PrecompileMUXS(ByVal MUXLIST1() As UInteger, ByVal MUXLIST2() As UInteger)
-    If MUXLIST1.Length = MUXLIST2.Length Then
-      For i As Integer = 0 To MUXLIST1.Length - 1
-        DecodeMUX(MUXLIST1(i), MUXLIST2(i), FragShaderCache, i)
-      Next
-    End If
-    PrecompiledCombiner = True
-  End Sub
-
-  Public Function UnpackMUX(ByVal MUXS0 As UInteger, ByVal MUXS1 As UInteger, ByRef CC_Colors As UnpackedCombiner)
-    CC_Colors = New UnpackedCombiner
-    With CC_Colors
-      ReDim .aA(1)
-      ReDim .aB(1)
-      ReDim .aC(1)
-      ReDim .aD(1)
-      ReDim .cA(1)
-      ReDim .cB(1)
-      ReDim .cC(1)
-      ReDim .cD(1)
-      .cA(0) = (MUXS0 >> 20) And &HF
-      .cB(0) = (MUXS1 >> 28) And &HF
-      .cC(0) = (MUXS0 >> 15) And &H1F
-      .cD(0) = (MUXS1 >> 15) And &H7
-
-      .aA(0) = (MUXS0 >> 12) And &H7
-      .aB(0) = (MUXS1 >> 12) And &H7
-      .aC(0) = (MUXS0 >> 9) And &H7
-      .aD(0) = (MUXS1 >> 9) And &H7
-
-      .cA(1) = (MUXS0 >> 5) And &HF
-      .cB(1) = (MUXS1 >> 24) And &HF
-      .cC(1) = (MUXS0 >> 0) And &H1F
-      .cD(1) = (MUXS1 >> 6) And &H7
-
-      .aA(1) = (MUXS1 >> 21) And &H7
-      .aB(1) = (MUXS1 >> 3) And &H7
-      .aC(1) = (MUXS1 >> 18) And &H7
-      .aD(1) = (MUXS1 >> 0) And &H7
-    End With
-  End Function
-
-  Public Sub DecodeMUX(ByVal MUXS0 As UInteger, ByVal MUXS1 As UInteger, ByRef Cache() As ShaderCache,
-                       ByVal CacheEntry As Integer)
-    UnpackMUX(MUXS0, MUXS1, CombArg)
-    ReDim Preserve Cache(CacheEntry)
-    Cache(CacheEntry).MUXS0 = MUXS0
-    Cache(CacheEntry).MUXS1 = MUXS1
-    CreateShader(2, Cache, CacheEntry)
-  End Sub
-
-  Private Sub CreateShaderGLSL(ByVal Cycles As Integer, ByVal Cache() As ShaderCache, ByVal CacheEntry As Integer)
-
-    Dim ShaderCode() As String = {"uniform vec4 Color;", "uniform vec4 Alpha;",
-                                  "void main(in float4 Color, in float4 Alpha)",
-                                  "{",
-                                  "gl_fragColor.rgb = ((Color.x + Color.y) * Color.z - Color.w)",
-                                  "gl_fragColor.a = ((alpha.x + alpha.y) * alpha.z - alpha.w)",
-                                  "}"}
-
-    Cache(CacheEntry).FragShader = Gl.glCreateShaderObjectARB(Gl.GL_FRAGMENT_SHADER)
-    Gl.glShaderSourceARB(Cache(CacheEntry).FragShader, ShaderCode.Length, ShaderCode, ShaderCode.Length)
-  End Sub
-
-  Private Sub CreateShader(ByVal Cycles As Integer, ByRef Cache() As ShaderCache, ByVal CacheEntry As Integer)
-    Dim ShaderLines As String = "!!ARBfp1.0" &
-                                "TEMP Texel0;" &
-                                "TEMP Texel1;" &
-                                "TEMP CCRegister_0;" &
-                                "TEMP CCRegister_1;" &
-                                "TEMP ACRegister_0;" &
-                                "TEMP ACRegister_1;" &
-                                "TEMP CCReg;" &
-                                "TEMP ACReg;" &
-                                "PARAM EnvColor = program.env[0];" &
-                                "PARAM PrimColor = program.env[1];" &
-                                "PARAM PrimColorL = program.env[2];" &
-                                "ATTRIB Shade = fragment.color.primary;" &
-                                "OUTPUT FinalColor = result.color;" &
-                                "TEX Texel0, fragment.texcoord[0], texture[0], 2D;" &
-                                "TEX Texel1, fragment.texcoord[1], texture[1], 2D;"
-    For i As Integer = 0 To Cycles - 1
-      'Final color = (ColorA [base] - ColorB) * ColorC + ColorD
-      With CombArg
-        Select Case .cA(i)
-          Case RDP.G_CCMUX_COMBINED '0
-            ShaderLines += "MOV CCRegister_0.rgb, CCReg;" & Environment.NewLine
-          Case RDP.G_CCMUX_TEXEL0 '1
-            ShaderLines += "MOV CCRegister_0.rgb, Texel0;" & Environment.NewLine
-          Case RDP.G_CCMUX_TEXEL1 '2
-            ShaderLines += "MOV CCRegister_0.rgb, Texel1;" & Environment.NewLine
-          Case RDP.G_CCMUX_PRIMITIVE '3
-            ShaderLines += "MOV CCRegister_0.rgb, PrimColor;" & Environment.NewLine
-          Case RDP.G_CCMUX_SHADE '4
-            ShaderLines += "MOV CCRegister_0.rgb, Shade;" & Environment.NewLine
-          Case RDP.G_CCMUX_ENVIRONMENT '5
-            ShaderLines += "MOV CCRegister_0.rgb, EnvColor;" & Environment.NewLine
-          Case RDP.G_CCMUX_1 '6
-            ShaderLines += "MOV CCRegister_0.rgb, {1.0,1.0,1.0,1.0};" & Environment.NewLine
-          Case RDP.G_CCMUX_NOISE '7
-            ShaderLines += "MOV CCRegister_0.rgb, {1.0,1.0,1.0,1.0};" & Environment.NewLine
-          Case Else ' > 7
-            ShaderLines += "MOV CCRegister_0.rgb, {0.0,0.0,0.0,0.0};" & Environment.NewLine
-        End Select
-        Select Case .cB(i)
-          Case RDP.G_CCMUX_COMBINED '0
-            ShaderLines += "MOV CCRegister_1.rgb, CCReg;" & Environment.NewLine
-          Case RDP.G_CCMUX_TEXEL0 '1
-            ShaderLines += "MOV CCRegister_1.rgb, Texel0;" & Environment.NewLine
-          Case RDP.G_CCMUX_TEXEL1 '2
-            ShaderLines += "MOV CCRegister_1.rgb, Texel1;" & Environment.NewLine
-          Case RDP.G_CCMUX_PRIMITIVE '3
-            ShaderLines += "MOV CCRegister_1.rgb, PrimColor;" & Environment.NewLine
-          Case RDP.G_CCMUX_SHADE '4
-            ShaderLines += "MOV CCRegister_1.rgb, Shade;" & Environment.NewLine
-          Case RDP.G_CCMUX_ENVIRONMENT '5
-            ShaderLines += "MOV CCRegister_1.rgb, EnvColor;" & Environment.NewLine
-          Case RDP.G_CCMUX_CENTER '6
-            ShaderLines += "MOV CCRegister_1.rgb, {1.0,1.0,1.0,1.0};" & Environment.NewLine
-          Case RDP.G_CCMUX_K4 '7
-            ShaderLines += "MOV CCRegister_1.rgb, {1.0,1.0,1.0,1.0};" & Environment.NewLine
-          Case Else ' > 7
-            ShaderLines += "MOV CCRegister_1.rgb, {0.0,0.0,0.0,0.0};" & Environment.NewLine
-        End Select
-        ShaderLines += "SUB CCRegister_0, CCRegister_0, CCRegister_1;" & Environment.NewLine
-        Select Case .cC(i)
-          Case RDP.G_CCMUX_COMBINED '0
-            ShaderLines += "MOV CCRegister_1.rgb, CCReg;" & Environment.NewLine
-          Case RDP.G_CCMUX_TEXEL0 '1
-            ShaderLines += "MOV CCRegister_1.rgb, Texel0;" & Environment.NewLine
-          Case RDP.G_CCMUX_TEXEL1 '2
-            ShaderLines += "MOV CCRegister_1.rgb, Texel1;" & Environment.NewLine
-          Case RDP.G_CCMUX_PRIMITIVE '3
-            ShaderLines += "MOV CCRegister_1.rgb, PrimColor;" & Environment.NewLine
-          Case RDP.G_CCMUX_SHADE '4
-            ShaderLines += "MOV CCRegister_1.rgb, Shade;" & Environment.NewLine
-          Case RDP.G_CCMUX_ENVIRONMENT '5
-            ShaderLines += "MOV CCRegister_1.rgb, EnvColor;" & Environment.NewLine
-          Case RDP.G_CCMUX_SCALE '6
-            ShaderLines += "MOV CCRegister_1.rgb, {1.0,1.0,1.0,1.0};" & Environment.NewLine
-          Case RDP.G_CCMUX_COMBINED_ALPHA '7
-            ShaderLines += "MOV CCRegister_1.rgb, CCReg.a;" & Environment.NewLine
-          Case RDP.G_CCMUX_TEXEL0_ALPHA '8
-            ShaderLines += "MOV CCRegister_1.rgb, Texel0.a;" & Environment.NewLine
-          Case RDP.G_CCMUX_TEXEL1_ALPHA '9
-            ShaderLines += "MOV CCRegister_1.rgb, Texel1.a;" & Environment.NewLine
-          Case RDP.G_CCMUX_PRIMITIVE_ALPHA '10
-            ShaderLines += "MOV CCRegister_1.rgb, PrimColor.a;" & Environment.NewLine
-          Case RDP.G_CCMUX_SHADE_ALPHA '11
-            ShaderLines += "MOV CCRegister_1.rgb, Shade.a;" & Environment.NewLine
-          Case RDP.G_CCMUX_ENV_ALPHA '12
-            ShaderLines += "MOV CCRegister_1.rgb, EnvColor.a;" & Environment.NewLine
-          Case RDP.G_CCMUX_PRIM_LOD_FRAC '14
-            ShaderLines += "MOV CCRegister_1.rgb, PrimColorL;" & Environment.NewLine
-          Case RDP.G_CCMUX_K5, RDP.G_CCMUX_SCALE ' 15, 6
-            ShaderLines += "MOV CCRegister_1.rgb, {1.0,1.0,1.0,1.0};" & Environment.NewLine
-          Case Else ' > 15 
-            ShaderLines += "MOV CCRegister_1.rgb, {0.0,0.0,0.0,0.0};" & Environment.NewLine
-        End Select
-        ShaderLines += "MUL CCRegister_0, CCRegister_0, CCRegister_1;" & Environment.NewLine
-        Select Case .cD(i)
-          Case RDP.G_CCMUX_COMBINED '0
-            ShaderLines += "MOV CCRegister_1.rgb, CCReg;" & Environment.NewLine
-          Case RDP.G_CCMUX_TEXEL0 '1
-            ShaderLines += "MOV CCRegister_1.rgb, Texel0;" & Environment.NewLine
-          Case RDP.G_CCMUX_TEXEL1 '2
-            ShaderLines += "MOV CCRegister_1.rgb, Texel1;" & Environment.NewLine
-          Case RDP.G_CCMUX_PRIMITIVE '3
-            ShaderLines += "MOV CCRegister_1.rgb, PrimColor;" & Environment.NewLine
-          Case RDP.G_CCMUX_SHADE '4
-            ShaderLines += "MOV CCRegister_1.rgb, Shade;" & Environment.NewLine
-          Case RDP.G_CCMUX_ENVIRONMENT '5
-            ShaderLines += "MOV CCRegister_1.rgb, EnvColor;" & Environment.NewLine
-          Case RDP.G_CCMUX_1 '6
-            ShaderLines += "MOV CCRegister_1.rgb, {1.0,1.0,1.0,1.0};" & Environment.NewLine
-          Case Else ' > 6
-            ShaderLines += "MOV CCRegister_1.rgb, {0.0,0.0,0.0,0.0};" & Environment.NewLine
-        End Select
-        ShaderLines += "ADD CCRegister_0, CCRegister_0, CCRegister_1;" & Environment.NewLine & Environment.NewLine
-
-        Select Case .aA(i)
-          Case RDP.G_ACMUX_COMBINED
-            ShaderLines += "MOV ACRegister_0.a, ACReg;" & Environment.NewLine
-          Case RDP.G_ACMUX_TEXEL0
-            ShaderLines += "MOV ACRegister_0.a, Texel0.a;" & Environment.NewLine
-          Case RDP.G_ACMUX_TEXEL1
-            ShaderLines += "MOV ACRegister_0.a, Texel1.a;" & Environment.NewLine
-          Case RDP.G_ACMUX_PRIMITIVE
-            ShaderLines += "MOV ACRegister_0.a, PrimColor.a;" & Environment.NewLine
-          Case RDP.G_ACMUX_SHADE
-            ShaderLines += "MOV ACRegister_0.a, Shade.a;" & Environment.NewLine
-          Case RDP.G_ACMUX_ENVIRONMENT
-            ShaderLines += "MOV ACRegister_0.a, EnvColor.a;" & Environment.NewLine
-          Case RDP.G_ACMUX_1
-            ShaderLines += "MOV ACRegister_0.a, {1.0,1.0,1.0,1.0};" & Environment.NewLine
-          Case Else
-            ShaderLines += "MOV ACRegister_0.a, {0.0,0.0,0.0,0.0};" & Environment.NewLine
-        End Select
-        Select Case .aB(i)
-          Case RDP.G_ACMUX_COMBINED
-            ShaderLines += "MOV ACRegister_1.a, ACReg;" & Environment.NewLine
-          Case RDP.G_ACMUX_TEXEL0
-            ShaderLines += "MOV ACRegister_1.a, Texel0.a;" & Environment.NewLine
-          Case RDP.G_ACMUX_TEXEL1
-            ShaderLines += "MOV ACRegister_1.a, Texel1.a;" & Environment.NewLine
-          Case RDP.G_ACMUX_PRIMITIVE
-            ShaderLines += "MOV ACRegister_1.a, PrimColor.a;" & Environment.NewLine
-          Case RDP.G_ACMUX_SHADE
-            ShaderLines += "MOV ACRegister_1.a, Shade.a;" & Environment.NewLine
-          Case RDP.G_ACMUX_ENVIRONMENT
-            ShaderLines += "MOV ACRegister_1.a, EnvColor.a;" & Environment.NewLine
-          Case RDP.G_ACMUX_1
-            ShaderLines += "MOV ACRegister_1.a, {1.0,1.0,1.0,1.0};" & Environment.NewLine
-          Case Else
-            ShaderLines += "MOV ACRegister_1.a, {0.0,0.0,0.0,0.0};" & Environment.NewLine
-        End Select
-        ShaderLines += "SUB ACRegister_0.a, ACRegister_0.a, ACRegister_1.a;" & Environment.NewLine
-
-        Select Case .aC(i)
-          Case RDP.G_ACMUX_LOD_FRACTION
-            ShaderLines += "MOV ACRegister_1.a, {1.0,1.0,1.0,1.0};" & Environment.NewLine
-          Case RDP.G_ACMUX_TEXEL0
-            ShaderLines += "MOV ACRegister_1.a, Texel0.a;" & Environment.NewLine
-          Case RDP.G_ACMUX_TEXEL1
-            ShaderLines += "MOV ACRegister_1.a, Texel1.a;" & Environment.NewLine
-          Case RDP.G_ACMUX_PRIMITIVE
-            ShaderLines += "MOV ACRegister_1.a, PrimColor.a;" & Environment.NewLine
-          Case RDP.G_ACMUX_SHADE
-            ShaderLines += "MOV ACRegister_1.a, Shade.a;" & Environment.NewLine
-          Case RDP.G_ACMUX_ENVIRONMENT
-            ShaderLines += "MOV ACRegister_1.a, EnvColor.a;" & Environment.NewLine
-          Case RDP.G_ACMUX_PRIM_LOD_FRAC
-            ShaderLines += "MOV ACRegister_1.a, PrimColorL.a;" & Environment.NewLine
-          Case Else
-            ShaderLines += "MOV ACRegister_1.a, {0.0,0.0,0.0,0.0};" & Environment.NewLine
-        End Select
-        ShaderLines += "MUL ACRegister_0.a, ACRegister_0.a, ACRegister_1.a;" & Environment.NewLine
-
-        Select Case .aD(i)
-          Case RDP.G_ACMUX_COMBINED
-            ShaderLines += "MOV ACRegister_1.a, ACReg.a;" & Environment.NewLine
-          Case RDP.G_ACMUX_TEXEL0
-            ShaderLines += "MOV ACRegister_1.a, Texel0.a;" & Environment.NewLine
-          Case RDP.G_ACMUX_TEXEL1
-            ShaderLines += "MOV ACRegister_1.a, Texel1.a;" & Environment.NewLine
-          Case RDP.G_ACMUX_PRIMITIVE
-            ShaderLines += "MOV ACRegister_1.a, PrimColor.a;" & Environment.NewLine
-          Case RDP.G_ACMUX_SHADE
-            ShaderLines += "MOV ACRegister_1.a, Shade.a;" & Environment.NewLine
-          Case RDP.G_ACMUX_ENVIRONMENT
-            ShaderLines += "MOV ACRegister_1.a, EnvColor.a;" & Environment.NewLine
-          Case RDP.G_ACMUX_1
-            ShaderLines += "MOV ACRegister_1.a, {1.0,1.0,1.0,1.0};" & Environment.NewLine
-          Case Else
-            ShaderLines += "MOV ACRegister_1.a, {0.0,0.0,0.0,0.0};" & Environment.NewLine
-        End Select
-      End With
-      ShaderLines += "ADD ACRegister_0, ACRegister_0, ACRegister_1;" & Environment.NewLine & Environment.NewLine
-
-      ShaderLines += "MOV CCReg.rgb, CCRegister_0;" & Environment.NewLine
-      ShaderLines += "MOV ACReg.a, ACRegister_0;" & Environment.NewLine
-    Next
-
-    ShaderLines += "MOV CCReg.a, ACReg.a;"
-    ShaderLines += "MOV FinalColor, CCReg;" & Environment.NewLine
-    ShaderLines += "END" & Environment.NewLine
-
-    Gl.glGenProgramsARB(1, Cache(CacheEntry).FragShader)
-    Gl.glBindProgramARB(Gl.GL_FRAGMENT_PROGRAM_ARB, Cache(CacheEntry).FragShader)
-    Gl.glProgramStringARB(Gl.GL_FRAGMENT_PROGRAM_ARB, Gl.GL_PROGRAM_FORMAT_ASCII_ARB, ShaderLines.Length,
-                          System.Text.Encoding.ASCII.GetBytes(ShaderLines))
+    ShaderManager.SetBlendColor(CMDParams(4) / 255,
+                                CMDParams(5) / 255,
+                                CMDParams(6) / 255,
+                                CMDParams(7) / 255)
   End Sub
 
 #End Region
@@ -1461,28 +1168,7 @@ enddisplaylist:
       SelectedTileDescriptors(i) = i
     Next
 
-    For i As Integer = 0 To 2
-      PrimColor(i) = 1
-      EnvironmentColor(i) = 1
-    Next
-
-    PrimColor(3) = 0.5
-    EnvironmentColor(3) = 0.5
-
-
-    Gl.glDisable(Gl.GL_FRAGMENT_PROGRAM_ARB)
-    Gl.glDisable(Gl.GL_CULL_FACE)
-    Gl.glDisable(Gl.GL_TEXTURE_2D)
-    Gl.glDisable(Gl.GL_BLEND)
-    Gl.glDisable(Gl.GL_ALPHA_TEST)
-    Gl.glBlendFunc(Gl.GL_ONE, Gl.GL_ZERO)
-    Gl.glAlphaFunc(Gl.GL_GREATER, 0.0)
-
-    Gl.glDisable(Gl.GL_LIGHTING)
-    Gl.glDisable(Gl.GL_NORMALIZE)
-
-    EnableCombiner = False
-    EnableLighting = True
+    ShaderManager.Reset()
 
     With VertexCache
       ReDim .x(VERTEX_CACHE_MAX)
@@ -1495,10 +1181,6 @@ enddisplaylist:
       ReDim .b(VERTEX_CACHE_MAX)
       ReDim .a(VERTEX_CACHE_MAX)
     End With
-
-    If Not PrecompiledCombiner Then
-      PrecompileMUXS(RDP_Defs.G_COMBINERMUX0, RDP_Defs.G_COMBINERMUX1)
-    End If
   End Sub
 
 #End Region
