@@ -99,12 +99,10 @@ namespace UoT {
     private Matrix<double> current_;
     private Stack<Matrix<double>> stack_ = new Stack<Matrix<double>>();
 
-    public SoftwareModelViewMatrixTransformer() {
-      this.Push();
-    }
+    public SoftwareModelViewMatrixTransformer() => this.Push();
 
     public void Project(ref double x, ref double y, ref double z)
-      => throw new NotImplementedException();
+      => GlMatrixUtil.Project(this.current_, ref x, ref y, ref z);
 
     public IModelViewMatrixTransformer Push() {
       Matrix<double> newMatrix;
@@ -242,6 +240,25 @@ namespace UoT {
           m[r, c] = GlMatrixUtil.glBuffer_[4 * c + r];
         }
       }
+    }
+
+    public static void Project(
+        Matrix<double> m,
+        ref double x,
+        ref double y,
+        ref double z) {
+      var vector = Vector<double>.Build.Dense(4);
+      vector[0] = x;
+      vector[1] = y;
+      vector[2] = z;
+      vector[3] = 1;
+
+      var result = m.Multiply(vector);
+
+      var w = result[3];
+      x = result[0] / w;
+      y = result[1] / w;
+      z = result[2] / w;
     }
   }
 }
