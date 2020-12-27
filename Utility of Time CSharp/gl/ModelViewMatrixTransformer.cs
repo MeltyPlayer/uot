@@ -7,6 +7,8 @@ using Tao.OpenGl;
 
 namespace UoT {
   public interface IModelViewMatrixTransformer {
+    void Project(ref double x, ref double y, ref double z);
+
     IModelViewMatrixTransformer Push();
     IModelViewMatrixTransformer Pop();
 
@@ -26,6 +28,9 @@ namespace UoT {
   public static class ModelViewMatrixTransformer {
     private static IModelViewMatrixTransformer INSTANCE =
         new SoftwareModelViewMatrixTransformer();
+
+    public static void Project(ref double x, ref double y, ref double z)
+      => ModelViewMatrixTransformer.INSTANCE.Project(ref x, ref y, ref z);
 
     public static IModelViewMatrixTransformer Push()
       => ModelViewMatrixTransformer.INSTANCE.Push();
@@ -53,6 +58,9 @@ namespace UoT {
 
 
   public class GlModelViewMatrixTransformer : IModelViewMatrixTransformer {
+    public void Project(ref double x, ref double y, ref double z)
+      => throw new NotImplementedException();
+
     public IModelViewMatrixTransformer Push() {
       Gl.glPushMatrix();
       return this;
@@ -94,6 +102,9 @@ namespace UoT {
     public SoftwareModelViewMatrixTransformer() {
       this.Push();
     }
+
+    public void Project(ref double x, ref double y, ref double z)
+      => throw new NotImplementedException();
 
     public IModelViewMatrixTransformer Push() {
       Matrix<double> newMatrix;
