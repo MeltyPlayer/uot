@@ -5067,10 +5067,11 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
           DlManager.HasLimbs = False
         Case FileTypes.ACTORMODEL
           animationbank.SelectedIndex = 0
-          LimbEntries = AnimParser.GetHierarchies(RamBanks.ZFileBuffer, 6)
+          ' TODO: Determine if model is link to auto-select animations.
+          LimbEntries = AnimParser.GetHierarchies(RamBanks.ZFileBuffer, 6, False)
           If LimbEntries IsNot Nothing Then
             DlManager.HasLimbs = True
-            AnimationEntries = AnimParser.GetCommonAnimations(RamBanks.ZFileBuffer, LimbEntries.Length - 1, 6)
+            AnimationEntries = AnimParser.GetCommonAnimations(RamBanks.ZFileBuffer, LimbEntries.Length - 1)
             If AnimationEntries IsNot Nothing Then
               AnimationList.SelectedIndex = 0
             End If
@@ -7898,7 +7899,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
         RamBanks.CommonBankUse = commonBankUse
 
         If RamBanks.CommonBankUse.AnimBank = UseBank.Inline Then
-          AnimationEntries = AnimParser.GetCommonAnimations(RamBanks.ZFileBuffer, LimbEntries.Length, 6)
+          AnimationEntries = AnimParser.GetCommonAnimations(RamBanks.ZFileBuffer, LimbEntries.Length)
         Else
           If animationbank.SelectedItem = "link_animetion" Then
             Dim animationData() As Byte = RamBanks.CommonBanks.Anims.Banks(RamBanks.CommonBankUse.AnimBank).Data
@@ -7907,7 +7908,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
           Else
             ' Normal animations.
             AnimationEntries = AnimParser.GetCommonAnimations(RamBanks.CommonBanks.Anims.Banks(RamBanks.CommonBankUse.AnimBank).Data,
-                                                      LimbEntries.Length, 6)
+                                                      LimbEntries.Length)
           End If
         End If
 

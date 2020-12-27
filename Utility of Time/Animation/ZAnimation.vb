@@ -1,74 +1,143 @@
 ﻿Imports System.Numerics
 
 Public Class ZAnimation
-  Public Function GetHierarchies(ByVal Data() As Byte, ByVal Bank As Byte) As Limb()
-    Try
-      Dim tOffset As Integer = 0
-      Dim tBank As Byte = 0
-      Dim tCnt As Integer = 0
-      Dim j As Integer = 0
-      For i As Integer = 0 To Data.Length - 8 Step 4
-        If (Data(i) = Bank) And Data(i + 4) > 0 Then
-          tBank = Data(i)
-          tCnt = Data(i + 4)
-          tOffset = IoUtil.ReadUInt24(Data, i + 1)
-          If tOffset < Data.Length - 16 Then
-            For j = tOffset To (tOffset + (tCnt * 4) - 1) Step 4
-              If Data(j) <> tBank Then
-                Exit For
-              End If
-            Next
-            If i = j Then
-              Dim tmpHierarchy(tCnt - 1) As Limb
-              Dim tmpLimbOff As Integer = 0
-              For k As Integer = 0 To tCnt - 1
-                tmpHierarchy(k) = New Limb
-                tmpLimbOff = IoUtil.ReadUInt24(Data, tOffset + 1)
-                With tmpHierarchy(k)
-                  .x = IoUtil.ReadUInt16(Data, tmpLimbOff + 0)
-                  .y = IoUtil.ReadUInt16(Data, tmpLimbOff + 2)
-                  .z = IoUtil.ReadUInt16(Data, tmpLimbOff + 4)
-                  .firstChild = CSByte(Data(tmpLimbOff + 6))
-                  .nextSibling = CSByte(Data(tmpLimbOff + 7))
+  Public Function GetHierarchies(Data() As Byte, Bank As Byte, isLink As Boolean) As Limb()
+    Dim limbIndexAddress As UInteger
+    Dim limbIndexBank As UInteger
+    Dim limbIndexOffset As UInteger
 
-                  If Data(tmpLimbOff + 8) = Bank Then
-                    .DisplayList = IoUtil.ReadUInt24(Data, tmpLimbOff + 9)
-                    ReDim Preserve GlobalVarsCs.N64DList(GlobalVarsCs.N64DList.Length)
-                    ReadInDL(Data, GlobalVarsCs.N64DList, .DisplayList, GlobalVarsCs.N64DList.Length - 1)
-                  Else
-                    .DisplayList = Nothing
-                  End If
-                  'If Data(tmpLimbOff + 12) = Bank Then
-                  '    .DisplayListLow = ReadUInt24(Data, tmpLimbOff + 13)
-                  '    ReDim Preserve N64DList(N64DList.Length)
-                  '    ReadInDL(Data, N64DList, .DisplayListLow, N64DList.Length - 1)
-                  'Else
-                  .DisplayListLow = Nothing
-                  'End If
-                  .r = Rand.NextDouble
-                  .g = Rand.NextDouble
-                  .b = Rand.NextDouble
-                End With
-                tOffset += 4
-              Next
-              Return tmpHierarchy
+    Dim j As Integer = 0
+    For i As Integer = 0 To Data.Length - 1 - 8 Step 4
+      limbIndexAddress = IoUtil.ReadUInt32(Data, i)
+      IoUtil.SplitAddress(limbIndexAddress, limbIndexBank, limbIndexOffset)
+
+      Dim limbCount As UInteger = Data(i + 4)
+      Dim displayListCount As UInteger = Data(i + 8)
+
+      Dim limbAddress As UInteger
+      Dim limbBank As UInteger
+      Dim limbOffset As UInteger
+      Dim limbBankBuffer() As Byte
+
+      ' Link has an extra set of values for each limb that define LOD model
+      ' display lists.
+      Dim limbSize As UInteger
+      If isLink Then
+        limbSize = 16
+      Else
+        limbSize = 12
+      End If
+
+      If RamBanks.IsValidBank(limbIndexBank) And limbCount > 0 Then
+        Dim limbIndexBankBuffer() As Byte = RamBanks.GetBankByIndex(limbIndexBank)
+
+        If limbIndexOffset + 4 * limbCount < limbIndexBankBuffer.Length Then
+          Dim firstChild As Byte
+          Dim nextSibling As Byte
+
+          Dim isValid As Boolean = True
+          Dim somethingVisible As Boolean = False
+
+          For j = 0 To limbCount - 1
+            limbAddress = IoUtil.ReadUInt32(limbIndexBankBuffer, limbIndexOffset + j * 4)
+            IoUtil.SplitAddress(limbAddress, limbBank, limbOffset)
+
+            If Not RamBanks.IsValidBank(limbBank) Then
+              isValid = False
+              GoTo badLimbIndexOffset
             End If
+
+            limbBankBuffer = RamBanks.GetBankByIndex(limbBank)
+
+            If limbOffset + limbSize >= limbBankBuffer.Length Then
+              isValid = False
+              GoTo badLimbIndexOffset
+            End If
+
+            firstChild = limbBankBuffer(limbOffset + 6)
+            nextSibling = limbBankBuffer(limbOffset + 7)
+
+            If firstChild = j Or nextSibling = j Then
+              isValid = False
+              GoTo badLimbIndexOffset
+            End If
+
+            Dim displayListAddress As UInteger = IoUtil.ReadUInt32(limbBankBuffer, limbOffset + 8)
+            Dim displayListBank As UInteger
+            Dim displayListOffset As UInteger
+            IoUtil.SplitAddress(displayListAddress, displayListBank, displayListOffset)
+
+            If displayListBank <> 0 Then
+              somethingVisible = True
+            End If
+
+            If displayListBank <> 0 And Not RamBanks.IsValidBank(displayListBank) Then
+              isValid = False
+              GoTo badLimbIndexOffset
+            End If
+          Next
+
+badLimbIndexOffset:
+
+          If isValid And somethingVisible Then
+            Dim tmpHierarchy(limbCount - 1) As Limb
+            For k As Integer = 0 To limbCount - 1
+              limbAddress = IoUtil.ReadUInt32(limbIndexBankBuffer, limbIndexOffset + 4 * k)
+              IoUtil.SplitAddress(limbAddress, limbBank, limbOffset)
+              limbBankBuffer = RamBanks.GetBankByIndex(limbBank)
+
+              tmpHierarchy(k) = New Limb
+              With tmpHierarchy(k)
+                .x = IoUtil.ReadUInt16(limbBankBuffer, limbOffset + 0)
+                .y = IoUtil.ReadUInt16(limbBankBuffer, limbOffset + 2)
+                .z = IoUtil.ReadUInt16(limbBankBuffer, limbOffset + 4)
+                .firstChild = CSByte(limbBankBuffer(limbOffset + 6))
+                .nextSibling = CSByte(limbBankBuffer(limbOffset + 7))
+
+                Dim displayListAddress As UInteger = IoUtil.ReadUInt32(limbBankBuffer, limbOffset + 8)
+                Dim displayListBank As UInteger
+                Dim displayListOffset As UInteger
+                IoUtil.SplitAddress(displayListAddress, displayListBank, displayListOffset)
+
+                If displayListBank <> 0 Then
+                  Dim displayListBankBuffer() As Byte = RamBanks.GetBankByIndex(displayListBank)
+                  .DisplayList = displayListOffset
+                  ReDim Preserve GlobalVarsCs.N64DList(GlobalVarsCs.N64DList.Length)
+                  ReadInDL(displayListBankBuffer, GlobalVarsCs.N64DList, .DisplayList, GlobalVarsCs.N64DList.Length - 1)
+                Else
+                  .DisplayList = Nothing
+                End If
+
+                ' Far model display list (i.e. LOD model). Only used for Link.
+                'If Data(tmpLimbOff + 12) = Bank Then
+                '    .DisplayListLow = ReadUInt24(Data, tmpLimbOff + 13)
+                '    ReDim Preserve N64DList(N64DList.Length)
+                '    ReadInDL(Data, N64DList, .DisplayListLow, N64DList.Length - 1)
+                'Else
+                .DisplayListLow = Nothing
+
+                'End If
+                .r = Rand.NextDouble
+                .g = Rand.NextDouble
+                .b = Rand.NextDouble
+              End With
+            Next
+
+
+            Return tmpHierarchy
           End If
         End If
-      Next
-      Return Nothing
-    Catch err As Exception
-      Return Nothing
-    End Try
+      End If
+    Next
+    Return Nothing
   End Function
 
   ''' <summary>
   '''   Parses a set of animations according to the spec at:
   '''   https://wiki.cloudmodding.com/oot/Animation_Format#Normal_Animations
   ''' </summary>
-  Public Function GetCommonAnimations(ByVal Data() As Byte, ByVal LimbCount As Integer, ByVal Bank As Byte) As IList(Of IAnimation)
-    ' TODO: Figure out why some animations are still failing to load. Are we handling rotation indices correct?
-
+  Public Function GetCommonAnimations(ByVal Data() As Byte, ByVal LimbCount As Integer) _
+    As IList(Of IAnimation)
     Dim animCnt As Integer = -1
     Dim tAnimation(-1) As NormalAnimation
     MainWin.AnimationList.Items.Clear()
@@ -76,7 +145,7 @@ Public Class ZAnimation
     ' Guesstimating the index by looking for an spot where the header's angle
     ' address and track address have the same bank as the param at the top.
     ' TODO: Is this robust enough?
-    For i As Integer = 16 To Data.Length - 8 Step 4
+    For i As Integer = 16 To Data.Length - 12 - 1 Step 4
       Dim attemptOffset = i - 4
 
       Dim frameCount As UShort = IoUtil.ReadUInt16(Data, attemptOffset)
@@ -91,21 +160,26 @@ Public Class ZAnimation
       Dim rotationIndicesOffset As UInt32
       IoUtil.SplitAddress(rotationIndicesAddress, rotationIndicesBank, rotationIndicesOffset)
 
-      Dim sameRotationValuesBank As Boolean = rotationValuesBank = Bank
-      Dim sameRotationIndicesBank As Boolean = rotationIndicesBank = Bank
-      Dim validAttemptOffset As Boolean = sameRotationValuesBank And sameRotationIndicesBank
+      Dim limit As UShort = IoUtil.ReadUInt16(Data, attemptOffset + 12)
 
-      Dim validRotationValuesOffset As Boolean = rotationValuesOffset < Data.Length
-      Dim validRotationIndicesOffset As Boolean = rotationIndicesOffset < Data.Length
-      Dim validRotationOffsets As Boolean = validRotationValuesOffset And validRotationIndicesOffset
+      Dim validAttemptOffset As Boolean = RamBanks.IsValidBank(rotationValuesBank) And RamBanks.IsValidBank(rotationIndicesBank)
 
+      ' Offsets should be within bounds of the bank.
+      Dim validRotationOffsets As Boolean = False
+      If validAttemptOffset Then
+        Dim validRotationValuesOffset As Boolean = rotationValuesOffset < RamBanks.GetBankByIndex(rotationValuesBank).Length
+        Dim validRotationIndicesOffset As Boolean = rotationIndicesOffset < RamBanks.GetBankByIndex(rotationIndicesBank).Length
+        validRotationOffsets = validRotationValuesOffset And validRotationIndicesOffset
+      End If
+
+      ' Angle count should be greater than 0.
       Dim angleCount As UInteger = (rotationIndicesOffset - rotationValuesOffset) \ 2
-      Dim validAngleCount As Boolean = rotationIndicesOffset > rotationValuesOffset And angleCount > 0
+      Dim validAngleCount As Boolean = rotationIndicesOffset > rotationValuesOffset And angleCount > 0 And limit < angleCount
 
       If validAttemptOffset And validRotationOffsets And validAngleCount Then
-        Dim limit As UShort = IoUtil.ReadUInt16(Data, attemptOffset + 12)
 
-        Dim hasZeroes As Boolean = IoUtil.ReadUInt16(Data, attemptOffset + 2) = 0 And IoUtil.ReadUInt16(Data, attemptOffset + 14) = 0
+        Dim hasZeroes As Boolean = IoUtil.ReadUInt16(Data, attemptOffset + 2) = 0 And
+                                   IoUtil.ReadUInt16(Data, attemptOffset + 14) = 0
         ' TODO: Assumes 0 is one of the angles, is this valid?
         'Dim validAngles As Boolean = IoUtil.ReadUInt16(Data, rotationValuesOffset) = 0 And IoUtil.ReadUInt16(Data, rotationValuesOffset + 2) > 0
 
@@ -125,20 +199,22 @@ Public Class ZAnimation
 
               MainWin.AnimationList.Items.Add("0x" & Hex(i))
 
+              Dim rotationValuesBuffer() As Byte = RamBanks.GetBankByIndex(rotationValuesBank)
               For i1 As Integer = 0 To .AngleCount - 1
-                .Angles(i1) = IoUtil.ReadUInt16(Data, rotationValuesOffset)
+                .Angles(i1) = IoUtil.ReadUInt16(rotationValuesBuffer, rotationValuesOffset)
                 rotationValuesOffset += 2
               Next
 
-              .Position.X = IoUtil.ReadInt16(Data, .TrackOffset + 0)
-              .Position.Y = IoUtil.ReadInt16(Data, .TrackOffset + 2)
-              .Position.Z = IoUtil.ReadInt16(Data, .TrackOffset + 4)
+              Dim rotationIndicesBuffer() As Byte = RamBanks.GetBankByIndex(rotationIndicesBank)
+              .Position.X = IoUtil.ReadInt16(rotationIndicesBuffer, .TrackOffset + 0)
+              .Position.Y = IoUtil.ReadInt16(rotationIndicesBuffer, .TrackOffset + 2)
+              .Position.Z = IoUtil.ReadInt16(rotationIndicesBuffer, .TrackOffset + 4)
 
               Dim tTrackOffset As Integer = .TrackOffset + 6
 
               Dim tTrack As UInteger = 0
               For i1 As Integer = 0 To trackCount - 1
-                tTrack = IoUtil.ReadUInt16(Data, tTrackOffset)
+                tTrack = IoUtil.ReadUInt16(rotationIndicesBuffer, tTrackOffset)
 
                 If tTrack < limit Then
                   ' Constant (single value)
@@ -150,7 +226,11 @@ Public Class ZAnimation
                   .Tracks(i1).Type = 1
                   ReDim .Tracks(i1).Frames(.FrameCount - 1)
                   For i2 As Integer = 0 To .FrameCount - 1
-                    .Tracks(i1).Frames(i2) = .Angles(tTrack + i2)
+                    Try
+                      .Tracks(i1).Frames(i2) = .Angles(tTrack + i2)
+                    Catch
+                      Return Nothing
+                    End Try
                   Next
                 End If
 
@@ -177,13 +257,14 @@ Public Class ZAnimation
   '''   Parses a set of animations according to the spec at:
   '''   https://wiki.cloudmodding.com/oot/Animation_Format#C_code
   ''' </summary>
-  Public Function GetLinkAnimations(HeaderData() As Byte, ByVal LimbCount As Integer, animationData() As Byte) As IList(Of IAnimation)
-    Dim animCnt As Integer = -1
-    Dim animations(-1) As LinkAnimetion
+  Public Function GetLinkAnimations(HeaderData() As Byte, ByVal LimbCount As Integer, animationData() As Byte) _
+    As IList(Of IAnimation)
+    Dim animCnt As Integer = - 1
+    Dim animations(- 1) As LinkAnimetion
     MainWin.AnimationList.Items.Clear()
 
-    Dim trackCount As UInteger = LimbCount * 3
-    Dim frameSize = 2 * (3 + trackCount) + 2
+    Dim trackCount As UInteger = LimbCount*3
+    Dim frameSize = 2*(3 + trackCount) + 2
 
     For i As Integer = &H2310 To &H34F8 Step 4
       Dim frameCount As UShort = IoUtil.ReadUInt16(HeaderData, i)
@@ -197,7 +278,7 @@ Public Class ZAnimation
       Dim hasZeroes As Boolean = IoUtil.ReadUInt16(HeaderData, i + 2) = 0
 
       ' TODO: Is this really needed?
-      Dim validOffset As Boolean = animationOffset + frameSize * frameCount < animationData.Length
+      Dim validOffset As Boolean = animationOffset + frameSize*frameCount < animationData.Length
 
       If validAnimationBank And hasZeroes And validOffset Then
         animCnt += 1
@@ -215,7 +296,7 @@ Public Class ZAnimation
             Next
 
             For f As Integer = 0 To frameCount - 1
-              Dim frameOffset As UInteger = animationOffset + f * frameSize
+              Dim frameOffset As UInteger = animationOffset + f*frameSize
 
               Dim position As Vec3s
               .Positions(f).X = IoUtil.ReadUInt16(animationData, frameOffset + 0)
@@ -223,7 +304,7 @@ Public Class ZAnimation
               .Positions(f).Z = IoUtil.ReadUInt16(animationData, frameOffset + 4)
 
               For t As Integer = 0 To trackCount - 1
-                Dim trackOffset As UInteger = frameOffset + 2 * (3 + t)
+                Dim trackOffset As UInteger = frameOffset + 2*(3 + t)
 
                 .Tracks(t).Frames(f) = IoUtil.ReadUInt16(animationData, trackOffset)
               Next
@@ -246,10 +327,11 @@ Public Class ZAnimation
     Return Nothing
   End Function
 
-  Public Function GetTrackRot(animation As IAnimation, ByVal Counter As FrameAdvancer, ByVal Track As Integer) As Quaternion
+  Public Function GetTrackRot(animation As IAnimation, ByVal Counter As FrameAdvancer, ByVal Track As Integer) _
+    As Quaternion
     'thanks to euler for some of this logic
 
-    Dim tTrack As Integer = Track * 3
+    Dim tTrack As Integer = Track*3
 
     ' TODO: This doesn't look like it should be needed.
     If tTrack > animation.TrackCount - 1 Then
@@ -273,23 +355,24 @@ Public Class ZAnimation
     GetFrameAndNext(yTrack, frame, yFrame, nextYFrame)
     GetFrameAndNext(zTrack, frame, zFrame, nextZFrame)
 
-    Dim r2d = Math.PI / 180
-    Dim x1 As Double = AngleToRad(xFrames(xFrame)) * r2d
-    Dim y1 As Double = AngleToRad(yFrames(yFrame)) * r2d
-    Dim z1 As Double = AngleToRad(zFrames(zFrame)) * r2d
+    Dim r2d = Math.PI/180
+    Dim x1 As Double = AngleToRad(xFrames(xFrame))*r2d
+    Dim y1 As Double = AngleToRad(yFrames(yFrame))*r2d
+    Dim z1 As Double = AngleToRad(zFrames(zFrame))*r2d
 
     Dim q1 As Quaternion = GetQuaternion(x1, y1, z1)
 
-    Dim x2 As Double = AngleToRad(xFrames(nextXFrame)) * r2d
-    Dim y2 As Double = AngleToRad(yFrames(nextYFrame)) * r2d
-    Dim z2 As Double = AngleToRad(zFrames(nextZFrame)) * r2d
+    Dim x2 As Double = AngleToRad(xFrames(nextXFrame))*r2d
+    Dim y2 As Double = AngleToRad(yFrames(nextYFrame))*r2d
+    Dim z2 As Double = AngleToRad(zFrames(nextZFrame))*r2d
 
     Dim q2 As Quaternion = GetQuaternion(x2, y2, z2)
 
     If Quaternion.Dot(q1, q2) < 0 Then
-      q2 = -q2
+      q2 = - q2
     End If
 
+    ' TODO: Zelda's head is upside-down, is this caused here?
     Dim interp As Quaternion = Quaternion.Slerp(q1, q2, Counter.FrameDelta)
     Return Quaternion.Normalize(interp)
   End Function
@@ -301,10 +384,11 @@ Public Class ZAnimation
     Dim qy As Quaternion = Quaternion.CreateFromYawPitchRoll(y, 0, 0)
     Dim qx As Quaternion = Quaternion.CreateFromYawPitchRoll(0, x, 0)
 
-    Return Quaternion.Normalize(qz * qy * qx)
+    Return Quaternion.Normalize(qz*qy*qx)
   End Function
 
-  Private Function GetFrameAndNext(track As IAnimationTrack, frame As UInteger, ByRef trackFrame As UInteger, ByRef nextTrackFrame As UInteger)
+  Private Function GetFrameAndNext(track As IAnimationTrack, frame As UInteger, ByRef trackFrame As UInteger,
+                                   ByRef nextTrackFrame As UInteger)
     Dim frameCount As UInteger = track.Frames.Length
 
     If track.Type = 1 Then
@@ -341,7 +425,7 @@ Public Class ZAnimation
       .DeltaTime = .ElapsedSeconds - .LastUpdateTime
 
       ' TODO: Delete unneeded fields.
-      Dim framesAdvanced As Double = .FrameDelta + .DeltaTime * .FPS
+      Dim framesAdvanced As Double = .FrameDelta + .DeltaTime*.FPS
       Dim frameAdvancedInt As Integer = Math.Floor(framesAdvanced)
 
       .FrameNo += frameAdvancedInt
