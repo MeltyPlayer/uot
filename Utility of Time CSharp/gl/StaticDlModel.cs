@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Tao.OpenGl;
 
 namespace UoT {
-  public class VboManager {
+  public class StaticDlModel {
     // TODO: Prune unused values.
     // TODO: Split out vertices into separately indexed position/uv/color arrays.
 
