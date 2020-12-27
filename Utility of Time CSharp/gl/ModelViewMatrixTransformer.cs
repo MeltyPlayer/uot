@@ -27,7 +27,7 @@ namespace UoT {
 
   public static class ModelViewMatrixTransformer {
     private static IModelViewMatrixTransformer INSTANCE =
-        new SoftwareModelViewMatrixTransformer();
+        new GlModelViewMatrixTransformer();
 
     public static void Project(ref double x, ref double y, ref double z)
       => ModelViewMatrixTransformer.INSTANCE.Project(ref x, ref y, ref z);
@@ -58,8 +58,11 @@ namespace UoT {
 
 
   public class GlModelViewMatrixTransformer : IModelViewMatrixTransformer {
-    public void Project(ref double x, ref double y, ref double z)
-      => throw new NotImplementedException();
+    private readonly Matrix<double> buffer_ = Matrix<double>.Build.DenseIdentity(4, 4);
+    public void Project(ref double x, ref double y, ref double z) {
+      GlMatrixUtil.Get(this.buffer_);
+      GlMatrixUtil.Project(this.buffer_, ref x, ref y, ref z);
+    }
 
     public IModelViewMatrixTransformer Push() {
       Gl.glPushMatrix();
@@ -90,8 +93,10 @@ namespace UoT {
       return this;
     }
 
-    public IModelViewMatrixTransformer MultMatrix(Matrix<double> m)
-      => throw new NotImplementedException();
+    public IModelViewMatrixTransformer MultMatrix(Matrix<double> m) {
+      Gl.glMultMatrixd(m.ToColumnMajorArray());
+      return this;
+    }
   }
 
   public class
@@ -217,7 +222,9 @@ namespace UoT {
     }
 
 
-    private void UpdateGl_() => GlMatrixUtil.Set(this.current_);
+    private void UpdateGl_() {
+      GlMatrixUtil.Set(this.current_);
+    }
   }
 
   // TODO: Move this somewhere else.
