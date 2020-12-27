@@ -4,7 +4,19 @@ using System.Collections.Generic;
 namespace UoT {
   public class VboBuilder {
     // TODO: Prune unused values.
-    // TODO: Split out vertices into separtely indexed position/uv/color arrays.
+    // TODO: Split out vertices into separately indexed position/uv/color arrays.
+
+    // TODO: How to separate limbs?
+    // TODO: How to apply matrix to specific limb's vertices?
+    // TODO: How to 
+
+    private VertexParams[] activeVertices_ = new VertexParams[32];
+    private TextureWrapper[] activeTextures_ = new TextureWrapper[2];
+
+    private IList<TriangleParams> allTriangles_ = new List<TriangleParams>();
+    private IList<VertexParams> allVertices_ = new List<VertexParams>();
+
+    public IList<TextureWrapper> allTextures_ = new List<TextureWrapper>();
 
     public void Reset() {
       // TODO: Clear vertices and textures.
@@ -14,13 +26,9 @@ namespace UoT {
       this.allTextures_.Clear();
     }
 
-    private VertexParams[] activeVertices_ = new VertexParams[32];
-    private TextureWrapper[] activeTextures_ = new TextureWrapper[2];
+    public void Draw() {
 
-    private IList<TriangleParams> allTriangles_;
-    private IList<VertexParams> allVertices_;
-
-    public IList<TextureWrapper> allTextures_;
+    }
 
     public void AddTriangle(int vertex1, int vertex2, int vertex3) {
       var triangle = new TriangleParams();
