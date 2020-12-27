@@ -5,10 +5,12 @@ Public Class ZAnimation
   '''   Parses a limb hierarchy according to the following spec:
   '''   https://wiki.cloudmodding.com/oot/Animation_Format#Hierarchy
   ''' </summary>
-  Public Function GetHierarchies(Data() As Byte, Bank As Byte, isLink As Boolean) As Limb()
+  Public Function GetHierarchies(Data() As Byte, Bank As Byte, isLink As Boolean, model As StaticDlModel) As Limb()
     Dim limbIndexAddress As UInteger
     Dim limbIndexBank As UInteger
     Dim limbIndexOffset As UInteger
+
+    model.Reset()
 
     Dim j As Integer = 0
     For i As Integer = 0 To Data.Length - 1 - 8 Step 4
@@ -97,6 +99,8 @@ badLimbIndexOffset:
                 .z = IoUtil.ReadUInt16(limbBankBuffer, limbOffset + 4)
                 .firstChild = CSByte(limbBankBuffer(limbOffset + 6))
                 .nextSibling = CSByte(limbBankBuffer(limbOffset + 7))
+
+                DlModel.AddLimb(.x, .y, .z, .firstChild, .nextSibling)
 
                 Dim displayListAddress As UInteger = IoUtil.ReadUInt32(limbBankBuffer, limbOffset + 8)
                 Dim displayListBank As UInteger

@@ -23,6 +23,7 @@ Public Class F3DEX2_Parser
   '''   At most, two can be bound at once.
   ''' </summary>
   Private TileDescriptors(TILE_DESCRIPTOR_MAX) As TileDescriptor
+
   Private Const TILE_DESCRIPTOR_MAX = 7
   Private Cache As New TextureCache
   Private Tmem As New Tmem(Cache)
@@ -47,6 +48,7 @@ Public Class F3DEX2_Parser
   '''   and tile+1.
   ''' </summary>
   Private SelectedTileDescriptors(-1) As Integer
+
   Private MultiTexture As Boolean
 
   ' TODO: Delete this field?
@@ -126,6 +128,7 @@ settextureimg:
                 MultiTexture = False
                 MultiTexCoord = False
                 CurrentSelectedTileDescriptor = 0
+                DlModel.UpdateTexture(1, Nothing)
               End If
 
               SETTIMG(.CMDLow, .CMDHigh, paletteMode)
@@ -526,6 +529,20 @@ enddisplaylist:
             .g(i2) = g
             .b(i2) = b
             .a(i2) = a
+
+            DlModel.UpdateVertex(i2, Function(vertex) As VertexParams
+                                       vertex.X = x
+                                       vertex.Y = y
+                                       vertex.Z = z
+
+                                       vertex.U = u
+                                       vertex.V = v
+
+                                       vertex.R = r
+                                       vertex.G = g
+                                       vertex.B = b
+                                       vertex.A = a
+                                     End Function)
           End With
           Offset += 16
         Next
@@ -568,11 +585,16 @@ enddisplaylist:
         Dim targetBuffer0() As Byte = RamBanks.GetBankByIndex(tileDescriptor0.ImageBank)
         If targetBuffer0 IsNot Nothing Then
           LoadTex(targetBuffer0, 0)
-        Else
-          Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2)
+
+          texture0 = SearchTexCache(tileDescriptor0)
+          DlModel.UpdateTexture(0, texture0)
         End If
-      Else
+      End If
+
+      If texture0 IsNot Nothing Then
         texture0.Bind()
+      Else
+        Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2)
       End If
 
       If MultiTexture Then
@@ -591,11 +613,18 @@ enddisplaylist:
               LoadTex(RamBanks.CommonBanks.Bank5.Banks(RamBanks.CommonBankUse.Bank05).Data, 0)
             Case Else
               ' TODO: Should throw an error for unsupported banks.
-              Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2)
           End Select
-        Else
-          texture1.Bind()
+
+          texture1 = SearchTexCache(tileDescriptor0)
+          DlModel.UpdateTexture(1, texture1)
         End If
+
+        If texture1 IsNot Nothing Then
+          texture1.Bind()
+        Else
+          Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2)
+        End If
+
         Gl.glDisable(Gl.GL_TEXTURE_2D)
         Gl.glActiveTextureARB(Gl.GL_TEXTURE0_ARB)
       End If
@@ -645,13 +674,13 @@ enddisplaylist:
     Dim tileDescriptor1 As TileDescriptor = GetSelectedTileDescriptor(1)
 
     If MultiTexCoord Then
-      Gl.glMultiTexCoord2f(Gl.GL_TEXTURE0_ARB, VertexCache.u(vertexIndex) * tileDescriptor0.TextureWRatio,
-                           VertexCache.v(vertexIndex) * tileDescriptor0.TextureHRatio)
-      Gl.glMultiTexCoord2f(Gl.GL_TEXTURE1_ARB, VertexCache.u(vertexIndex) * tileDescriptor1.TextureWRatio,
-                           VertexCache.v(vertexIndex) * tileDescriptor1.TextureHRatio)
+      Gl.glMultiTexCoord2f(Gl.GL_TEXTURE0_ARB, VertexCache.u(vertexIndex)*tileDescriptor0.TextureWRatio,
+                           VertexCache.v(vertexIndex)*tileDescriptor0.TextureHRatio)
+      Gl.glMultiTexCoord2f(Gl.GL_TEXTURE1_ARB, VertexCache.u(vertexIndex)*tileDescriptor1.TextureWRatio,
+                           VertexCache.v(vertexIndex)*tileDescriptor1.TextureHRatio)
     Else
-      Gl.glTexCoord2f(VertexCache.u(vertexIndex) * tileDescriptor0.TextureWRatio,
-                      VertexCache.v(vertexIndex) * tileDescriptor0.TextureHRatio)
+      Gl.glTexCoord2f(VertexCache.u(vertexIndex)*tileDescriptor0.TextureWRatio,
+                      VertexCache.v(vertexIndex)*tileDescriptor0.TextureHRatio)
     End If
   End Sub
 
@@ -660,11 +689,12 @@ enddisplaylist:
     PrepareDrawTriangle_()
 
     Try
+      ' TODO: Handle reordering based on value of flag.
       Polygons(0) = CMDParams(1) >> 1
       Polygons(1) = CMDParams(2) >> 1
       Polygons(2) = CMDParams(3) >> 1
 
-      ' TODO: Handle reordering based on value of flag.
+      DlModel.AddTriangle(Polygons(0), Polygons(1), Polygons(2))
 
       If ParseMode = Parse.EVERYTHING Then
         Gl.glBegin(Gl.GL_TRIANGLES)
@@ -699,6 +729,7 @@ enddisplaylist:
     PrepareDrawTriangle_()
 
     Try
+      ' TODO: Handle reordering based on value of flag.
       Polygons(0) = CMDParams(1) >> 1
       Polygons(1) = CMDParams(2) >> 1
       Polygons(2) = CMDParams(3) >> 1
@@ -706,7 +737,8 @@ enddisplaylist:
       Polygons(4) = CMDParams(6) >> 1
       Polygons(5) = CMDParams(7) >> 1
 
-      ' TODO: Handle reordering based on value of flag.
+      DlModel.AddTriangle(Polygons(0), Polygons(1), Polygons(2))
+      DlModel.AddTriangle(Polygons(3), Polygons(4), Polygons(5))
 
       If ParseMode = Parse.EVERYTHING Then
         Gl.glBegin(Gl.GL_TRIANGLES)
@@ -844,9 +876,9 @@ enddisplaylist:
       .LRT = (w1 And &HFFF) >> 2
       .Width = ((.LRS - .ULS) + 1)
       .Height = ((.LRT - .ULT) + 1)
-      .TexBytes = (.Width * .Height) * 2
+      .TexBytes = (.Width*.Height)*2
       If .TexBytes >> 16 = &HFFFF Then
-        .TexBytes = (.TexBytes << 16 >> 16) * 2
+        .TexBytes = (.TexBytes << 16 >> 16)*2
       End If
     End With
 
@@ -893,18 +925,18 @@ enddisplaylist:
       Dim Mask_Height As UInteger = 1 << .MaskT
 
       Dim Line_Height As UInteger = 0
-      If Line_Width > 0 Then Line_Height = Min(MaxTexel / Line_Width, Tile_Height)
+      If Line_Width > 0 Then Line_Height = Min(MaxTexel/Line_Width, Tile_Height)
 
-      If .MaskS > 0 And ((Mask_Width * Mask_Height) <= MaxTexel) Then
+      If .MaskS > 0 And ((Mask_Width*Mask_Height) <= MaxTexel) Then
         .Width = Mask_Width
-      ElseIf ((Tile_Width * Tile_Height) <= MaxTexel) Then
+      ElseIf ((Tile_Width*Tile_Height) <= MaxTexel) Then
         .Width = Tile_Width
       Else
         .Width = Line_Width
       End If
-      If .MaskT > 0 And ((Mask_Width * Mask_Height) <= MaxTexel) Then
+      If .MaskT > 0 And ((Mask_Width*Mask_Height) <= MaxTexel) Then
         .Height = Mask_Height
-      ElseIf ((Tile_Width * Tile_Height) <= MaxTexel) Then
+      ElseIf ((Tile_Width*Tile_Height) <= MaxTexel) Then
         .Height = Tile_Height
       Else
         .Height = Line_Height
@@ -963,8 +995,8 @@ enddisplaylist:
         .ShiftT /= (1 << .TShiftT)
       End If
 
-      .TextureHRatio = ((.T_Scale * .ShiftT) / 32 / .LoadHeight)
-      .TextureWRatio = ((.S_Scale * .ShiftS) / 32 / .LoadWidth)
+      .TextureHRatio = ((.T_Scale*.ShiftT)/32/.LoadHeight)
+      .TextureWRatio = ((.S_Scale*.ShiftS)/32/.LoadWidth)
     End With
   End Sub
 
@@ -996,11 +1028,11 @@ enddisplaylist:
       Select Case .PaletteBank
         Case RamBanks.CurrentBank
           For i As Integer = 0 To paletteSizeMinus1
-            palette16(i) = IoUtil.ReadUInt16(RamBanks.ZFileBuffer, .PaletteOffset + 2 * i)
+            palette16(i) = IoUtil.ReadUInt16(RamBanks.ZFileBuffer, .PaletteOffset + 2*i)
           Next
         Case 2
           For i As Integer = 0 To paletteSizeMinus1
-            palette16(i) = IoUtil.ReadUInt16(RamBanks.ZSceneBuffer, .PaletteOffset + 2 * i)
+            palette16(i) = IoUtil.ReadUInt16(RamBanks.ZSceneBuffer, .PaletteOffset + 2*i)
           Next
       End Select
 
@@ -1021,7 +1053,8 @@ enddisplaylist:
 
     If UseJank Then
       Dim generator As New OglTextureConverter
-      generator.GenerateAndAddToCache(Data, tileDescriptor.Offset, tileDescriptor, GetSelectedTileDescriptor(0).Palette32, JankCache, True)
+      generator.GenerateAndAddToCache(Data, tileDescriptor.Offset, tileDescriptor,
+                                      GetSelectedTileDescriptor(0).Palette32, JankCache, True)
     Else
       Tmem.LoadTexture(tileDescriptor)
     End If
@@ -1068,7 +1101,7 @@ enddisplaylist:
 
   Private Sub SETCOMBINE(ByVal w0 As UInt32, ByVal w1 As UInt32)
     If GLExtensions.GLFragProg Then
-      Dim ShaderCachePos As Integer = -1
+      Dim ShaderCachePos As Integer = - 1
       EnableCombiner = True
       For i As Integer = 0 To FragShaderCache.Length - 1
         If (w0 = FragShaderCache(i).MUXS0) And (w1 = FragShaderCache(i).MUXS1) Then
@@ -1094,33 +1127,33 @@ enddisplaylist:
   End Sub
 
   Private Sub SETFOGCOLOR(ByVal CMDParams() As Byte)
-    FogColor(0) = CMDParams(4) / 255
-    FogColor(1) = CMDParams(5) / 255
-    FogColor(2) = CMDParams(6) / 255
-    FogColor(3) = CMDParams(7) / 255
+    FogColor(0) = CMDParams(4)/255
+    FogColor(1) = CMDParams(5)/255
+    FogColor(2) = CMDParams(6)/255
+    FogColor(3) = CMDParams(7)/255
   End Sub
 
   Private Sub ENVCOLOR(ByVal CMDParams() As Byte)
-    EnvironmentColor(0) = CMDParams(4) / 255
-    EnvironmentColor(1) = CMDParams(5) / 255
-    EnvironmentColor(2) = CMDParams(6) / 255
-    EnvironmentColor(3) = CMDParams(7) / 255
+    EnvironmentColor(0) = CMDParams(4)/255
+    EnvironmentColor(1) = CMDParams(5)/255
+    EnvironmentColor(2) = CMDParams(6)/255
+    EnvironmentColor(3) = CMDParams(7)/255
   End Sub
 
   Private Sub SETPRIMCOLOR(ByVal CMDParams() As Byte)
-    PrimColorM = CMDParams(2) / 255
-    PrimColorLOD = CMDParams(3) / 255
-    PrimColor(0) = CMDParams(4) / 255
-    PrimColor(1) = CMDParams(5) / 255
-    PrimColor(2) = CMDParams(6) / 255
-    PrimColor(3) = CMDParams(7) / 255
+    PrimColorM = CMDParams(2)/255
+    PrimColorLOD = CMDParams(3)/255
+    PrimColor(0) = CMDParams(4)/255
+    PrimColor(1) = CMDParams(5)/255
+    PrimColor(2) = CMDParams(6)/255
+    PrimColor(3) = CMDParams(7)/255
   End Sub
 
   Private Sub SETBLENDCOLOR(ByVal CMDParams() As Byte)
-    BlendColor(0) = CMDParams(4) / 255
-    BlendColor(1) = CMDParams(5) / 255
-    BlendColor(2) = CMDParams(6) / 255
-    BlendColor(3) = CMDParams(7) / 255
+    BlendColor(0) = CMDParams(4)/255
+    BlendColor(1) = CMDParams(5)/255
+    BlendColor(2) = CMDParams(6)/255
+    BlendColor(3) = CMDParams(7)/255
   End Sub
 
   Public Sub PrecompileMUXS(ByVal MUXLIST1() As UInteger, ByVal MUXLIST2() As UInteger)

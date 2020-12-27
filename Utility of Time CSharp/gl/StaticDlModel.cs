@@ -10,7 +10,8 @@ namespace UoT {
 
     // TODO: How to separate limbs?
     // TODO: How to apply matrix to specific limb's vertices?
-    // TODO: How to 
+    // TODO: Keep track of texture params, combine modes, env colors, etc.
+    // TODO: Support submeshes (e.g. held items).
 
     public bool IsComplete { get; set; }
 
@@ -24,6 +25,8 @@ namespace UoT {
     public IList<TextureWrapper> allTextures_ = new List<TextureWrapper>();
 
     public void Reset() {
+      this.IsComplete = false;
+
       this.activeLimb_ = -1;
       for (var i = 0; i < this.activeVertices_.Length; ++i) {
         this.activeVertices_[i] = -1;
@@ -45,41 +48,62 @@ namespace UoT {
     }
 
     public void DrawWithAnimation(IAnimation animation, double frame) {
+      // TODO: Include animations directly in this model.
       // TODO: Project vertices first.
       // TODO: Then draw w/ projected vertices.
+      // TODO: Add helper class for shader program.
 
       foreach (var limb in this.allLimbs_) {
         foreach (var triangle in limb.Triangles) {
           Gl.glBegin(Gl.GL_TRIANGLES);
+
+          // TODO: Draw.
+
           Gl.glEnd();
         }
       }
     }
 
     public void AddLimb(double x, double y, double z, int firstChild, int nextSibling) {
+      if (this.IsComplete) {
+        return;
+      }
+
       this.allLimbs_.Add(new LimbParams {
           Triangles = new List<TriangleParams>(),
-          OwnedVertices = new List<int>()
+          OwnedVertices = new List<int>(),
+          X = x,
+          Y = y,
+          Z = z,
+          FirstChild = firstChild,
+          NextSibling = nextSibling
       });
     }
 
-    public void SetCurrentLimb(int limb) => this.activeLimb_ = limb;
+    public void SetCurrentLimb(int limb) {
+      if (this.IsComplete) {
+        return;
+      }
+
+      this.activeLimb_ = limb;
+    }
 
     public void AddTriangle(int vertex1, int vertex2, int vertex3) {
+      if (this.IsComplete) {
+        return;
+      }
+
       var triangle = new TriangleParams();
 
       triangle.Textures = new int[2];
       for (var t = 0; t < 2; ++t) {
-        triangle.Textures[t] = this.allTextures_[this.activeTextures_[t]].Uuid;
+        triangle.Textures[t] = this.activeTextures_[t];
       }
 
       triangle.Vertices = new int[3];
-      triangle.Vertices[0] =
-          this.allVertices_[this.activeVertices_[vertex1]].Uuid;
-      triangle.Vertices[1] =
-          this.allVertices_[this.activeVertices_[vertex2]].Uuid;
-      triangle.Vertices[2] =
-          this.allVertices_[this.activeVertices_[vertex3]].Uuid;
+      triangle.Vertices[0] = this.activeVertices_[vertex1];
+      triangle.Vertices[1] = this.activeVertices_[vertex2];
+      triangle.Vertices[2] = this.activeVertices_[vertex3];
 
       this.allLimbs_[this.activeLimb_].Triangles.Add(triangle);
     }
@@ -87,6 +111,10 @@ namespace UoT {
     public void UpdateVertex(
         int index,
         Func<VertexParams, VertexParams> modifier) {
+      if (this.IsComplete) {
+        return;
+      }
+
       VertexParams vertex;
       var oldUuid = this.activeVertices_[index];
       if (oldUuid == -1) {
@@ -104,6 +132,15 @@ namespace UoT {
     }
 
     public void UpdateTexture(int index, Texture texture) {
+      if (this.IsComplete) {
+        return;
+      }
+
+      if (texture == null) {
+        this.activeTextures_[index] = -1;
+        return;
+      }
+
       var textureWrapper = new TextureWrapper {
           Uuid = this.allTextures_.Count,
           Texture = texture

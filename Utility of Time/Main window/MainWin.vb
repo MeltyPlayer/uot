@@ -3921,6 +3921,16 @@ Public Class MainWin
   End Sub
 
   Private Sub DrawDLArray(ByVal DLists() As N64DisplayList, ByVal SelectionMode As Integer)
+    If UseStaticDlModel And DlModel.IsComplete Then
+      Dim animation As IAnimation
+      If AnimationEntries IsNot Nothing Then
+        animation = AnimationEntries(CurrAnimation)
+      End If
+
+      DlModel.DrawWithAnimation(animation, ZAnimationCounter.CurrFrame)
+      Return
+    End If
+
     If SelectionMode Then
       DLParser.ParseMode = DLParser.Parse.GEOMETRY
     Else
@@ -3959,6 +3969,8 @@ Public Class MainWin
       Next
       ModelViewMatrixTransformer.Pop()
     End If
+
+    DlModel.IsComplete = True
   End Sub
 
   Private Sub DrawJoint(ByVal id As Integer)
@@ -3968,6 +3980,8 @@ Public Class MainWin
       Else
         CurrLimb = id
       End If
+
+      DlModel.SetCurrentLimb(CurrLimb)
 
       Dim dlIndex As Integer = -1
       If .DisplayList > Nothing Then
@@ -5068,7 +5082,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
         Case FileTypes.ACTORMODEL
           animationbank.SelectedIndex = 0
           ' TODO: Determine if model is link to auto-select animations.
-          LimbEntries = AnimParser.GetHierarchies(RamBanks.ZFileBuffer, 6, False)
+          LimbEntries = AnimParser.GetHierarchies(RamBanks.ZFileBuffer, 6, False, DlModel)
           If LimbEntries IsNot Nothing Then
             DlManager.HasLimbs = True
             AnimationEntries = AnimParser.GetCommonAnimations(RamBanks.ZFileBuffer, LimbEntries.Length - 1)

@@ -75,6 +75,9 @@ Module GlobalVars
   Public AnimParser As New ZAnimation
   Public DLParser As New F3DEX2_Parser
 
+  Public UseStaticDlModel As Boolean = False
+  Public DlModel As New StaticDlModel
+
   Public CompileDL As New N64DlistAssembler
   Public ParseOBJ As New OBJParser
   Public LinkedCommands As New DLEdit
