@@ -35,6 +35,9 @@
       <HintPath>..\Utility of Time\packages\MathNet.Numerics.4.12.0\lib\net461\MathNet.Numerics.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="OpenSpatialLibrary, Version=0.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Utility of Time\packages\TheOpenSpatialLibrary.0.5.0\lib\net40\OpenSpatialLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -68,6 +71,7 @@
     <Compile Include="displaylist\DlManager.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="gl\GLExtensions.cs" />
+    <Compile Include="gl\VboManager.cs" />
     <Compile Include="graphics\Gdp.cs" />
     <Compile Include="helpers\BetterFilenames.cs" />
     <Compile Include="gl\ModelViewMatrixTransformer.cs" />
@@ -114,8 +118,12 @@
     <Compile Include="data\GlobalVars.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="doxy.zip" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="License.txt" />
+    <Content Include="ReleaseNotev0.5.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
