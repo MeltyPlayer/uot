@@ -3,6 +3,12 @@
 using Microsoft.VisualBasic.CompilerServices;
 
 namespace UoT {
+  /// <summary>
+  ///   Helper class that converts OoT's various texture formats to RGBA32.
+  ///
+  ///   Based on the spec at:
+  ///   https://wiki.cloudmodding.com/oot/Textures
+  /// </summary>
   public class TextureConverter {
     public static ITextureConverter GetConverter(
         ColorFormat colorFormat,
@@ -69,6 +75,8 @@ namespace UoT {
     }
 
     private class Rgba16 : ITextureConverter {
+      private readonly double FACTOR = 255.0 / 31;
+
       public void Convert(
           uint Width,
           uint Height,
@@ -84,9 +92,12 @@ namespace UoT {
         for (var i = 0; i < Height; ++i) {
           for (int j = 0; j < Width; ++j) {
             RGBA5551 = IoUtil.ReadUInt16(SourceImg, (uint) SourceTexPos);
-            DestImg[DestTexPos] = (byte) ((RGBA5551 & 0xF800) >> 8);
-            DestImg[DestTexPos + 1] = (byte) ((RGBA5551 & 0x7C0) << 5 >> 8);
-            DestImg[DestTexPos + 2] = (byte) ((RGBA5551 & 0x3E) << 18 >> 16);
+            DestImg[DestTexPos] =
+                (byte) Math.Round(IoUtil.ShiftR(RGBA5551, 11, 5) * FACTOR);
+            DestImg[DestTexPos + 1] =
+                (byte) Math.Round(IoUtil.ShiftR(RGBA5551, 6, 5) * FACTOR);
+            DestImg[DestTexPos + 2] =
+                (byte) Math.Round(IoUtil.ShiftR(RGBA5551, 1, 5) * FACTOR);
             if (Conversions.ToBoolean(RGBA5551 & 1))
               DestImg[DestTexPos + 3] = 255;
             else
@@ -318,7 +329,7 @@ namespace UoT {
     }
 
     private class Ia4 : ITextureConverter {
-      private const byte FACTOR = 17;
+      private readonly double FACTOR = 255.0 / 7;
 
       public void Convert(
           uint Width,
@@ -339,19 +350,20 @@ namespace UoT {
                           out var upper4,
                           out var lower4);
 
-            var IAIntensity = (byte) ((SourceImg[SourceTexPos] & 0xF0) >> 4);
             byte IAAlpha;
             if (Conversions.ToBoolean(upper4 & 1))
               IAAlpha = 255;
             else
               IAAlpha = 0;
-            var upperIntensity = (byte) (upper4 * FACTOR);
+            var upperIntensity =
+                (byte) Math.Round(IoUtil.ShiftR(upper4, 1, 3) * FACTOR);
             DestImg[DestTexPos] = upperIntensity;
             DestImg[DestTexPos + 1] = upperIntensity;
             DestImg[DestTexPos + 2] = upperIntensity;
             DestImg[DestTexPos + 3] = IAAlpha;
 
-            var lowerIntensity = (byte) (lower4 * FACTOR);
+            var lowerIntensity =
+                (byte) Math.Round(IoUtil.ShiftR(lower4, 1, 3) * FACTOR);
             if (Conversions.ToBoolean(lower4 & 1))
               IAAlpha = 255;
             else

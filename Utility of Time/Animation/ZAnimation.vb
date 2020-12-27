@@ -1,6 +1,10 @@
 ﻿Imports System.Numerics
 
 Public Class ZAnimation
+  ''' <summary>
+  '''   Parses a limb hierarchy according to the following spec:
+  '''   https://wiki.cloudmodding.com/oot/Animation_Format#Hierarchy
+  ''' </summary>
   Public Function GetHierarchies(Data() As Byte, Bank As Byte, isLink As Boolean) As Limb()
     Dim limbIndexAddress As UInteger
     Dim limbIndexBank As UInteger
@@ -79,7 +83,7 @@ Public Class ZAnimation
 
 badLimbIndexOffset:
 
-          If isValid And somethingVisible Then
+          If isValid Then
             Dim tmpHierarchy(limbCount - 1) As Limb
             For k As Integer = 0 To limbCount - 1
               limbAddress = IoUtil.ReadUInt32(limbIndexBankBuffer, limbIndexOffset + 4 * k)
@@ -104,6 +108,8 @@ badLimbIndexOffset:
                   .DisplayList = displayListOffset
                   ReDim Preserve GlobalVarsCs.N64DList(GlobalVarsCs.N64DList.Length)
                   ReadInDL(displayListBankBuffer, GlobalVarsCs.N64DList, .DisplayList, GlobalVarsCs.N64DList.Length - 1)
+                ElseIf Not somethingVisible Then
+                  .DisplayList = displayListOffset
                 Else
                   .DisplayList = Nothing
                 End If
@@ -123,6 +129,9 @@ badLimbIndexOffset:
               End With
             Next
 
+            If isValid And Not somethingVisible Then
+              Throw New NotSupportedException("model format is not rendering a valid model!")
+            End If
 
             Return tmpHierarchy
           End If
@@ -259,12 +268,12 @@ badLimbIndexOffset:
   ''' </summary>
   Public Function GetLinkAnimations(HeaderData() As Byte, ByVal LimbCount As Integer, animationData() As Byte) _
     As IList(Of IAnimation)
-    Dim animCnt As Integer = - 1
-    Dim animations(- 1) As LinkAnimetion
+    Dim animCnt As Integer = -1
+    Dim animations(-1) As LinkAnimetion
     MainWin.AnimationList.Items.Clear()
 
-    Dim trackCount As UInteger = LimbCount*3
-    Dim frameSize = 2*(3 + trackCount) + 2
+    Dim trackCount As UInteger = LimbCount * 3
+    Dim frameSize = 2 * (3 + trackCount) + 2
 
     For i As Integer = &H2310 To &H34F8 Step 4
       Dim frameCount As UShort = IoUtil.ReadUInt16(HeaderData, i)
@@ -278,7 +287,7 @@ badLimbIndexOffset:
       Dim hasZeroes As Boolean = IoUtil.ReadUInt16(HeaderData, i + 2) = 0
 
       ' TODO: Is this really needed?
-      Dim validOffset As Boolean = animationOffset + frameSize*frameCount < animationData.Length
+      Dim validOffset As Boolean = animationOffset + frameSize * frameCount < animationData.Length
 
       If validAnimationBank And hasZeroes And validOffset Then
         animCnt += 1
@@ -296,7 +305,7 @@ badLimbIndexOffset:
             Next
 
             For f As Integer = 0 To frameCount - 1
-              Dim frameOffset As UInteger = animationOffset + f*frameSize
+              Dim frameOffset As UInteger = animationOffset + f * frameSize
 
               Dim position As Vec3s
               .Positions(f).X = IoUtil.ReadUInt16(animationData, frameOffset + 0)
@@ -304,7 +313,7 @@ badLimbIndexOffset:
               .Positions(f).Z = IoUtil.ReadUInt16(animationData, frameOffset + 4)
 
               For t As Integer = 0 To trackCount - 1
-                Dim trackOffset As UInteger = frameOffset + 2*(3 + t)
+                Dim trackOffset As UInteger = frameOffset + 2 * (3 + t)
 
                 .Tracks(t).Frames(f) = IoUtil.ReadUInt16(animationData, trackOffset)
               Next
@@ -331,7 +340,7 @@ badLimbIndexOffset:
     As Quaternion
     'thanks to euler for some of this logic
 
-    Dim tTrack As Integer = Track*3
+    Dim tTrack As Integer = Track * 3
 
     ' TODO: This doesn't look like it should be needed.
     If tTrack > animation.TrackCount - 1 Then
@@ -355,21 +364,21 @@ badLimbIndexOffset:
     GetFrameAndNext(yTrack, frame, yFrame, nextYFrame)
     GetFrameAndNext(zTrack, frame, zFrame, nextZFrame)
 
-    Dim r2d = Math.PI/180
-    Dim x1 As Double = AngleToRad(xFrames(xFrame))*r2d
-    Dim y1 As Double = AngleToRad(yFrames(yFrame))*r2d
-    Dim z1 As Double = AngleToRad(zFrames(zFrame))*r2d
+    Dim r2d = Math.PI / 180
+    Dim x1 As Double = AngleToRad(xFrames(xFrame)) * r2d
+    Dim y1 As Double = AngleToRad(yFrames(yFrame)) * r2d
+    Dim z1 As Double = AngleToRad(zFrames(zFrame)) * r2d
 
     Dim q1 As Quaternion = GetQuaternion(x1, y1, z1)
 
-    Dim x2 As Double = AngleToRad(xFrames(nextXFrame))*r2d
-    Dim y2 As Double = AngleToRad(yFrames(nextYFrame))*r2d
-    Dim z2 As Double = AngleToRad(zFrames(nextZFrame))*r2d
+    Dim x2 As Double = AngleToRad(xFrames(nextXFrame)) * r2d
+    Dim y2 As Double = AngleToRad(yFrames(nextYFrame)) * r2d
+    Dim z2 As Double = AngleToRad(zFrames(nextZFrame)) * r2d
 
     Dim q2 As Quaternion = GetQuaternion(x2, y2, z2)
 
     If Quaternion.Dot(q1, q2) < 0 Then
-      q2 = - q2
+      q2 = -q2
     End If
 
     ' TODO: Zelda's head is upside-down, is this caused here?
@@ -384,7 +393,7 @@ badLimbIndexOffset:
     Dim qy As Quaternion = Quaternion.CreateFromYawPitchRoll(y, 0, 0)
     Dim qx As Quaternion = Quaternion.CreateFromYawPitchRoll(0, x, 0)
 
-    Return Quaternion.Normalize(qz*qy*qx)
+    Return Quaternion.Normalize(qz * qy * qx)
   End Function
 
   Private Function GetFrameAndNext(track As IAnimationTrack, frame As UInteger, ByRef trackFrame As UInteger,
@@ -425,7 +434,7 @@ badLimbIndexOffset:
       .DeltaTime = .ElapsedSeconds - .LastUpdateTime
 
       ' TODO: Delete unneeded fields.
-      Dim framesAdvanced As Double = .FrameDelta + .DeltaTime*.FPS
+      Dim framesAdvanced As Double = .FrameDelta + .DeltaTime * .FPS
       Dim frameAdvancedInt As Integer = Math.Floor(framesAdvanced)
 
       .FrameNo += frameAdvancedInt
