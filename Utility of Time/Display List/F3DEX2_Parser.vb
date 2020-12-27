@@ -490,51 +490,48 @@ enddisplaylist:
 
   Private Function FillVertexCache(ByVal Data() As Byte, ByRef Cache As N64Vertex, ByVal DataSource As Byte,
                                    ByVal Offset As Integer, ByVal n0 As Integer, ByVal v0 As Integer)
-    Try
-      Select Case DataSource
-        Case RamBanks.CurrentBank
-          Dim x As Short
-          Dim y As Short
-          Dim z As Short
-          Dim u As Short
-          Dim v As Short
-          Dim r As Byte
-          Dim g As Byte
-          Dim b As Byte
-          Dim a As Byte
-          For i2 As Integer = v0 To (v0 + n0) - 1
-            x = CShort(IoUtil.ReadUInt16(Data, Offset))
-            y = CShort(IoUtil.ReadUInt16(Data, Offset + 2))
-            z = CShort(IoUtil.ReadUInt16(Data, Offset + 4))
-            u = CShort(IoUtil.ReadUInt16(Data, Offset + 8))
-            v = CShort(IoUtil.ReadUInt16(Data, Offset + 10))
-            r = Data(Offset + 12)
-            g = Data(Offset + 13)
-            b = Data(Offset + 14)
-            a = Data(Offset + 15)
-            With Cache
-              'Vertex x(l)-y(w)-z(d) coordinates
-              .x(i2) = x
-              .y(i2) = y
-              .z(i2) = z
+    Select Case DataSource
+      Case RamBanks.CurrentBank
+        Dim x As Short
+        Dim y As Short
+        Dim z As Short
+        Dim u As Short
+        Dim v As Short
+        Dim r As Byte
+        Dim g As Byte
+        Dim b As Byte
+        Dim a As Byte
+        For i2 As Integer = v0 To (v0 + n0) - 1
+          x = CShort(IoUtil.ReadUInt16(Data, Offset))
+          y = CShort(IoUtil.ReadUInt16(Data, Offset + 2))
+          z = CShort(IoUtil.ReadUInt16(Data, Offset + 4))
+          u = CShort(IoUtil.ReadUInt16(Data, Offset + 8))
+          v = CShort(IoUtil.ReadUInt16(Data, Offset + 10))
+          r = Data(Offset + 12)
+          g = Data(Offset + 13)
+          b = Data(Offset + 14)
+          a = Data(Offset + 15)
+          With Cache
+            'Vertex x(l)-y(w)-z(d) coordinates
+            .x(i2) = x
+            .y(i2) = y
+            .z(i2) = z
 
-              'Texture coordinates
-              .u(i2) = u
-              .v(i2) = v
+            'Texture coordinates
+            .u(i2) = u
+            .v(i2) = v
 
-              'Vertex colors
-              .r(i2) = r
-              .g(i2) = g
-              .b(i2) = b
-              .a(i2) = a
-            End With
-            Offset += 16
-          Next
-        Case Else
-          MsgBox("Trying to load vertices from bank 0x" & Hex(DataSource) & "?")
-      End Select
-    Catch err As Exception
-    End Try
+            'Vertex colors
+            .r(i2) = r
+            .g(i2) = g
+            .b(i2) = b
+            .a(i2) = a
+          End With
+          Offset += 16
+        Next
+      Case Else
+        MsgBox("Trying to load vertices from bank 0x" & Hex(DataSource) & "?")
+    End Select
   End Function
 
   ''' <summary>
@@ -1024,7 +1021,7 @@ enddisplaylist:
 
     If UseJank Then
       Dim generator As New OglTextureConverter
-      generator.GenerateAndAddToCache(Data, tileDescriptor.Offset, tileDescriptor, GetSelectedTileDescriptor(0).Palette32, JankCache)
+      generator.GenerateAndAddToCache(Data, tileDescriptor.Offset, tileDescriptor, GetSelectedTileDescriptor(0).Palette32, JankCache, True)
     Else
       Tmem.LoadTexture(tileDescriptor)
     End If
