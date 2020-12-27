@@ -208,15 +208,20 @@ namespace UoT {
     }
 
 
-    private readonly double[] glBuffer_ = new double[16];
+    private void UpdateGl_() => GlMatrixUtil.Set(this.current_);
+  }
 
-    private void UpdateGl_() {
+  // TODO: Move this somewhere else.
+  public class GlMatrixUtil {
+    private static readonly double[] glBuffer_ = new double[16];
+
+    public static void Set(Matrix<double> m) {
       for (var r = 0; r < 4; ++r) {
         for (var c = 0; c < 4; ++c) {
-          this.glBuffer_[4 * c + r] = this.current_[r, c];
+          GlMatrixUtil.glBuffer_[4 * c + r] = m[r, c];
         }
       }
-      Gl.glLoadMatrixd(this.glBuffer_);
+      Gl.glLoadMatrixd(GlMatrixUtil.glBuffer_);
     }
   }
 }
