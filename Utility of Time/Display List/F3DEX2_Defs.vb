@@ -3,6 +3,11 @@
                            ByVal Index As Integer) As Integer
     Try
       If Offset < Data.Count Then
+        ' TODO: This jumps into the lowest level DL, but the 0xDE command (DL)
+        ' actually allows returning back up and calling more DLs. So this seems
+        ' like it will sometimes overlook any DLs that follow.
+        ' This should just be deleted and replaced w/ emulating in
+        ' F3DEX2_Parser.
         If Data(Offset) = &HDE Then
           Do Until Data(Offset) <> &HDE
             Offset = IoUtil.ReadUInt24(Data, Offset + 5)
