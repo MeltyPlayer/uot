@@ -497,7 +497,7 @@ branchz:
     End Select
   End Sub
 
-  Private Function FillVertexCache(ByVal Data() As Byte, ByRef Cache As N64Vertex, ByVal DataSource As Byte,
+  Private Function FillVertexCache(ByVal Data As IList(Of Byte), ByRef Cache As N64Vertex, ByVal DataSource As Byte,
                                    ByVal Offset As Integer, ByVal n0 As Integer, ByVal v0 As Integer)
     Select Case DataSource
       Case RamBanks.CurrentBank
@@ -537,18 +537,18 @@ branchz:
             .a(i2) = a
 
             DlModel.UpdateVertex(i2, Function(vertex) As VertexParams
-              vertex.X = x
-              vertex.Y = y
-              vertex.Z = z
+                                       vertex.X = x
+                                       vertex.Y = y
+                                       vertex.Z = z
 
-              vertex.U = u
-              vertex.V = v
+                                       vertex.U = u
+                                       vertex.V = v
 
-              vertex.R = r
-              vertex.G = g
-              vertex.B = b
-              vertex.A = a
-            End Function)
+                                       vertex.R = r
+                                       vertex.G = g
+                                       vertex.B = b
+                                       vertex.A = a
+                                     End Function)
           End With
           Offset += 16
         Next
@@ -592,7 +592,7 @@ branchz:
       Dim texture0 As Texture = SearchTexCache(tileDescriptor0)
 
       If texture0 Is Nothing Then
-        Dim targetBuffer0() As Byte = RamBanks.GetBankByIndex(tileDescriptor0.ImageBank)
+        Dim targetBuffer0 As IRamBank = RamBanks.GetBankByIndex(tileDescriptor0.ImageBank)
         If targetBuffer0 IsNot Nothing Then
           LoadTex(targetBuffer0, 0)
 
@@ -1058,7 +1058,7 @@ branchz:
   End Sub
 
 
-  Private Function LoadTex(ByVal Data() As Byte, ByVal ID As UInteger) As Integer
+  Private Function LoadTex(Data As IList(Of Byte), ByVal ID As UInteger) As Integer
     Dim tileDescriptor As TileDescriptor = GetSelectedTileDescriptor(ID)
 
     If UseJank Then

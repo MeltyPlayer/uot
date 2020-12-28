@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using Microsoft.VisualBasic.CompilerServices;
 
@@ -68,7 +69,7 @@ namespace UoT {
           uint Width,
           uint Height,
           uint LineSize,
-          byte[] SourceImg,
+          IList<byte> SourceImg,
           int sourceOffset,
           ref byte[] DestImg,
           Color4UByte[] Palette);
@@ -81,7 +82,7 @@ namespace UoT {
           uint Width,
           uint Height,
           uint LineSize,
-          byte[] SourceImg,
+          IList<byte> SourceImg,
           int SourceTexPos,
           ref byte[] DestImg,
           Color4UByte[] _) {
@@ -122,7 +123,7 @@ namespace UoT {
           uint Width,
           uint Height,
           uint LineSize,
-          byte[] SourceImg,
+          IList<byte> SourceImg,
           int SourceTexPos,
           ref byte[] DestImg,
           Color4UByte[] Palette) {
@@ -152,7 +153,7 @@ namespace UoT {
           uint Width,
           uint Height,
           uint LineSize,
-          byte[] SourceImg,
+          IList<byte> SourceImg,
           int SourceTexPos,
           ref byte[] DestImg,
           Color4UByte[] Palette) {
@@ -193,7 +194,7 @@ namespace UoT {
           uint Width,
           uint Height,
           uint LineSize,
-          byte[] SourceImg,
+          IList<byte> SourceImg,
           int SourceTexPos,
           ref byte[] DestImg,
           Color4UByte[] _) {
@@ -224,7 +225,7 @@ namespace UoT {
           uint Width,
           uint Height,
           uint LineSize,
-          byte[] SourceImg,
+          IList<byte> SourceImg,
           int SourceTexPos,
           ref byte[] DestImg,
           Color4UByte[] _) {
@@ -268,7 +269,7 @@ namespace UoT {
           uint Width,
           uint Height,
           uint LineSize,
-          byte[] SourceImg,
+          IList<byte> SourceImg,
           int SourceTexPos,
           ref byte[] DestImg,
           Color4UByte[] _) {
@@ -299,7 +300,7 @@ namespace UoT {
           uint Width,
           uint Height,
           uint LineSize,
-          byte[] SourceImg,
+          IList<byte> SourceImg,
           int SourceTexPos,
           ref byte[] DestImg,
           Color4UByte[] _) {
@@ -335,7 +336,7 @@ namespace UoT {
           uint Width,
           uint Height,
           uint LineSize,
-          byte[] SourceImg,
+          IList<byte> SourceImg,
           int SourceTexPos,
           ref byte[] DestImg,
           Color4UByte[] _) {

@@ -1,8 +1,8 @@
 ﻿Module F3DEX2_Defs
-  Public Function ReadInDL(ByVal Data() As Byte, ByRef DisplayList() As N64DisplayList, ByVal Offset As Integer,
+  Public Function ReadInDL(Data As IRamBank, ByRef DisplayList() As N64DisplayList, ByVal Offset As Integer,
                            ByVal Index As Integer) As Integer
     Try
-      If Offset < Data.Length Then
+      If Offset < Data.Count Then
         If Data(Offset) = &HDE Then
           Do Until Data(Offset) <> &HDE
             Offset = IoUtil.ReadUInt24(Data, Offset + 5)
@@ -42,7 +42,7 @@
 
             .Commands(.CommandCount).DLPos = .CommandCount
 
-            If Data(EPLoc) = F3DZEX.ENDDL Or EPLoc >= Data.Length Then
+            If Data(EPLoc) = F3DZEX.ENDDL Or EPLoc >= Data.Count Then
               EPLoc += 8
               Exit Do
             End If

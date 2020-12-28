@@ -19,7 +19,7 @@ namespace UoT.helpers {
       var buffer = new byte[] { 0x12, 0x34, 0x56, 0x78, 0x90, };
 
       var offset = 1;
-      IoUtil.WriteInt16(ref buffer, ref offset, 0x0987);
+      IoUtil.WriteInt16(buffer, ref offset, 0x0987);
 
       Assert.AreEqual(buffer[0], 0x12);
       Assert.AreEqual(buffer[1], 0x09);
@@ -33,7 +33,7 @@ namespace UoT.helpers {
       var buffer = new byte[] { 0x12, 0x34, 0x56, 0x78, 0x90, };
 
       var offset = 1;
-      IoUtil.WriteInt32(ref buffer, 0x09876543, ref offset);
+      IoUtil.WriteInt32(buffer, 0x09876543, ref offset);
 
       Assert.AreEqual(buffer[0], 0x12);
       Assert.AreEqual(buffer[1], 0x09);

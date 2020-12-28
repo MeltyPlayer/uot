@@ -5,7 +5,7 @@ Public Class ZAnimation
   '''   Parses a limb hierarchy according to the following spec:
   '''   https://wiki.cloudmodding.com/oot/Animation_Format#Hierarchy
   ''' </summary>
-  Public Function GetHierarchies(Data() As Byte, Bank As Byte, isLink As Boolean, model As StaticDlModel) As Limb()
+  Public Function GetHierarchies(Data As IRamBank, Bank As Byte, isLink As Boolean, model As StaticDlModel) As Limb()
     Dim limbIndexAddress As UInteger
     Dim limbIndexBank As UInteger
     Dim limbIndexOffset As UInteger
@@ -13,7 +13,7 @@ Public Class ZAnimation
     model.Reset()
 
     Dim j As Integer = 0
-    For i As Integer = 0 To Data.Length - 1 - 8 Step 4
+    For i As Integer = 0 To Data.Count - 1 - 8 Step 4
       limbIndexAddress = IoUtil.ReadUInt32(Data, i)
       IoUtil.SplitAddress(limbIndexAddress, limbIndexBank, limbIndexOffset)
 
@@ -23,7 +23,7 @@ Public Class ZAnimation
       Dim limbAddress As UInteger
       Dim limbBank As UInteger
       Dim limbOffset As UInteger
-      Dim limbBankBuffer() As Byte
+      Dim limbBankBuffer As IRamBank
 
       ' Link has an extra set of values for each limb that define LOD model
       ' display lists.
@@ -35,9 +35,9 @@ Public Class ZAnimation
       End If
 
       If RamBanks.IsValidBank(limbIndexBank) And limbCount > 0 Then
-        Dim limbIndexBankBuffer() As Byte = RamBanks.GetBankByIndex(limbIndexBank)
+        Dim limbIndexBankBuffer As IRamBank = RamBanks.GetBankByIndex(limbIndexBank)
 
-        If limbIndexOffset + 4 * limbCount < limbIndexBankBuffer.Length Then
+        If limbIndexOffset + 4 * limbCount < limbIndexBankBuffer.Count Then
           Dim firstChild As Byte
           Dim nextSibling As Byte
 
@@ -55,7 +55,7 @@ Public Class ZAnimation
 
             limbBankBuffer = RamBanks.GetBankByIndex(limbBank)
 
-            If limbOffset + limbSize >= limbBankBuffer.Length Then
+            If limbOffset + limbSize >= limbBankBuffer.Count Then
               isValid = False
               GoTo badLimbIndexOffset
             End If
@@ -108,7 +108,7 @@ badLimbIndexOffset:
                 IoUtil.SplitAddress(displayListAddress, displayListBank, displayListOffset)
 
                 If displayListBank <> 0 Then
-                  Dim displayListBankBuffer() As Byte = RamBanks.GetBankByIndex(displayListBank)
+                  Dim displayListBankBuffer As IRamBank = RamBanks.GetBankByIndex(displayListBank)
                   .DisplayList = displayListOffset
                   ReDim Preserve GlobalVarsCs.N64DList(GlobalVarsCs.N64DList.Length)
                   ReadInDL(displayListBankBuffer, GlobalVarsCs.N64DList, .DisplayList, GlobalVarsCs.N64DList.Length - 1)
@@ -149,7 +149,7 @@ badLimbIndexOffset:
   '''   Parses a set of animations according to the spec at:
   '''   https://wiki.cloudmodding.com/oot/Animation_Format#Normal_Animations
   ''' </summary>
-  Public Function GetCommonAnimations(ByVal Data() As Byte, ByVal LimbCount As Integer) _
+  Public Function GetCommonAnimations(Data As IRamBank, ByVal LimbCount As Integer) _
     As IList(Of IAnimation)
     Dim animCnt As Integer = -1
     Dim tAnimation(-1) As NormalAnimation
@@ -158,7 +158,7 @@ badLimbIndexOffset:
     ' Guesstimating the index by looking for an spot where the header's angle
     ' address and track address have the same bank as the param at the top.
     ' TODO: Is this robust enough?
-    For i As Integer = 16 To Data.Length - 12 - 1 Step 4
+    For i As Integer = 16 To Data.Count - 12 - 1 Step 4
       Dim attemptOffset = i - 4
 
       Dim frameCount As UShort = IoUtil.ReadUInt16(Data, attemptOffset)
@@ -180,8 +180,8 @@ badLimbIndexOffset:
       ' Offsets should be within bounds of the bank.
       Dim validRotationOffsets As Boolean = False
       If validAttemptOffset Then
-        Dim validRotationValuesOffset As Boolean = rotationValuesOffset < RamBanks.GetBankByIndex(rotationValuesBank).Length
-        Dim validRotationIndicesOffset As Boolean = rotationIndicesOffset < RamBanks.GetBankByIndex(rotationIndicesBank).Length
+        Dim validRotationValuesOffset As Boolean = rotationValuesOffset < RamBanks.GetBankByIndex(rotationValuesBank).Count
+        Dim validRotationIndicesOffset As Boolean = rotationIndicesOffset < RamBanks.GetBankByIndex(rotationIndicesBank).Count
         validRotationOffsets = validRotationValuesOffset And validRotationIndicesOffset
       End If
 
@@ -212,13 +212,13 @@ badLimbIndexOffset:
 
               MainWin.AnimationList.Items.Add("0x" & Hex(i))
 
-              Dim rotationValuesBuffer() As Byte = RamBanks.GetBankByIndex(rotationValuesBank)
+              Dim rotationValuesBuffer As IRamBank = RamBanks.GetBankByIndex(rotationValuesBank)
               For i1 As Integer = 0 To .AngleCount - 1
                 .Angles(i1) = IoUtil.ReadUInt16(rotationValuesBuffer, rotationValuesOffset)
                 rotationValuesOffset += 2
               Next
 
-              Dim rotationIndicesBuffer() As Byte = RamBanks.GetBankByIndex(rotationIndicesBank)
+              Dim rotationIndicesBuffer As IRamBank = RamBanks.GetBankByIndex(rotationIndicesBank)
               .Position.X = IoUtil.ReadInt16(rotationIndicesBuffer, .TrackOffset + 0)
               .Position.Y = IoUtil.ReadInt16(rotationIndicesBuffer, .TrackOffset + 2)
               .Position.Z = IoUtil.ReadInt16(rotationIndicesBuffer, .TrackOffset + 4)
@@ -270,7 +270,7 @@ badLimbIndexOffset:
   '''   Parses a set of animations according to the spec at:
   '''   https://wiki.cloudmodding.com/oot/Animation_Format#C_code
   ''' </summary>
-  Public Function GetLinkAnimations(HeaderData() As Byte, ByVal LimbCount As Integer, animationData() As Byte) _
+  Public Function GetLinkAnimations(HeaderData As IRamBank, ByVal LimbCount As Integer, animationData As IRamBank) _
     As IList(Of IAnimation)
     Dim animCnt As Integer = -1
     Dim animations(-1) As LinkAnimetion
@@ -291,7 +291,7 @@ badLimbIndexOffset:
       Dim hasZeroes As Boolean = IoUtil.ReadUInt16(HeaderData, i + 2) = 0
 
       ' TODO: Is this really needed?
-      Dim validOffset As Boolean = animationOffset + frameSize * frameCount < animationData.Length
+      Dim validOffset As Boolean = animationOffset + frameSize * frameCount < animationData.Count
 
       If validAnimationBank And hasZeroes And validOffset Then
         animCnt += 1

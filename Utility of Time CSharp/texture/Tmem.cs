@@ -219,10 +219,10 @@ namespace UoT {
           var ptr = ((tline + i) ^ xorval) & 0x3ff;
 
           var offset1 = 2 * ptr;
-          IoUtil.WriteInt16(ref targetBank, ref offset1, (ushort) (c >> 16));
+          IoUtil.WriteInt16(targetBank, ref offset1, (ushort) (c >> 16));
 
           var offset2 = 2 * (ptr | 0x400);
-          IoUtil.WriteInt16(ref targetBank, ref offset2, (ushort) (c & 0xffff));
+          IoUtil.WriteInt16(targetBank, ref offset2, (ushort) (c & 0xffff));
         }
       }
     }
@@ -426,7 +426,7 @@ namespace UoT {
         //memcpy(TMEM, &RDRAM[address], bytes); // HACK!
       } else {
         for (var i = 0; i < bytes; ++i) {
-          this.impl_[i] = targetBuffer[specOffset + i];
+          this.impl_[i] = targetBuffer[(int) (specOffset + i)];
         }
 
         // TODO: Figure out what the heck this stuff below does.
@@ -562,8 +562,8 @@ namespace UoT {
         p0 = IoUtil.ReadUInt32(src, (uint) offset0);
         var p1 = IoUtil.ReadUInt32(src, (uint) offset1);
 
-        IoUtil.WriteInt32(ref src, p1, ref offset0);
-        IoUtil.WriteInt32(ref src, p0, ref offset1);
+        IoUtil.WriteInt32(src, p1, ref offset0);
+        IoUtil.WriteInt32(src, p0, ref offset1);
       }
     }
   }

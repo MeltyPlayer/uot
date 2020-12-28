@@ -219,7 +219,7 @@ namespace UoT {
     public string Name;
     public uint StartOffset;
     public uint EndOffset;
-    public byte[] Data;
+    public IRamBank Data;
   }
 
   public struct ZFileTypes {

@@ -1,9 +1,11 @@
-﻿using Tao.OpenGl;
+﻿using System.Collections.Generic;
+
+using Tao.OpenGl;
 
 namespace UoT {
   // TODO: Come up w/ better name.
   public class OglTextureConverter {
-    public void GenerateAndAddToCache(byte[] data, int offset, ref TileDescriptor tileDescriptor, Color4UByte[] palette32, TextureCache cache, bool save = false) {
+    public void GenerateAndAddToCache(IList<byte> data, int offset, ref TileDescriptor tileDescriptor, Color4UByte[] palette32, TextureCache cache, bool save = false) {
       var OGLTexImg = new byte[] { 0, 0xFF, 0, 0 };
 
       var converter = TextureConverter.GetConverter(tileDescriptor.ColorFormat, tileDescriptor.BitSize);

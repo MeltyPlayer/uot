@@ -88,7 +88,7 @@
     <Compile Include="texture\ColorFormat.cs" />
     <Compile Include="texture\DlTextureManager.cs" />
     <Compile Include="texture\OglTextureConverter.cs" />
-    <Compile Include="helpers\RamBanks.cs" />
+    <Compile Include="data\RamBanks.cs" />
     <Compile Include="texture\Texture.cs" />
     <Compile Include="texture\TextureCache.cs" />
     <Compile Include="texture\TileDescriptor.cs" />
