@@ -52,7 +52,7 @@ namespace UoT {
         ("object_mori_hineri1", "Twisting Hallway"),
         ("object_ms", "Bean Seller"),
         ("object_niw", "Cucco"),
-        ("object_oF1d_map", "Goron")
+        ("object_oF1d_map", "Goron"),
         ("object_okuta", "Octorok"),
         ("object_os", "Happy Mask Salesman"),
         ("object_ossan", "Hyrule Castle Town Shopkeeper"),

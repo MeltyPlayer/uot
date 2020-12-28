@@ -5085,10 +5085,11 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
           LimbEntries = AnimParser.GetHierarchies(RamBanks.ZFileBuffer, 6, False, DlModel)
           If LimbEntries IsNot Nothing Then
             DlManager.HasLimbs = True
-            AnimationEntries = AnimParser.GetCommonAnimations(RamBanks.ZFileBuffer, LimbEntries.Length - 1)
-            If AnimationEntries IsNot Nothing Then
-              AnimationList.SelectedIndex = 0
-            End If
+
+            ' Selects first animation indirectly to fix an issue where NPC 
+            ' heads were sideways.
+            animationbank.SelectedIndex = 0
+            animationbank_SelectedIndexChanged(Nothing, Nothing)
           Else
             DlManager.HasLimbs = False
             FindAllDLs(RamBanks.ZFileBuffer, GlobalVarsCs.N64DList)
