@@ -15,11 +15,14 @@ namespace UoT {
 
     public bool IsComplete { get; set; }
 
-    private int activeLimb_;
+    private LimbInstance activeLimb_;
     private int[] activeVertices_ = new int[32];
     private int[] activeTextures_ = new int[2];
 
-    private IList<LimbParams> allLimbs_ = new List<LimbParams>();
+    // TODO: Needed for models w/o limbs.
+    private LimbInstance root_;
+
+    private IList<LimbInstance> allLimbs_ = new List<LimbInstance>();
     private IList<VertexParams> allVertices_ = new List<VertexParams>();
 
     public IList<TextureWrapper> allTextures_ = new List<TextureWrapper>();
@@ -27,13 +30,20 @@ namespace UoT {
     public void Reset() {
       this.IsComplete = false;
 
-      this.activeLimb_ = -1;
       for (var i = 0; i < this.activeVertices_.Length; ++i) {
         this.activeVertices_[i] = -1;
       }
       for (var i = 0; i < this.activeTextures_.Length; ++i) {
         this.activeTextures_[i] = -1;
       }
+
+      this.root_ = new LimbInstance {
+          Triangles = new List<TriangleParams>(),
+          OwnedVertices = new List<int>(),
+          FirstChild = -1,
+          NextSibling = -1
+      };
+      this.SetCurrentLimb(-1);
 
       // TODO: Clear vertices and textures.
 
@@ -69,7 +79,7 @@ namespace UoT {
         return;
       }
 
-      this.allLimbs_.Add(new LimbParams {
+      this.allLimbs_.Add(new LimbInstance {
           Triangles = new List<TriangleParams>(),
           OwnedVertices = new List<int>(),
           X = x,
@@ -85,7 +95,11 @@ namespace UoT {
         return;
       }
 
-      this.activeLimb_ = limb;
+      if (limb == -1) {
+        this.activeLimb_ = this.root_;
+      } else {
+        this.activeLimb_ = this.allLimbs_[limb];
+      }
     }
 
     public void AddTriangle(int vertex1, int vertex2, int vertex3) {
@@ -105,7 +119,7 @@ namespace UoT {
       triangle.Vertices[1] = this.activeVertices_[vertex2];
       triangle.Vertices[2] = this.activeVertices_[vertex3];
 
-      this.allLimbs_[this.activeLimb_].Triangles.Add(triangle);
+      this.activeLimb_.Triangles.Add(triangle);
     }
 
     public void UpdateVertex(
@@ -126,7 +140,7 @@ namespace UoT {
       vertex = modifier(vertex);
       vertex.Uuid = this.allVertices_.Count;
 
-      this.allLimbs_[this.activeLimb_].OwnedVertices.Add(vertex.Uuid);
+      this.activeLimb_.OwnedVertices.Add(vertex.Uuid);
       this.activeVertices_[index] = vertex.Uuid;
       this.allVertices_.Add(vertex);
     }
@@ -151,7 +165,7 @@ namespace UoT {
     }
   }
 
-  public struct LimbParams {
+  public class LimbInstance {
     public IList<TriangleParams> Triangles;
     public IList<int> OwnedVertices;
 
