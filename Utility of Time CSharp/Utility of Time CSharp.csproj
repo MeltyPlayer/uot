@@ -64,6 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="actor\link\Tunic.cs" />
     <Compile Include="animation\Interfaces.cs" />
     <Compile Include="animation\link\LinkAnimetionStructs.cs" />
     <Compile Include="animation\NormalAnimationStructs.cs" />
