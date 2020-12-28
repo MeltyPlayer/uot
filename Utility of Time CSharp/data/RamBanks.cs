@@ -4,43 +4,12 @@ using System.Collections.Generic;
 using System.IO;
 
 namespace UoT {
-  public interface IRamBank : IList<byte> {
-    void Resize(int size);
+  public interface IRamBank : IList<byte> {}
 
-    void PopulateFromFile(string filename);
-    void PopulateFromStream(FileStream fs, int fsOffset, int count);
-
-    void WriteToFile(string filename);
-    void WriteToStream(FileStream fs, int fsOffset);
-  }
-
-  public class SimpleRamBank : IRamBank {
-    private byte[] impl_ = new byte[0];
-
-    public void Resize(int size) => Array.Resize(ref this.impl_, size);
-
-    public byte this[int index] {
-      get => this.impl_[index];
-      set => this.impl_[index] = value;
-    }
-
-    public void PopulateFromFile(string filename)
-      => this.impl_ = File.ReadAllBytes(filename);
-
-    public void PopulateFromStream(FileStream fs, int fsOffset, int count) {
-      this.Resize(count);
-      fs.Position = fsOffset;
-      fs.Read(this.impl_, 0, count);
-    }
-
-    public void WriteToFile(string filename)
-      => File.WriteAllBytes(filename, this.impl_);
-
-    public void WriteToStream(FileStream fs, int fsOffset) {
-      fs.Position = fsOffset;
-      fs.Write(this.impl_, 0, this.Count);
-    }
-
+  public abstract class BList : IList<byte> {
+    public abstract int Count { get; }
+    public abstract byte this[int index] { get; set; }
+    
 
     // TODO: Get rid of all this crap.
     public IEnumerator<byte> GetEnumerator()
@@ -67,7 +36,6 @@ namespace UoT {
       throw new NotImplementedException();
     }
 
-    public int Count => this.impl_.Length;
     public bool IsReadOnly => false;
 
     public int IndexOf(byte item) {
@@ -83,32 +51,79 @@ namespace UoT {
     }
   }
 
+  public class SimpleRamBank : BList, IRamBank {
+    private byte[] impl_ = new byte[0];
+
+    public void Resize(int size) => Array.Resize(ref this.impl_, size);
+
+    public override int Count => this.impl_.Length;
+    public override byte this[int offset] {
+      get => this.impl_[offset];
+      set => this.impl_[offset] = value;
+    }
+
+    public void PopulateFromFile(string filename)
+      => this.impl_ = File.ReadAllBytes(filename);
+
+    public void PopulateFromStream(FileStream fs, int fsOffset, int count) {
+      this.Resize(count);
+      fs.Position = fsOffset;
+      fs.Read(this.impl_, 0, count);
+    }
+
+    public void WriteToFile(string filename)
+      => File.WriteAllBytes(filename, this.impl_);
+
+    public void WriteToStream(FileStream fs, int fsOffset) {
+      fs.Position = fsOffset;
+      fs.Write(this.impl_, 0, this.Count);
+    }
+  }
+
+  public class RdRamBank : BList, IRamBank {
+    private const int RDRAM_SIZE = 0x7A1200;
+    private readonly SimpleRamBank impl_;
+
+    public RdRamBank() {
+      this.impl_ = new SimpleRamBank();
+      this.impl_.Resize(RDRAM_SIZE);
+    }
+
+    public override int Count => this.impl_.Count;
+
+    public override byte this[int offset] {
+      get {
+        return this.impl_[offset];
+      } 
+      set => this.impl_[offset] = value;
+    }
+  }
+
   public static class RamBanks {
     static RamBanks() {
       // TODO: Initialize RDRAM.
     }
 
-    private const int RDRAM_SIZE = 0x7A1200;
-    public static byte[] Rdram { get; } = new byte[RDRAM_SIZE];
+    public static RdRamBank Rdram { get; } = new RdRamBank();
 
-    public static IRamBank ZFileBuffer { get; } = new SimpleRamBank();
+    public static SimpleRamBank ZFileBuffer { get; } = new SimpleRamBank();
 
     /// <summary>
     ///   Bank 2, Current Scene.
     /// </summary>
-    public static IRamBank ZSceneBuffer { get; } = new SimpleRamBank();
+    public static SimpleRamBank ZSceneBuffer { get; } = new SimpleRamBank();
 
     // TODO: Figure out why textures are not parsed correctly from 8 and 9.
     /// <summary>
     ///   Bank 8, "icon_item_static". Contains animated textures, such as eyes,
     ///   mouths, etc.
     /// </summary>
-    public static IRamBank IconItemStatic { get; } = new SimpleRamBank();
+    public static SimpleRamBank IconItemStatic { get; } = new SimpleRamBank();
 
     /// <summary>
     ///   Bank 9, "icon_item_24_static". Contains animated textures.
     /// </summary>
-    public static IRamBank IconItem24Static { get; } = new SimpleRamBank();
+    public static SimpleRamBank IconItem24Static { get; } = new SimpleRamBank();
 
 
     public static int CurrentBank { get; set; }
