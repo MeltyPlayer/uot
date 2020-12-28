@@ -5427,6 +5427,10 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
           .Bank5.Banks(1).Data.PopulateFromStream(romFS, ROMFiles.Others(i).startoff, fileSize)
           .Bank5.Banks(1).StartOffset = ROMFiles.Others(i).startoff
           .Bank5.Banks(1).EndOffset = ROMFiles.Others(i).endoff
+        ElseIf ROMFiles.Others(i).filename = "icon_item_static" Then
+          RamBanks.IconItemStatic.PopulateFromStream(romFS, ROMFiles.Others(i).startoff, fileSize)
+        ElseIf ROMFiles.Others(i).filename = "icon_item_24_static" Then
+          RamBanks.IconItem24Static.PopulateFromStream(romFS, ROMFiles.Others(i).startoff, fileSize)
         End If
       Next
       Dim animBankCnt As Integer = 0

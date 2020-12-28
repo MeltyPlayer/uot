@@ -14,7 +14,7 @@ namespace UoT {
     void WriteToStream(FileStream fs, int fsOffset);
   }
 
-    public class SimpleRamBank : IRamBank {
+  public class SimpleRamBank : IRamBank {
     private byte[] impl_ = new byte[0];
 
     public void Resize(int size) => Array.Resize(ref this.impl_, size);
@@ -40,7 +40,6 @@ namespace UoT {
       fs.Position = fsOffset;
       fs.Write(this.impl_, 0, this.Count);
     }
-
 
 
     // TODO: Get rid of all this crap.
@@ -93,14 +92,31 @@ namespace UoT {
     public static byte[] Rdram { get; } = new byte[RDRAM_SIZE];
 
     public static IRamBank ZFileBuffer { get; } = new SimpleRamBank();
+
+    /// <summary>
+    ///   Bank 2, Current Scene.
+    /// </summary>
     public static IRamBank ZSceneBuffer { get; } = new SimpleRamBank();
+
+    // TODO: Figure out why textures are not parsed correctly from 8 and 9.
+    /// <summary>
+    ///   Bank 8, "icon_item_static". Contains animated textures, such as eyes,
+    ///   mouths, etc.
+    /// </summary>
+    public static IRamBank IconItemStatic { get; } = new SimpleRamBank();
+
+    /// <summary>
+    ///   Bank 9, "icon_item_24_static". Contains animated textures.
+    /// </summary>
+    public static IRamBank IconItem24Static { get; } = new SimpleRamBank();
+
 
     public static int CurrentBank { get; set; }
     public static BankSwitch CommonBankUse { get; set; }
 
     public static ObjectExchange CommonBanks { get; set; }
 
-    public static bool IsValidBank(uint bankIndex) {
+    public static bool IsValidBank(byte bankIndex) {
       if (bankIndex == RamBanks.CurrentBank) {
         return true;
       }
@@ -125,6 +141,7 @@ namespace UoT {
 
       switch (bankIndex) {
         // TODO: Support case 0, direct reference!
+        // TODO: Support case 3, "Current Room". (?)
         case 2:
           return RamBanks.ZSceneBuffer;
         case 4:
