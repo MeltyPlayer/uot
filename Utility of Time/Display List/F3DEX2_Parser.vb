@@ -91,6 +91,7 @@ Public Class F3DEX2_Parser
           Select Case .CMDParams(0)
             Case F3DZEX.POPMTX
 popmatrix:
+              Debug.NotImplemented()
 
             Case RDP.G_SETENVCOLOR
 setenvironmentcolor:
@@ -182,35 +183,52 @@ onetriangle:
 twotriangles:
               TRI2(.CMDParams)
 
+            Case F3DZEX.QUAD
+quad:
+              Debug.NotImplemented()
+
+            Case F3DZEX.DL
+dl:
+              ' TODO: Support jumping to another DL.
+              ' TODO: Decide to continue or quit depending on pp from w0. 
+              Debug.NotImplemented("Tried to jump to display list with address: " & .CMDHigh.ToString("X8"))
+
+            Case F3DZEX.BRANCH_Z
+branchz:
+              Debug.NotImplemented()
+
             Case F3DZEX.ENDDL
-enddisplaylist:
+              enddisplaylist:
               Reset()
               Exit Sub
           End Select
         ElseIf ParseMode = Parse.GEOMETRY Then
           Select Case .CMDParams(0)
             Case F3DZEX.VTX
-
               GoTo vertex
 
             Case F3DZEX.GEOMETRYMODE
-
               GoTo geometrymode
 
             Case F3DZEX.MODIFYVTX
-
               GoTo modifyvertex
 
             Case F3DZEX.TRI1
-
               GoTo onetriangle
 
             Case F3DZEX.TRI2
-
               GoTo twotriangles
 
-            Case F3DZEX.ENDDL
+            Case F3DZEX.QUAD
+              GoTo quad
 
+            Case F3DZEX.DL
+              GoTo dl
+
+            Case F3DZEX.BRANCH_Z
+              GoTo branchz
+
+            Case F3DZEX.ENDDL
               GoTo enddisplaylist
 
           End Select
@@ -308,7 +326,7 @@ enddisplaylist:
       For j As Integer = 0 To 3
         MatValue(0) = IoUtil.ReadUInt16(TempRSPMatrix.N64Mat, MtxPos + 0)
         MatValue(1) = IoUtil.ReadUInt16(TempRSPMatrix.N64Mat, MtxPos + 32)
-        TempRSPMatrix.OGLMat(i, j) = ((MatValue(0) << 16) Or MatValue(1)) * 1.0F / 65536.0F
+        TempRSPMatrix.OGLMat(i, j) = ((MatValue(0) << 16) Or MatValue(1))*1.0F/65536.0F
         MtxPos += 2
       Next
     Next
@@ -338,7 +356,7 @@ enddisplaylist:
   End Sub
 
   Private Sub MODIFYVTX(ByRef VertCache As N64Vertex, ByVal CMDParams() As Byte)
-    Dim Vertex As Integer = (IoUtil.ReadUInt16(CMDParams, 2) And &HFFF) / 2
+    Dim Vertex As Integer = (IoUtil.ReadUInt16(CMDParams, 2) And &HFFF)/2
     Dim Target As Integer = CMDParams(1)
     Select Case Target
       Case &H10
@@ -413,7 +431,7 @@ enddisplaylist:
       Case 3 'rendermode
         If ZMODE_DEC Then
           Gl.glEnable(Gl.GL_POLYGON_OFFSET_FILL)
-          Gl.glPolygonOffset(-7, -7)
+          Gl.glPolygonOffset(- 7, - 7)
         Else
           Gl.glDisable(Gl.GL_POLYGON_OFFSET_FILL)
         End If
@@ -519,18 +537,18 @@ enddisplaylist:
             .a(i2) = a
 
             DlModel.UpdateVertex(i2, Function(vertex) As VertexParams
-                                       vertex.X = x
-                                       vertex.Y = y
-                                       vertex.Z = z
+              vertex.X = x
+              vertex.Y = y
+              vertex.Z = z
 
-                                       vertex.U = u
-                                       vertex.V = v
+              vertex.U = u
+              vertex.V = v
 
-                                       vertex.R = r
-                                       vertex.G = g
-                                       vertex.B = b
-                                       vertex.A = a
-                                     End Function)
+              vertex.R = r
+              vertex.G = g
+              vertex.B = b
+              vertex.A = a
+            End Function)
           End With
           Offset += 16
         Next
@@ -666,13 +684,13 @@ enddisplaylist:
     Dim tileDescriptor1 As TileDescriptor = GetSelectedTileDescriptor(1)
 
     If MultiTexCoord Then
-      Gl.glMultiTexCoord2f(Gl.GL_TEXTURE0_ARB, VertexCache.u(vertexIndex) * tileDescriptor0.TextureWRatio,
-                           VertexCache.v(vertexIndex) * tileDescriptor0.TextureHRatio)
-      Gl.glMultiTexCoord2f(Gl.GL_TEXTURE1_ARB, VertexCache.u(vertexIndex) * tileDescriptor1.TextureWRatio,
-                           VertexCache.v(vertexIndex) * tileDescriptor1.TextureHRatio)
+      Gl.glMultiTexCoord2f(Gl.GL_TEXTURE0_ARB, VertexCache.u(vertexIndex)*tileDescriptor0.TextureWRatio,
+                           VertexCache.v(vertexIndex)*tileDescriptor0.TextureHRatio)
+      Gl.glMultiTexCoord2f(Gl.GL_TEXTURE1_ARB, VertexCache.u(vertexIndex)*tileDescriptor1.TextureWRatio,
+                           VertexCache.v(vertexIndex)*tileDescriptor1.TextureHRatio)
     Else
-      Gl.glTexCoord2f(VertexCache.u(vertexIndex) * tileDescriptor0.TextureWRatio,
-                      VertexCache.v(vertexIndex) * tileDescriptor0.TextureHRatio)
+      Gl.glTexCoord2f(VertexCache.u(vertexIndex)*tileDescriptor0.TextureWRatio,
+                      VertexCache.v(vertexIndex)*tileDescriptor0.TextureHRatio)
     End If
   End Sub
 
@@ -868,9 +886,9 @@ enddisplaylist:
       .LRT = (w1 And &HFFF) >> 2
       .Width = ((.LRS - .ULS) + 1)
       .Height = ((.LRT - .ULT) + 1)
-      .TexBytes = (.Width * .Height) * 2
+      .TexBytes = (.Width*.Height)*2
       If .TexBytes >> 16 = &HFFFF Then
-        .TexBytes = (.TexBytes << 16 >> 16) * 2
+        .TexBytes = (.TexBytes << 16 >> 16)*2
       End If
     End With
 
@@ -917,18 +935,18 @@ enddisplaylist:
       Dim Mask_Height As UInteger = 1 << .MaskT
 
       Dim Line_Height As UInteger = 0
-      If Line_Width > 0 Then Line_Height = Min(MaxTexel / Line_Width, Tile_Height)
+      If Line_Width > 0 Then Line_Height = Min(MaxTexel/Line_Width, Tile_Height)
 
-      If .MaskS > 0 And ((Mask_Width * Mask_Height) <= MaxTexel) Then
+      If .MaskS > 0 And ((Mask_Width*Mask_Height) <= MaxTexel) Then
         .Width = Mask_Width
-      ElseIf ((Tile_Width * Tile_Height) <= MaxTexel) Then
+      ElseIf ((Tile_Width*Tile_Height) <= MaxTexel) Then
         .Width = Tile_Width
       Else
         .Width = Line_Width
       End If
-      If .MaskT > 0 And ((Mask_Width * Mask_Height) <= MaxTexel) Then
+      If .MaskT > 0 And ((Mask_Width*Mask_Height) <= MaxTexel) Then
         .Height = Mask_Height
-      ElseIf ((Tile_Width * Tile_Height) <= MaxTexel) Then
+      ElseIf ((Tile_Width*Tile_Height) <= MaxTexel) Then
         .Height = Tile_Height
       Else
         .Height = Line_Height
@@ -987,8 +1005,8 @@ enddisplaylist:
         .ShiftT /= (1 << .TShiftT)
       End If
 
-      .TextureHRatio = ((.T_Scale * .ShiftT) / 32 / .LoadHeight)
-      .TextureWRatio = ((.S_Scale * .ShiftS) / 32 / .LoadWidth)
+      .TextureHRatio = ((.T_Scale*.ShiftT)/32/.LoadHeight)
+      .TextureWRatio = ((.S_Scale*.ShiftS)/32/.LoadWidth)
     End With
   End Sub
 
@@ -1020,11 +1038,11 @@ enddisplaylist:
       Select Case .PaletteBank
         Case RamBanks.CurrentBank
           For i As Integer = 0 To paletteSizeMinus1
-            palette16(i) = IoUtil.ReadUInt16(RamBanks.ZFileBuffer, .PaletteOffset + 2 * i)
+            palette16(i) = IoUtil.ReadUInt16(RamBanks.ZFileBuffer, .PaletteOffset + 2*i)
           Next
         Case 2
           For i As Integer = 0 To paletteSizeMinus1
-            palette16(i) = IoUtil.ReadUInt16(RamBanks.ZSceneBuffer, .PaletteOffset + 2 * i)
+            palette16(i) = IoUtil.ReadUInt16(RamBanks.ZSceneBuffer, .PaletteOffset + 2*i)
           Next
       End Select
 
@@ -1107,33 +1125,33 @@ enddisplaylist:
   End Sub
 
   Private Sub SETFOGCOLOR(ByVal CMDParams() As Byte)
-    ShaderManager.SetFogColor(CMDParams(4) / 255,
-                              CMDParams(5) / 255,
-                              CMDParams(6) / 255,
-                              CMDParams(7) / 255)
+    ShaderManager.SetFogColor(CMDParams(4)/255,
+                              CMDParams(5)/255,
+                              CMDParams(6)/255,
+                              CMDParams(7)/255)
   End Sub
 
   Private Sub ENVCOLOR(ByVal CMDParams() As Byte)
-    ShaderManager.SetEnvironmentColor(CMDParams(4) / 255,
-                                      CMDParams(5) / 255,
-                                      CMDParams(6) / 255,
-                                      CMDParams(7) / 255)
+    ShaderManager.SetEnvironmentColor(CMDParams(4)/255,
+                                      CMDParams(5)/255,
+                                      CMDParams(6)/255,
+                                      CMDParams(7)/255)
   End Sub
 
   Private Sub SETPRIMCOLOR(ByVal CMDParams() As Byte)
-    ShaderManager.SetPrimaryColor(CMDParams(2) / 255,
-                                  CMDParams(3) / 255,
-                                  CMDParams(4) / 255,
-                                  CMDParams(5) / 255,
-                                  CMDParams(6) / 255,
-                                  CMDParams(7) / 255)
+    ShaderManager.SetPrimaryColor(CMDParams(2)/255,
+                                  CMDParams(3)/255,
+                                  CMDParams(4)/255,
+                                  CMDParams(5)/255,
+                                  CMDParams(6)/255,
+                                  CMDParams(7)/255)
   End Sub
 
   Private Sub SETBLENDCOLOR(ByVal CMDParams() As Byte)
-    ShaderManager.SetBlendColor(CMDParams(4) / 255,
-                                CMDParams(5) / 255,
-                                CMDParams(6) / 255,
-                                CMDParams(7) / 255)
+    ShaderManager.SetBlendColor(CMDParams(4)/255,
+                                CMDParams(5)/255,
+                                CMDParams(6)/255,
+                                CMDParams(7)/255)
   End Sub
 
 #End Region

@@ -68,6 +68,7 @@
     <Compile Include="animation\link\LinkAnimetionStructs.cs" />
     <Compile Include="animation\NormalAnimationStructs.cs" />
     <Compile Include="data\Structs.cs" />
+    <Compile Include="util\Debug.cs" />
     <Compile Include="displaylist\DlManager.cs" />
     <Compile Include="displaylist\DlShaderManager.cs" />
     <Compile Include="GlobalSuppressions.cs" />
@@ -126,5 +127,6 @@
     <Content Include="License.txt" />
     <Content Include="ReleaseNotev0.5.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
