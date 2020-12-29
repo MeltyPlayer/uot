@@ -84,8 +84,11 @@ Public Class F3DEX2_Parser
 #End Region
 
 #Region "Hacks"
+  Private FaceHack As IFaceHack
   Private HackEnvColor() As Byte
   Public Sub EnableHacksFor(filename As String)
+    FaceHack = FaceHacks.Get(filename)
+
     Dim envColor() As Byte = EnvironmentColorHacks.GetColorForObject(filename)
     HackEnvColor = envColor
   End Sub
@@ -845,6 +848,11 @@ enddisplaylist:
 
   Private Sub SETTIMG(w0 As UInt32, w1 As UInt32, ByVal paletteMode As Boolean)
     Dim address As UInt32 = w1
+
+    If FaceHack IsNot Nothing Then
+      address = FaceHack.MapTextureAddress(address)
+    End If
+
     Dim tmpBank As Integer
     Dim tmpOff As Integer
     IoUtil.SplitAddress(address, tmpBank, tmpOff)

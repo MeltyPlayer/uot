@@ -71,6 +71,8 @@
     <Compile Include="data\Structs.cs" />
     <Compile Include="hacks\AnimatedTextureHacks.cs" />
     <Compile Include="hacks\EnvironmentColorHacks.cs" />
+    <Compile Include="hacks\face\FaceHacks.cs" />
+    <Compile Include="hacks\face\LinkFaceHack.cs" />
     <Compile Include="util\Debug.cs" />
     <Compile Include="displaylist\DlManager.cs" />
     <Compile Include="displaylist\DlShaderManager.cs" />
