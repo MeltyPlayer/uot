@@ -83,9 +83,23 @@ Public Class F3DEX2_Parser
 
 #End Region
 
-#Region "F3DEX2 TO OPENGL DISPLAY LIST"
+#Region "Hacks"
+  Private HackEnvColor() As Byte
+  Public Sub EnableHacksFor(filename As String)
+    Dim envColor() As Byte = EnvironmentColorHacks.GetColorForObject(filename)
+    HackEnvColor = envColor
+  End Sub
+#End Region
 
+#Region "F3DEX2 TO OPENGL DISPLAY LIST"
   Public Sub ParseDL(ByVal DL As N64DisplayList)
+    If HackEnvColor IsNot Nothing Then
+      ShaderManager.SetEnvironmentColor(HackEnvColor(0) / 255.0F,
+                                        HackEnvColor(1) / 255.0F,
+                                        HackEnvColor(2) / 255.0F,
+                                        HackEnvColor(3) / 255.0F)
+    End If
+
     For i As Integer = 0 To DL.Commands.Length - 1
       With DL.Commands(i)
         If ParseMode = Parse.EVERYTHING Then
@@ -199,7 +213,7 @@ branchz:
               Debug.NotImplemented()
 
             Case F3DZEX.ENDDL
-              enddisplaylist:
+enddisplaylist:
               Reset()
               Exit Sub
           End Select

@@ -3921,7 +3921,10 @@ Public Class MainWin
   End Sub
 
   Private Sub DrawDLArray(ByVal DLists() As N64DisplayList, ByVal SelectionMode As Integer)
+    ' Used for some hacks.
     Time.UpdateCurrent()
+
+    DLParser.EnableHacksFor(ObjectFilename)
 
     If UseStaticDlModel And DlModel.IsComplete Then
       Dim animation As IAnimation
@@ -7508,6 +7511,8 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     Dim CurrentNodeParent As String = FileTree.SelectedNode.Parent.Text
     Dim filetype As Integer = FileTree.SelectedNode.Parent.Index
     Dim filename As Integer = FileTree.SelectedNode.Index
+
+    ObjectFilename = ""
 
     ROMFileStream.Close()
     ROMFileStream = New FileStream(DefROM, FileMode.Open)

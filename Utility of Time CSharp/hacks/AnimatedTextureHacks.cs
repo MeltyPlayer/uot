@@ -5,6 +5,7 @@
       // different handlers.
       var uuid = tileDescriptor.Uuid;
 
+      // Water in the river to Zora's Domain.
       if (uuid == 0x02008D58) {
         return -Time.CurrentFrac;
       }
