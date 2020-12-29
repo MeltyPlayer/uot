@@ -33,6 +33,7 @@ Public Class F3DEX2_Parser
 
   Private JankTileDescriptors(- 1) As TileDescriptor
   Private JankCache As New TextureCache
+  Private JankTextures(1) As Texture
 
   ' TODO: Support the second texture being a mipmap in LOD mode.
   ' TODO: Figure out and document how tile selectors are selected.
@@ -468,6 +469,25 @@ branchz:
     End If
   End Sub
 
+  Private Function GetTexture(index As Integer) As Texture
+    If UseJank Then
+      Dim texture As Texture = JankTextures(index)
+      Dim tileDescriptor As TileDescriptor = JankTileDescriptors(index)
+
+      If texture IsNot Nothing Then
+        If texture.TileDescriptor.Uuid = tileDescriptor.Uuid Then
+          Return texture
+        End If
+      End If
+
+      texture = JankCache(tileDescriptor)
+      JankTextures(index) = texture
+
+      Return texture
+    End If
+    Throw New NotImplementedException()
+  End Function
+
   Private Function SearchTexCache(ByVal tileDescriptor As TileDescriptor) As Texture
     If UseJank Then
       Return JankCache(tileDescriptor)
@@ -588,10 +608,10 @@ branchz:
       Gl.glEnable(Gl.GL_TEXTURE_2D)
       Gl.glActiveTextureARB(Gl.GL_TEXTURE0_ARB)
 
-      Dim tileDescriptor0 As TileDescriptor = GetSelectedTileDescriptor(0)
-      Dim texture0 As Texture = SearchTexCache(tileDescriptor0)
+      Dim texture0 As Texture = GetTexture(0)
 
       If texture0 Is Nothing Then
+        Dim tileDescriptor0 As TileDescriptor = GetSelectedTileDescriptor(0)
         Dim targetBuffer0 As IRamBank = RamBanks.GetBankByIndex(tileDescriptor0.ImageBank)
         If targetBuffer0 IsNot Nothing Then
           LoadTex(targetBuffer0, 0)
@@ -609,10 +629,11 @@ branchz:
 
       If ShaderManager.MultiTexture Then
         Gl.glActiveTextureARB(Gl.GL_TEXTURE1_ARB)
-        Dim texture1 As Texture = SearchTexCache(GetSelectedTileDescriptor(1))
+        Dim texture1 As Texture = GetTexture(1)
 
         If texture1 Is Nothing Then
-          Select Case GetSelectedTileDescriptor(1).ImageBank
+          Dim tileDescriptor1 As TileDescriptor = GetSelectedTileDescriptor(1)
+          Select Case tileDescriptor1.ImageBank
             Case RamBanks.CurrentBank
               LoadTex(RamBanks.ZFileBuffer, 1)
             Case 2
@@ -625,7 +646,7 @@ branchz:
               ' TODO: Should throw an error for unsupported banks.
           End Select
 
-          texture1 = SearchTexCache(tileDescriptor0)
+          texture1 = SearchTexCache(tileDescriptor1)
           DlModel.UpdateTexture(1, texture1)
         End If
 
@@ -680,17 +701,27 @@ branchz:
   End Sub
 
   Private Sub BindTextures(ByRef vertexIndex As UInteger)
-    Dim tileDescriptor0 As TileDescriptor = GetSelectedTileDescriptor(0)
-    Dim tileDescriptor1 As TileDescriptor = GetSelectedTileDescriptor(1)
+    ' TODO: These lookups are slow, cache these.
+    Dim texture0 As Texture = GetTexture(0)
+    Dim tileDescriptor0 As TileDescriptor
+    If texture0 IsNot Nothing Then
+      tileDescriptor0 = texture0.TileDescriptor
+    End If
 
     If MultiTexCoord Then
-      Gl.glMultiTexCoord2f(Gl.GL_TEXTURE0_ARB, VertexCache.u(vertexIndex)*tileDescriptor0.TextureWRatio,
-                           VertexCache.v(vertexIndex)*tileDescriptor0.TextureHRatio)
-      Gl.glMultiTexCoord2f(Gl.GL_TEXTURE1_ARB, VertexCache.u(vertexIndex)*tileDescriptor1.TextureWRatio,
-                           VertexCache.v(vertexIndex)*tileDescriptor1.TextureHRatio)
+      Dim texture1 As Texture = GetTexture(1)
+      Dim tileDescriptor1 As TileDescriptor
+      If texture1 IsNot Nothing Then
+        tileDescriptor1 = texture1.TileDescriptor
+      End If
+
+      Gl.glMultiTexCoord2f(Gl.GL_TEXTURE0_ARB, VertexCache.u(vertexIndex) * tileDescriptor0.TextureWRatio * tileDescriptor0.UScaling,
+                           VertexCache.v(vertexIndex) * tileDescriptor0.TextureHRatio * tileDescriptor0.VScaling)
+      Gl.glMultiTexCoord2f(Gl.GL_TEXTURE1_ARB, VertexCache.u(vertexIndex) * tileDescriptor1.TextureWRatio * tileDescriptor1.UScaling,
+                           VertexCache.v(vertexIndex) * tileDescriptor1.TextureHRatio * tileDescriptor1.VScaling)
     Else
-      Gl.glTexCoord2f(VertexCache.u(vertexIndex)*tileDescriptor0.TextureWRatio,
-                      VertexCache.v(vertexIndex)*tileDescriptor0.TextureHRatio)
+      Gl.glTexCoord2f(VertexCache.u(vertexIndex) * tileDescriptor0.TextureWRatio * tileDescriptor0.UScaling,
+                      VertexCache.v(vertexIndex) * tileDescriptor0.TextureHRatio * tileDescriptor0.VScaling)
     End If
   End Sub
 
@@ -1065,6 +1096,7 @@ branchz:
       Dim generator As New OglTextureConverter
       generator.GenerateAndAddToCache(Data, tileDescriptor.Offset, tileDescriptor,
                                       GetSelectedTileDescriptor(0).Palette32, JankCache, True)
+      JankTextures(ID) = JankCache(tileDescriptor)
     Else
       Tmem.LoadTexture(tileDescriptor)
     End If

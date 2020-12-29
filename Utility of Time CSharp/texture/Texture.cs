@@ -8,7 +8,7 @@ namespace UoT {
   ///   Instance of a valid texture.
   /// </summary>
   public class Texture {
-    private TileDescriptor TileDescriptor { get; }
+    public TileDescriptor TileDescriptor { get; }
     private readonly byte[] rgba_;
 
     public Texture(TileDescriptor tileDescriptor, byte[] rgba, bool save = false) {
@@ -24,7 +24,7 @@ namespace UoT {
                        "_" +
                        size +
                        "_" +
-                       uuid +
+                       uuid.ToString("X8") +
                        ".bmp";
         this.SaveToFile(filename);
       }
