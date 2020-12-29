@@ -333,7 +333,7 @@ enddisplaylist:
           TempRSPMatrix.N64Mat(i) = RamBanks.ZSceneBuffer(Address + i)
         Next
       Case &H80
-        Gl.glPopMatrix()
+        ModelViewMatrixTransformer.Pop()
         Exit Sub
       Case Else
         Exit Sub
@@ -362,11 +362,12 @@ enddisplaylist:
     '        Gl.glPushMatrix()
     '    End If
     'End If
-    Gl.glPushMatrix()
+    ModelViewMatrixTransformer.Push()
 
     'If Param And F3DZEX.MTX_LOAD > 0 Then
     '    Gl.glLoadMatrixf(mtxPtr)
     'Else
+    ' TODO Should be able to multiply this in.
     Gl.glMultMatrixf(mtxPtr)
     'End If
 
