@@ -708,6 +708,13 @@ branchz:
       tileDescriptor0 = texture0.TileDescriptor
     End If
 
+    Dim u As Double = VertexCache.u(vertexIndex)
+    Dim v As Double = VertexCache.v(vertexIndex)
+
+    Dim u0 As Double = u
+    Dim v0 As Double = v
+    GetUv(tileDescriptor0, u0, v0)
+
     If MultiTexCoord Then
       Dim texture1 As Texture = GetTexture(1)
       Dim tileDescriptor1 As TileDescriptor
@@ -715,14 +722,20 @@ branchz:
         tileDescriptor1 = texture1.TileDescriptor
       End If
 
-      Gl.glMultiTexCoord2f(Gl.GL_TEXTURE0_ARB, VertexCache.u(vertexIndex) * tileDescriptor0.TextureWRatio * tileDescriptor0.UScaling,
-                           VertexCache.v(vertexIndex) * tileDescriptor0.TextureHRatio * tileDescriptor0.VScaling)
-      Gl.glMultiTexCoord2f(Gl.GL_TEXTURE1_ARB, VertexCache.u(vertexIndex) * tileDescriptor1.TextureWRatio * tileDescriptor1.UScaling,
-                           VertexCache.v(vertexIndex) * tileDescriptor1.TextureHRatio * tileDescriptor1.VScaling)
+      Dim u1 As Double = u
+      Dim v1 As Double = v
+      GetUv(tileDescriptor1, u1, v1)
+
+      Gl.glMultiTexCoord2f(Gl.GL_TEXTURE0_ARB, u0, v0)
+      Gl.glMultiTexCoord2f(Gl.GL_TEXTURE1_ARB, u1, v1)
     Else
-      Gl.glTexCoord2f(VertexCache.u(vertexIndex) * tileDescriptor0.TextureWRatio * tileDescriptor0.UScaling,
-                      VertexCache.v(vertexIndex) * tileDescriptor0.TextureHRatio * tileDescriptor0.VScaling)
+      Gl.glTexCoord2f(u0, v0)
     End If
+  End Sub
+
+  Private Sub GetUv(tileDescriptor As TileDescriptor, ByRef u As Double, ByRef v As Double)
+    u = u * tileDescriptor.TextureWRatio * tileDescriptor.UScaling
+    v = v * tileDescriptor.TextureHRatio * tileDescriptor.VScaling + AnimatedTextureHacks.GetVOffsetForTexture(tileDescriptor)
   End Sub
 
 

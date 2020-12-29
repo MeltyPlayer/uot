@@ -3921,6 +3921,8 @@ Public Class MainWin
   End Sub
 
   Private Sub DrawDLArray(ByVal DLists() As N64DisplayList, ByVal SelectionMode As Integer)
+    Time.UpdateCurrent()
+
     If UseStaticDlModel And DlModel.IsComplete Then
       Dim animation As IAnimation
       If AnimationEntries IsNot Nothing Then
