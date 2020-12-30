@@ -31,8 +31,8 @@ namespace UoT {
 
     public static short ReadInt16(IList<byte> buffer, uint offset) {
       var bytes = new byte[2];
-      bytes[0] = buffer[(int)offset];
-      bytes[1] = buffer[(int) (offset + 1)];
+      bytes[0] = buffer[(int)offset + 1];
+      bytes[1] = buffer[(int)offset];
 
       Buffer.BlockCopy(bytes, 0, IoUtil.int16Buffer_, 0, 2);
       return IoUtil.int16Buffer_[0];
