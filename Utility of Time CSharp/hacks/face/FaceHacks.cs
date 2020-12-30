@@ -15,6 +15,12 @@
         return new LinkFaceHack();
       }
 
+      if (filename == "object_zl1") {
+        return new ZeldaChildFaceHack();
+      } else if (filename == "object_zl2") {
+        return new ZeldaAdultFaceHack();
+      }
+
       return null;
     }
   }
