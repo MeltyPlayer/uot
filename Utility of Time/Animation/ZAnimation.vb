@@ -151,6 +151,8 @@ badLimbIndexOffset:
   ''' </summary>
   Public Function GetCommonAnimations(Data As IRamBank, ByVal LimbCount As Integer) _
     As IList(Of IAnimation)
+    Dim trackCount As UInteger = LimbCount * 3
+
     Dim animCnt As Integer = -1
     Dim tAnimation(-1) As NormalAnimation
     MainWin.AnimationList.Items.Clear()
@@ -158,10 +160,15 @@ badLimbIndexOffset:
     ' Guesstimating the index by looking for an spot where the header's angle
     ' address and track address have the same bank as the param at the top.
     ' TODO: Is this robust enough?
-    For i As Integer = 16 To Data.Count - 12 - 1 Step 4
+    For i As Integer = 4 To Data.Count - 12 - 1 Step 4
       Dim attemptOffset = i - 4
 
       Dim frameCount As UShort = IoUtil.ReadUInt16(Data, attemptOffset)
+
+      If frameCount = 0 Then
+        Continue For
+      End If
+
       Dim rotationValuesAddress As UInt32 = IoUtil.ReadUInt32(Data, attemptOffset + 4)
       Dim rotationIndicesAddress As UInt32 = IoUtil.ReadUInt32(Data, attemptOffset + 8)
 
@@ -177,33 +184,64 @@ badLimbIndexOffset:
 
       Dim validAttemptOffset As Boolean = RamBanks.IsValidBank(rotationValuesBank) And RamBanks.IsValidBank(rotationIndicesBank)
 
-      ' Offsets should be within bounds of the bank.
+      Dim rotationValuesBuffer As IRamBank
+      Dim rotationIndicesBuffer As IRamBank
       Dim validRotationOffsets As Boolean = False
       If validAttemptOffset Then
-        Dim validRotationValuesOffset As Boolean = rotationValuesOffset < RamBanks.GetBankByIndex(rotationValuesBank).Count
-        Dim validRotationIndicesOffset As Boolean = rotationIndicesOffset < RamBanks.GetBankByIndex(rotationIndicesBank).Count
+        ' 6 is "current file", which is whatever was passed into "Data".
+        If rotationValuesBank = 6 Then
+          rotationValuesBuffer = Data
+        Else
+          rotationValuesBuffer = RamBanks.GetBankByIndex(rotationValuesBank)
+        End If
+        If rotationIndicesBank = 6 Then
+          rotationIndicesBuffer = Data
+        Else
+          rotationIndicesBuffer = RamBanks.GetBankByIndex(rotationIndicesBank)
+        End If
+
+        ' Offsets should be within bounds of the bank.
+        Dim validRotationValuesOffset As Boolean = rotationValuesOffset < rotationValuesBuffer.Count
+        Dim validRotationIndicesOffset As Boolean = rotationIndicesOffset < rotationIndicesBuffer.Count
         validRotationOffsets = validRotationValuesOffset And validRotationIndicesOffset
       End If
 
       ' Angle count should be greater than 0.
       Dim angleCount As UInteger = (rotationIndicesOffset - rotationValuesOffset) \ 2
-      Dim validAngleCount As Boolean = rotationIndicesOffset > rotationValuesOffset And angleCount > 0 And limit < angleCount
+      Dim validAngleCount As Boolean = rotationIndicesOffset > rotationValuesOffset And angleCount > 0
 
       If validAttemptOffset And validRotationOffsets And validAngleCount Then
-
+        ' Should have zeroes present in two spots of the animation header. 
         Dim hasZeroes As Boolean = IoUtil.ReadUInt16(Data, attemptOffset + 2) = 0 And
                                    IoUtil.ReadUInt16(Data, attemptOffset + 14) = 0
+
         ' TODO: Assumes 0 is one of the angles, is this valid?
         'Dim validAngles As Boolean = IoUtil.ReadUInt16(Data, rotationValuesOffset) = 0 And IoUtil.ReadUInt16(Data, rotationValuesOffset + 2) > 0
 
-        If hasZeroes Then
+        ' All values of "tTrack" should be within the bounds of .Angles.
+        Dim validTTracks As Boolean = True
+        For i1 As Integer = 0 To trackCount - 1
+          Dim tTrack As UShort = IoUtil.ReadUInt16(rotationIndicesBuffer, rotationIndicesOffset + 6 + 2 * i1)
+
+          If tTrack < limit Then
+            If tTrack >= angleCount Then
+              validTTracks = False
+              GoTo badTTracks
+            End If
+          ElseIf tTrack + frameCount > angleCount Then
+            validTTracks = False
+            GoTo badTTracks
+          End If
+        Next
+badTTracks:
+
+        If hasZeroes And validTTracks Then
           animCnt += 1
           ReDim Preserve tAnimation(animCnt)
           With tAnimation(animCnt)
             .FrameCount = frameCount
             .TrackOffset = rotationIndicesOffset
 
-            Dim trackCount As UInteger = LimbCount * 3
             .AngleCount = angleCount
 
             If .FrameCount > 0 Then
@@ -212,22 +250,19 @@ badLimbIndexOffset:
 
               MainWin.AnimationList.Items.Add("0x" & Hex(i))
 
-              Dim rotationValuesBuffer As IRamBank = RamBanks.GetBankByIndex(rotationValuesBank)
               For i1 As Integer = 0 To .AngleCount - 1
                 .Angles(i1) = IoUtil.ReadUInt16(rotationValuesBuffer, rotationValuesOffset)
                 rotationValuesOffset += 2
               Next
 
-              Dim rotationIndicesBuffer As IRamBank = RamBanks.GetBankByIndex(rotationIndicesBank)
               .Position.X = IoUtil.ReadInt16(rotationIndicesBuffer, .TrackOffset + 0)
               .Position.Y = IoUtil.ReadInt16(rotationIndicesBuffer, .TrackOffset + 2)
               .Position.Z = IoUtil.ReadInt16(rotationIndicesBuffer, .TrackOffset + 4)
 
               Dim tTrackOffset As Integer = .TrackOffset + 6
 
-              Dim tTrack As UInteger = 0
               For i1 As Integer = 0 To trackCount - 1
-                tTrack = IoUtil.ReadUInt16(rotationIndicesBuffer, tTrackOffset)
+                Dim tTrack As UShort = IoUtil.ReadUInt16(rotationIndicesBuffer, tTrackOffset)
 
                 If tTrack < limit Then
                   ' Constant (single value)
@@ -311,6 +346,7 @@ badLimbIndexOffset:
             For f As Integer = 0 To frameCount - 1
               Dim frameOffset As UInteger = animationOffset + f * frameSize
 
+              ' TODO: This should be ReadInt16() instead.
               Dim position As Vec3s
               .Positions(f).X = IoUtil.ReadUInt16(animationData, frameOffset + 0)
               .Positions(f).Y = IoUtil.ReadUInt16(animationData, frameOffset + 2)
