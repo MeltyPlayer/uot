@@ -9,7 +9,7 @@ namespace UoT {
   public interface IModelViewMatrixTransformer {
     void Project(ref double x, ref double y, ref double z);
 
-    IModelViewMatrixTransformer Push();
+    IModelViewMatrixTransformer Push(bool isVisible);
     IModelViewMatrixTransformer Pop();
 
     IModelViewMatrixTransformer Identity();
@@ -23,17 +23,23 @@ namespace UoT {
         double z);
 
     IModelViewMatrixTransformer MultMatrix(Matrix<double> m);
+
+    // Needed to link the vertices of limbs.
+    void GetLastVisible(Matrix<double> m);
+
+    void Get(Matrix<double> m);
+    void Set(Matrix<double> m);
   }
 
   public static class ModelViewMatrixTransformer {
     private static IModelViewMatrixTransformer INSTANCE =
-        new GlModelViewMatrixTransformer();
+        new SoftwareModelViewMatrixTransformer();
 
     public static void Project(ref double x, ref double y, ref double z)
       => ModelViewMatrixTransformer.INSTANCE.Project(ref x, ref y, ref z);
 
-    public static IModelViewMatrixTransformer Push()
-      => ModelViewMatrixTransformer.INSTANCE.Push();
+    public static IModelViewMatrixTransformer Push(bool isVisible)
+      => ModelViewMatrixTransformer.INSTANCE.Push(isVisible);
 
     public static IModelViewMatrixTransformer Pop()
       => ModelViewMatrixTransformer.INSTANCE.Pop();
@@ -54,17 +60,27 @@ namespace UoT {
 
     public static IModelViewMatrixTransformer MultMatrix(Matrix<double> m)
       => ModelViewMatrixTransformer.INSTANCE.MultMatrix(m);
+
+    public static void Get(Matrix<double> m)
+      => ModelViewMatrixTransformer.INSTANCE.Get(m);
+
+    public static void Set(Matrix<double> m)
+      => ModelViewMatrixTransformer.INSTANCE.Set(m);
+
+    public static void GetLastVisible(Matrix<double> m)
+      => ModelViewMatrixTransformer.INSTANCE.GetLastVisible(m);
   }
 
 
   public class GlModelViewMatrixTransformer : IModelViewMatrixTransformer {
     private readonly Matrix<double> buffer_ = Matrix<double>.Build.DenseIdentity(4, 4);
+
     public void Project(ref double x, ref double y, ref double z) {
       GlMatrixUtil.Get(this.buffer_);
       GlMatrixUtil.Project(this.buffer_, ref x, ref y, ref z);
     }
 
-    public IModelViewMatrixTransformer Push() {
+    public IModelViewMatrixTransformer Push(bool isVisible) {
       Gl.glPushMatrix();
       return this;
     }
@@ -97,19 +113,34 @@ namespace UoT {
       Gl.glMultMatrixd(m.ToColumnMajorArray());
       return this;
     }
+
+    public void Get(Matrix<double> m)
+      => GlMatrixUtil.Get(m);
+
+    public void Set(Matrix<double> m)
+      => GlMatrixUtil.Set(m);
+
+    public void GetLastVisible(Matrix<double> m) {
+      throw new NotImplementedException();
+    }
   }
 
   public class
       SoftwareModelViewMatrixTransformer : IModelViewMatrixTransformer {
     private Matrix<double> current_;
-    private Stack<Matrix<double>> stack_ = new Stack<Matrix<double>>();
+    private LinkedList<MatrixNode> stack_ = new LinkedList<MatrixNode>();
 
-    public SoftwareModelViewMatrixTransformer() => this.Push();
+    private class MatrixNode {
+      public bool IsVisible {get; set; }
+      public Matrix<double> Matrix { get; set; }
+    }
+
+    public SoftwareModelViewMatrixTransformer() => this.Push(false);
 
     public void Project(ref double x, ref double y, ref double z)
       => GlMatrixUtil.Project(this.current_, ref x, ref y, ref z);
 
-    public IModelViewMatrixTransformer Push() {
+    public IModelViewMatrixTransformer Push(bool isVisible) {
       Matrix<double> newMatrix;
       if (this.current_ == null) {
         newMatrix = Matrix<double>.Build.DenseIdentity(4, 4);
@@ -117,7 +148,10 @@ namespace UoT {
         newMatrix = this.current_.Clone();
       }
 
-      this.stack_.Push(newMatrix);
+      this.stack_.AddLast(new MatrixNode {
+          IsVisible = isVisible,
+          Matrix = newMatrix
+      });
       this.UpdateCurrent_();
       this.UpdateGl_();
 
@@ -129,14 +163,15 @@ namespace UoT {
         throw new Exception("Popped too far.");
       }
 
-      this.stack_.Pop();
+      this.stack_.RemoveLast();
       this.UpdateCurrent_();
       this.UpdateGl_();
 
       return this;
     }
 
-    private void UpdateCurrent_() => this.current_ = this.stack_.Peek();
+    private void UpdateCurrent_()
+      => this.current_ = this.stack_.Last.Value.Matrix;
 
     private readonly Matrix<double> rhsBuffer_ =
         Matrix<double>.Build.DenseIdentity(4, 4);
@@ -221,9 +256,32 @@ namespace UoT {
       return this;
     }
 
+    public void Get(Matrix<double> m) {
+      this.current_.CopyTo(m);
+    }
+
+    public void Set(Matrix<double> m) {
+      m.CopyTo(this.current_);
+      this.UpdateGl_();
+    }
+
+    public void GetLastVisible(Matrix<double> m) {
+      Matrix<double> last = null;
+      int len = this.stack_.Count;
+      int i = 0;
+      foreach (var node in this.stack_) {
+        if (i < len - 1) {
+          last = node.Matrix;
+        }
+        i++;
+      }
+
+      // Should never be null!
+      last.CopyTo(m);
+    }
 
     private void UpdateGl_() {
-      GlMatrixUtil.Set(this.current_);
+      //GlMatrixUtil.Set(this.current_);
     }
   }
 

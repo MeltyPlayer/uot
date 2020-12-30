@@ -3811,14 +3811,13 @@ Public Class MainWin
 
       UpdateCamLabels()
 
-      ModelViewMatrixTransformer.Push()
-      ModelViewMatrixTransformer.Identity()
-      ModelViewMatrixTransformer.Rotate(CamXRot, 1.0F, 0.0F, 0.0F)
-      ModelViewMatrixTransformer.Rotate(CamYRot, 0.0F, 1.0F, 0.0F)
-      ModelViewMatrixTransformer.Rotate(CamZRot, 0.0F, 0.0F, 1.0F)
-      ModelViewMatrixTransformer.Translate(CamXPos, CamYPos, CamZPos)
+      Gl.glLoadIdentity()
+      Gl.glRotated(CamXRot, 1.0F, 0.0F, 0.0F)
+      Gl.glRotated(CamYRot, 0.0F, 1.0F, 0.0F)
+      Gl.glRotated(CamZRot, 0.0F, 0.0F, 1.0F)
+      Gl.glTranslated(CamXPos, CamYPos, CamZPos)
 
-
+      ModelViewMatrixTransformer.Push(False)
       If LoadedDataType = FileTypes.MAP Then DrawActorBoxes(False)
       If RenderGraphics Then DrawDLArray(GlobalVarsCs.N64DList, ToolID.NONE)
       If RenderCollision Then DrawCollision(CollisionPolies, CollisionVerts, False)
@@ -3943,12 +3942,12 @@ Public Class MainWin
     End If
     If Not DlManager.HasLimbs Then
       For i As Integer = 0 To DLists.Length - 1
-        DrawDL(i, SelectionMode)
+        DrawDL(i, i, SelectionMode)
       Next
     Else
       CurrLimb = 0
 
-      ModelViewMatrixTransformer.Push()
+      ModelViewMatrixTransformer.Push(True)
       If AnimationEntries IsNot Nothing Then
         With AnimationEntries(CurrAnimation)
           Dim startPos As Vec3s = .GetPosition(ZAnimationCounter.CurrFrame)
@@ -3964,34 +3963,44 @@ Public Class MainWin
           ModelViewMatrixTransformer.Translate(x, y, z)
         End With
       End If
-      For CurrLimb = 0 To LimbEntries.Length - 1
-        With BoneColorFactor
-          .r = 0
-          .g = 0
-          .b = 0
-        End With
-        DrawJoint(CurrLimb)
-      Next
+
+      If False Then
+        For CurrLimb = 0 To LimbEntries.Length - 1
+          With BoneColorFactor
+            .r = 0
+            .g = 0
+            .b = 0
+          End With
+          'DrawJoint(CurrLimb)
+        Next
+      End If
+
+      Dim visibleLimbIndex As UInteger = 0
+      DrawJoint(visibleLimbIndex, 0)
+
       ModelViewMatrixTransformer.Pop()
     End If
 
     DlModel.IsComplete = True
   End Sub
 
-  Private Sub DrawJoint(ByVal id As Integer)
-    With LimbEntries(id)
-      If id + 1 < LimbEntries.Length - 1 Then
-        CurrLimb = id + 1
-      Else
-        CurrLimb = id
-      End If
+  Private Sub DrawJoint(ByRef visibleLimbIndex As UInteger, ByVal id As Integer)
 
-      DlModel.SetCurrentLimb(CurrLimb)
+
+    With LimbEntries(id)
+      'If id + 1 < LimbEntries.Length - 1 Then
+      'CurrLimb = id + 1
+      'Else
+      ' CurrLimb = id
+      'End If
+
+      DlModel.SetCurrentLimb(id)
 
       Dim dlIndex As Integer = -1
       If .DisplayList > Nothing Then
         dlIndex = SearchDLCache(GlobalVarsCs.N64DList, .DisplayList) 'index of limb's requested DL, -1 if none found
       End If
+      Dim validDl As Boolean = dlIndex > -1
 
       If DlManager.ShowBones Then 'draw bones
         Gl.glDepthRange(0, 0)
@@ -4017,7 +4026,7 @@ Public Class MainWin
         Gl.glDepthRange(0, 1)
       End If
 
-      ModelViewMatrixTransformer.Push()
+      ModelViewMatrixTransformer.Push(False)
       ModelViewMatrixTransformer.Translate(.x, .y, .z)
 
       If ZAnimationCounter.Advancing Then
@@ -4033,15 +4042,18 @@ Public Class MainWin
         ' ApplyQuaternion2(q)
       End If
 
-      If dlIndex > -1 Then
-        DrawDL(dlIndex, False)
+      If validDl Then
+        DrawDL(visibleLimbIndex, dlIndex, False)
+        visibleLimbIndex += 1
+      Else
+        Dim doSomething = 1
       End If
 
       If .firstChild > -1 Then
         BoneColorFactor.r = 255
         BoneColorFactor.g = 0
         BoneColorFactor.b = 0
-        DrawJoint(.firstChild)
+        DrawJoint(visibleLimbIndex, .firstChild)
       Else
         BoneColorFactor.r = 255
         BoneColorFactor.g = 255
@@ -4054,7 +4066,7 @@ Public Class MainWin
         BoneColorFactor.r = 0
         BoneColorFactor.g = 0
         BoneColorFactor.b = 255
-        DrawJoint(.nextSibling)
+        DrawJoint(visibleLimbIndex, .nextSibling)
       Else
         BoneColorFactor.r = 255
         BoneColorFactor.g = 255
@@ -4148,22 +4160,24 @@ Public Class MainWin
                            CInt(ZAnimationCounter.ElapsedMilliseconds.ToString) & "s"
   End Sub
 
-  Private Sub DrawDL(ByVal index As Integer, ByVal SelectionMode As Integer)
+  Private Sub DrawDL(visibleLimbIndex As Integer, ByVal index As Integer, ByVal SelectionMode As Integer)
+    Dim isFirstVisibleLimb As Boolean = visibleLimbIndex = 0
+
     If Not GlobalVarsCs.N64DList(index).Skip Then
       If SelectionMode = ToolID.NONE Then
-        DLParser.ParseDL(GlobalVarsCs.N64DList(index))
+        DLParser.ParseDL(isFirstVisibleLimb, GlobalVarsCs.N64DList(index))
         If GlobalVarsCs.N64DList(index).Highlight Then
           DLParser.ParseMode = DLParser.Parse.GEOMETRY
           Gl.glBindProgramARB(Gl.GL_FRAGMENT_PROGRAM_ARB, HighlightProg)
           Gl.glEnable(Gl.GL_FRAGMENT_PROGRAM_ARB)
           Gl.glEnable(Gl.GL_BLEND)
           Gl.glBlendFunc(Gl.GL_SRC_ALPHA, Gl.GL_ONE_MINUS_SRC_ALPHA)
-          DLParser.ParseDL(GlobalVarsCs.N64DList(index))
+          DLParser.ParseDL(isFirstVisibleLimb, GlobalVarsCs.N64DList(index))
           DLParser.ParseMode = DLParser.Parse.EVERYTHING
         End If
       ElseIf SelectionMode = ToolID.DLIST Then
         Gl.glColor3ub(GlobalVarsCs.N64DList(index).PickCol.r, GlobalVarsCs.N64DList(index).PickCol.g, GlobalVarsCs.N64DList(index).PickCol.b)
-        DLParser.ParseDL(GlobalVarsCs.N64DList(index))
+        DLParser.ParseDL(isFirstVisibleLimb, GlobalVarsCs.N64DList(index))
         ReadPixel = MousePixelRead(NewMouseX, NewMouseY)
         If _
           ReadPixel(0) = GlobalVarsCs.N64DList(index).PickCol.r And ReadPixel(1) = GlobalVarsCs.N64DList(index).PickCol.g And
@@ -5584,7 +5598,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     Gl.glViewport(0, 0, UoTRender.Width, UoTRender.Height)
     Gl.glMatrixMode(Gl.GL_PROJECTION)
     Gl.glLoadIdentity()
-    Glu.gluPerspective(45.0F, UoTRender.Width / UoTRender.Height, 1.0F, 999999)
+    Glu.gluPerspective(45.0, UoTRender.Width / UoTRender.Height, GlConstants.NEAR, GlConstants.FAR)
     Gl.glMatrixMode(Gl.GL_MODELVIEW)
     Gl.glLoadIdentity()
   End Sub
@@ -5630,7 +5644,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
   End Sub
 
   Private Sub PickItem(ByVal CurrentTool As Integer, ByVal Button As Windows.Forms.MouseButtons)
-    ModelViewMatrixTransformer.Push()
+    ModelViewMatrixTransformer.Push(False)
 
     ModelViewMatrixTransformer.Rotate(CamXRot, 1.0F, 0.0F, 0.0F)
     ModelViewMatrixTransformer.Rotate(CamYRot, 0.0F, 1.0F, 0.0F)

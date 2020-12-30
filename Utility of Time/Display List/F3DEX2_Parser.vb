@@ -1,4 +1,6 @@
 ﻿Imports System.Math
+Imports MathNet.Numerics.LinearAlgebra
+Imports MathNet.Numerics.LinearAlgebra.Double
 Imports Tao.OpenGl
 
 Public Class F3DEX2_Parser
@@ -62,8 +64,7 @@ Public Class F3DEX2_Parser
   Private v0 As Byte = 0
   Private n0 As Byte = 0
 
-  Private VERTEX_CACHE_MAX = 31
-  Private VertexCache As N64Vertex
+  Private vertexCache As New VertexCache
 
   Private FullAlphaCombiner As Boolean = False
   Private ModColorWithAlpha As Boolean = False
@@ -84,24 +85,65 @@ Public Class F3DEX2_Parser
 #End Region
 
 #Region "Hacks"
+
   Private FaceHack As IFaceHack
   Private HackEnvColor() As Byte
+
   Public Sub EnableHacksFor(filename As String)
     FaceHack = FaceHacks.Get(filename)
 
     Dim envColor() As Byte = EnvironmentColorHacks.GetColorForObject(filename)
     HackEnvColor = envColor
   End Sub
+
 #End Region
 
 #Region "F3DEX2 TO OPENGL DISPLAY LIST"
-  Public Sub ParseDL(ByVal DL As N64DisplayList)
+
+  Private MatrixMap As New Dictionary(Of UInteger, Matrix(Of Double))
+
+  Public Sub ParseDL(isFirstVisibleLimb As Boolean, ByVal DL As N64DisplayList)
     If HackEnvColor IsNot Nothing Then
       ShaderManager.SetEnvironmentColor(HackEnvColor(0) / 255.0F,
                                         HackEnvColor(1) / 255.0F,
                                         HackEnvColor(2) / 255.0F,
                                         HackEnvColor(3) / 255.0F)
     End If
+
+    ' TODO: Ingo and Talon don't follow the "first visible limb" rule, it seems
+    ' like the expected matrix is on an invisible limb?
+    ' TODO: Clean up this logic.
+
+    Dim isSubLimb As Boolean = False
+    Dim subLimbMatrix As Matrix(Of Double)
+
+    ' First visible limb is &HD000000
+    If isFirstVisibleLimb Then
+      Dim rootMatrix As Matrix(Of Double)
+      Dim targetAddress = &HD000000
+      If Not MatrixMap.TryGetValue(targetAddress, rootMatrix) Then
+        rootMatrix = New DenseMatrix(4, 4)
+        MatrixMap.Add(targetAddress, rootMatrix)
+      End If
+      ModelViewMatrixTransformer.Get(rootMatrix)
+    Else
+      For i As Integer = 0 To DL.Commands.Length - 1
+        If DL.Commands(i).CMDParams(0) = F3DZEX.VTX Then
+          If DL.Commands(i + 1).CMDParams(0) = F3DZEX.MTX Then
+            isSubLimb = True
+
+            Dim targetAddress = DL.Commands(i + 1).CMDHigh
+            If Not MatrixMap.TryGetValue(targetAddress, subLimbMatrix) Then
+              subLimbMatrix = New DenseMatrix(4, 4)
+              MatrixMap.Add(targetAddress, subLimbMatrix)
+            End If
+            ModelViewMatrixTransformer.Get(subLimbMatrix)
+            Exit For
+          End If
+        End If
+      Next
+    End If
+
 
     For i As Integer = 0 To DL.Commands.Length - 1
       With DL.Commands(i)
@@ -181,17 +223,63 @@ seothtermodelow:
 
             Case F3DZEX.MTX
 matrix:
-              MTX(.CMDLow, .CMDHigh)
+              ' MTX(.CMDLow, .CMDHigh)
+              Dim targetAddress As UInteger = .CMDHigh
+              If Not isSubLimb Then
+                Dim matrix As Matrix(Of Double)
+                If Not MatrixMap.TryGetValue(targetAddress, matrix) Then
+                  matrix = New DenseMatrix(4, 4)
+                  MatrixMap.Add(targetAddress, matrix)
+                End If
+                ModelViewMatrixTransformer.Get(matrix)
+              Else
+                Dim isFirst As Boolean = i = 0
+                Dim previousIsVtx As Boolean = False
+
+                If Not isFirst Then
+                  previousIsVtx = DL.Commands(i - 1).CMDParams(0) = F3DZEX.VTX
+                End If
+
+                If isFirst Or Not previousIsVtx Then
+                  ' TODO: This is probably not robust.
+
+                  If MatrixMap.ContainsKey(targetAddress) Then
+                    Dim temp As Matrix(Of Double) = MatrixMap(targetAddress)
+                    ModelViewMatrixTransformer.Set(temp)
+                  Else
+                    ' TODO: Do not create a new matrix each frame.
+                    Dim m As New DenseMatrix(4, 4)
+                    ModelViewMatrixTransformer.GetLastVisible(m)
+                    ModelViewMatrixTransformer.Set(m)
+                  End If
+                End If
+              End If
 
             Case F3DZEX.VTX
 vertex:
-              If DL.Commands(i + 1).CMDParams(0) <> F3DZEX.CULLDL And DL.Commands(i + 1).CMDParams(0) <> F3DZEX.MTX Then
-                VTX(.CMDLow, .CMDHigh)
+              Dim nextIsNotCulling As Boolean = DL.Commands(i + 1).CMDParams(0) <> F3DZEX.CULLDL
+
+              ' TODO: Is this robust?
+              ' For all animated models, at the beginning of each limb's DL it
+              ' will bring some of the previous DL's vertices back to link them
+              ' together. Then, in the next command, it will use a matrix to
+              ' set up this limb's translation and rotation.
+              ' We've already done this outside the method, so we need to pop
+              ' back up to a previous matrix.
+              Dim nextIsNotMatrix As Boolean = DL.Commands(i + 1).CMDParams(0) <> F3DZEX.MTX
+
+              If nextIsNotCulling Then
+                If nextIsNotMatrix Then
+                  VTX(.CMDLow, .CMDHigh)
+                ElseIf isSubLimb Then
+                  VTX(.CMDLow, .CMDHigh)
+                  ModelViewMatrixTransformer.Set(subLimbMatrix)
+                End If
               End If
 
             Case F3DZEX.MODIFYVTX
 modifyvertex:
-              MODIFYVTX(VertexCache, .CMDParams)
+              MODIFYVTX(.CMDParams)
 
             Case F3DZEX.TRI1
 onetriangle:
@@ -248,7 +336,6 @@ enddisplaylist:
 
             Case F3DZEX.ENDDL
               GoTo enddisplaylist
-
           End Select
         End If
       End With
@@ -362,7 +449,7 @@ enddisplaylist:
     '        Gl.glPushMatrix()
     '    End If
     'End If
-    ModelViewMatrixTransformer.Push()
+    ModelViewMatrixTransformer.Push(True)
 
     'If Param And F3DZEX.MTX_LOAD > 0 Then
     '    Gl.glLoadMatrixf(mtxPtr)
@@ -374,19 +461,24 @@ enddisplaylist:
     gch.Free()
   End Sub
 
-  Private Sub MODIFYVTX(ByRef VertCache As N64Vertex, ByVal CMDParams() As Byte)
-    Dim Vertex As Integer = (IoUtil.ReadUInt16(CMDParams, 2) And &HFFF)/2
+  Private Sub MODIFYVTX(ByVal CMDParams() As Byte)
+    Dim i As Integer = (IoUtil.ReadUInt16(CMDParams, 2) And &HFFF) / 2
     Dim Target As Integer = CMDParams(1)
+
+    Dim vertex As Vertex = vertexCache(i)
+
     Select Case Target
       Case &H10
-        VertCache.r(Vertex) = CMDParams(4)
-        VertCache.g(Vertex) = CMDParams(5)
-        VertCache.b(Vertex) = CMDParams(6)
-        VertCache.a(Vertex) = CMDParams(7)
+        vertex.R = CMDParams(4)
+        vertex.G = CMDParams(5)
+        vertex.B = CMDParams(6)
+        vertex.A = CMDParams(7)
       Case &H14
-        VertCache.u(Vertex) = CShort(IoUtil.ReadUInt16(CMDParams, 4))
-        VertCache.v(Vertex) = CShort(IoUtil.ReadUInt16(CMDParams, 6))
+        vertex.U = CShort(IoUtil.ReadUInt16(CMDParams, 4))
+        vertex.V = CShort(IoUtil.ReadUInt16(CMDParams, 6))
     End Select
+
+    vertexCache(i) = vertex
   End Sub
 
   Private Function GEOMETRYMODE(ByVal w0 As UInt32, ByVal w1 As UInt32)
@@ -524,24 +616,24 @@ enddisplaylist:
 
     Select Case VertexSeg
       Case RamBanks.CurrentBank
-        FillVertexCache(RamBanks.ZFileBuffer, VertexCache, VertexSeg, VertBufferOff, n0, v0)
+        FillVertexCache(RamBanks.ZFileBuffer, VertexSeg, VertBufferOff, n0, v0)
 
       Case 2
-        FillVertexCache(RamBanks.ZSceneBuffer, VertexCache, VertexSeg, VertBufferOff, n0, v0)
-      Case 4
+        FillVertexCache(RamBanks.ZSceneBuffer, VertexSeg, VertBufferOff, n0, v0)
 
-      Case 5
-
+      Case Else
+        Dim somethingIsWrong = True
     End Select
   End Sub
 
-  Private Function FillVertexCache(ByVal Data As IList(Of Byte), ByRef Cache As N64Vertex, ByVal DataSource As Byte,
+  Private Function FillVertexCache(ByVal Data As IList(Of Byte), ByVal DataSource As Byte,
                                    ByVal Offset As Integer, ByVal n0 As Integer, ByVal v0 As Integer)
     Select Case DataSource
       Case RamBanks.CurrentBank
         Dim x As Short
         Dim y As Short
         Dim z As Short
+
         Dim u As Short
         Dim v As Short
         Dim r As Byte
@@ -549,45 +641,53 @@ enddisplaylist:
         Dim b As Byte
         Dim a As Byte
         For i2 As Integer = v0 To (v0 + n0) - 1
-          x = CShort(IoUtil.ReadUInt16(Data, Offset))
-          y = CShort(IoUtil.ReadUInt16(Data, Offset + 2))
-          z = CShort(IoUtil.ReadUInt16(Data, Offset + 4))
+          x = IoUtil.ReadInt16(Data, Offset)
+          y = IoUtil.ReadInt16(Data, Offset + 2)
+          z = IoUtil.ReadInt16(Data, Offset + 4)
+
+          ModelViewMatrixTransformer.Project(x, y, z)
+
           u = CShort(IoUtil.ReadUInt16(Data, Offset + 8))
           v = CShort(IoUtil.ReadUInt16(Data, Offset + 10))
           r = Data(Offset + 12)
           g = Data(Offset + 13)
           b = Data(Offset + 14)
           a = Data(Offset + 15)
-          With Cache
-            'Vertex x(l)-y(w)-z(d) coordinates
-            .x(i2) = x
-            .y(i2) = y
-            .z(i2) = z
 
-            'Texture coordinates
-            .u(i2) = u
-            .v(i2) = v
+          Dim newVertex As Vertex
 
-            'Vertex colors
-            .r(i2) = r
-            .g(i2) = g
-            .b(i2) = b
-            .a(i2) = a
+          newVertex.Populated = True
 
-            DlModel.UpdateVertex(i2, Function(vertex) As VertexParams
-                                       vertex.X = x
-                                       vertex.Y = y
-                                       vertex.Z = z
+          'Vertex x(l)-y(w)-z(d) coordinates
+          newVertex.X = x
+          newVertex.Y = y
+          newVertex.Z = z
 
-                                       vertex.U = u
-                                       vertex.V = v
+          'Texture coordinates
+          newVertex.U = u
+          newVertex.V = v
 
-                                       vertex.R = r
-                                       vertex.G = g
-                                       vertex.B = b
-                                       vertex.A = a
-                                     End Function)
-          End With
+          'Vertex colors
+          newVertex.R = r
+          newVertex.G = g
+          newVertex.B = b
+          newVertex.A = a
+
+          vertexCache(i2) = newVertex
+
+          DlModel.UpdateVertex(i2, Function(vertex) As VertexParams
+                                     vertex.X = x
+                                     vertex.Y = y
+                                     vertex.Z = z
+
+                                     vertex.U = u
+                                     vertex.V = v
+
+                                     vertex.R = r
+                                     vertex.G = g
+                                     vertex.B = b
+                                     vertex.A = a
+                                   End Function)
           Offset += 16
         Next
       Case Else
@@ -718,7 +818,7 @@ enddisplaylist:
     TileDescriptors(tileDescriptorIndex) = tileDescriptor
   End Sub
 
-  Private Sub BindTextures(ByRef vertexIndex As UInteger)
+  Private Sub BindTextures(ByRef vertex As Vertex)
     ' TODO: These lookups are slow, cache these.
     Dim texture0 As Texture = GetTexture(0)
     Dim tileDescriptor0 As TileDescriptor
@@ -726,8 +826,8 @@ enddisplaylist:
       tileDescriptor0 = texture0.TileDescriptor
     End If
 
-    Dim u As Double = VertexCache.u(vertexIndex)
-    Dim v As Double = VertexCache.v(vertexIndex)
+    Dim u As Double = vertex.U
+    Dim v As Double = vertex.V
 
     Dim u0 As Double = u
     Dim v0 As Double = v
@@ -752,8 +852,9 @@ enddisplaylist:
   End Sub
 
   Private Sub GetUv(tileDescriptor As TileDescriptor, ByRef u As Double, ByRef v As Double)
-    u = u * tileDescriptor.TextureWRatio * tileDescriptor.UScaling
-    v = v * tileDescriptor.TextureHRatio * tileDescriptor.VScaling + AnimatedTextureHacks.GetVOffsetForTexture(tileDescriptor)
+    u = u*tileDescriptor.TextureWRatio*tileDescriptor.UScaling
+    v = v*tileDescriptor.TextureHRatio*tileDescriptor.VScaling +
+        AnimatedTextureHacks.GetVOffsetForTexture(tileDescriptor)
   End Sub
 
 
@@ -766,28 +867,35 @@ enddisplaylist:
       Polygons(1) = CMDParams(2) >> 1
       Polygons(2) = CMDParams(3) >> 1
 
+      For Each polygon As Integer In Polygons
+        Dim vertex As Vertex = vertexCache(polygon)
+        If Not vertex.Populated Then
+          Return
+        End If
+      Next
+
       DlModel.AddTriangle(Polygons(0), Polygons(1), Polygons(2))
 
       If ParseMode = Parse.EVERYTHING Then
         Gl.glBegin(Gl.GL_TRIANGLES)
         For i As Integer = 0 To 2
-          BindTextures(Polygons(i))
+          Dim vertex As Vertex = vertexCache(Polygons(i))
+          BindTextures(vertex)
 
           If ShaderManager.EnableLighting Then
             If (Not ShaderManager.EnableCombiner) Then Gl.glColor4fv(ShaderManager.PrimColor) Else Gl.glColor3f(1, 1, 1)
-            Gl.glNormal3b(CByte(VertexCache.r(Polygons(i))), CByte(VertexCache.g(Polygons(i))),
-                          CByte(VertexCache.b(Polygons(i))))
+            Gl.glNormal3b(vertex.R, vertex.G, vertex.B)
           Else
-            Gl.glColor4ub(VertexCache.r(Polygons(i)), VertexCache.g(Polygons(i)), VertexCache.b(Polygons(i)),
-                          VertexCache.a(Polygons(i)))
+            Gl.glColor4ub(vertex.R, vertex.G, vertex.B, vertex.A)
           End If
-          Gl.glVertex3f(VertexCache.x(Polygons(i)), VertexCache.y(Polygons(i)), VertexCache.z(Polygons(i)))
+          Gl.glVertex3d(vertex.X, vertex.Y, vertex.Z)
         Next
         Gl.glEnd()
       Else
         Gl.glBegin(Gl.GL_TRIANGLES)
         For i As Integer = 0 To 2
-          Gl.glVertex3f(VertexCache.x(Polygons(i)), VertexCache.y(Polygons(i)), VertexCache.z(Polygons(i)))
+          Dim vertex As Vertex = vertexCache(Polygons(i))
+          Gl.glVertex3d(vertex.X, vertex.Y, vertex.Z)
         Next
         Gl.glEnd()
       End If
@@ -809,29 +917,36 @@ enddisplaylist:
       Polygons(4) = CMDParams(6) >> 1
       Polygons(5) = CMDParams(7) >> 1
 
+      For Each polygon As Integer In Polygons
+        Dim vertex As Vertex = vertexCache(polygon)
+        If Not vertex.Populated Then
+          Return
+        End If
+      Next
+
       DlModel.AddTriangle(Polygons(0), Polygons(1), Polygons(2))
       DlModel.AddTriangle(Polygons(3), Polygons(4), Polygons(5))
 
       If ParseMode = Parse.EVERYTHING Then
         Gl.glBegin(Gl.GL_TRIANGLES)
         For i As Integer = 0 To 5
-          BindTextures(Polygons(i))
+          Dim vertex As Vertex = vertexCache(Polygons(i))
+          BindTextures(vertex)
 
           If ShaderManager.EnableLighting Then
             If (Not ShaderManager.EnableCombiner) Then Gl.glColor4fv(ShaderManager.PrimColor) Else Gl.glColor3f(1, 1, 1)
-            Gl.glNormal3b(CByte(VertexCache.r(Polygons(i))), CByte(VertexCache.g(Polygons(i))),
-                          CByte(VertexCache.b(Polygons(i))))
+            Gl.glNormal3b(vertex.R, vertex.G, vertex.B)
           Else
-            Gl.glColor4ub(VertexCache.r(Polygons(i)), VertexCache.g(Polygons(i)), VertexCache.b(Polygons(i)),
-                          VertexCache.a(Polygons(i)))
+            Gl.glColor4ub(vertex.R, vertex.G, vertex.B, vertex.A)
           End If
-          Gl.glVertex3f(VertexCache.x(Polygons(i)), VertexCache.y(Polygons(i)), VertexCache.z(Polygons(i)))
+          Gl.glVertex3d(vertex.X, vertex.Y, vertex.Z)
         Next
         Gl.glEnd()
       Else
         Gl.glBegin(Gl.GL_TRIANGLES)
         For i As Integer = 0 To 5
-          Gl.glVertex3f(VertexCache.x(Polygons(i)), VertexCache.y(Polygons(i)), VertexCache.z(Polygons(i)))
+          Dim vertex As Vertex = vertexCache(Polygons(i))
+          Gl.glVertex3d(vertex.X, vertex.Y, vertex.Z)
         Next
         Gl.glEnd()
       End If
@@ -1229,6 +1344,8 @@ enddisplaylist:
   Public Sub Initialize()
     Reset()
     KillTexCache()
+    MatrixMap.Clear()
+    vertexCache.Reset()
   End Sub
 
   Public Sub KillTexCache()
@@ -1255,18 +1372,6 @@ enddisplaylist:
     Next
 
     ShaderManager.Reset()
-
-    With VertexCache
-      ReDim .x(VERTEX_CACHE_MAX)
-      ReDim .y(VERTEX_CACHE_MAX)
-      ReDim .z(VERTEX_CACHE_MAX)
-      ReDim .u(VERTEX_CACHE_MAX)
-      ReDim .v(VERTEX_CACHE_MAX)
-      ReDim .r(VERTEX_CACHE_MAX)
-      ReDim .g(VERTEX_CACHE_MAX)
-      ReDim .b(VERTEX_CACHE_MAX)
-      ReDim .a(VERTEX_CACHE_MAX)
-    End With
   End Sub
 
 #End Region
