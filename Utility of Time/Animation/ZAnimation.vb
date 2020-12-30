@@ -13,12 +13,11 @@ Public Class ZAnimation
     model.Reset()
 
     Dim j As Integer = 0
-    For i As Integer = 0 To Data.Count - 1 - 8 Step 4
+    For i As Integer = 0 To Data.Count - 8 Step 4
       limbIndexAddress = IoUtil.ReadUInt32(Data, i)
       IoUtil.SplitAddress(limbIndexAddress, limbIndexBank, limbIndexOffset)
 
       Dim limbCount As UInteger = Data(i + 4)
-      Dim displayListCount As UInteger = Data(i + 8)
 
       Dim limbAddress As UInteger
       Dim limbBank As UInteger
