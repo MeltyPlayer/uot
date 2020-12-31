@@ -50,19 +50,6 @@ namespace UoT {
     public uint DisplayListLow;
   }
 
-  public struct FrameAdvancer {
-    public bool Advancing;
-    public uint FrameNo;
-    public uint CurrFrame;
-    public double Frames;
-    public double CurrentTime;
-    public double LastUpdateTime;
-    public double ElapsedSeconds;
-    public double ElapsedMilliseconds;
-    public double DeltaTime;
-    public double FrameDelta;
-    public double FPS;
-  }
   /* TODO ERROR: Skipped EndRegionDirectiveTrivia */
   /* TODO ERROR: Skipped RegionDirectiveTrivia */
   public struct Rooms {

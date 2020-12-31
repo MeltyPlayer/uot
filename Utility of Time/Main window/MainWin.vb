@@ -3291,7 +3291,6 @@ Public Class MainWin
   Private AnimTick As UInteger = 0
   Private CurrFrame As Double = 0
   Private CurrAnimation As Integer = 0
-  Private LoopAnimation As Boolean = False
   Private DlManager As New DlManager
 
 #End Region
@@ -3925,13 +3924,15 @@ Public Class MainWin
 
     DLParser.EnableHacksFor(ObjectFilename)
 
+    UpdateAnimationTab()
+
     If UseStaticDlModel And DlModel.IsComplete Then
       Dim animation As IAnimation
       If AnimationEntries IsNot Nothing Then
         animation = AnimationEntries(CurrAnimation)
       End If
 
-      DlModel.DrawWithAnimation(animation, ZAnimationCounter.CurrFrame)
+      DlModel.DrawWithAnimation(animation, ZAnimationCounter.Frame)
       Return
     End If
 
@@ -3950,10 +3951,13 @@ Public Class MainWin
       ModelViewMatrixTransformer.Push(True)
       If AnimationEntries IsNot Nothing Then
         With AnimationEntries(CurrAnimation)
-          Dim startPos As Vec3s = .GetPosition(ZAnimationCounter.CurrFrame)
-          Dim endPos As Vec3s = .GetPosition((ZAnimationCounter.CurrFrame + 1) Mod .FrameCount)
+          Dim frameIndex As Integer = Math.Floor(ZAnimationCounter.Frame)
+          Dim frameDelta As Double = ZAnimationCounter.Frame Mod 1
 
-          Dim f As Double = ZAnimationCounter.FrameDelta
+          Dim startPos As Vec3s = .GetPosition(frameIndex)
+          Dim endPos As Vec3s = .GetPosition((frameIndex + 1) Mod .FrameCount)
+
+          Dim f As Double = frameDelta
 
           ' TODO: Move this out.
           Dim x As Double = startPos.X * (1 - f) + endPos.X * f
@@ -4028,11 +4032,6 @@ Public Class MainWin
 
       ModelViewMatrixTransformer.Push(False)
       ModelViewMatrixTransformer.Translate(.x, .y, .z)
-
-      If ZAnimationCounter.Advancing Then
-        AnimParser.Animate(AnimationEntries(CurrAnimation), LoopAnimation, CurrentFrame)
-        UpdateAnimationTab()
-      End If
 
       If AnimationEntries IsNot Nothing Then
         Dim q As Quaternion = AnimParser.GetTrackRot(AnimationEntries(CurrAnimation), ZAnimationCounter, id)
@@ -4155,9 +4154,18 @@ Public Class MainWin
   End Sub
 
   Private Sub UpdateAnimationTab()
-    FrameNo.Text = (ZAnimationCounter.CurrFrame).ToString & "/" & CurrentFrame.Maximum
-    AnimationElapse.Text = CInt(Math.Floor(ZAnimationCounter.ElapsedSeconds)).ToString & ":" &
-                           CInt(ZAnimationCounter.ElapsedMilliseconds.ToString) & "s"
+    ZAnimationCounter.Tick()
+
+    Dim frame As Double = ZAnimationCounter.Frame
+    Dim frameIndex As Integer = Math.Floor(frame)
+
+    CurrentFrame.Value = frameIndex + 1
+    FrameNo.Text = frameIndex.ToString & "/" & ZAnimationCounter.TotalFrames
+
+    Dim seconds As Double = frame / ZAnimationCounter.FrameRate
+    Dim secondsDelta As Double = seconds Mod 1
+    AnimationElapse.Text = CInt(Math.Floor(seconds)).ToString & ":" &
+                           CInt(secondsDelta * 1000).ToString & "s"
   End Sub
 
   Private Sub DrawDL(visibleLimbIndex As Integer, ByVal index As Integer, ByVal SelectionMode As Integer)
@@ -5089,8 +5097,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       ReDim GlobalVarsCs.N64DList(-1)
       AnimationEntries = Nothing
       ReDim LimbEntries(-1)
-      AnimParser.ResetAnimation(AnimationStopWatch, ZAnimationCounter)
-      AnimParser.StopAnimation(AnimationStopWatch, ZAnimationCounter)
+      ZAnimationCounter.Reset()
       CurrentFrame.Value = 1
       DListSelection.Items.Clear()
       AnimationList.Items.Clear()
@@ -7180,8 +7187,8 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       If AnimationList.SelectedIndex > -1 Then
         CurrAnimation = AnimationList.SelectedIndex
         CurrentFrame.Maximum = AnimationEntries(CurrAnimation).FrameCount - 1
-        AnimParser.ResetAnimation(AnimationStopWatch, ZAnimationCounter)
-        AnimParser.StopAnimation(AnimationStopWatch, ZAnimationCounter)
+        ZAnimationCounter.Reset()
+        ZAnimationCounter.TotalFrames = AnimationEntries(CurrAnimation).FrameCount - 1
         CurrentFrame.Value = 1
         AnimationElapse.Text = "00:00s"
         FrameNo.Text = "0/" & CurrentFrame.Maximum.ToString
@@ -7191,13 +7198,13 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
 
   Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
     If AnimationEntries IsNot Nothing And AnimationList.SelectedIndex > -1 Then
-      AnimParser.StartAnimation(AnimationStopWatch, ZAnimationCounter)
+      ZAnimationCounter.IsPlaying = True
     End If
   End Sub
 
   Private Sub CheckBox1_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
     Handles CheckBox1.CheckedChanged
-    If LoopAnimation Then LoopAnimation = False Else LoopAnimation = True
+    ZAnimationCounter.ShouldLoop = CheckBox1.Checked
   End Sub
 
   Private Sub ResetSelectedToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
@@ -7910,7 +7917,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
   End Sub
 
   Private Sub Button5_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button5.Click
-    AnimParser.StopAnimation(AnimationStopWatch, ZAnimationCounter)
+    ZAnimationCounter.IsPlaying = False
   End Sub
 
   Private Sub animationbank_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
@@ -7956,12 +7963,12 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
 
   Private Sub NumericUpDown1_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
     Handles AnimationFPS.ValueChanged, AnimationFPS.ValueChanged
-    ZAnimationCounter.FPS = AnimationFPS.Value
+    ZAnimationCounter.FrameRate = AnimationFPS.Value
   End Sub
 
   Private Sub CurrentFrame_Scroll(ByVal sender As System.Object, ByVal e As System.EventArgs) _
     Handles CurrentFrame.Scroll
-    ZAnimationCounter.CurrFrame = CurrentFrame.Value - 1
+    ZAnimationCounter.Frame = CurrentFrame.Value - 1
     UpdateAnimationTab()
   End Sub
 

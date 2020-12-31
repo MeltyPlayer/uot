@@ -394,7 +394,7 @@ badTTracks:
     Dim yFrames As UShort() = yTrack.Frames
     Dim zFrames As UShort() = zTrack.Frames
 
-    Dim frame As Integer = Counter.CurrFrame
+    Dim frame As Integer = Math.Floor(Counter.Frame)
     Dim xFrame, nextXFrame As Integer
     Dim yFrame, nextYFrame As Integer
     Dim zFrame, nextZFrame As Integer
@@ -421,7 +421,8 @@ badTTracks:
     End If
 
     ' TODO: Zelda's head is upside-down, is this caused here?
-    Dim interp As Quaternion = Quaternion.Slerp(q1, q2, Counter.FrameDelta)
+    Dim frameDelta As Double = Counter.Frame Mod 1
+    Dim interp As Quaternion = Quaternion.Slerp(q1, q2, frameDelta)
     Return Quaternion.Normalize(interp)
   End Function
 
@@ -446,63 +447,5 @@ badTTracks:
       trackFrame = 0
       nextTrackFrame = 0
     End If
-  End Function
-
-  Public Function Animate(animation As IAnimation, LoopAnimation As Boolean,
-                          ByRef CurrentFrame As TrackBar)
-    CountFrames(AnimationStopWatch, ZAnimationCounter)
-    If ZAnimationCounter.FrameNo < animation.FrameCount - 1 Then
-      ZAnimationCounter.CurrFrame = ZAnimationCounter.FrameNo
-      CurrentFrame.Value = ZAnimationCounter.CurrFrame + 1
-    ElseIf ZAnimationCounter.FrameNo = animation.FrameCount - 1 And Not LoopAnimation Then
-      ResetAnimation(AnimationStopWatch, ZAnimationCounter)
-      StopAnimation(AnimationStopWatch, ZAnimationCounter)
-      CurrentFrame.Value = 1
-    Else
-      ResetAnimation(AnimationStopWatch, ZAnimationCounter)
-      StopAnimation(AnimationStopWatch, ZAnimationCounter)
-      StartAnimation(AnimationStopWatch, ZAnimationCounter)
-      CurrentFrame.Value = 1
-    End If
-  End Function
-
-  Public Function CountFrames(ByRef AnimationStopWatch As Stopwatch, ByRef Counter As FrameAdvancer)
-    With Counter
-      .ElapsedSeconds = AnimationStopWatch.Elapsed.TotalSeconds
-      .ElapsedMilliseconds = AnimationStopWatch.Elapsed.Milliseconds
-      .DeltaTime = .ElapsedSeconds - .LastUpdateTime
-
-      ' TODO: Delete unneeded fields.
-      Dim framesAdvanced As Double = .FrameDelta + .DeltaTime * .FPS
-      Dim frameAdvancedInt As Integer = Math.Floor(framesAdvanced)
-
-      .FrameNo += frameAdvancedInt
-      .FrameDelta = framesAdvanced Mod 1
-
-      .LastUpdateTime = AnimationStopWatch.Elapsed.TotalSeconds
-    End With
-  End Function
-
-  Public Function ResetAnimation(ByRef AnimationStopWatch As Stopwatch, ByRef Counter As FrameAdvancer)
-    With Counter
-      .CurrFrame = 0
-      .FrameNo = 0
-      .FrameDelta = 0
-      .ElapsedMilliseconds = 0
-      .ElapsedSeconds = 0
-      .LastUpdateTime = 0
-      .DeltaTime = 0
-    End With
-    AnimationStopWatch.Reset()
-  End Function
-
-  Public Function StartAnimation(ByRef AnimationStopWatch As Stopwatch, ByRef Counter As FrameAdvancer)
-    Counter.Advancing = True
-    AnimationStopWatch.Start()
-  End Function
-
-  Public Function StopAnimation(ByRef AnimationStopWatch As Stopwatch, ByRef Counter As FrameAdvancer)
-    Counter.Advancing = False
-    AnimationStopWatch.Stop()
   End Function
 End Class
