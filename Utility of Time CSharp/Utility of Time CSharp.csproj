@@ -84,9 +84,9 @@
     <Compile Include="gl\GLExtensions.cs" />
     <Compile Include="gl\StaticDlModel.cs" />
     <Compile Include="graphics\Gdp.cs" />
-    <Compile Include="helpers\BetterFilenames.cs" />
+    <Compile Include="memory\BetterFilenames.cs" />
     <Compile Include="gl\ModelViewMatrixTransformer.cs" />
-    <Compile Include="helpers\IoUtil.cs" />
+    <Compile Include="memory\IoUtil.cs" />
     <Compile Include="math\trig\Interpolation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="scene\SceneFileType.cs" />
@@ -97,7 +97,7 @@
     <Compile Include="texture\ColorFormat.cs" />
     <Compile Include="texture\DlTextureManager.cs" />
     <Compile Include="texture\OglTextureConverter.cs" />
-    <Compile Include="data\RamBanks.cs" />
+    <Compile Include="memory\RamBanks.cs" />
     <Compile Include="texture\Texture.cs" />
     <Compile Include="texture\TextureCache.cs" />
     <Compile Include="texture\TileDescriptor.cs" />

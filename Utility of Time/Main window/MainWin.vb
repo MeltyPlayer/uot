@@ -5360,10 +5360,11 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
         ReDim Preserve ROMFiles.Levels(sccount)
         With ROMFiles.Levels(sccount)
           .filename = curfilename
+          .betterFilename = betterFilename
           .startoff = tempstart(nameinc)
           .endoff = tempend(nameinc)
         End With
-        FileTree.Nodes(2).Nodes.Add(curfilename)
+        FileTree.Nodes(2).Nodes.Add(betterFilename)
         mapcount = 0
       ElseIf curfilename.Contains("room_") Then
         ReDim Preserve ROMFiles.Levels(sccount).Maps(mapcount)
