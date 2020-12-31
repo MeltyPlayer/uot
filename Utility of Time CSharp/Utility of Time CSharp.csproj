@@ -77,7 +77,17 @@
     <Compile Include="hacks\face\ZeldaAdultFaceHack.cs" />
     <Compile Include="hacks\face\ZeldaChildFaceHack.cs" />
     <Compile Include="hacks\face\LinkFaceHack.cs" />
-    <Compile Include="ui\main\tabs\animation\AnimationPlaybackManager.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ui\main\tabs\animation\AnimationPlaybackPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ui\main\tabs\animation\AnimationPlaybackPanel.Designer.cs">
+      <DependentUpon>AnimationPlaybackPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="ui\main\tabs\animation\FrameAdvancer.cs" />
     <Compile Include="ui\main\tabs\animation\Interfaces.cs" />
     <Compile Include="util\Debug.cs" />
@@ -110,8 +120,15 @@
     <Compile Include="util\Time.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="TaoButton.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ui\main\tabs\animation\AnimationPlaybackPanel.resx">
+      <DependentUpon>AnimationPlaybackPanel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +156,8 @@
   <ItemGroup>
     <Content Include="License.txt" />
     <Content Include="ReleaseNotev0.5.txt" />
+    <None Include="Resources\Button-Refresh-icon.png" />
+    <None Include="Resources\Button-Stop-icon.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

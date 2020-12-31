@@ -17,6 +17,7 @@
     bool IsPlaying { get; set; }
     bool ShouldLoop { get; set; }
 
+    void Tick();
     void Reset();
   }
 }

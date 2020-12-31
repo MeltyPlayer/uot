@@ -81,7 +81,6 @@ Module GlobalVars
   Public CompileDL As New N64DlistAssembler
   Public ParseOBJ As New OBJParser
   Public LinkedCommands As New DLEdit
-  Public ZAnimationCounter As New FrameAdvancer
   Public Rand As New Random
   Public AnimationStopWatch As New Stopwatch
   Public AllVertices As New N64Vertex

@@ -375,7 +375,7 @@ badTTracks:
     Return Nothing
   End Function
 
-  Public Function GetTrackRot(animation As IAnimation, ByVal Counter As FrameAdvancer, ByVal Track As Integer) _
+  Public Function GetTrackRot(animation As IAnimation, ByVal Counter As IAnimationPlaybackManager, ByVal Track As Integer) _
     As Quaternion
     'thanks to euler for some of this logic
 
@@ -441,8 +441,8 @@ badTTracks:
     Dim frameCount As UInteger = track.Frames.Length
 
     If track.Type = 1 Then
-      trackFrame = frame Mod (frameCount - 1)
-      nextTrackFrame = (trackFrame + 1) Mod (frameCount - 1)
+      trackFrame = frame Mod frameCount
+      nextTrackFrame = (trackFrame + 1) Mod frameCount
     ElseIf track.Type = 0 Then
       trackFrame = 0
       nextTrackFrame = 0

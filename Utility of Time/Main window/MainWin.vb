@@ -37,316 +37,306 @@ Public Class MainWin
   'Do not modify it using the code editor.
   <System.Diagnostics.DebuggerStepThrough()>
   Private Sub InitializeComponent()
-    Me.components = New System.ComponentModel.Container
-    Dim resources As System.ComponentModel.ComponentResourceManager =
-          New System.ComponentModel.ComponentResourceManager(GetType(MainWin))
-    Me.LoadROM = New System.Windows.Forms.OpenFileDialog
-    Me.UoTStatus = New System.Windows.Forms.StatusStrip
-    Me.ToolStatusLabel = New System.Windows.Forms.ToolStripStatusLabel
-    Me.CamXLabel = New System.Windows.Forms.ToolStripStatusLabel
-    Me.CamYLabel = New System.Windows.Forms.ToolStripStatusLabel
-    Me.CamZLabel = New System.Windows.Forms.ToolStripStatusLabel
-    Me.ToolStripStatusLabel5 = New System.Windows.Forms.ToolStripStatusLabel
-    Me.ToolStripStatusLabel4 = New System.Windows.Forms.ToolStripStatusLabel
-    Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator
-    Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator
-    Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator
-    Me.ToolStripSeparator6 = New System.Windows.Forms.ToolStripSeparator
-    Me.ToolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator
-    Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator
-    Me.Label12 = New System.Windows.Forms.Label
-    Me.TrackBar4 = New System.Windows.Forms.TrackBar
-    Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.OpenModelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.SaveChangesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.ReloadCurrentFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.ImportCSVToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripSeparator10 = New System.Windows.Forms.ToolStripSeparator
-    Me.QuitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.ResetSelectedVerticesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.ResetAllGraphicsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.ResetAllCollisionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripSeparator11 = New System.Windows.Forms.ToolStripSeparator
-    Me.ResetSelectedActorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.ResetAllActorsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.ResetAllSceneActorsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripSeparator9 = New System.Windows.Forms.ToolStripSeparator
-    Me.SelectAllRoomActorsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.SelectAllSceneActorsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.SelectAllGraphicsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.SelectAllCollisionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.OptionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.LaunchROMInPJ64ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.ZeldaResourceExtractorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.FeaturesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.RenderModeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.ViewingMeshToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
-    Me.CollisionMeshToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.PrimitiveTypeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.FilledToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.WireframeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripSeparator8 = New System.Windows.Forms.ToolStripSeparator
-    Me.MouseToolToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.SetupToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.ControlsInfoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripSeparator7 = New System.Windows.Forms.ToolStripSeparator
-    Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.SearchForUpdatesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+    Me.components = New System.ComponentModel.Container()
+    Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainWin))
+    Me.LoadROM = New System.Windows.Forms.OpenFileDialog()
+    Me.UoTStatus = New System.Windows.Forms.StatusStrip()
+    Me.ToolStatusLabel = New System.Windows.Forms.ToolStripStatusLabel()
+    Me.CamXLabel = New System.Windows.Forms.ToolStripStatusLabel()
+    Me.CamYLabel = New System.Windows.Forms.ToolStripStatusLabel()
+    Me.CamZLabel = New System.Windows.Forms.ToolStripStatusLabel()
+    Me.ToolStripStatusLabel5 = New System.Windows.Forms.ToolStripStatusLabel()
+    Me.ToolStripStatusLabel4 = New System.Windows.Forms.ToolStripStatusLabel()
+    Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
+    Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
+    Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
+    Me.ToolStripSeparator6 = New System.Windows.Forms.ToolStripSeparator()
+    Me.ToolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
+    Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
+    Me.Label12 = New System.Windows.Forms.Label()
+    Me.TrackBar4 = New System.Windows.Forms.TrackBar()
+    Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.OpenModelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.SaveChangesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ReloadCurrentFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ImportCSVToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripSeparator10 = New System.Windows.Forms.ToolStripSeparator()
+    Me.QuitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ResetSelectedVerticesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ResetAllGraphicsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ResetAllCollisionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripSeparator11 = New System.Windows.Forms.ToolStripSeparator()
+    Me.ResetSelectedActorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ResetAllActorsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ResetAllSceneActorsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripSeparator9 = New System.Windows.Forms.ToolStripSeparator()
+    Me.SelectAllRoomActorsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.SelectAllSceneActorsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.SelectAllGraphicsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.SelectAllCollisionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.OptionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.LaunchROMInPJ64ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ZeldaResourceExtractorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.FeaturesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.RenderModeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ViewingMeshToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.CollisionMeshToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.PrimitiveTypeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.FilledToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.WireframeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripSeparator8 = New System.Windows.Forms.ToolStripSeparator()
+    Me.MouseToolToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.SetupToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ControlsInfoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripSeparator7 = New System.Windows.Forms.ToolStripSeparator()
+    Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.SearchForUpdatesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
     Me.ActorInputTimer = New System.Windows.Forms.Timer(Me.components)
-    Me.CollisionTab = New System.Windows.Forms.TabPage
-    Me.GroupBox1 = New System.Windows.Forms.GroupBox
-    Me.Button9 = New System.Windows.Forms.Button
-    Me.TriTypeText = New System.Windows.Forms.TextBox
-    Me.Label48 = New System.Windows.Forms.Label
-    Me.Label47 = New System.Windows.Forms.Label
-    Me.ColTriangleBox = New System.Windows.Forms.ComboBox
-    Me.CollisionGroupBox = New System.Windows.Forms.GroupBox
-    Me.Label36 = New System.Windows.Forms.Label
-    Me.ColWalkSound = New System.Windows.Forms.TextBox
-    Me.Label38 = New System.Windows.Forms.Label
-    Me.Label37 = New System.Windows.Forms.Label
-    Me.Label35 = New System.Windows.Forms.Label
-    Me.Label33 = New System.Windows.Forms.Label
-    Me.Label32 = New System.Windows.Forms.Label
-    Me.Label23 = New System.Windows.Forms.Label
-    Me.Label13 = New System.Windows.Forms.Label
-    Me.Label1 = New System.Windows.Forms.Label
-    Me.ColVar4 = New System.Windows.Forms.TextBox
-    Me.ApplyCollisionButton = New System.Windows.Forms.Button
-    Me.ColVar2 = New System.Windows.Forms.TextBox
-    Me.ColVar3 = New System.Windows.Forms.TextBox
-    Me.ColVar1 = New System.Windows.Forms.TextBox
-    Me.CollisionPresetButton = New System.Windows.Forms.Button
-    Me.Label34 = New System.Windows.Forms.Label
-    Me.ColTypeText = New System.Windows.Forms.TextBox
-    Me.ColTypeBox = New System.Windows.Forms.ComboBox
-    Me.Label31 = New System.Windows.Forms.Label
-    Me.ExitTextBox = New System.Windows.Forms.TextBox
-    Me.ExitCombobox = New System.Windows.Forms.ComboBox
-    Me.Label10 = New System.Windows.Forms.Label
-    Me.MiscTab = New System.Windows.Forms.TabPage
-    Me.GroupBox9 = New System.Windows.Forms.GroupBox
-    Me.ProgressBar1 = New System.Windows.Forms.ProgressBar
-    Me.Label28 = New System.Windows.Forms.Label
-    Me.Button16 = New System.Windows.Forms.Button
-    Me.Button15 = New System.Windows.Forms.Button
-    Me.Label45 = New System.Windows.Forms.Label
-    Me.AnimStart = New System.Windows.Forms.TextBox
-    Me.Label30 = New System.Windows.Forms.Label
-    Me.LimbStart = New System.Windows.Forms.TextBox
-    Me.GroupBox10 = New System.Windows.Forms.GroupBox
-    Me.CheckBox5 = New System.Windows.Forms.CheckBox
-    Me.CheckBox15 = New System.Windows.Forms.CheckBox
-    Me.CheckBox14 = New System.Windows.Forms.CheckBox
-    Me.CheckBox13 = New System.Windows.Forms.CheckBox
-    Me.GroupBox8 = New System.Windows.Forms.GroupBox
-    Me.MapsCombobox = New System.Windows.Forms.ComboBox
-    Me.Label46 = New System.Windows.Forms.Label
-    Me.LevelFlagsTab = New System.Windows.Forms.TabPage
-    Me.GroupBox6 = New System.Windows.Forms.GroupBox
-    Me.ComboBox6 = New System.Windows.Forms.ComboBox
-    Me.Label2 = New System.Windows.Forms.Label
-    Me.Button11 = New System.Windows.Forms.Button
-    Me.TextBox13 = New System.Windows.Forms.TextBox
-    Me.Label21 = New System.Windows.Forms.Label
-    Me.ActorsTab = New System.Windows.Forms.TabPage
-    Me.Button2 = New System.Windows.Forms.Button
-    Me.GroupBox4 = New System.Windows.Forms.GroupBox
-    Me.Label14 = New System.Windows.Forms.Label
-    Me.Label17 = New System.Windows.Forms.Label
-    Me.TextBox9 = New System.Windows.Forms.TextBox
-    Me.Label18 = New System.Windows.Forms.Label
-    Me.TextBox8 = New System.Windows.Forms.TextBox
-    Me.Label19 = New System.Windows.Forms.Label
-    Me.TextBox7 = New System.Windows.Forms.TextBox
-    Me.TextBox10 = New System.Windows.Forms.TextBox
-    Me.Label16 = New System.Windows.Forms.Label
-    Me.TextBox11 = New System.Windows.Forms.TextBox
-    Me.Label15 = New System.Windows.Forms.Label
-    Me.TextBox12 = New System.Windows.Forms.TextBox
-    Me.GroupBox5 = New System.Windows.Forms.GroupBox
-    Me.Button6 = New System.Windows.Forms.Button
-    Me.SceneActorCombobox = New System.Windows.Forms.ComboBox
-    Me.ActorNumberText = New System.Windows.Forms.TextBox
-    Me.Label7 = New System.Windows.Forms.Label
-    Me.ActorVarText = New System.Windows.Forms.TextBox
-    Me.Label8 = New System.Windows.Forms.Label
-    Me.Label6 = New System.Windows.Forms.Label
-    Me.ActorGroupText = New System.Windows.Forms.TextBox
-    Me.Label22 = New System.Windows.Forms.Label
-    Me.RoomActorCombobox = New System.Windows.Forms.ComboBox
-    Me.Label24 = New System.Windows.Forms.Label
-    Me.EditingTabs = New System.Windows.Forms.TabControl
-    Me.AnimationsTab = New System.Windows.Forms.TabPage
-    Me.Label5 = New System.Windows.Forms.Label
-    Me.CurrentFrame = New System.Windows.Forms.TrackBar
-    Me.AnimationSetGroup = New System.Windows.Forms.GroupBox
-    Me.Label20 = New System.Windows.Forms.Label
-    Me.CheckBox2 = New System.Windows.Forms.CheckBox
-    Me.AnimationList = New System.Windows.Forms.ListBox
-    Me.animationbank = New System.Windows.Forms.ComboBox
-    Me.PlaybackGroup = New System.Windows.Forms.GroupBox
-    Me.AnimationFPS = New System.Windows.Forms.NumericUpDown
-    Me.Label27 = New System.Windows.Forms.Label
-    Me.FrameNo = New System.Windows.Forms.Label
-    Me.AnimationElapse = New System.Windows.Forms.Label
-    Me.CheckBox1 = New System.Windows.Forms.CheckBox
-    Me.Button5 = New System.Windows.Forms.Button
-    Me.Button3 = New System.Windows.Forms.Button
-    Me.DLTab = New System.Windows.Forms.TabPage
-    Me.RadioButton2 = New System.Windows.Forms.RadioButton
-    Me.GroupBox7 = New System.Windows.Forms.GroupBox
-    Me.WholeCommandTxt = New System.Windows.Forms.TextBox
-    Me.Label3 = New System.Windows.Forms.Label
-    Me.Button8 = New System.Windows.Forms.Button
-    Me.HiwordText = New System.Windows.Forms.TextBox
-    Me.Button1 = New System.Windows.Forms.Button
-    Me.LowordText = New System.Windows.Forms.TextBox
-    Me.CommandCodeText = New System.Windows.Forms.TextBox
-    Me.CommandJumpBox = New System.Windows.Forms.ComboBox
-    Me.Label26 = New System.Windows.Forms.Label
-    Me.Label25 = New System.Windows.Forms.Label
-    Me.Label9 = New System.Windows.Forms.Label
-    Me.Button4 = New System.Windows.Forms.Button
-    Me.CommandsListbox = New System.Windows.Forms.ListBox
+    Me.CollisionTab = New System.Windows.Forms.TabPage()
+    Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+    Me.Button9 = New System.Windows.Forms.Button()
+    Me.TriTypeText = New System.Windows.Forms.TextBox()
+    Me.Label48 = New System.Windows.Forms.Label()
+    Me.Label47 = New System.Windows.Forms.Label()
+    Me.ColTriangleBox = New System.Windows.Forms.ComboBox()
+    Me.CollisionGroupBox = New System.Windows.Forms.GroupBox()
+    Me.Label36 = New System.Windows.Forms.Label()
+    Me.ColWalkSound = New System.Windows.Forms.TextBox()
+    Me.Label38 = New System.Windows.Forms.Label()
+    Me.Label37 = New System.Windows.Forms.Label()
+    Me.Label35 = New System.Windows.Forms.Label()
+    Me.Label33 = New System.Windows.Forms.Label()
+    Me.Label32 = New System.Windows.Forms.Label()
+    Me.Label23 = New System.Windows.Forms.Label()
+    Me.Label13 = New System.Windows.Forms.Label()
+    Me.Label1 = New System.Windows.Forms.Label()
+    Me.ColVar4 = New System.Windows.Forms.TextBox()
+    Me.ApplyCollisionButton = New System.Windows.Forms.Button()
+    Me.ColVar2 = New System.Windows.Forms.TextBox()
+    Me.ColVar3 = New System.Windows.Forms.TextBox()
+    Me.ColVar1 = New System.Windows.Forms.TextBox()
+    Me.CollisionPresetButton = New System.Windows.Forms.Button()
+    Me.Label34 = New System.Windows.Forms.Label()
+    Me.ColTypeText = New System.Windows.Forms.TextBox()
+    Me.ColTypeBox = New System.Windows.Forms.ComboBox()
+    Me.Label31 = New System.Windows.Forms.Label()
+    Me.ExitTextBox = New System.Windows.Forms.TextBox()
+    Me.ExitCombobox = New System.Windows.Forms.ComboBox()
+    Me.Label10 = New System.Windows.Forms.Label()
+    Me.MiscTab = New System.Windows.Forms.TabPage()
+    Me.GroupBox9 = New System.Windows.Forms.GroupBox()
+    Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
+    Me.Label28 = New System.Windows.Forms.Label()
+    Me.Button16 = New System.Windows.Forms.Button()
+    Me.Button15 = New System.Windows.Forms.Button()
+    Me.Label45 = New System.Windows.Forms.Label()
+    Me.AnimStart = New System.Windows.Forms.TextBox()
+    Me.Label30 = New System.Windows.Forms.Label()
+    Me.LimbStart = New System.Windows.Forms.TextBox()
+    Me.GroupBox10 = New System.Windows.Forms.GroupBox()
+    Me.CheckBox5 = New System.Windows.Forms.CheckBox()
+    Me.CheckBox15 = New System.Windows.Forms.CheckBox()
+    Me.CheckBox14 = New System.Windows.Forms.CheckBox()
+    Me.CheckBox13 = New System.Windows.Forms.CheckBox()
+    Me.GroupBox8 = New System.Windows.Forms.GroupBox()
+    Me.MapsCombobox = New System.Windows.Forms.ComboBox()
+    Me.Label46 = New System.Windows.Forms.Label()
+    Me.LevelFlagsTab = New System.Windows.Forms.TabPage()
+    Me.GroupBox6 = New System.Windows.Forms.GroupBox()
+    Me.ComboBox6 = New System.Windows.Forms.ComboBox()
+    Me.Label2 = New System.Windows.Forms.Label()
+    Me.Button11 = New System.Windows.Forms.Button()
+    Me.TextBox13 = New System.Windows.Forms.TextBox()
+    Me.Label21 = New System.Windows.Forms.Label()
+    Me.ActorsTab = New System.Windows.Forms.TabPage()
+    Me.Button2 = New System.Windows.Forms.Button()
+    Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+    Me.Label14 = New System.Windows.Forms.Label()
+    Me.Label17 = New System.Windows.Forms.Label()
+    Me.TextBox9 = New System.Windows.Forms.TextBox()
+    Me.Label18 = New System.Windows.Forms.Label()
+    Me.TextBox8 = New System.Windows.Forms.TextBox()
+    Me.Label19 = New System.Windows.Forms.Label()
+    Me.TextBox7 = New System.Windows.Forms.TextBox()
+    Me.TextBox10 = New System.Windows.Forms.TextBox()
+    Me.Label16 = New System.Windows.Forms.Label()
+    Me.TextBox11 = New System.Windows.Forms.TextBox()
+    Me.Label15 = New System.Windows.Forms.Label()
+    Me.TextBox12 = New System.Windows.Forms.TextBox()
+    Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+    Me.Button6 = New System.Windows.Forms.Button()
+    Me.SceneActorCombobox = New System.Windows.Forms.ComboBox()
+    Me.ActorNumberText = New System.Windows.Forms.TextBox()
+    Me.Label7 = New System.Windows.Forms.Label()
+    Me.ActorVarText = New System.Windows.Forms.TextBox()
+    Me.Label8 = New System.Windows.Forms.Label()
+    Me.Label6 = New System.Windows.Forms.Label()
+    Me.ActorGroupText = New System.Windows.Forms.TextBox()
+    Me.Label22 = New System.Windows.Forms.Label()
+    Me.RoomActorCombobox = New System.Windows.Forms.ComboBox()
+    Me.Label24 = New System.Windows.Forms.Label()
+    Me.EditingTabs = New System.Windows.Forms.TabControl()
+    Me.AnimationsTab = New System.Windows.Forms.TabPage()
+    Me.AnimationSetGroup = New System.Windows.Forms.GroupBox()
+    Me.Label20 = New System.Windows.Forms.Label()
+    Me.CheckBox2 = New System.Windows.Forms.CheckBox()
+    Me.AnimationList = New System.Windows.Forms.ListBox()
+    Me.animationbank = New System.Windows.Forms.ComboBox()
+    Me.AnimationPlaybackPanel = New UoT.AnimationPlaybackPanel()
+    Me.DLTab = New System.Windows.Forms.TabPage()
+    Me.RadioButton2 = New System.Windows.Forms.RadioButton()
+    Me.GroupBox7 = New System.Windows.Forms.GroupBox()
+    Me.WholeCommandTxt = New System.Windows.Forms.TextBox()
+    Me.Label3 = New System.Windows.Forms.Label()
+    Me.Button8 = New System.Windows.Forms.Button()
+    Me.HiwordText = New System.Windows.Forms.TextBox()
+    Me.Button1 = New System.Windows.Forms.Button()
+    Me.LowordText = New System.Windows.Forms.TextBox()
+    Me.CommandCodeText = New System.Windows.Forms.TextBox()
+    Me.CommandJumpBox = New System.Windows.Forms.ComboBox()
+    Me.Label26 = New System.Windows.Forms.Label()
+    Me.Label25 = New System.Windows.Forms.Label()
+    Me.Label9 = New System.Windows.Forms.Label()
+    Me.Button4 = New System.Windows.Forms.Button()
+    Me.CommandsListbox = New System.Windows.Forms.ListBox()
     Me.DLEditorContextMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
-    Me.Copy = New System.Windows.Forms.ToolStripMenuItem
-    Me.Paste = New System.Windows.Forms.ToolStripMenuItem
-    Me.Reset = New System.Windows.Forms.ToolStripMenuItem
-    Me.DListSelection = New System.Windows.Forms.ComboBox
-    Me.RadioButton1 = New System.Windows.Forms.RadioButton
-    Me.GroupBox3 = New System.Windows.Forms.GroupBox
-    Me.Button12 = New System.Windows.Forms.Button
-    Me.Label4 = New System.Windows.Forms.Label
-    Me.Button10 = New System.Windows.Forms.Button
+    Me.Copy = New System.Windows.Forms.ToolStripMenuItem()
+    Me.Paste = New System.Windows.Forms.ToolStripMenuItem()
+    Me.Reset = New System.Windows.Forms.ToolStripMenuItem()
+    Me.DListSelection = New System.Windows.Forms.ComboBox()
+    Me.RadioButton1 = New System.Windows.Forms.RadioButton()
+    Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+    Me.Button12 = New System.Windows.Forms.Button()
+    Me.Label4 = New System.Windows.Forms.Label()
+    Me.Button10 = New System.Windows.Forms.Button()
     Me.BackupMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
-    Me.RestorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.Label43 = New System.Windows.Forms.Label
-    Me.TrackBar1 = New System.Windows.Forms.TrackBar
-    Me.UoTRender = New UoT.Tao.Platform.Windows.SimpleOpenGlControl
+    Me.RestorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.Label43 = New System.Windows.Forms.Label()
+    Me.TrackBar1 = New System.Windows.Forms.TrackBar()
+    Me.UoTRender = New UoT.Tao.Platform.Windows.SimpleOpenGlControl()
     Me.ActorContextMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
-    Me.DeselectToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripSeparator14 = New System.Windows.Forms.ToolStripSeparator
-    Me.EditToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem
-    Me.CamXRotationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.DegreesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.DegreesToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
-    Me.CamYRotationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.DegreesToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem
-    Me.DegreesToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem
-    Me.CamZRotationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.DegreesToolStripMenuItem4 = New System.Windows.Forms.ToolStripMenuItem
-    Me.DegreesToolStripMenuItem5 = New System.Windows.Forms.ToolStripMenuItem
-    Me.AlignToolItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.XToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem
-    Me.YToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ZToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripSeparator13 = New System.Windows.Forms.ToolStripSeparator
-    Me.CopyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.PasteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.PositionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.XToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
-    Me.YToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ZToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.AllToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
-    Me.RotationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.XToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem
-    Me.YToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ZToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
-    Me.AllToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.NumberAndVariableToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.ClearClipboardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+    Me.DeselectToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripSeparator14 = New System.Windows.Forms.ToolStripSeparator()
+    Me.EditToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.CamXRotationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.DegreesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.DegreesToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.CamYRotationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.DegreesToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.DegreesToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.CamZRotationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.DegreesToolStripMenuItem4 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.DegreesToolStripMenuItem5 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.AlignToolItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.XToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.YToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ZToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripSeparator13 = New System.Windows.Forms.ToolStripSeparator()
+    Me.CopyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.PasteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.PositionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.XToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.YToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ZToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.AllToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.RotationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.XToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.YToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ZToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.AllToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.NumberAndVariableToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ClearClipboardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
     Me.RotationTimer = New System.Windows.Forms.Timer(Me.components)
-    Me.LoadIndividual = New System.Windows.Forms.OpenFileDialog
-    Me.ROMBrowser = New System.Windows.Forms.TabControl
-    Me.ROMDataTabs = New System.Windows.Forms.TabPage
-    Me.Button7 = New System.Windows.Forms.Button
-    Me.IndividualFiles = New System.Windows.Forms.TabPage
-    Me.Label29 = New System.Windows.Forms.Label
-    Me.TreeFind = New System.Windows.Forms.TextBox
-    Me.FileTree = New System.Windows.Forms.TreeView
-    Me.FileToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripMenuItem35 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem
-    Me.CustomLevel = New System.Windows.Forms.ToolStripMenuItem
-    Me.toolStripSeparator = New System.Windows.Forms.ToolStripSeparator
-    Me.SaveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripMenuItem34 = New System.Windows.Forms.ToolStripMenuItem
-    Me.toolStripSeparator12 = New System.Windows.Forms.ToolStripSeparator
-    Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.EditToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
-    Me.UndoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.WireframeModeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.RenderToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.GraphicsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.CollisionOverlayToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolsToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
-    Me.MouseToolToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
-    Me.CameraOnlyMenu = New System.Windows.Forms.ToolStripMenuItem
-    Me.ActorSelectorMenu = New System.Windows.Forms.ToolStripMenuItem
-    Me.CollisionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.CollisionSelectorMenu = New System.Windows.Forms.ToolStripMenuItem
-    Me.EdgeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.TriangleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.VertexToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.DisplayListSelectorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.LockAxesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.XToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.YToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.DisableToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.OptionsToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem
-    Me.DisableDepthTestToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.OptionsToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
-    Me.RendererToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.TexturesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.ColorCombinerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.AnisotropicFilteringToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.FullSceneAntialiasingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.HelpToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ContentsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.AboutUoTToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-    Me.UoTMainMenu = New System.Windows.Forms.MenuStrip
-    Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem
-    Me.UndoToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
-    Me.RedoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+    Me.LoadIndividual = New System.Windows.Forms.OpenFileDialog()
+    Me.ROMBrowser = New System.Windows.Forms.TabControl()
+    Me.ROMDataTabs = New System.Windows.Forms.TabPage()
+    Me.Button7 = New System.Windows.Forms.Button()
+    Me.IndividualFiles = New System.Windows.Forms.TabPage()
+    Me.Label29 = New System.Windows.Forms.Label()
+    Me.TreeFind = New System.Windows.Forms.TextBox()
+    Me.FileTree = New System.Windows.Forms.TreeView()
+    Me.FileToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripMenuItem35 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.CustomLevel = New System.Windows.Forms.ToolStripMenuItem()
+    Me.toolStripSeparator = New System.Windows.Forms.ToolStripSeparator()
+    Me.SaveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripMenuItem34 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.toolStripSeparator12 = New System.Windows.Forms.ToolStripSeparator()
+    Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.EditToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.UndoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.WireframeModeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.RenderToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.GraphicsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.CollisionOverlayToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolsToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.MouseToolToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.CameraOnlyMenu = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ActorSelectorMenu = New System.Windows.Forms.ToolStripMenuItem()
+    Me.CollisionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.CollisionSelectorMenu = New System.Windows.Forms.ToolStripMenuItem()
+    Me.EdgeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.TriangleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.VertexToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.DisplayListSelectorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.LockAxesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.XToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.YToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.DisableToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.OptionsToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.DisableDepthTestToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.OptionsToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.RendererToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.TexturesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ColorCombinerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.AnisotropicFilteringToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.FullSceneAntialiasingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.HelpToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ContentsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.AboutUoTToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+    Me.UoTMainMenu = New System.Windows.Forms.MenuStrip()
+    Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.UndoToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.RedoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
     Me.VertContextMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
-    Me.ToolStripMenuItem5 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripSeparator15 = New System.Windows.Forms.ToolStripSeparator
-    Me.ToolStripMenuItem6 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripMenuItem7 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripMenuItem8 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripMenuItem9 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripMenuItem10 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripMenuItem11 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripMenuItem12 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripMenuItem13 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripMenuItem14 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripMenuItem15 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripMenuItem16 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripMenuItem17 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripMenuItem18 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripMenuItem19 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripSeparator16 = New System.Windows.Forms.ToolStripSeparator
-    Me.ToolStripMenuItem20 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripMenuItem21 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripMenuItem22 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripMenuItem23 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripMenuItem24 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripMenuItem25 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripMenuItem26 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripMenuItem27 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripMenuItem28 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripMenuItem29 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripMenuItem30 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripMenuItem31 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripMenuItem32 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ToolStripMenuItem33 = New System.Windows.Forms.ToolStripMenuItem
-    Me.ColorDialog1 = New System.Windows.Forms.ColorDialog
-    Me.RipDL = New System.Windows.Forms.SaveFileDialog
-    Me.SaveROMAs = New System.Windows.Forms.SaveFileDialog
+    Me.ToolStripMenuItem5 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripSeparator15 = New System.Windows.Forms.ToolStripSeparator()
+    Me.ToolStripMenuItem6 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripMenuItem7 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripMenuItem8 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripMenuItem9 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripMenuItem10 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripMenuItem11 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripMenuItem12 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripMenuItem13 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripMenuItem14 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripMenuItem15 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripMenuItem16 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripMenuItem17 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripMenuItem18 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripMenuItem19 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripSeparator16 = New System.Windows.Forms.ToolStripSeparator()
+    Me.ToolStripMenuItem20 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripMenuItem21 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripMenuItem22 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripMenuItem23 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripMenuItem24 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripMenuItem25 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripMenuItem26 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripMenuItem27 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripMenuItem28 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripMenuItem29 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripMenuItem30 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripMenuItem31 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripMenuItem32 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ToolStripMenuItem33 = New System.Windows.Forms.ToolStripMenuItem()
+    Me.ColorDialog1 = New System.Windows.Forms.ColorDialog()
+    Me.RipDL = New System.Windows.Forms.SaveFileDialog()
+    Me.SaveROMAs = New System.Windows.Forms.SaveFileDialog()
     Me.VarContextMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
     Me.NumContextMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
     Me.GrpContextMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
@@ -366,10 +356,7 @@ Public Class MainWin
     Me.GroupBox5.SuspendLayout()
     Me.EditingTabs.SuspendLayout()
     Me.AnimationsTab.SuspendLayout()
-    CType(Me.CurrentFrame, System.ComponentModel.ISupportInitialize).BeginInit()
     Me.AnimationSetGroup.SuspendLayout()
-    Me.PlaybackGroup.SuspendLayout()
-    CType(Me.AnimationFPS, System.ComponentModel.ISupportInitialize).BeginInit()
     Me.DLTab.SuspendLayout()
     Me.GroupBox7.SuspendLayout()
     Me.DLEditorContextMenu.SuspendLayout()
@@ -391,8 +378,7 @@ Public Class MainWin
     'UoTStatus
     '
     Me.UoTStatus.AutoSize = False
-    Me.UoTStatus.Items.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                 {Me.ToolStatusLabel, Me.CamXLabel, Me.CamYLabel, Me.CamZLabel})
+    Me.UoTStatus.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStatusLabel, Me.CamXLabel, Me.CamYLabel, Me.CamZLabel})
     Me.UoTStatus.Location = New System.Drawing.Point(0, 620)
     Me.UoTStatus.Name = "UoTStatus"
     Me.UoTStatus.Size = New System.Drawing.Size(1160, 29)
@@ -401,40 +387,35 @@ Public Class MainWin
     '
     'ToolStatusLabel
     '
-    Me.ToolStatusLabel.Font = New System.Drawing.Font("Verdana", 9.75!, System.Drawing.FontStyle.Underline,
-                                                      System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+    Me.ToolStatusLabel.Font = New System.Drawing.Font("Verdana", 9.75!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
     Me.ToolStatusLabel.ForeColor = System.Drawing.Color.Red
     Me.ToolStatusLabel.Name = "ToolStatusLabel"
-    Me.ToolStatusLabel.Size = New System.Drawing.Size(96, 24)
+    Me.ToolStatusLabel.Size = New System.Drawing.Size(95, 24)
     Me.ToolStatusLabel.Text = "Tool: Camera"
     '
     'CamXLabel
     '
     Me.CamXLabel.Name = "CamXLabel"
-    Me.CamXLabel.Size = New System.Drawing.Size(41, 24)
+    Me.CamXLabel.Size = New System.Drawing.Size(45, 24)
     Me.CamXLabel.Text = "Cam X:"
     '
     'CamYLabel
     '
     Me.CamYLabel.Name = "CamYLabel"
-    Me.CamYLabel.Size = New System.Drawing.Size(41, 24)
+    Me.CamYLabel.Size = New System.Drawing.Size(45, 24)
     Me.CamYLabel.Text = "Cam Y:"
     '
     'CamZLabel
     '
     Me.CamZLabel.Name = "CamZLabel"
-    Me.CamZLabel.Size = New System.Drawing.Size(41, 24)
+    Me.CamZLabel.Size = New System.Drawing.Size(45, 24)
     Me.CamZLabel.Text = "Cam Z:"
     '
     'ToolStripStatusLabel5
     '
-    Me.ToolStripStatusLabel5.BorderSides =
-      CType(
-        (((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left Or
-           System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) _
-          Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) _
-         Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom),
-        System.Windows.Forms.ToolStripStatusLabelBorderSides)
+    Me.ToolStripStatusLabel5.BorderSides = CType((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) _
+            Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) _
+            Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom), System.Windows.Forms.ToolStripStatusLabelBorderSides)
     Me.ToolStripStatusLabel5.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter
     Me.ToolStripStatusLabel5.Name = "ToolStripStatusLabel5"
     Me.ToolStripStatusLabel5.Size = New System.Drawing.Size(29, 22)
@@ -442,17 +423,12 @@ Public Class MainWin
     '
     'ToolStripStatusLabel4
     '
-    Me.ToolStripStatusLabel4.BorderSides =
-      CType(
-        (((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left Or
-           System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) _
-          Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) _
-         Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom),
-        System.Windows.Forms.ToolStripStatusLabelBorderSides)
+    Me.ToolStripStatusLabel4.BorderSides = CType((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) _
+            Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) _
+            Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom), System.Windows.Forms.ToolStripStatusLabelBorderSides)
     Me.ToolStripStatusLabel4.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter
     Me.ToolStripStatusLabel4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-    Me.ToolStripStatusLabel4.Font = New System.Drawing.Font("Trebuchet MS", 9.0!, System.Drawing.FontStyle.Regular,
-                                                            System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+    Me.ToolStripStatusLabel4.Font = New System.Drawing.Font("Trebuchet MS", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
     Me.ToolStripStatusLabel4.Name = "ToolStripStatusLabel4"
     Me.ToolStripStatusLabel4.Size = New System.Drawing.Size(111, 22)
     Me.ToolStripStatusLabel4.Text = "Tool: Camera only"
@@ -493,22 +469,19 @@ Public Class MainWin
     '
     'Label12
     '
-    Me.Label12.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right),
-                              System.Windows.Forms.AnchorStyles)
+    Me.Label12.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
     Me.Label12.AutoSize = True
     Me.Label12.BackColor = System.Drawing.SystemColors.Control
-    Me.Label12.Font = New System.Drawing.Font("Trebuchet MS", 9.0!, System.Drawing.FontStyle.Regular,
-                                              System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+    Me.Label12.Font = New System.Drawing.Font("Trebuchet MS", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
     Me.Label12.Location = New System.Drawing.Point(946, 626)
     Me.Label12.Name = "Label12"
-    Me.Label12.Size = New System.Drawing.Size(95, 18)
+    Me.Label12.Size = New System.Drawing.Size(94, 18)
     Me.Label12.TabIndex = 39
     Me.Label12.Text = "Tool Sensitivity:"
     '
     'TrackBar4
     '
-    Me.TrackBar4.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right),
-                                System.Windows.Forms.AnchorStyles)
+    Me.TrackBar4.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
     Me.TrackBar4.AutoSize = False
     Me.TrackBar4.Cursor = System.Windows.Forms.Cursors.Hand
     Me.TrackBar4.LargeChange = 1
@@ -522,11 +495,7 @@ Public Class MainWin
     '
     'FileToolStripMenuItem
     '
-    Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                                     {Me.OpenModelToolStripMenuItem, Me.SaveChangesToolStripMenuItem,
-                                                      Me.ReloadCurrentFileToolStripMenuItem,
-                                                      Me.ImportCSVToolStripMenuItem, Me.ToolStripSeparator10,
-                                                      Me.QuitToolStripMenuItem})
+    Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenModelToolStripMenuItem, Me.SaveChangesToolStripMenuItem, Me.ReloadCurrentFileToolStripMenuItem, Me.ImportCSVToolStripMenuItem, Me.ToolStripSeparator10, Me.QuitToolStripMenuItem})
     Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
     Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 17)
     Me.FileToolStripMenuItem.Text = "File"
@@ -535,56 +504,44 @@ Public Class MainWin
     '
     Me.OpenModelToolStripMenuItem.Name = "OpenModelToolStripMenuItem"
     Me.OpenModelToolStripMenuItem.ShortcutKeyDisplayString = "Alt+O"
-    Me.OpenModelToolStripMenuItem.ShortcutKeys =
-      CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.O), System.Windows.Forms.Keys)
-    Me.OpenModelToolStripMenuItem.Size = New System.Drawing.Size(202, 22)
+    Me.OpenModelToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.O), System.Windows.Forms.Keys)
+    Me.OpenModelToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
     Me.OpenModelToolStripMenuItem.Text = "&Open ROM..."
     '
     'SaveChangesToolStripMenuItem
     '
     Me.SaveChangesToolStripMenuItem.Name = "SaveChangesToolStripMenuItem"
     Me.SaveChangesToolStripMenuItem.ShortcutKeyDisplayString = "Alt+S"
-    Me.SaveChangesToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.S),
-                                                         System.Windows.Forms.Keys)
-    Me.SaveChangesToolStripMenuItem.Size = New System.Drawing.Size(202, 22)
+    Me.SaveChangesToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
+    Me.SaveChangesToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
     Me.SaveChangesToolStripMenuItem.Text = "&Save"
     '
     'ReloadCurrentFileToolStripMenuItem
     '
     Me.ReloadCurrentFileToolStripMenuItem.Name = "ReloadCurrentFileToolStripMenuItem"
-    Me.ReloadCurrentFileToolStripMenuItem.Size = New System.Drawing.Size(202, 22)
+    Me.ReloadCurrentFileToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
     Me.ReloadCurrentFileToolStripMenuItem.Text = "&Reload current file"
     '
     'ImportCSVToolStripMenuItem
     '
     Me.ImportCSVToolStripMenuItem.Name = "ImportCSVToolStripMenuItem"
-    Me.ImportCSVToolStripMenuItem.Size = New System.Drawing.Size(202, 22)
+    Me.ImportCSVToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
     Me.ImportCSVToolStripMenuItem.Text = "Convert Wavefront OBJ..."
     '
     'ToolStripSeparator10
     '
     Me.ToolStripSeparator10.Name = "ToolStripSeparator10"
-    Me.ToolStripSeparator10.Size = New System.Drawing.Size(199, 6)
+    Me.ToolStripSeparator10.Size = New System.Drawing.Size(203, 6)
     '
     'QuitToolStripMenuItem
     '
     Me.QuitToolStripMenuItem.Name = "QuitToolStripMenuItem"
-    Me.QuitToolStripMenuItem.Size = New System.Drawing.Size(202, 22)
+    Me.QuitToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
     Me.QuitToolStripMenuItem.Text = "E&xit"
     '
     'EditToolStripMenuItem
     '
-    Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                                     {Me.ResetSelectedVerticesToolStripMenuItem,
-                                                      Me.ResetAllGraphicsToolStripMenuItem,
-                                                      Me.ResetAllCollisionToolStripMenuItem, Me.ToolStripSeparator11,
-                                                      Me.ResetSelectedActorToolStripMenuItem,
-                                                      Me.ResetAllActorsToolStripMenuItem,
-                                                      Me.ResetAllSceneActorsToolStripMenuItem, Me.ToolStripSeparator9,
-                                                      Me.SelectAllRoomActorsToolStripMenuItem,
-                                                      Me.SelectAllSceneActorsToolStripMenuItem,
-                                                      Me.SelectAllGraphicsToolStripMenuItem,
-                                                      Me.SelectAllCollisionToolStripMenuItem})
+    Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ResetSelectedVerticesToolStripMenuItem, Me.ResetAllGraphicsToolStripMenuItem, Me.ResetAllCollisionToolStripMenuItem, Me.ToolStripSeparator11, Me.ResetSelectedActorToolStripMenuItem, Me.ResetAllActorsToolStripMenuItem, Me.ResetAllSceneActorsToolStripMenuItem, Me.ToolStripSeparator9, Me.SelectAllRoomActorsToolStripMenuItem, Me.SelectAllSceneActorsToolStripMenuItem, Me.SelectAllGraphicsToolStripMenuItem, Me.SelectAllCollisionToolStripMenuItem})
     Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
     Me.EditToolStripMenuItem.Size = New System.Drawing.Size(40, 17)
     Me.EditToolStripMenuItem.Text = "Edit"
@@ -593,91 +550,85 @@ Public Class MainWin
     '
     Me.ResetSelectedVerticesToolStripMenuItem.Name = "ResetSelectedVerticesToolStripMenuItem"
     Me.ResetSelectedVerticesToolStripMenuItem.ShortcutKeyDisplayString = "V"
-    Me.ResetSelectedVerticesToolStripMenuItem.Size = New System.Drawing.Size(218, 22)
+    Me.ResetSelectedVerticesToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
     Me.ResetSelectedVerticesToolStripMenuItem.Text = "Reset selected vertices"
     '
     'ResetAllGraphicsToolStripMenuItem
     '
     Me.ResetAllGraphicsToolStripMenuItem.Name = "ResetAllGraphicsToolStripMenuItem"
     Me.ResetAllGraphicsToolStripMenuItem.ShortcutKeyDisplayString = ""
-    Me.ResetAllGraphicsToolStripMenuItem.ShortcutKeys =
-      CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.V), System.Windows.Forms.Keys)
-    Me.ResetAllGraphicsToolStripMenuItem.Size = New System.Drawing.Size(218, 22)
+    Me.ResetAllGraphicsToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.V), System.Windows.Forms.Keys)
+    Me.ResetAllGraphicsToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
     Me.ResetAllGraphicsToolStripMenuItem.Text = "Reset all graphics"
     '
     'ResetAllCollisionToolStripMenuItem
     '
     Me.ResetAllCollisionToolStripMenuItem.Name = "ResetAllCollisionToolStripMenuItem"
     Me.ResetAllCollisionToolStripMenuItem.ShortcutKeyDisplayString = ""
-    Me.ResetAllCollisionToolStripMenuItem.ShortcutKeys =
-      CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.C), System.Windows.Forms.Keys)
-    Me.ResetAllCollisionToolStripMenuItem.Size = New System.Drawing.Size(218, 22)
+    Me.ResetAllCollisionToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.C), System.Windows.Forms.Keys)
+    Me.ResetAllCollisionToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
     Me.ResetAllCollisionToolStripMenuItem.Text = "Reset all collision"
     '
     'ToolStripSeparator11
     '
     Me.ToolStripSeparator11.Name = "ToolStripSeparator11"
-    Me.ToolStripSeparator11.Size = New System.Drawing.Size(215, 6)
+    Me.ToolStripSeparator11.Size = New System.Drawing.Size(225, 6)
     '
     'ResetSelectedActorToolStripMenuItem
     '
     Me.ResetSelectedActorToolStripMenuItem.Name = "ResetSelectedActorToolStripMenuItem"
     Me.ResetSelectedActorToolStripMenuItem.ShortcutKeyDisplayString = "B"
-    Me.ResetSelectedActorToolStripMenuItem.Size = New System.Drawing.Size(218, 22)
+    Me.ResetSelectedActorToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
     Me.ResetSelectedActorToolStripMenuItem.Text = "Reset selected actors"
     '
     'ResetAllActorsToolStripMenuItem
     '
     Me.ResetAllActorsToolStripMenuItem.Name = "ResetAllActorsToolStripMenuItem"
-    Me.ResetAllActorsToolStripMenuItem.ShortcutKeys =
-      CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.B), System.Windows.Forms.Keys)
-    Me.ResetAllActorsToolStripMenuItem.Size = New System.Drawing.Size(218, 22)
+    Me.ResetAllActorsToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.B), System.Windows.Forms.Keys)
+    Me.ResetAllActorsToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
     Me.ResetAllActorsToolStripMenuItem.Text = "Reset all room actors"
     '
     'ResetAllSceneActorsToolStripMenuItem
     '
     Me.ResetAllSceneActorsToolStripMenuItem.Name = "ResetAllSceneActorsToolStripMenuItem"
-    Me.ResetAllSceneActorsToolStripMenuItem.ShortcutKeys =
-      CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.N), System.Windows.Forms.Keys)
-    Me.ResetAllSceneActorsToolStripMenuItem.Size = New System.Drawing.Size(218, 22)
+    Me.ResetAllSceneActorsToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.N), System.Windows.Forms.Keys)
+    Me.ResetAllSceneActorsToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
     Me.ResetAllSceneActorsToolStripMenuItem.Text = "Reset all scene actors"
     '
     'ToolStripSeparator9
     '
     Me.ToolStripSeparator9.Name = "ToolStripSeparator9"
-    Me.ToolStripSeparator9.Size = New System.Drawing.Size(215, 6)
+    Me.ToolStripSeparator9.Size = New System.Drawing.Size(225, 6)
     '
     'SelectAllRoomActorsToolStripMenuItem
     '
     Me.SelectAllRoomActorsToolStripMenuItem.Name = "SelectAllRoomActorsToolStripMenuItem"
     Me.SelectAllRoomActorsToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F11
-    Me.SelectAllRoomActorsToolStripMenuItem.Size = New System.Drawing.Size(218, 22)
+    Me.SelectAllRoomActorsToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
     Me.SelectAllRoomActorsToolStripMenuItem.Text = "Select all room actors"
     '
     'SelectAllSceneActorsToolStripMenuItem
     '
     Me.SelectAllSceneActorsToolStripMenuItem.Name = "SelectAllSceneActorsToolStripMenuItem"
     Me.SelectAllSceneActorsToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F12
-    Me.SelectAllSceneActorsToolStripMenuItem.Size = New System.Drawing.Size(218, 22)
+    Me.SelectAllSceneActorsToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
     Me.SelectAllSceneActorsToolStripMenuItem.Text = "Select all scene actors"
     '
     'SelectAllGraphicsToolStripMenuItem
     '
     Me.SelectAllGraphicsToolStripMenuItem.Name = "SelectAllGraphicsToolStripMenuItem"
-    Me.SelectAllGraphicsToolStripMenuItem.Size = New System.Drawing.Size(218, 22)
+    Me.SelectAllGraphicsToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
     Me.SelectAllGraphicsToolStripMenuItem.Text = "Select all graphics"
     '
     'SelectAllCollisionToolStripMenuItem
     '
     Me.SelectAllCollisionToolStripMenuItem.Name = "SelectAllCollisionToolStripMenuItem"
-    Me.SelectAllCollisionToolStripMenuItem.Size = New System.Drawing.Size(218, 22)
+    Me.SelectAllCollisionToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
     Me.SelectAllCollisionToolStripMenuItem.Text = "Select all collision"
     '
     'OptionsToolStripMenuItem
     '
-    Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                                        {Me.LaunchROMInPJ64ToolStripMenuItem,
-                                                         Me.ZeldaResourceExtractorToolStripMenuItem})
+    Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LaunchROMInPJ64ToolStripMenuItem, Me.ZeldaResourceExtractorToolStripMenuItem})
     Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
     Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(59, 17)
     Me.OptionsToolStripMenuItem.Text = "Options"
@@ -686,38 +637,30 @@ Public Class MainWin
     '
     Me.LaunchROMInPJ64ToolStripMenuItem.Name = "LaunchROMInPJ64ToolStripMenuItem"
     Me.LaunchROMInPJ64ToolStripMenuItem.ShortcutKeyDisplayString = ""
-    Me.LaunchROMInPJ64ToolStripMenuItem.ShortcutKeys =
-      CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.P), System.Windows.Forms.Keys)
-    Me.LaunchROMInPJ64ToolStripMenuItem.Size = New System.Drawing.Size(217, 22)
+    Me.LaunchROMInPJ64ToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.P), System.Windows.Forms.Keys)
+    Me.LaunchROMInPJ64ToolStripMenuItem.Size = New System.Drawing.Size(227, 22)
     Me.LaunchROMInPJ64ToolStripMenuItem.Text = "&Launch ROM in &PJ64..."
     '
     'ZeldaResourceExtractorToolStripMenuItem
     '
     Me.ZeldaResourceExtractorToolStripMenuItem.Name = "ZeldaResourceExtractorToolStripMenuItem"
-    Me.ZeldaResourceExtractorToolStripMenuItem.ShortcutKeys =
-      CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.R), System.Windows.Forms.Keys)
-    Me.ZeldaResourceExtractorToolStripMenuItem.Size = New System.Drawing.Size(217, 22)
+    Me.ZeldaResourceExtractorToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.R), System.Windows.Forms.Keys)
+    Me.ZeldaResourceExtractorToolStripMenuItem.Size = New System.Drawing.Size(227, 22)
     Me.ZeldaResourceExtractorToolStripMenuItem.Text = "Extract &ROM..."
     '
     'FeaturesToolStripMenuItem
     '
-    Me.FeaturesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                                         {Me.RenderModeToolStripMenuItem,
-                                                          Me.PrimitiveTypeToolStripMenuItem, Me.ToolStripSeparator8,
-                                                          Me.MouseToolToolStripMenuItem, Me.SetupToolStripMenuItem})
+    Me.FeaturesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RenderModeToolStripMenuItem, Me.PrimitiveTypeToolStripMenuItem, Me.ToolStripSeparator8, Me.MouseToolToolStripMenuItem, Me.SetupToolStripMenuItem})
     Me.FeaturesToolStripMenuItem.Name = "FeaturesToolStripMenuItem"
     Me.FeaturesToolStripMenuItem.Size = New System.Drawing.Size(81, 17)
     Me.FeaturesToolStripMenuItem.Text = "Preferences"
     '
     'RenderModeToolStripMenuItem
     '
-    Me.RenderModeToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                                           {Me.ViewingMeshToolStripMenuItem1,
-                                                            Me.CollisionMeshToolStripMenuItem})
+    Me.RenderModeToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ViewingMeshToolStripMenuItem1, Me.CollisionMeshToolStripMenuItem})
     Me.RenderModeToolStripMenuItem.Name = "RenderModeToolStripMenuItem"
-    Me.RenderModeToolStripMenuItem.ShortcutKeys =
-      CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.R), System.Windows.Forms.Keys)
-    Me.RenderModeToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
+    Me.RenderModeToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.R), System.Windows.Forms.Keys)
+    Me.RenderModeToolStripMenuItem.Size = New System.Drawing.Size(174, 22)
     Me.RenderModeToolStripMenuItem.Text = "&Render"
     '
     'ViewingMeshToolStripMenuItem1
@@ -725,22 +668,21 @@ Public Class MainWin
     Me.ViewingMeshToolStripMenuItem1.Checked = True
     Me.ViewingMeshToolStripMenuItem1.CheckState = System.Windows.Forms.CheckState.Checked
     Me.ViewingMeshToolStripMenuItem1.Name = "ViewingMeshToolStripMenuItem1"
-    Me.ViewingMeshToolStripMenuItem1.Size = New System.Drawing.Size(143, 22)
+    Me.ViewingMeshToolStripMenuItem1.Size = New System.Drawing.Size(152, 22)
     Me.ViewingMeshToolStripMenuItem1.Text = "Graphics Mesh"
     '
     'CollisionMeshToolStripMenuItem
     '
     Me.CollisionMeshToolStripMenuItem.Name = "CollisionMeshToolStripMenuItem"
-    Me.CollisionMeshToolStripMenuItem.Size = New System.Drawing.Size(143, 22)
+    Me.CollisionMeshToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
     Me.CollisionMeshToolStripMenuItem.Text = "Collision Mesh"
     '
     'PrimitiveTypeToolStripMenuItem
     '
-    Me.PrimitiveTypeToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                                              {Me.FilledToolStripMenuItem, Me.WireframeToolStripMenuItem})
+    Me.PrimitiveTypeToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FilledToolStripMenuItem, Me.WireframeToolStripMenuItem})
     Me.PrimitiveTypeToolStripMenuItem.Name = "PrimitiveTypeToolStripMenuItem"
     Me.PrimitiveTypeToolStripMenuItem.ShortcutKeyDisplayString = "F1"
-    Me.PrimitiveTypeToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
+    Me.PrimitiveTypeToolStripMenuItem.Size = New System.Drawing.Size(174, 22)
     Me.PrimitiveTypeToolStripMenuItem.Text = "&Primitive Mode"
     '
     'FilledToolStripMenuItem
@@ -754,8 +696,7 @@ Public Class MainWin
     'WireframeToolStripMenuItem
     '
     Me.WireframeToolStripMenuItem.AutoSize = False
-    Me.WireframeToolStripMenuItem.Image = CType(resources.GetObject("WireframeToolStripMenuItem.Image"),
-                                                System.Drawing.Image)
+    Me.WireframeToolStripMenuItem.Image = CType(resources.GetObject("WireframeToolStripMenuItem.Image"), System.Drawing.Image)
     Me.WireframeToolStripMenuItem.Name = "WireframeToolStripMenuItem"
     Me.WireframeToolStripMenuItem.Size = New System.Drawing.Size(152, 20)
     Me.WireframeToolStripMenuItem.Text = "&Wireframe"
@@ -763,26 +704,24 @@ Public Class MainWin
     'ToolStripSeparator8
     '
     Me.ToolStripSeparator8.Name = "ToolStripSeparator8"
-    Me.ToolStripSeparator8.Size = New System.Drawing.Size(159, 6)
+    Me.ToolStripSeparator8.Size = New System.Drawing.Size(171, 6)
     '
     'MouseToolToolStripMenuItem
     '
     Me.MouseToolToolStripMenuItem.Name = "MouseToolToolStripMenuItem"
-    Me.MouseToolToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
+    Me.MouseToolToolStripMenuItem.Size = New System.Drawing.Size(174, 22)
     Me.MouseToolToolStripMenuItem.Text = "&Mouse Tool..."
     '
     'SetupToolStripMenuItem
     '
     Me.SetupToolStripMenuItem.Name = "SetupToolStripMenuItem"
     Me.SetupToolStripMenuItem.ShortcutKeyDisplayString = ""
-    Me.SetupToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
+    Me.SetupToolStripMenuItem.Size = New System.Drawing.Size(174, 22)
     Me.SetupToolStripMenuItem.Text = "&Setup..."
     '
     'HelpToolStripMenuItem
     '
-    Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                                     {Me.ControlsInfoToolStripMenuItem, Me.ToolStripSeparator7,
-                                                      Me.AboutToolStripMenuItem, Me.SearchForUpdatesToolStripMenuItem})
+    Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ControlsInfoToolStripMenuItem, Me.ToolStripSeparator7, Me.AboutToolStripMenuItem, Me.SearchForUpdatesToolStripMenuItem})
     Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
     Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(41, 17)
     Me.HelpToolStripMenuItem.Text = "Help"
@@ -791,31 +730,28 @@ Public Class MainWin
     '
     Me.ControlsInfoToolStripMenuItem.Name = "ControlsInfoToolStripMenuItem"
     Me.ControlsInfoToolStripMenuItem.ShortcutKeyDisplayString = ""
-    Me.ControlsInfoToolStripMenuItem.ShortcutKeys =
-      CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.H), System.Windows.Forms.Keys)
-    Me.ControlsInfoToolStripMenuItem.Size = New System.Drawing.Size(217, 22)
+    Me.ControlsInfoToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.H), System.Windows.Forms.Keys)
+    Me.ControlsInfoToolStripMenuItem.Size = New System.Drawing.Size(227, 22)
     Me.ControlsInfoToolStripMenuItem.Text = "&Controls"
     '
     'ToolStripSeparator7
     '
     Me.ToolStripSeparator7.Name = "ToolStripSeparator7"
-    Me.ToolStripSeparator7.Size = New System.Drawing.Size(214, 6)
+    Me.ToolStripSeparator7.Size = New System.Drawing.Size(224, 6)
     '
     'AboutToolStripMenuItem
     '
     Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
     Me.AboutToolStripMenuItem.ShortcutKeyDisplayString = ""
-    Me.AboutToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Q),
-                                                   System.Windows.Forms.Keys)
-    Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(217, 22)
+    Me.AboutToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Q), System.Windows.Forms.Keys)
+    Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(227, 22)
     Me.AboutToolStripMenuItem.Text = "A&bout Utility of Time"
     '
     'SearchForUpdatesToolStripMenuItem
     '
     Me.SearchForUpdatesToolStripMenuItem.Name = "SearchForUpdatesToolStripMenuItem"
-    Me.SearchForUpdatesToolStripMenuItem.ShortcutKeys =
-      CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.U), System.Windows.Forms.Keys)
-    Me.SearchForUpdatesToolStripMenuItem.Size = New System.Drawing.Size(217, 22)
+    Me.SearchForUpdatesToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.U), System.Windows.Forms.Keys)
+    Me.SearchForUpdatesToolStripMenuItem.Size = New System.Drawing.Size(227, 22)
     Me.SearchForUpdatesToolStripMenuItem.Text = "Search for updates..."
     '
     'ActorInputTimer
@@ -826,10 +762,10 @@ Public Class MainWin
     '
     Me.CollisionTab.Controls.Add(Me.GroupBox1)
     Me.CollisionTab.Controls.Add(Me.CollisionGroupBox)
-    Me.CollisionTab.Location = New System.Drawing.Point(4, 55)
+    Me.CollisionTab.Location = New System.Drawing.Point(4, 28)
     Me.CollisionTab.Name = "CollisionTab"
     Me.CollisionTab.Padding = New System.Windows.Forms.Padding(3)
-    Me.CollisionTab.Size = New System.Drawing.Size(224, 528)
+    Me.CollisionTab.Size = New System.Drawing.Size(224, 555)
     Me.CollisionTab.TabIndex = 4
     Me.CollisionTab.Text = "Collision"
     Me.CollisionTab.UseVisualStyleBackColor = True
@@ -878,7 +814,7 @@ Public Class MainWin
     Me.Label47.AutoSize = True
     Me.Label47.Location = New System.Drawing.Point(135, 25)
     Me.Label47.Name = "Label47"
-    Me.Label47.Size = New System.Drawing.Size(32, 16)
+    Me.Label47.Size = New System.Drawing.Size(31, 16)
     Me.Label47.TabIndex = 1
     Me.Label47.Text = "Type"
     '
@@ -949,7 +885,7 @@ Public Class MainWin
     Me.Label38.AutoSize = True
     Me.Label38.Location = New System.Drawing.Point(121, 109)
     Me.Label38.Name = "Label38"
-    Me.Label38.Size = New System.Drawing.Size(91, 16)
+    Me.Label38.Size = New System.Drawing.Size(90, 16)
     Me.Label38.TabIndex = 106
     Me.Label38.Text = "Walked on sound"
     '
@@ -1113,7 +1049,7 @@ Public Class MainWin
     Me.Label31.AutoSize = True
     Me.Label31.Location = New System.Drawing.Point(8, 62)
     Me.Label31.Name = "Label31"
-    Me.Label31.Size = New System.Drawing.Size(54, 16)
+    Me.Label31.Size = New System.Drawing.Size(53, 16)
     Me.Label31.TabIndex = 87
     Me.Label31.Text = "Variables"
     '
@@ -1183,13 +1119,12 @@ Public Class MainWin
     '
     'Label28
     '
-    Me.Label28.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right),
-                              System.Windows.Forms.AnchorStyles)
+    Me.Label28.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
     Me.Label28.AutoSize = True
     Me.Label28.BackColor = System.Drawing.SystemColors.Control
     Me.Label28.Location = New System.Drawing.Point(119, 0)
     Me.Label28.Name = "Label28"
-    Me.Label28.Size = New System.Drawing.Size(50, 16)
+    Me.Label28.Size = New System.Drawing.Size(49, 16)
     Me.Label28.TabIndex = 89
     Me.Label28.Text = "Working"
     Me.Label28.Visible = False
@@ -1214,8 +1149,7 @@ Public Class MainWin
     '
     'Label45
     '
-    Me.Label45.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left),
-                              System.Windows.Forms.AnchorStyles)
+    Me.Label45.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
     Me.Label45.AutoSize = True
     Me.Label45.Location = New System.Drawing.Point(12, 412)
     Me.Label45.Name = "Label45"
@@ -1226,8 +1160,7 @@ Public Class MainWin
     '
     'AnimStart
     '
-    Me.AnimStart.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left),
-                                System.Windows.Forms.AnchorStyles)
+    Me.AnimStart.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
     Me.AnimStart.Location = New System.Drawing.Point(14, 429)
     Me.AnimStart.Name = "AnimStart"
     Me.AnimStart.Size = New System.Drawing.Size(100, 20)
@@ -1236,8 +1169,7 @@ Public Class MainWin
     '
     'Label30
     '
-    Me.Label30.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left),
-                              System.Windows.Forms.AnchorStyles)
+    Me.Label30.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
     Me.Label30.AutoSize = True
     Me.Label30.Location = New System.Drawing.Point(12, 370)
     Me.Label30.Name = "Label30"
@@ -1248,8 +1180,7 @@ Public Class MainWin
     '
     'LimbStart
     '
-    Me.LimbStart.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left),
-                                System.Windows.Forms.AnchorStyles)
+    Me.LimbStart.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
     Me.LimbStart.Location = New System.Drawing.Point(13, 389)
     Me.LimbStart.Name = "LimbStart"
     Me.LimbStart.Size = New System.Drawing.Size(100, 20)
@@ -1342,9 +1273,9 @@ Public Class MainWin
     '
     Me.LevelFlagsTab.BackColor = System.Drawing.Color.Transparent
     Me.LevelFlagsTab.Controls.Add(Me.GroupBox6)
-    Me.LevelFlagsTab.Location = New System.Drawing.Point(4, 55)
+    Me.LevelFlagsTab.Location = New System.Drawing.Point(4, 28)
     Me.LevelFlagsTab.Name = "LevelFlagsTab"
-    Me.LevelFlagsTab.Size = New System.Drawing.Size(224, 528)
+    Me.LevelFlagsTab.Size = New System.Drawing.Size(224, 555)
     Me.LevelFlagsTab.TabIndex = 2
     Me.LevelFlagsTab.Text = "Level Flags"
     Me.LevelFlagsTab.UseVisualStyleBackColor = True
@@ -1462,7 +1393,7 @@ Public Class MainWin
     Me.Label14.AutoSize = True
     Me.Label14.Location = New System.Drawing.Point(20, 19)
     Me.Label14.Name = "Label14"
-    Me.Label14.Size = New System.Drawing.Size(70, 16)
+    Me.Label14.Size = New System.Drawing.Size(69, 16)
     Me.Label14.TabIndex = 59
     Me.Label14.Text = "Actor X Pos."
     '
@@ -1530,7 +1461,7 @@ Public Class MainWin
     Me.Label16.AutoSize = True
     Me.Label16.Location = New System.Drawing.Point(20, 97)
     Me.Label16.Name = "Label16"
-    Me.Label16.Size = New System.Drawing.Size(69, 16)
+    Me.Label16.Size = New System.Drawing.Size(68, 16)
     Me.Label16.TabIndex = 61
     Me.Label16.Text = "Actor Z Pos."
     '
@@ -1547,7 +1478,7 @@ Public Class MainWin
     Me.Label15.AutoSize = True
     Me.Label15.Location = New System.Drawing.Point(20, 58)
     Me.Label15.Name = "Label15"
-    Me.Label15.Size = New System.Drawing.Size(70, 16)
+    Me.Label15.Size = New System.Drawing.Size(69, 16)
     Me.Label15.TabIndex = 60
     Me.Label15.Text = "Actor Y Pos."
     '
@@ -1641,7 +1572,7 @@ Public Class MainWin
     Me.Label6.AutoSize = True
     Me.Label6.Location = New System.Drawing.Point(111, 111)
     Me.Label6.Name = "Label6"
-    Me.Label6.Size = New System.Drawing.Size(49, 16)
+    Me.Label6.Size = New System.Drawing.Size(48, 16)
     Me.Label6.TabIndex = 34
     Me.Label6.Text = "Variable"
     '
@@ -1661,7 +1592,7 @@ Public Class MainWin
     Me.Label22.AutoSize = True
     Me.Label22.Location = New System.Drawing.Point(16, 18)
     Me.Label22.Name = "Label22"
-    Me.Label22.Size = New System.Drawing.Size(70, 16)
+    Me.Label22.Size = New System.Drawing.Size(69, 16)
     Me.Label22.TabIndex = 52
     Me.Label22.Text = "Room Actors"
     '
@@ -1679,15 +1610,14 @@ Public Class MainWin
     Me.Label24.AutoSize = True
     Me.Label24.Location = New System.Drawing.Point(17, 62)
     Me.Label24.Name = "Label24"
-    Me.Label24.Size = New System.Drawing.Size(73, 16)
+    Me.Label24.Size = New System.Drawing.Size(72, 16)
     Me.Label24.TabIndex = 53
     Me.Label24.Text = "Scene Actors"
     '
     'EditingTabs
     '
     Me.EditingTabs.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                                   Or System.Windows.Forms.AnchorStyles.Right),
-                                  System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
     Me.EditingTabs.Appearance = System.Windows.Forms.TabAppearance.Buttons
     Me.EditingTabs.Controls.Add(Me.ActorsTab)
     Me.EditingTabs.Controls.Add(Me.LevelFlagsTab)
@@ -1695,8 +1625,7 @@ Public Class MainWin
     Me.EditingTabs.Controls.Add(Me.MiscTab)
     Me.EditingTabs.Controls.Add(Me.AnimationsTab)
     Me.EditingTabs.Controls.Add(Me.DLTab)
-    Me.EditingTabs.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Regular,
-                                                  System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+    Me.EditingTabs.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
     Me.EditingTabs.HotTrack = True
     Me.EditingTabs.Location = New System.Drawing.Point(930, 33)
     Me.EditingTabs.Multiline = True
@@ -1708,10 +1637,8 @@ Public Class MainWin
     '
     'AnimationsTab
     '
-    Me.AnimationsTab.Controls.Add(Me.Label5)
-    Me.AnimationsTab.Controls.Add(Me.CurrentFrame)
     Me.AnimationsTab.Controls.Add(Me.AnimationSetGroup)
-    Me.AnimationsTab.Controls.Add(Me.PlaybackGroup)
+    Me.AnimationsTab.Controls.Add(Me.AnimationPlaybackPanel)
     Me.AnimationsTab.Location = New System.Drawing.Point(4, 55)
     Me.AnimationsTab.Name = "AnimationsTab"
     Me.AnimationsTab.Size = New System.Drawing.Size(224, 528)
@@ -1719,41 +1646,17 @@ Public Class MainWin
     Me.AnimationsTab.Text = "Animations"
     Me.AnimationsTab.UseVisualStyleBackColor = True
     '
-    'Label5
-    '
-    Me.Label5.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.Label5.AutoSize = True
-    Me.Label5.Location = New System.Drawing.Point(19, 319)
-    Me.Label5.Name = "Label5"
-    Me.Label5.Size = New System.Drawing.Size(42, 16)
-    Me.Label5.TabIndex = 6
-    Me.Label5.Text = "Tracks"
-    '
-    'CurrentFrame
-    '
-    Me.CurrentFrame.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.CurrentFrame.AutoSize = False
-    Me.CurrentFrame.LargeChange = 2
-    Me.CurrentFrame.Location = New System.Drawing.Point(15, 337)
-    Me.CurrentFrame.Minimum = 1
-    Me.CurrentFrame.Name = "CurrentFrame"
-    Me.CurrentFrame.Size = New System.Drawing.Size(197, 30)
-    Me.CurrentFrame.TabIndex = 5
-    Me.CurrentFrame.Value = 1
-    '
     'AnimationSetGroup
     '
-    Me.AnimationSetGroup.Anchor =
-      CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-             Or System.Windows.Forms.AnchorStyles.Left),
-            System.Windows.Forms.AnchorStyles)
+    Me.AnimationSetGroup.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
     Me.AnimationSetGroup.Controls.Add(Me.Label20)
     Me.AnimationSetGroup.Controls.Add(Me.CheckBox2)
     Me.AnimationSetGroup.Controls.Add(Me.AnimationList)
     Me.AnimationSetGroup.Controls.Add(Me.animationbank)
     Me.AnimationSetGroup.Location = New System.Drawing.Point(10, 4)
     Me.AnimationSetGroup.Name = "AnimationSetGroup"
-    Me.AnimationSetGroup.Size = New System.Drawing.Size(206, 276)
+    Me.AnimationSetGroup.Size = New System.Drawing.Size(206, 338)
     Me.AnimationSetGroup.TabIndex = 13
     Me.AnimationSetGroup.TabStop = False
     Me.AnimationSetGroup.Text = "Animation Sets"
@@ -1771,7 +1674,7 @@ Public Class MainWin
     '
     Me.CheckBox2.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.CheckBox2.AutoSize = True
-    Me.CheckBox2.Location = New System.Drawing.Point(6, 248)
+    Me.CheckBox2.Location = New System.Drawing.Point(6, 310)
     Me.CheckBox2.Name = "CheckBox2"
     Me.CheckBox2.Size = New System.Drawing.Size(56, 20)
     Me.CheckBox2.TabIndex = 4
@@ -1781,13 +1684,12 @@ Public Class MainWin
     'AnimationList
     '
     Me.AnimationList.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                                     Or System.Windows.Forms.AnchorStyles.Left),
-                                    System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
     Me.AnimationList.FormattingEnabled = True
     Me.AnimationList.ItemHeight = 16
     Me.AnimationList.Location = New System.Drawing.Point(6, 58)
     Me.AnimationList.Name = "AnimationList"
-    Me.AnimationList.Size = New System.Drawing.Size(192, 180)
+    Me.AnimationList.Size = New System.Drawing.Size(192, 244)
     Me.AnimationList.TabIndex = 0
     '
     'animationbank
@@ -1800,104 +1702,18 @@ Public Class MainWin
     Me.animationbank.Size = New System.Drawing.Size(151, 24)
     Me.animationbank.TabIndex = 9
     '
-    'PlaybackGroup
+    'AnimationPlaybackPanel
     '
-    Me.PlaybackGroup.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left),
-                                    System.Windows.Forms.AnchorStyles)
-    Me.PlaybackGroup.Controls.Add(Me.AnimationFPS)
-    Me.PlaybackGroup.Controls.Add(Me.Label27)
-    Me.PlaybackGroup.Controls.Add(Me.FrameNo)
-    Me.PlaybackGroup.Controls.Add(Me.AnimationElapse)
-    Me.PlaybackGroup.Controls.Add(Me.CheckBox1)
-    Me.PlaybackGroup.Controls.Add(Me.Button5)
-    Me.PlaybackGroup.Controls.Add(Me.Button3)
-    Me.PlaybackGroup.Location = New System.Drawing.Point(10, 286)
-    Me.PlaybackGroup.Name = "PlaybackGroup"
-    Me.PlaybackGroup.Size = New System.Drawing.Size(206, 232)
-    Me.PlaybackGroup.TabIndex = 14
-    Me.PlaybackGroup.TabStop = False
-    Me.PlaybackGroup.Text = "Playback"
-    '
-    'AnimationFPS
-    '
-    Me.AnimationFPS.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.AnimationFPS.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Bold,
-                                                   System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-    Me.AnimationFPS.Location = New System.Drawing.Point(128, 131)
-    Me.AnimationFPS.Maximum = New Decimal(New Integer() {60, 0, 0, 0})
-    Me.AnimationFPS.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
-    Me.AnimationFPS.Name = "AnimationFPS"
-    Me.AnimationFPS.Size = New System.Drawing.Size(40, 20)
-    Me.AnimationFPS.TabIndex = 11
-    Me.AnimationFPS.Value = New Decimal(New Integer() {30, 0, 0, 0})
-    '
-    'Label27
-    '
-    Me.Label27.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.Label27.AutoSize = True
-    Me.Label27.Location = New System.Drawing.Point(173, 133)
-    Me.Label27.Name = "Label27"
-    Me.Label27.Size = New System.Drawing.Size(25, 16)
-    Me.Label27.TabIndex = 12
-    Me.Label27.Text = "FPS"
-    '
-    'FrameNo
-    '
-    Me.FrameNo.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.FrameNo.AutoSize = True
-    Me.FrameNo.Location = New System.Drawing.Point(160, 90)
-    Me.FrameNo.Name = "FrameNo"
-    Me.FrameNo.Size = New System.Drawing.Size(38, 16)
-    Me.FrameNo.TabIndex = 8
-    Me.FrameNo.Text = "00/00"
-    '
-    'AnimationElapse
-    '
-    Me.AnimationElapse.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.AnimationElapse.AutoSize = True
-    Me.AnimationElapse.Location = New System.Drawing.Point(9, 90)
-    Me.AnimationElapse.Name = "AnimationElapse"
-    Me.AnimationElapse.Size = New System.Drawing.Size(41, 16)
-    Me.AnimationElapse.TabIndex = 7
-    Me.AnimationElapse.Text = "00:00s"
-    '
-    'CheckBox1
-    '
-    Me.CheckBox1.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.CheckBox1.Image = Global.UoT.My.Resources.Resources.Button_Refresh_icon
-    Me.CheckBox1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-    Me.CheckBox1.Location = New System.Drawing.Point(126, 31)
-    Me.CheckBox1.Name = "CheckBox1"
-    Me.CheckBox1.Size = New System.Drawing.Size(69, 20)
-    Me.CheckBox1.TabIndex = 3
-    Me.CheckBox1.Text = "Loop"
-    Me.CheckBox1.UseVisualStyleBackColor = True
-    '
-    'Button5
-    '
-    Me.Button5.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.Button5.Image = Global.UoT.My.Resources.Resources.Button_Stop_icon
-    Me.Button5.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-    Me.Button5.Location = New System.Drawing.Point(69, 123)
-    Me.Button5.Name = "Button5"
-    Me.Button5.Size = New System.Drawing.Size(53, 36)
-    Me.Button5.TabIndex = 2
-    Me.Button5.Text = "Stop"
-    Me.Button5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-    Me.Button5.UseVisualStyleBackColor = True
-    '
-    'Button3
-    '
-    Me.Button3.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.Button3.Image = Global.UoT.My.Resources.Resources.Button_Play_icon
-    Me.Button3.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-    Me.Button3.Location = New System.Drawing.Point(12, 123)
-    Me.Button3.Name = "Button3"
-    Me.Button3.Size = New System.Drawing.Size(51, 36)
-    Me.Button3.TabIndex = 1
-    Me.Button3.Text = "Play"
-    Me.Button3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-    Me.Button3.UseVisualStyleBackColor = True
+    Me.AnimationPlaybackPanel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+    Me.AnimationPlaybackPanel.Frame = 0R
+    Me.AnimationPlaybackPanel.FrameRate = 20
+    Me.AnimationPlaybackPanel.IsPlaying = False
+    Me.AnimationPlaybackPanel.Location = New System.Drawing.Point(7, 348)
+    Me.AnimationPlaybackPanel.Name = "AnimationPlaybackPanel"
+    Me.AnimationPlaybackPanel.ShouldLoop = False
+    Me.AnimationPlaybackPanel.Size = New System.Drawing.Size(212, 175)
+    Me.AnimationPlaybackPanel.TabIndex = 14
+    Me.AnimationPlaybackPanel.TotalFrames = 0
     '
     'DLTab
     '
@@ -1927,8 +1743,7 @@ Public Class MainWin
     'GroupBox7
     '
     Me.GroupBox7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                                 Or System.Windows.Forms.AnchorStyles.Left),
-                                System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
     Me.GroupBox7.Controls.Add(Me.WholeCommandTxt)
     Me.GroupBox7.Controls.Add(Me.Label3)
     Me.GroupBox7.Controls.Add(Me.Button8)
@@ -1944,7 +1759,7 @@ Public Class MainWin
     Me.GroupBox7.Controls.Add(Me.CommandsListbox)
     Me.GroupBox7.Location = New System.Drawing.Point(10, 176)
     Me.GroupBox7.Name = "GroupBox7"
-    Me.GroupBox7.Size = New System.Drawing.Size(206, 343)
+    Me.GroupBox7.Size = New System.Drawing.Size(206, 460)
     Me.GroupBox7.TabIndex = 69
     Me.GroupBox7.TabStop = False
     Me.GroupBox7.Text = "Commands"
@@ -1953,7 +1768,7 @@ Public Class MainWin
     '
     Me.WholeCommandTxt.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.WholeCommandTxt.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-    Me.WholeCommandTxt.Location = New System.Drawing.Point(7, 306)
+    Me.WholeCommandTxt.Location = New System.Drawing.Point(7, 423)
     Me.WholeCommandTxt.MaxLength = 32
     Me.WholeCommandTxt.Name = "WholeCommandTxt"
     Me.WholeCommandTxt.Size = New System.Drawing.Size(107, 20)
@@ -1963,7 +1778,7 @@ Public Class MainWin
     '
     Me.Label3.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.Label3.AutoSize = True
-    Me.Label3.Location = New System.Drawing.Point(3, 223)
+    Me.Label3.Location = New System.Drawing.Point(3, 340)
     Me.Label3.Name = "Label3"
     Me.Label3.Size = New System.Drawing.Size(47, 16)
     Me.Label3.TabIndex = 69
@@ -1972,7 +1787,7 @@ Public Class MainWin
     'Button8
     '
     Me.Button8.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.Button8.Location = New System.Drawing.Point(57, 219)
+    Me.Button8.Location = New System.Drawing.Point(57, 336)
     Me.Button8.Name = "Button8"
     Me.Button8.Size = New System.Drawing.Size(67, 23)
     Me.Button8.TabIndex = 68
@@ -1983,7 +1798,7 @@ Public Class MainWin
     '
     Me.HiwordText.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.HiwordText.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-    Me.HiwordText.Location = New System.Drawing.Point(109, 278)
+    Me.HiwordText.Location = New System.Drawing.Point(109, 395)
     Me.HiwordText.MaxLength = 8
     Me.HiwordText.Name = "HiwordText"
     Me.HiwordText.Size = New System.Drawing.Size(90, 20)
@@ -1992,7 +1807,7 @@ Public Class MainWin
     'Button1
     '
     Me.Button1.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.Button1.Location = New System.Drawing.Point(130, 219)
+    Me.Button1.Location = New System.Drawing.Point(130, 336)
     Me.Button1.Name = "Button1"
     Me.Button1.Size = New System.Drawing.Size(67, 23)
     Me.Button1.TabIndex = 67
@@ -2003,7 +1818,7 @@ Public Class MainWin
     '
     Me.LowordText.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.LowordText.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-    Me.LowordText.Location = New System.Drawing.Point(37, 278)
+    Me.LowordText.Location = New System.Drawing.Point(37, 395)
     Me.LowordText.MaxLength = 6
     Me.LowordText.Name = "LowordText"
     Me.LowordText.Size = New System.Drawing.Size(66, 20)
@@ -2013,7 +1828,7 @@ Public Class MainWin
     '
     Me.CommandCodeText.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.CommandCodeText.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-    Me.CommandCodeText.Location = New System.Drawing.Point(7, 278)
+    Me.CommandCodeText.Location = New System.Drawing.Point(7, 395)
     Me.CommandCodeText.MaxLength = 2
     Me.CommandCodeText.Name = "CommandCodeText"
     Me.CommandCodeText.Size = New System.Drawing.Size(24, 20)
@@ -2024,7 +1839,7 @@ Public Class MainWin
     Me.CommandJumpBox.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.CommandJumpBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
     Me.CommandJumpBox.FormattingEnabled = True
-    Me.CommandJumpBox.Location = New System.Drawing.Point(6, 189)
+    Me.CommandJumpBox.Location = New System.Drawing.Point(6, 306)
     Me.CommandJumpBox.Name = "CommandJumpBox"
     Me.CommandJumpBox.Size = New System.Drawing.Size(192, 24)
     Me.CommandJumpBox.TabIndex = 66
@@ -2033,9 +1848,9 @@ Public Class MainWin
     '
     Me.Label26.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.Label26.AutoSize = True
-    Me.Label26.Location = New System.Drawing.Point(132, 259)
+    Me.Label26.Location = New System.Drawing.Point(132, 376)
     Me.Label26.Name = "Label26"
-    Me.Label26.Size = New System.Drawing.Size(45, 16)
+    Me.Label26.Size = New System.Drawing.Size(44, 16)
     Me.Label26.TabIndex = 65
     Me.Label26.Text = "Param1"
     '
@@ -2043,9 +1858,9 @@ Public Class MainWin
     '
     Me.Label25.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.Label25.AutoSize = True
-    Me.Label25.Location = New System.Drawing.Point(48, 259)
+    Me.Label25.Location = New System.Drawing.Point(48, 376)
     Me.Label25.Name = "Label25"
-    Me.Label25.Size = New System.Drawing.Size(45, 16)
+    Me.Label25.Size = New System.Drawing.Size(44, 16)
     Me.Label25.TabIndex = 64
     Me.Label25.Text = "Param0"
     '
@@ -2053,7 +1868,7 @@ Public Class MainWin
     '
     Me.Label9.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.Label9.AutoSize = True
-    Me.Label9.Location = New System.Drawing.Point(5, 259)
+    Me.Label9.Location = New System.Drawing.Point(5, 376)
     Me.Label9.Name = "Label9"
     Me.Label9.Size = New System.Drawing.Size(29, 16)
     Me.Label9.TabIndex = 63
@@ -2062,7 +1877,7 @@ Public Class MainWin
     'Button4
     '
     Me.Button4.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.Button4.Location = New System.Drawing.Point(127, 304)
+    Me.Button4.Location = New System.Drawing.Point(127, 421)
     Me.Button4.Name = "Button4"
     Me.Button4.Size = New System.Drawing.Size(70, 23)
     Me.Button4.TabIndex = 62
@@ -2071,16 +1886,14 @@ Public Class MainWin
     '
     'CommandsListbox
     '
-    Me.CommandsListbox.Anchor =
-      CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-             Or System.Windows.Forms.AnchorStyles.Left),
-            System.Windows.Forms.AnchorStyles)
+    Me.CommandsListbox.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
     Me.CommandsListbox.ContextMenuStrip = Me.DLEditorContextMenu
     Me.CommandsListbox.FormattingEnabled = True
     Me.CommandsListbox.ItemHeight = 16
     Me.CommandsListbox.Location = New System.Drawing.Point(6, 22)
     Me.CommandsListbox.Name = "CommandsListbox"
-    Me.CommandsListbox.Size = New System.Drawing.Size(192, 148)
+    Me.CommandsListbox.Size = New System.Drawing.Size(192, 452)
     Me.CommandsListbox.TabIndex = 61
     '
     'DLEditorContextMenu
@@ -2172,21 +1985,19 @@ Public Class MainWin
     '
     Me.BackupMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RestorToolStripMenuItem})
     Me.BackupMenuStrip.Name = "BackupMenuStrip"
-    Me.BackupMenuStrip.Size = New System.Drawing.Size(175, 26)
+    Me.BackupMenuStrip.Size = New System.Drawing.Size(185, 26)
     '
     'RestorToolStripMenuItem
     '
     Me.RestorToolStripMenuItem.Name = "RestorToolStripMenuItem"
-    Me.RestorToolStripMenuItem.Size = New System.Drawing.Size(174, 22)
+    Me.RestorToolStripMenuItem.Size = New System.Drawing.Size(184, 22)
     Me.RestorToolStripMenuItem.Text = "Restore from backup"
     '
     'Label43
     '
-    Me.Label43.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right),
-                              System.Windows.Forms.AnchorStyles)
+    Me.Label43.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
     Me.Label43.AutoSize = True
-    Me.Label43.Font = New System.Drawing.Font("Trebuchet MS", 9.0!, System.Drawing.FontStyle.Regular,
-                                              System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+    Me.Label43.Font = New System.Drawing.Font("Trebuchet MS", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
     Me.Label43.Location = New System.Drawing.Point(763, 626)
     Me.Label43.Name = "Label43"
     Me.Label43.Size = New System.Drawing.Size(89, 18)
@@ -2195,8 +2006,7 @@ Public Class MainWin
     '
     'TrackBar1
     '
-    Me.TrackBar1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right),
-                                System.Windows.Forms.AnchorStyles)
+    Me.TrackBar1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
     Me.TrackBar1.AutoSize = False
     Me.TrackBar1.Cursor = System.Windows.Forms.Cursors.Hand
     Me.TrackBar1.Location = New System.Drawing.Point(850, 628)
@@ -2212,9 +2022,8 @@ Public Class MainWin
     Me.UoTRender.AccumBits = CType(0, Byte)
     Me.UoTRender.AllowDrop = True
     Me.UoTRender.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                                  Or System.Windows.Forms.AnchorStyles.Left) _
-                                 Or System.Windows.Forms.AnchorStyles.Right),
-                                System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
     Me.UoTRender.AutoCheckErrors = False
     Me.UoTRender.AutoFinish = True
     Me.UoTRender.AutoMakeCurrent = True
@@ -2236,220 +2045,203 @@ Public Class MainWin
     'ActorContextMenu
     '
     Me.ActorContextMenu.BackColor = System.Drawing.SystemColors.Control
-    Me.ActorContextMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                        {Me.DeselectToolStripMenuItem, Me.ToolStripSeparator14,
-                                         Me.EditToolStripMenuItem2, Me.AlignToolItem, Me.ToolStripSeparator13,
-                                         Me.CopyToolStripMenuItem, Me.PasteToolStripMenuItem,
-                                         Me.ClearClipboardToolStripMenuItem})
+    Me.ActorContextMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DeselectToolStripMenuItem, Me.ToolStripSeparator14, Me.EditToolStripMenuItem2, Me.AlignToolItem, Me.ToolStripSeparator13, Me.CopyToolStripMenuItem, Me.PasteToolStripMenuItem, Me.ClearClipboardToolStripMenuItem})
     Me.ActorContextMenu.Name = "ContextMenuStrip4"
     Me.ActorContextMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
-    Me.ActorContextMenu.Size = New System.Drawing.Size(152, 148)
+    Me.ActorContextMenu.Size = New System.Drawing.Size(156, 148)
     '
     'DeselectToolStripMenuItem
     '
     Me.DeselectToolStripMenuItem.Name = "DeselectToolStripMenuItem"
-    Me.DeselectToolStripMenuItem.Size = New System.Drawing.Size(151, 22)
+    Me.DeselectToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
     Me.DeselectToolStripMenuItem.Text = "Deselect"
     '
     'ToolStripSeparator14
     '
     Me.ToolStripSeparator14.Name = "ToolStripSeparator14"
-    Me.ToolStripSeparator14.Size = New System.Drawing.Size(148, 6)
+    Me.ToolStripSeparator14.Size = New System.Drawing.Size(152, 6)
     '
     'EditToolStripMenuItem2
     '
-    Me.EditToolStripMenuItem2.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                                      {Me.CamXRotationToolStripMenuItem,
-                                                       Me.CamYRotationToolStripMenuItem,
-                                                       Me.CamZRotationToolStripMenuItem})
+    Me.EditToolStripMenuItem2.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CamXRotationToolStripMenuItem, Me.CamYRotationToolStripMenuItem, Me.CamZRotationToolStripMenuItem})
     Me.EditToolStripMenuItem2.Name = "EditToolStripMenuItem2"
-    Me.EditToolStripMenuItem2.Size = New System.Drawing.Size(151, 22)
+    Me.EditToolStripMenuItem2.Size = New System.Drawing.Size(155, 22)
     Me.EditToolStripMenuItem2.Text = "Rotate"
     '
     'CamXRotationToolStripMenuItem
     '
-    Me.CamXRotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                                             {Me.DegreesToolStripMenuItem, Me.DegreesToolStripMenuItem1})
+    Me.CamXRotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DegreesToolStripMenuItem, Me.DegreesToolStripMenuItem1})
     Me.CamXRotationToolStripMenuItem.Name = "CamXRotationToolStripMenuItem"
-    Me.CamXRotationToolStripMenuItem.Size = New System.Drawing.Size(80, 22)
+    Me.CamXRotationToolStripMenuItem.Size = New System.Drawing.Size(81, 22)
     Me.CamXRotationToolStripMenuItem.Text = "X"
     '
     'DegreesToolStripMenuItem
     '
     Me.DegreesToolStripMenuItem.Name = "DegreesToolStripMenuItem"
-    Me.DegreesToolStripMenuItem.Size = New System.Drawing.Size(139, 22)
+    Me.DegreesToolStripMenuItem.Size = New System.Drawing.Size(141, 22)
     Me.DegreesToolStripMenuItem.Text = "+ 90 degrees"
     '
     'DegreesToolStripMenuItem1
     '
     Me.DegreesToolStripMenuItem1.Name = "DegreesToolStripMenuItem1"
-    Me.DegreesToolStripMenuItem1.Size = New System.Drawing.Size(139, 22)
+    Me.DegreesToolStripMenuItem1.Size = New System.Drawing.Size(141, 22)
     Me.DegreesToolStripMenuItem1.Text = "- 90 degrees"
     '
     'CamYRotationToolStripMenuItem
     '
-    Me.CamYRotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                                             {Me.DegreesToolStripMenuItem2, Me.DegreesToolStripMenuItem3})
+    Me.CamYRotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DegreesToolStripMenuItem2, Me.DegreesToolStripMenuItem3})
     Me.CamYRotationToolStripMenuItem.Name = "CamYRotationToolStripMenuItem"
-    Me.CamYRotationToolStripMenuItem.Size = New System.Drawing.Size(80, 22)
+    Me.CamYRotationToolStripMenuItem.Size = New System.Drawing.Size(81, 22)
     Me.CamYRotationToolStripMenuItem.Text = "Y"
     '
     'DegreesToolStripMenuItem2
     '
     Me.DegreesToolStripMenuItem2.Name = "DegreesToolStripMenuItem2"
-    Me.DegreesToolStripMenuItem2.Size = New System.Drawing.Size(142, 22)
+    Me.DegreesToolStripMenuItem2.Size = New System.Drawing.Size(144, 22)
     Me.DegreesToolStripMenuItem2.Text = " + 90 degrees"
     '
     'DegreesToolStripMenuItem3
     '
     Me.DegreesToolStripMenuItem3.Name = "DegreesToolStripMenuItem3"
-    Me.DegreesToolStripMenuItem3.Size = New System.Drawing.Size(142, 22)
+    Me.DegreesToolStripMenuItem3.Size = New System.Drawing.Size(144, 22)
     Me.DegreesToolStripMenuItem3.Text = "- 90 degrees"
     '
     'CamZRotationToolStripMenuItem
     '
-    Me.CamZRotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                                             {Me.DegreesToolStripMenuItem4, Me.DegreesToolStripMenuItem5})
+    Me.CamZRotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DegreesToolStripMenuItem4, Me.DegreesToolStripMenuItem5})
     Me.CamZRotationToolStripMenuItem.Name = "CamZRotationToolStripMenuItem"
-    Me.CamZRotationToolStripMenuItem.Size = New System.Drawing.Size(80, 22)
+    Me.CamZRotationToolStripMenuItem.Size = New System.Drawing.Size(81, 22)
     Me.CamZRotationToolStripMenuItem.Text = "Z"
     '
     'DegreesToolStripMenuItem4
     '
     Me.DegreesToolStripMenuItem4.Name = "DegreesToolStripMenuItem4"
-    Me.DegreesToolStripMenuItem4.Size = New System.Drawing.Size(139, 22)
+    Me.DegreesToolStripMenuItem4.Size = New System.Drawing.Size(141, 22)
     Me.DegreesToolStripMenuItem4.Text = "+ 90 degrees"
     '
     'DegreesToolStripMenuItem5
     '
     Me.DegreesToolStripMenuItem5.Name = "DegreesToolStripMenuItem5"
-    Me.DegreesToolStripMenuItem5.Size = New System.Drawing.Size(139, 22)
+    Me.DegreesToolStripMenuItem5.Size = New System.Drawing.Size(141, 22)
     Me.DegreesToolStripMenuItem5.Text = "- 90 degrees"
     '
     'AlignToolItem
     '
-    Me.AlignToolItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                             {Me.XToolStripMenuItem3, Me.YToolStripMenuItem3, Me.ZToolStripMenuItem2})
+    Me.AlignToolItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.XToolStripMenuItem3, Me.YToolStripMenuItem3, Me.ZToolStripMenuItem2})
     Me.AlignToolItem.Name = "AlignToolItem"
-    Me.AlignToolItem.Size = New System.Drawing.Size(151, 22)
+    Me.AlignToolItem.Size = New System.Drawing.Size(155, 22)
     Me.AlignToolItem.Text = "Align"
     '
     'XToolStripMenuItem3
     '
     Me.XToolStripMenuItem3.Name = "XToolStripMenuItem3"
-    Me.XToolStripMenuItem3.Size = New System.Drawing.Size(80, 22)
+    Me.XToolStripMenuItem3.Size = New System.Drawing.Size(81, 22)
     Me.XToolStripMenuItem3.Text = "X"
     '
     'YToolStripMenuItem3
     '
     Me.YToolStripMenuItem3.Name = "YToolStripMenuItem3"
-    Me.YToolStripMenuItem3.Size = New System.Drawing.Size(80, 22)
+    Me.YToolStripMenuItem3.Size = New System.Drawing.Size(81, 22)
     Me.YToolStripMenuItem3.Text = "Y"
     '
     'ZToolStripMenuItem2
     '
     Me.ZToolStripMenuItem2.Name = "ZToolStripMenuItem2"
-    Me.ZToolStripMenuItem2.Size = New System.Drawing.Size(80, 22)
+    Me.ZToolStripMenuItem2.Size = New System.Drawing.Size(81, 22)
     Me.ZToolStripMenuItem2.Text = "Z"
     '
     'ToolStripSeparator13
     '
     Me.ToolStripSeparator13.Name = "ToolStripSeparator13"
-    Me.ToolStripSeparator13.Size = New System.Drawing.Size(148, 6)
+    Me.ToolStripSeparator13.Size = New System.Drawing.Size(152, 6)
     '
     'CopyToolStripMenuItem
     '
     Me.CopyToolStripMenuItem.Name = "CopyToolStripMenuItem"
-    Me.CopyToolStripMenuItem.Size = New System.Drawing.Size(151, 22)
+    Me.CopyToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
     Me.CopyToolStripMenuItem.Text = "Copy attributes"
     '
     'PasteToolStripMenuItem
     '
-    Me.PasteToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                                      {Me.PositionToolStripMenuItem, Me.RotationToolStripMenuItem,
-                                                       Me.NumberAndVariableToolStripMenuItem})
+    Me.PasteToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PositionToolStripMenuItem, Me.RotationToolStripMenuItem, Me.NumberAndVariableToolStripMenuItem})
     Me.PasteToolStripMenuItem.Enabled = False
     Me.PasteToolStripMenuItem.Name = "PasteToolStripMenuItem"
-    Me.PasteToolStripMenuItem.Size = New System.Drawing.Size(151, 22)
+    Me.PasteToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
     Me.PasteToolStripMenuItem.Text = "Paste attributes"
     '
     'PositionToolStripMenuItem
     '
-    Me.PositionToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                                         {Me.XToolStripMenuItem1, Me.YToolStripMenuItem1,
-                                                          Me.ZToolStripMenuItem, Me.AllToolStripMenuItem1})
+    Me.PositionToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.XToolStripMenuItem1, Me.YToolStripMenuItem1, Me.ZToolStripMenuItem, Me.AllToolStripMenuItem1})
     Me.PositionToolStripMenuItem.Name = "PositionToolStripMenuItem"
-    Me.PositionToolStripMenuItem.Size = New System.Drawing.Size(173, 22)
+    Me.PositionToolStripMenuItem.Size = New System.Drawing.Size(185, 22)
     Me.PositionToolStripMenuItem.Text = "Position"
     '
     'XToolStripMenuItem1
     '
     Me.XToolStripMenuItem1.Name = "XToolStripMenuItem1"
-    Me.XToolStripMenuItem1.Size = New System.Drawing.Size(85, 22)
+    Me.XToolStripMenuItem1.Size = New System.Drawing.Size(88, 22)
     Me.XToolStripMenuItem1.Text = "X"
     '
     'YToolStripMenuItem1
     '
     Me.YToolStripMenuItem1.Name = "YToolStripMenuItem1"
-    Me.YToolStripMenuItem1.Size = New System.Drawing.Size(85, 22)
+    Me.YToolStripMenuItem1.Size = New System.Drawing.Size(88, 22)
     Me.YToolStripMenuItem1.Text = "Y"
     '
     'ZToolStripMenuItem
     '
     Me.ZToolStripMenuItem.Name = "ZToolStripMenuItem"
-    Me.ZToolStripMenuItem.Size = New System.Drawing.Size(85, 22)
+    Me.ZToolStripMenuItem.Size = New System.Drawing.Size(88, 22)
     Me.ZToolStripMenuItem.Text = "Z"
     '
     'AllToolStripMenuItem1
     '
     Me.AllToolStripMenuItem1.Name = "AllToolStripMenuItem1"
-    Me.AllToolStripMenuItem1.Size = New System.Drawing.Size(85, 22)
+    Me.AllToolStripMenuItem1.Size = New System.Drawing.Size(88, 22)
     Me.AllToolStripMenuItem1.Text = "All"
     '
     'RotationToolStripMenuItem
     '
-    Me.RotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                                         {Me.XToolStripMenuItem2, Me.YToolStripMenuItem2,
-                                                          Me.ZToolStripMenuItem1, Me.AllToolStripMenuItem})
+    Me.RotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.XToolStripMenuItem2, Me.YToolStripMenuItem2, Me.ZToolStripMenuItem1, Me.AllToolStripMenuItem})
     Me.RotationToolStripMenuItem.Name = "RotationToolStripMenuItem"
-    Me.RotationToolStripMenuItem.Size = New System.Drawing.Size(173, 22)
+    Me.RotationToolStripMenuItem.Size = New System.Drawing.Size(185, 22)
     Me.RotationToolStripMenuItem.Text = "Rotation"
     '
     'XToolStripMenuItem2
     '
     Me.XToolStripMenuItem2.Name = "XToolStripMenuItem2"
-    Me.XToolStripMenuItem2.Size = New System.Drawing.Size(85, 22)
+    Me.XToolStripMenuItem2.Size = New System.Drawing.Size(88, 22)
     Me.XToolStripMenuItem2.Text = "X"
     '
     'YToolStripMenuItem2
     '
     Me.YToolStripMenuItem2.Name = "YToolStripMenuItem2"
-    Me.YToolStripMenuItem2.Size = New System.Drawing.Size(85, 22)
+    Me.YToolStripMenuItem2.Size = New System.Drawing.Size(88, 22)
     Me.YToolStripMenuItem2.Text = "Y"
     '
     'ZToolStripMenuItem1
     '
     Me.ZToolStripMenuItem1.Name = "ZToolStripMenuItem1"
-    Me.ZToolStripMenuItem1.Size = New System.Drawing.Size(85, 22)
+    Me.ZToolStripMenuItem1.Size = New System.Drawing.Size(88, 22)
     Me.ZToolStripMenuItem1.Text = "Z"
     '
     'AllToolStripMenuItem
     '
     Me.AllToolStripMenuItem.Name = "AllToolStripMenuItem"
-    Me.AllToolStripMenuItem.Size = New System.Drawing.Size(85, 22)
+    Me.AllToolStripMenuItem.Size = New System.Drawing.Size(88, 22)
     Me.AllToolStripMenuItem.Text = "All"
     '
     'NumberAndVariableToolStripMenuItem
     '
     Me.NumberAndVariableToolStripMenuItem.Name = "NumberAndVariableToolStripMenuItem"
-    Me.NumberAndVariableToolStripMenuItem.Size = New System.Drawing.Size(173, 22)
+    Me.NumberAndVariableToolStripMenuItem.Size = New System.Drawing.Size(185, 22)
     Me.NumberAndVariableToolStripMenuItem.Text = "Number and Variable"
     '
     'ClearClipboardToolStripMenuItem
     '
     Me.ClearClipboardToolStripMenuItem.Enabled = False
     Me.ClearClipboardToolStripMenuItem.Name = "ClearClipboardToolStripMenuItem"
-    Me.ClearClipboardToolStripMenuItem.Size = New System.Drawing.Size(151, 22)
+    Me.ClearClipboardToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
     Me.ClearClipboardToolStripMenuItem.Text = "Clear clipboard"
     '
     'RotationTimer
@@ -2463,8 +2255,7 @@ Public Class MainWin
     'ROMBrowser
     '
     Me.ROMBrowser.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                                  Or System.Windows.Forms.AnchorStyles.Left),
-                                 System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
     Me.ROMBrowser.Appearance = System.Windows.Forms.TabAppearance.Buttons
     Me.ROMBrowser.Controls.Add(Me.ROMDataTabs)
     Me.ROMBrowser.Controls.Add(Me.IndividualFiles)
@@ -2488,8 +2279,7 @@ Public Class MainWin
     '
     'Button7
     '
-    Me.Button7.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left),
-                              System.Windows.Forms.AnchorStyles)
+    Me.Button7.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
     Me.Button7.Location = New System.Drawing.Point(153, 526)
     Me.Button7.Name = "Button7"
     Me.Button7.Size = New System.Drawing.Size(60, 23)
@@ -2508,8 +2298,7 @@ Public Class MainWin
     '
     'Label29
     '
-    Me.Label29.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left),
-                              System.Windows.Forms.AnchorStyles)
+    Me.Label29.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
     Me.Label29.AutoSize = True
     Me.Label29.Location = New System.Drawing.Point(7, 567)
     Me.Label29.Name = "Label29"
@@ -2519,8 +2308,7 @@ Public Class MainWin
     '
     'TreeFind
     '
-    Me.TreeFind.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left),
-                               System.Windows.Forms.AnchorStyles)
+    Me.TreeFind.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
     Me.TreeFind.Location = New System.Drawing.Point(10, 586)
     Me.TreeFind.Name = "TreeFind"
     Me.TreeFind.Size = New System.Drawing.Size(141, 20)
@@ -2529,8 +2317,7 @@ Public Class MainWin
     'FileTree
     '
     Me.FileTree.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                                Or System.Windows.Forms.AnchorStyles.Left),
-                               System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
     Me.FileTree.ContextMenuStrip = Me.BackupMenuStrip
     Me.FileTree.HideSelection = False
     Me.FileTree.HotTracking = True
@@ -2541,11 +2328,7 @@ Public Class MainWin
     '
     'FileToolStripMenuItem1
     '
-    Me.FileToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                                      {Me.ToolStripMenuItem35, Me.ToolStripMenuItem2, Me.CustomLevel,
-                                                       Me.toolStripSeparator, Me.SaveToolStripMenuItem,
-                                                       Me.ToolStripMenuItem34, Me.toolStripSeparator12,
-                                                       Me.ExitToolStripMenuItem})
+    Me.FileToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem35, Me.ToolStripMenuItem2, Me.CustomLevel, Me.toolStripSeparator, Me.SaveToolStripMenuItem, Me.ToolStripMenuItem34, Me.toolStripSeparator12, Me.ExitToolStripMenuItem})
     Me.FileToolStripMenuItem1.Name = "FileToolStripMenuItem1"
     Me.FileToolStripMenuItem1.Size = New System.Drawing.Size(37, 27)
     Me.FileToolStripMenuItem1.Text = "&File"
@@ -2607,9 +2390,7 @@ Public Class MainWin
     '
     'EditToolStripMenuItem1
     '
-    Me.EditToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                                      {Me.UndoToolStripMenuItem, Me.WireframeModeToolStripMenuItem,
-                                                       Me.RenderToolStripMenuItem})
+    Me.EditToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UndoToolStripMenuItem, Me.WireframeModeToolStripMenuItem, Me.RenderToolStripMenuItem})
     Me.EditToolStripMenuItem1.Name = "EditToolStripMenuItem1"
     Me.EditToolStripMenuItem1.Size = New System.Drawing.Size(44, 27)
     Me.EditToolStripMenuItem1.Text = "&View"
@@ -2632,9 +2413,7 @@ Public Class MainWin
     '
     'RenderToolStripMenuItem
     '
-    Me.RenderToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                                       {Me.GraphicsToolStripMenuItem,
-                                                        Me.CollisionOverlayToolStripMenuItem})
+    Me.RenderToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.GraphicsToolStripMenuItem, Me.CollisionOverlayToolStripMenuItem})
     Me.RenderToolStripMenuItem.Name = "RenderToolStripMenuItem"
     Me.RenderToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+R"
     Me.RenderToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
@@ -2659,19 +2438,14 @@ Public Class MainWin
     '
     'ToolsToolStripMenuItem1
     '
-    Me.ToolsToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                                       {Me.MouseToolToolStripMenuItem1, Me.LockAxesToolStripMenuItem,
-                                                        Me.OptionsToolStripMenuItem2})
+    Me.ToolsToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MouseToolToolStripMenuItem1, Me.LockAxesToolStripMenuItem, Me.OptionsToolStripMenuItem2})
     Me.ToolsToolStripMenuItem1.Name = "ToolsToolStripMenuItem1"
-    Me.ToolsToolStripMenuItem1.Size = New System.Drawing.Size(45, 27)
+    Me.ToolsToolStripMenuItem1.Size = New System.Drawing.Size(44, 27)
     Me.ToolsToolStripMenuItem1.Text = "&Tools"
     '
     'MouseToolToolStripMenuItem1
     '
-    Me.MouseToolToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                                           {Me.CameraOnlyMenu, Me.ActorSelectorMenu,
-                                                            Me.CollisionToolStripMenuItem, Me.CollisionSelectorMenu,
-                                                            Me.DisplayListSelectorToolStripMenuItem})
+    Me.MouseToolToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CameraOnlyMenu, Me.ActorSelectorMenu, Me.CollisionToolStripMenuItem, Me.CollisionSelectorMenu, Me.DisplayListSelectorToolStripMenuItem})
     Me.MouseToolToolStripMenuItem1.Name = "MouseToolToolStripMenuItem1"
     Me.MouseToolToolStripMenuItem1.ShortcutKeyDisplayString = ""
     Me.MouseToolToolStripMenuItem1.Size = New System.Drawing.Size(163, 22)
@@ -2700,9 +2474,7 @@ Public Class MainWin
     '
     'CollisionSelectorMenu
     '
-    Me.CollisionSelectorMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                                     {Me.EdgeToolStripMenuItem, Me.TriangleToolStripMenuItem,
-                                                      Me.VertexToolStripMenuItem})
+    Me.CollisionSelectorMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EdgeToolStripMenuItem, Me.TriangleToolStripMenuItem, Me.VertexToolStripMenuItem})
     Me.CollisionSelectorMenu.Name = "CollisionSelectorMenu"
     Me.CollisionSelectorMenu.ShortcutKeyDisplayString = ""
     Me.CollisionSelectorMenu.Size = New System.Drawing.Size(191, 22)
@@ -2713,21 +2485,21 @@ Public Class MainWin
     '
     Me.EdgeToolStripMenuItem.Name = "EdgeToolStripMenuItem"
     Me.EdgeToolStripMenuItem.ShortcutKeyDisplayString = "4"
-    Me.EdgeToolStripMenuItem.Size = New System.Drawing.Size(130, 22)
+    Me.EdgeToolStripMenuItem.Size = New System.Drawing.Size(129, 22)
     Me.EdgeToolStripMenuItem.Text = "Edge"
     '
     'TriangleToolStripMenuItem
     '
     Me.TriangleToolStripMenuItem.Name = "TriangleToolStripMenuItem"
     Me.TriangleToolStripMenuItem.ShortcutKeyDisplayString = "5"
-    Me.TriangleToolStripMenuItem.Size = New System.Drawing.Size(130, 22)
+    Me.TriangleToolStripMenuItem.Size = New System.Drawing.Size(129, 22)
     Me.TriangleToolStripMenuItem.Text = "Triangle"
     '
     'VertexToolStripMenuItem
     '
     Me.VertexToolStripMenuItem.Name = "VertexToolStripMenuItem"
     Me.VertexToolStripMenuItem.ShortcutKeyDisplayString = "6"
-    Me.VertexToolStripMenuItem.Size = New System.Drawing.Size(130, 22)
+    Me.VertexToolStripMenuItem.Size = New System.Drawing.Size(129, 22)
     Me.VertexToolStripMenuItem.Text = "Vertex"
     '
     'DisplayListSelectorToolStripMenuItem
@@ -2739,9 +2511,7 @@ Public Class MainWin
     '
     'LockAxesToolStripMenuItem
     '
-    Me.LockAxesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                                         {Me.XToolStripMenuItem, Me.YToolStripMenuItem,
-                                                          Me.DisableToolStripMenuItem})
+    Me.LockAxesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.XToolStripMenuItem, Me.YToolStripMenuItem, Me.DisableToolStripMenuItem})
     Me.LockAxesToolStripMenuItem.Name = "LockAxesToolStripMenuItem"
     Me.LockAxesToolStripMenuItem.ShortcutKeyDisplayString = "Space"
     Me.LockAxesToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
@@ -2770,8 +2540,7 @@ Public Class MainWin
     '
     'OptionsToolStripMenuItem2
     '
-    Me.OptionsToolStripMenuItem2.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                                         {Me.DisableDepthTestToolStripMenuItem})
+    Me.OptionsToolStripMenuItem2.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DisableDepthTestToolStripMenuItem})
     Me.OptionsToolStripMenuItem2.Name = "OptionsToolStripMenuItem2"
     Me.OptionsToolStripMenuItem2.Size = New System.Drawing.Size(163, 22)
     Me.OptionsToolStripMenuItem2.Text = "Options"
@@ -2785,10 +2554,9 @@ Public Class MainWin
     '
     'ToolsToolStripMenuItem
     '
-    Me.ToolsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                                      {Me.OptionsToolStripMenuItem1, Me.RendererToolStripMenuItem})
+    Me.ToolsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OptionsToolStripMenuItem1, Me.RendererToolStripMenuItem})
     Me.ToolsToolStripMenuItem.Name = "ToolsToolStripMenuItem"
-    Me.ToolsToolStripMenuItem.Size = New System.Drawing.Size(81, 27)
+    Me.ToolsToolStripMenuItem.Size = New System.Drawing.Size(80, 27)
     Me.ToolsToolStripMenuItem.Text = "&Preferences"
     '
     'OptionsToolStripMenuItem1
@@ -2799,11 +2567,7 @@ Public Class MainWin
     '
     'RendererToolStripMenuItem
     '
-    Me.RendererToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                                         {Me.TexturesToolStripMenuItem,
-                                                          Me.ColorCombinerToolStripMenuItem,
-                                                          Me.AnisotropicFilteringToolStripMenuItem,
-                                                          Me.FullSceneAntialiasingToolStripMenuItem})
+    Me.RendererToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TexturesToolStripMenuItem, Me.ColorCombinerToolStripMenuItem, Me.AnisotropicFilteringToolStripMenuItem, Me.FullSceneAntialiasingToolStripMenuItem})
     Me.RendererToolStripMenuItem.Name = "RendererToolStripMenuItem"
     Me.RendererToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
     Me.RendererToolStripMenuItem.Text = "Renderer"
@@ -2813,7 +2577,7 @@ Public Class MainWin
     Me.TexturesToolStripMenuItem.Checked = True
     Me.TexturesToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
     Me.TexturesToolStripMenuItem.Name = "TexturesToolStripMenuItem"
-    Me.TexturesToolStripMenuItem.Size = New System.Drawing.Size(184, 22)
+    Me.TexturesToolStripMenuItem.Size = New System.Drawing.Size(183, 22)
     Me.TexturesToolStripMenuItem.Text = "Textures"
     '
     'ColorCombinerToolStripMenuItem
@@ -2821,7 +2585,7 @@ Public Class MainWin
     Me.ColorCombinerToolStripMenuItem.Checked = True
     Me.ColorCombinerToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
     Me.ColorCombinerToolStripMenuItem.Name = "ColorCombinerToolStripMenuItem"
-    Me.ColorCombinerToolStripMenuItem.Size = New System.Drawing.Size(184, 22)
+    Me.ColorCombinerToolStripMenuItem.Size = New System.Drawing.Size(183, 22)
     Me.ColorCombinerToolStripMenuItem.Text = "Color Combiner"
     '
     'AnisotropicFilteringToolStripMenuItem
@@ -2829,7 +2593,7 @@ Public Class MainWin
     Me.AnisotropicFilteringToolStripMenuItem.Checked = True
     Me.AnisotropicFilteringToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
     Me.AnisotropicFilteringToolStripMenuItem.Name = "AnisotropicFilteringToolStripMenuItem"
-    Me.AnisotropicFilteringToolStripMenuItem.Size = New System.Drawing.Size(184, 22)
+    Me.AnisotropicFilteringToolStripMenuItem.Size = New System.Drawing.Size(183, 22)
     Me.AnisotropicFilteringToolStripMenuItem.Text = "Anisotropic Filtering"
     '
     'FullSceneAntialiasingToolStripMenuItem
@@ -2837,13 +2601,12 @@ Public Class MainWin
     Me.FullSceneAntialiasingToolStripMenuItem.Checked = True
     Me.FullSceneAntialiasingToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
     Me.FullSceneAntialiasingToolStripMenuItem.Name = "FullSceneAntialiasingToolStripMenuItem"
-    Me.FullSceneAntialiasingToolStripMenuItem.Size = New System.Drawing.Size(184, 22)
+    Me.FullSceneAntialiasingToolStripMenuItem.Size = New System.Drawing.Size(183, 22)
     Me.FullSceneAntialiasingToolStripMenuItem.Text = "Full Scene Antialiasing"
     '
     'HelpToolStripMenuItem1
     '
-    Me.HelpToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                                      {Me.ContentsToolStripMenuItem, Me.AboutUoTToolStripMenuItem})
+    Me.HelpToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ContentsToolStripMenuItem, Me.AboutUoTToolStripMenuItem})
     Me.HelpToolStripMenuItem1.Name = "HelpToolStripMenuItem1"
     Me.HelpToolStripMenuItem1.Size = New System.Drawing.Size(41, 27)
     Me.HelpToolStripMenuItem1.Text = "&Help"
@@ -2865,11 +2628,8 @@ Public Class MainWin
     Me.UoTMainMenu.AllowMerge = False
     Me.UoTMainMenu.AutoSize = False
     Me.UoTMainMenu.BackColor = System.Drawing.SystemColors.ControlLight
-    Me.UoTMainMenu.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Regular,
-                                                  System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-    Me.UoTMainMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                   {Me.FileToolStripMenuItem1, Me.ToolStripMenuItem3, Me.EditToolStripMenuItem1,
-                                    Me.ToolsToolStripMenuItem, Me.ToolsToolStripMenuItem1, Me.HelpToolStripMenuItem1})
+    Me.UoTMainMenu.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+    Me.UoTMainMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem1, Me.ToolStripMenuItem3, Me.EditToolStripMenuItem1, Me.ToolsToolStripMenuItem, Me.ToolsToolStripMenuItem1, Me.HelpToolStripMenuItem1})
     Me.UoTMainMenu.Location = New System.Drawing.Point(0, 0)
     Me.UoTMainMenu.Name = "UoTMainMenu"
     Me.UoTMainMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
@@ -2880,8 +2640,7 @@ Public Class MainWin
     '
     'ToolStripMenuItem3
     '
-    Me.ToolStripMenuItem3.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                                  {Me.UndoToolStripMenuItem1, Me.RedoToolStripMenuItem})
+    Me.ToolStripMenuItem3.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UndoToolStripMenuItem1, Me.RedoToolStripMenuItem})
     Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
     Me.ToolStripMenuItem3.Size = New System.Drawing.Size(40, 27)
     Me.ToolStripMenuItem3.Text = "Edit"
@@ -2890,8 +2649,7 @@ Public Class MainWin
     'UndoToolStripMenuItem1
     '
     Me.UndoToolStripMenuItem1.Name = "UndoToolStripMenuItem1"
-    Me.UndoToolStripMenuItem1.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Z),
-                                                   System.Windows.Forms.Keys)
+    Me.UndoToolStripMenuItem1.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Z), System.Windows.Forms.Keys)
     Me.UndoToolStripMenuItem1.Size = New System.Drawing.Size(140, 22)
     Me.UndoToolStripMenuItem1.Text = "&Undo"
     '
@@ -2905,218 +2663,203 @@ Public Class MainWin
     'VertContextMenu
     '
     Me.VertContextMenu.BackColor = System.Drawing.SystemColors.Control
-    Me.VertContextMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                       {Me.ToolStripMenuItem5, Me.ToolStripSeparator15, Me.ToolStripMenuItem6,
-                                        Me.ToolStripMenuItem16, Me.ToolStripSeparator16, Me.ToolStripMenuItem20,
-                                        Me.ToolStripMenuItem21, Me.ToolStripMenuItem33})
+    Me.VertContextMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem5, Me.ToolStripSeparator15, Me.ToolStripMenuItem6, Me.ToolStripMenuItem16, Me.ToolStripSeparator16, Me.ToolStripMenuItem20, Me.ToolStripMenuItem21, Me.ToolStripMenuItem33})
     Me.VertContextMenu.Name = "ContextMenuStrip4"
     Me.VertContextMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
-    Me.VertContextMenu.Size = New System.Drawing.Size(152, 148)
+    Me.VertContextMenu.Size = New System.Drawing.Size(156, 148)
     '
     'ToolStripMenuItem5
     '
     Me.ToolStripMenuItem5.Name = "ToolStripMenuItem5"
-    Me.ToolStripMenuItem5.Size = New System.Drawing.Size(151, 22)
+    Me.ToolStripMenuItem5.Size = New System.Drawing.Size(155, 22)
     Me.ToolStripMenuItem5.Text = "Deselect"
     '
     'ToolStripSeparator15
     '
     Me.ToolStripSeparator15.Name = "ToolStripSeparator15"
-    Me.ToolStripSeparator15.Size = New System.Drawing.Size(148, 6)
+    Me.ToolStripSeparator15.Size = New System.Drawing.Size(152, 6)
     '
     'ToolStripMenuItem6
     '
-    Me.ToolStripMenuItem6.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                                  {Me.ToolStripMenuItem7, Me.ToolStripMenuItem10, Me.ToolStripMenuItem13})
+    Me.ToolStripMenuItem6.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem7, Me.ToolStripMenuItem10, Me.ToolStripMenuItem13})
     Me.ToolStripMenuItem6.Name = "ToolStripMenuItem6"
-    Me.ToolStripMenuItem6.Size = New System.Drawing.Size(151, 22)
+    Me.ToolStripMenuItem6.Size = New System.Drawing.Size(155, 22)
     Me.ToolStripMenuItem6.Text = "Rotate"
     '
     'ToolStripMenuItem7
     '
-    Me.ToolStripMenuItem7.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                                  {Me.ToolStripMenuItem8, Me.ToolStripMenuItem9})
+    Me.ToolStripMenuItem7.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem8, Me.ToolStripMenuItem9})
     Me.ToolStripMenuItem7.Name = "ToolStripMenuItem7"
-    Me.ToolStripMenuItem7.Size = New System.Drawing.Size(80, 22)
+    Me.ToolStripMenuItem7.Size = New System.Drawing.Size(81, 22)
     Me.ToolStripMenuItem7.Text = "X"
     '
     'ToolStripMenuItem8
     '
     Me.ToolStripMenuItem8.Name = "ToolStripMenuItem8"
-    Me.ToolStripMenuItem8.Size = New System.Drawing.Size(139, 22)
+    Me.ToolStripMenuItem8.Size = New System.Drawing.Size(141, 22)
     Me.ToolStripMenuItem8.Text = "+ 90 degrees"
     '
     'ToolStripMenuItem9
     '
     Me.ToolStripMenuItem9.Name = "ToolStripMenuItem9"
-    Me.ToolStripMenuItem9.Size = New System.Drawing.Size(139, 22)
+    Me.ToolStripMenuItem9.Size = New System.Drawing.Size(141, 22)
     Me.ToolStripMenuItem9.Text = "- 90 degrees"
     '
     'ToolStripMenuItem10
     '
-    Me.ToolStripMenuItem10.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                                   {Me.ToolStripMenuItem11, Me.ToolStripMenuItem12})
+    Me.ToolStripMenuItem10.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem11, Me.ToolStripMenuItem12})
     Me.ToolStripMenuItem10.Name = "ToolStripMenuItem10"
-    Me.ToolStripMenuItem10.Size = New System.Drawing.Size(80, 22)
+    Me.ToolStripMenuItem10.Size = New System.Drawing.Size(81, 22)
     Me.ToolStripMenuItem10.Text = "Y"
     '
     'ToolStripMenuItem11
     '
     Me.ToolStripMenuItem11.Name = "ToolStripMenuItem11"
-    Me.ToolStripMenuItem11.Size = New System.Drawing.Size(142, 22)
+    Me.ToolStripMenuItem11.Size = New System.Drawing.Size(144, 22)
     Me.ToolStripMenuItem11.Text = " + 90 degrees"
     '
     'ToolStripMenuItem12
     '
     Me.ToolStripMenuItem12.Name = "ToolStripMenuItem12"
-    Me.ToolStripMenuItem12.Size = New System.Drawing.Size(142, 22)
+    Me.ToolStripMenuItem12.Size = New System.Drawing.Size(144, 22)
     Me.ToolStripMenuItem12.Text = "- 90 degrees"
     '
     'ToolStripMenuItem13
     '
-    Me.ToolStripMenuItem13.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                                   {Me.ToolStripMenuItem14, Me.ToolStripMenuItem15})
+    Me.ToolStripMenuItem13.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem14, Me.ToolStripMenuItem15})
     Me.ToolStripMenuItem13.Name = "ToolStripMenuItem13"
-    Me.ToolStripMenuItem13.Size = New System.Drawing.Size(80, 22)
+    Me.ToolStripMenuItem13.Size = New System.Drawing.Size(81, 22)
     Me.ToolStripMenuItem13.Text = "Z"
     '
     'ToolStripMenuItem14
     '
     Me.ToolStripMenuItem14.Name = "ToolStripMenuItem14"
-    Me.ToolStripMenuItem14.Size = New System.Drawing.Size(139, 22)
+    Me.ToolStripMenuItem14.Size = New System.Drawing.Size(141, 22)
     Me.ToolStripMenuItem14.Text = "+ 90 degrees"
     '
     'ToolStripMenuItem15
     '
     Me.ToolStripMenuItem15.Name = "ToolStripMenuItem15"
-    Me.ToolStripMenuItem15.Size = New System.Drawing.Size(139, 22)
+    Me.ToolStripMenuItem15.Size = New System.Drawing.Size(141, 22)
     Me.ToolStripMenuItem15.Text = "- 90 degrees"
     '
     'ToolStripMenuItem16
     '
-    Me.ToolStripMenuItem16.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                                   {Me.ToolStripMenuItem17, Me.ToolStripMenuItem18,
-                                                    Me.ToolStripMenuItem19})
+    Me.ToolStripMenuItem16.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem17, Me.ToolStripMenuItem18, Me.ToolStripMenuItem19})
     Me.ToolStripMenuItem16.Name = "ToolStripMenuItem16"
-    Me.ToolStripMenuItem16.Size = New System.Drawing.Size(151, 22)
+    Me.ToolStripMenuItem16.Size = New System.Drawing.Size(155, 22)
     Me.ToolStripMenuItem16.Text = "Align"
     '
     'ToolStripMenuItem17
     '
     Me.ToolStripMenuItem17.Name = "ToolStripMenuItem17"
-    Me.ToolStripMenuItem17.Size = New System.Drawing.Size(80, 22)
+    Me.ToolStripMenuItem17.Size = New System.Drawing.Size(81, 22)
     Me.ToolStripMenuItem17.Text = "X"
     '
     'ToolStripMenuItem18
     '
     Me.ToolStripMenuItem18.Name = "ToolStripMenuItem18"
-    Me.ToolStripMenuItem18.Size = New System.Drawing.Size(80, 22)
+    Me.ToolStripMenuItem18.Size = New System.Drawing.Size(81, 22)
     Me.ToolStripMenuItem18.Text = "Y"
     '
     'ToolStripMenuItem19
     '
     Me.ToolStripMenuItem19.Name = "ToolStripMenuItem19"
-    Me.ToolStripMenuItem19.Size = New System.Drawing.Size(80, 22)
+    Me.ToolStripMenuItem19.Size = New System.Drawing.Size(81, 22)
     Me.ToolStripMenuItem19.Text = "Z"
     '
     'ToolStripSeparator16
     '
     Me.ToolStripSeparator16.Name = "ToolStripSeparator16"
-    Me.ToolStripSeparator16.Size = New System.Drawing.Size(148, 6)
+    Me.ToolStripSeparator16.Size = New System.Drawing.Size(152, 6)
     '
     'ToolStripMenuItem20
     '
     Me.ToolStripMenuItem20.Name = "ToolStripMenuItem20"
-    Me.ToolStripMenuItem20.Size = New System.Drawing.Size(151, 22)
+    Me.ToolStripMenuItem20.Size = New System.Drawing.Size(155, 22)
     Me.ToolStripMenuItem20.Text = "Copy attributes"
     '
     'ToolStripMenuItem21
     '
-    Me.ToolStripMenuItem21.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                                   {Me.ToolStripMenuItem22, Me.ToolStripMenuItem27,
-                                                    Me.ToolStripMenuItem32})
+    Me.ToolStripMenuItem21.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem22, Me.ToolStripMenuItem27, Me.ToolStripMenuItem32})
     Me.ToolStripMenuItem21.Enabled = False
     Me.ToolStripMenuItem21.Name = "ToolStripMenuItem21"
-    Me.ToolStripMenuItem21.Size = New System.Drawing.Size(151, 22)
+    Me.ToolStripMenuItem21.Size = New System.Drawing.Size(155, 22)
     Me.ToolStripMenuItem21.Text = "Paste attributes"
     '
     'ToolStripMenuItem22
     '
-    Me.ToolStripMenuItem22.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                                   {Me.ToolStripMenuItem23, Me.ToolStripMenuItem24,
-                                                    Me.ToolStripMenuItem25, Me.ToolStripMenuItem26})
+    Me.ToolStripMenuItem22.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem23, Me.ToolStripMenuItem24, Me.ToolStripMenuItem25, Me.ToolStripMenuItem26})
     Me.ToolStripMenuItem22.Name = "ToolStripMenuItem22"
-    Me.ToolStripMenuItem22.Size = New System.Drawing.Size(173, 22)
+    Me.ToolStripMenuItem22.Size = New System.Drawing.Size(185, 22)
     Me.ToolStripMenuItem22.Text = "Position"
     '
     'ToolStripMenuItem23
     '
     Me.ToolStripMenuItem23.Name = "ToolStripMenuItem23"
-    Me.ToolStripMenuItem23.Size = New System.Drawing.Size(85, 22)
+    Me.ToolStripMenuItem23.Size = New System.Drawing.Size(88, 22)
     Me.ToolStripMenuItem23.Text = "X"
     '
     'ToolStripMenuItem24
     '
     Me.ToolStripMenuItem24.Name = "ToolStripMenuItem24"
-    Me.ToolStripMenuItem24.Size = New System.Drawing.Size(85, 22)
+    Me.ToolStripMenuItem24.Size = New System.Drawing.Size(88, 22)
     Me.ToolStripMenuItem24.Text = "Y"
     '
     'ToolStripMenuItem25
     '
     Me.ToolStripMenuItem25.Name = "ToolStripMenuItem25"
-    Me.ToolStripMenuItem25.Size = New System.Drawing.Size(85, 22)
+    Me.ToolStripMenuItem25.Size = New System.Drawing.Size(88, 22)
     Me.ToolStripMenuItem25.Text = "Z"
     '
     'ToolStripMenuItem26
     '
     Me.ToolStripMenuItem26.Name = "ToolStripMenuItem26"
-    Me.ToolStripMenuItem26.Size = New System.Drawing.Size(85, 22)
+    Me.ToolStripMenuItem26.Size = New System.Drawing.Size(88, 22)
     Me.ToolStripMenuItem26.Text = "All"
     '
     'ToolStripMenuItem27
     '
-    Me.ToolStripMenuItem27.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
-                                                   {Me.ToolStripMenuItem28, Me.ToolStripMenuItem29,
-                                                    Me.ToolStripMenuItem30, Me.ToolStripMenuItem31})
+    Me.ToolStripMenuItem27.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem28, Me.ToolStripMenuItem29, Me.ToolStripMenuItem30, Me.ToolStripMenuItem31})
     Me.ToolStripMenuItem27.Name = "ToolStripMenuItem27"
-    Me.ToolStripMenuItem27.Size = New System.Drawing.Size(173, 22)
+    Me.ToolStripMenuItem27.Size = New System.Drawing.Size(185, 22)
     Me.ToolStripMenuItem27.Text = "Rotation"
     '
     'ToolStripMenuItem28
     '
     Me.ToolStripMenuItem28.Name = "ToolStripMenuItem28"
-    Me.ToolStripMenuItem28.Size = New System.Drawing.Size(85, 22)
+    Me.ToolStripMenuItem28.Size = New System.Drawing.Size(88, 22)
     Me.ToolStripMenuItem28.Text = "X"
     '
     'ToolStripMenuItem29
     '
     Me.ToolStripMenuItem29.Name = "ToolStripMenuItem29"
-    Me.ToolStripMenuItem29.Size = New System.Drawing.Size(85, 22)
+    Me.ToolStripMenuItem29.Size = New System.Drawing.Size(88, 22)
     Me.ToolStripMenuItem29.Text = "Y"
     '
     'ToolStripMenuItem30
     '
     Me.ToolStripMenuItem30.Name = "ToolStripMenuItem30"
-    Me.ToolStripMenuItem30.Size = New System.Drawing.Size(85, 22)
+    Me.ToolStripMenuItem30.Size = New System.Drawing.Size(88, 22)
     Me.ToolStripMenuItem30.Text = "Z"
     '
     'ToolStripMenuItem31
     '
     Me.ToolStripMenuItem31.Name = "ToolStripMenuItem31"
-    Me.ToolStripMenuItem31.Size = New System.Drawing.Size(85, 22)
+    Me.ToolStripMenuItem31.Size = New System.Drawing.Size(88, 22)
     Me.ToolStripMenuItem31.Text = "All"
     '
     'ToolStripMenuItem32
     '
     Me.ToolStripMenuItem32.Name = "ToolStripMenuItem32"
-    Me.ToolStripMenuItem32.Size = New System.Drawing.Size(173, 22)
+    Me.ToolStripMenuItem32.Size = New System.Drawing.Size(185, 22)
     Me.ToolStripMenuItem32.Text = "Number and Variable"
     '
     'ToolStripMenuItem33
     '
     Me.ToolStripMenuItem33.Enabled = False
     Me.ToolStripMenuItem33.Name = "ToolStripMenuItem33"
-    Me.ToolStripMenuItem33.Size = New System.Drawing.Size(151, 22)
+    Me.ToolStripMenuItem33.Size = New System.Drawing.Size(155, 22)
     Me.ToolStripMenuItem33.Text = "Clear clipboard"
     '
     'RipDL
@@ -3191,13 +2934,8 @@ Public Class MainWin
     Me.GroupBox5.PerformLayout()
     Me.EditingTabs.ResumeLayout(False)
     Me.AnimationsTab.ResumeLayout(False)
-    Me.AnimationsTab.PerformLayout()
-    CType(Me.CurrentFrame, System.ComponentModel.ISupportInitialize).EndInit()
     Me.AnimationSetGroup.ResumeLayout(False)
     Me.AnimationSetGroup.PerformLayout()
-    Me.PlaybackGroup.ResumeLayout(False)
-    Me.PlaybackGroup.PerformLayout()
-    CType(Me.AnimationFPS, System.ComponentModel.ISupportInitialize).EndInit()
     Me.DLTab.ResumeLayout(False)
     Me.DLTab.PerformLayout()
     Me.GroupBox7.ResumeLayout(False)
@@ -3215,6 +2953,7 @@ Public Class MainWin
     Me.VertContextMenu.ResumeLayout(False)
     Me.ResumeLayout(False)
     Me.PerformLayout()
+
   End Sub
 
 #End Region
@@ -3924,7 +3663,7 @@ Public Class MainWin
 
     DLParser.EnableHacksFor(ObjectFilename)
 
-    UpdateAnimationTab()
+    AnimationPlaybackPanel.Tick()
 
     If UseStaticDlModel And DlModel.IsComplete Then
       Dim animation As IAnimation
@@ -3932,7 +3671,7 @@ Public Class MainWin
         animation = AnimationEntries(CurrAnimation)
       End If
 
-      DlModel.DrawWithAnimation(animation, ZAnimationCounter.Frame)
+      DlModel.DrawWithAnimation(animation, AnimationPlaybackPanel.Frame)
       Return
     End If
 
@@ -3951,11 +3690,11 @@ Public Class MainWin
       ModelViewMatrixTransformer.Push(True)
       If AnimationEntries IsNot Nothing Then
         With AnimationEntries(CurrAnimation)
-          Dim frameIndex As Integer = Math.Floor(ZAnimationCounter.Frame)
-          Dim frameDelta As Double = ZAnimationCounter.Frame Mod 1
+          Dim frameIndex As Integer = Math.Floor(AnimationPlaybackPanel.Frame)
+          Dim frameDelta As Double = AnimationPlaybackPanel.Frame Mod 1
 
           Dim startPos As Vec3s = .GetPosition(frameIndex)
-          Dim endPos As Vec3s = .GetPosition((frameIndex + 1) Mod .FrameCount)
+          Dim endPos As Vec3s = .GetPosition((frameIndex + 1) Mod AnimationPlaybackPanel.TotalFrames)
 
           Dim f As Double = frameDelta
 
@@ -4034,7 +3773,7 @@ Public Class MainWin
       ModelViewMatrixTransformer.Translate(.x, .y, .z)
 
       If AnimationEntries IsNot Nothing Then
-        Dim q As Quaternion = AnimParser.GetTrackRot(AnimationEntries(CurrAnimation), ZAnimationCounter, id)
+        Dim q As Quaternion = AnimParser.GetTrackRot(AnimationEntries(CurrAnimation), AnimationPlaybackPanel, id)
         q = Quaternion.Normalize(q)
 
         ApplyQuaternion1(q)
@@ -4151,21 +3890,6 @@ Public Class MainWin
     m(3, 3) = 1
 
     ModelViewMatrixTransformer.MultMatrix(m)
-  End Sub
-
-  Private Sub UpdateAnimationTab()
-    ZAnimationCounter.Tick()
-
-    Dim frame As Double = ZAnimationCounter.Frame
-    Dim frameIndex As Integer = Math.Floor(frame)
-
-    CurrentFrame.Value = frameIndex + 1
-    FrameNo.Text = frameIndex.ToString & "/" & ZAnimationCounter.TotalFrames
-
-    Dim seconds As Double = frame / ZAnimationCounter.FrameRate
-    Dim secondsDelta As Double = seconds Mod 1
-    AnimationElapse.Text = CInt(Math.Floor(seconds)).ToString & ":" &
-                           CInt(secondsDelta * 1000).ToString & "s"
   End Sub
 
   Private Sub DrawDL(visibleLimbIndex As Integer, ByVal index As Integer, ByVal SelectionMode As Integer)
@@ -4531,8 +4255,6 @@ Public Class MainWin
       Dim blank_tex() As Byte = {&HFF, &HFF, &HFF, &HFF}
       Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2)
       Gl.glTexImage2D(Gl.GL_TEXTURE_2D, 0, Gl.GL_RGBA, 1, 1, 0, Gl.GL_RGBA, Gl.GL_UNSIGNED_BYTE, blank_tex)
-
-      AnimationFPS.Value = 20
 
       With CollisionVerts
         .x = New ArrayList
@@ -5097,8 +4819,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       ReDim GlobalVarsCs.N64DList(-1)
       AnimationEntries = Nothing
       ReDim LimbEntries(-1)
-      ZAnimationCounter.Reset()
-      CurrentFrame.Value = 1
+      AnimationPlaybackPanel.Reset()
       DListSelection.Items.Clear()
       AnimationList.Items.Clear()
       Select Case LoadedDataType
@@ -7186,25 +6907,10 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     If AnimationEntries IsNot Nothing Then
       If AnimationList.SelectedIndex > -1 Then
         CurrAnimation = AnimationList.SelectedIndex
-        CurrentFrame.Maximum = AnimationEntries(CurrAnimation).FrameCount - 1
-        ZAnimationCounter.Reset()
-        ZAnimationCounter.TotalFrames = AnimationEntries(CurrAnimation).FrameCount - 1
-        CurrentFrame.Value = 1
-        AnimationElapse.Text = "00:00s"
-        FrameNo.Text = "0/" & CurrentFrame.Maximum.ToString
+        AnimationPlaybackPanel.Reset()
+        AnimationPlaybackPanel.TotalFrames = AnimationEntries(CurrAnimation).FrameCount
       End If
     End If
-  End Sub
-
-  Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
-    If AnimationEntries IsNot Nothing And AnimationList.SelectedIndex > -1 Then
-      ZAnimationCounter.IsPlaying = True
-    End If
-  End Sub
-
-  Private Sub CheckBox1_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
-    Handles CheckBox1.CheckedChanged
-    ZAnimationCounter.ShouldLoop = CheckBox1.Checked
   End Sub
 
   Private Sub ResetSelectedToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
@@ -7874,6 +7580,10 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     SaveROMAs.ShowDialog()
   End Sub
 
+  Private Sub AnimationPlaybackPanel_Load(sender As Object, e As EventArgs) Handles AnimationPlaybackPanel.Load
+
+  End Sub
+
   Private Sub SaveROMAs_FileOk(ByVal sender As System.Object, ByVal e As System.ComponentModel.CancelEventArgs) _
     Handles SaveROMAs.FileOk
     If DefROM <> "" Then
@@ -7915,11 +7625,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     Handles FullSceneAntialiasingToolStripMenuItem.Click
     ToggleBoolean(RenderToggles.AntiAliasing, FullSceneAntialiasingToolStripMenuItem)
   End Sub
-
-  Private Sub Button5_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button5.Click
-    ZAnimationCounter.IsPlaying = False
-  End Sub
-
   Private Sub animationbank_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
     Handles animationbank.SelectedIndexChanged
     If LimbEntries IsNot Nothing Then
@@ -7959,17 +7664,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
   Private Sub TrackBar4_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
     Handles TrackBar4.ValueChanged
     ToolSensitivity = TrackBar4.Value
-  End Sub
-
-  Private Sub NumericUpDown1_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
-    Handles AnimationFPS.ValueChanged, AnimationFPS.ValueChanged
-    ZAnimationCounter.FrameRate = AnimationFPS.Value
-  End Sub
-
-  Private Sub CurrentFrame_Scroll(ByVal sender As System.Object, ByVal e As System.EventArgs) _
-    Handles CurrentFrame.Scroll
-    ZAnimationCounter.Frame = CurrentFrame.Value - 1
-    UpdateAnimationTab()
   End Sub
 
   Private Sub VarPresetButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)

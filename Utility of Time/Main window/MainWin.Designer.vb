@@ -133,10 +133,7 @@ Partial Class MainWin
     Friend WithEvents DegreesToolStripMenuItem5 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents RotationTimer As System.Windows.Forms.Timer
     Friend WithEvents AnimationsTab As System.Windows.Forms.TabPage
-    Friend WithEvents Button5 As System.Windows.Forms.Button
-    Friend WithEvents Button3 As System.Windows.Forms.Button
     Friend WithEvents AnimationList As System.Windows.Forms.ListBox
-    Friend WithEvents CheckBox1 As System.Windows.Forms.CheckBox
     Friend WithEvents LoadIndividual As System.Windows.Forms.OpenFileDialog
     Friend WithEvents CopyToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripSeparator14 As System.Windows.Forms.ToolStripSeparator
@@ -297,18 +294,12 @@ Partial Class MainWin
     Friend WithEvents ColorCombinerToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents AnisotropicFilteringToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents FullSceneAntialiasingToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents FrameNo As System.Windows.Forms.Label
-    Friend WithEvents AnimationElapse As System.Windows.Forms.Label
-    Friend WithEvents Label5 As System.Windows.Forms.Label
-    Friend WithEvents CurrentFrame As System.Windows.Forms.TrackBar
     Friend WithEvents animationbank As System.Windows.Forms.ComboBox
-    Friend WithEvents Label27 As System.Windows.Forms.Label
-    Friend WithEvents AnimationFPS As System.Windows.Forms.NumericUpDown
     Friend WithEvents AnimationSetGroup As System.Windows.Forms.GroupBox
-    Friend WithEvents PlaybackGroup As System.Windows.Forms.GroupBox
     Friend WithEvents Label20 As System.Windows.Forms.Label
     Friend WithEvents VarContextMenu As System.Windows.Forms.ContextMenuStrip
     Friend WithEvents NumContextMenu As System.Windows.Forms.ContextMenuStrip
     Friend WithEvents GrpContextMenu As System.Windows.Forms.ContextMenuStrip
     Friend WithEvents Button6 As System.Windows.Forms.Button
+    Friend WithEvents AnimationPlaybackPanel As AnimationPlaybackPanel
 End Class
