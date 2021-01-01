@@ -5063,13 +5063,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     Dim tempstart() As UInt32 = {}
     Dim tempend() As UInt32 = {}
 
-    FileTree.Nodes.Clear()
-
-    FileTree.Nodes.Add("Actor models")
-    FileTree.Nodes.Add("Actor code")
-    FileTree.Nodes.Add("Levels")
-    FileTree.Nodes.Add("Others")
-
     namebuffpos = 0
     curnamepos = nameoff
     segbuffpos = segoff
@@ -5120,7 +5113,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
           .startoff = tempstart(nameinc)
           .endoff = tempend(nameinc)
         End With
-        FileTree.Nodes(2).Nodes.Add(betterFilename)
         mapcount = 0
       ElseIf curfilename.Contains("room_") Then
         ReDim Preserve ROMFiles.Levels(sccount).Maps(mapcount)
@@ -5129,7 +5121,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
           .startoff = tempstart(nameinc)
           .endoff = tempend(nameinc)
         End With
-        FileTree.Nodes(2).Nodes(sccount).Nodes.Add(curfilename)
         mapcount += 1
       ElseIf Mid(curfilename, 1, 7).ToLower = "object_" Then
         ReDim Preserve ROMFiles.Objects(objcount)
@@ -5139,7 +5130,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
           .startoff = tempstart(nameinc)
           .endoff = tempend(nameinc)
         End With
-        FileTree.Nodes(0).Nodes.Add(betterFilename)
         objcount += 1
         mapcount = 0
         sccount = -1
@@ -5150,7 +5140,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
           .startoff = tempstart(nameinc)
           .endoff = tempend(nameinc)
         End With
-        FileTree.Nodes(1).Nodes.Add(curfilename)
         codecount += 1
       Else
         ReDim Preserve ROMFiles.Others(othercount)
@@ -5159,7 +5148,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
           .startoff = tempstart(nameinc)
           .endoff = tempend(nameinc)
         End With
-        FileTree.Nodes(3).Nodes.Add(curfilename)
         othercount += 1
         mapcount = 0
         sccount = -1
@@ -5168,6 +5156,34 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     End While
     PopulateCommonBanks()
     Reshape()
+  End Sub
+
+  Public Sub PopulateFileTreeView()
+    FileTree.Nodes.Clear()
+
+    Dim modelsNode As TreeNode = FileTree.Nodes.Add("Actor models")
+    For Each model As ZObj In ROMFiles.Objects
+      modelsNode.Nodes.Add(model.betterFilename)
+    Next
+
+    Dim codesNode As TreeNode = FileTree.Nodes.Add("Actor code")
+    For Each code As ZCodeFiles In ROMFiles.ActorCode
+      codesNode.Nodes.Add(code.filename)
+    Next
+
+    Dim scenesNode As TreeNode = FileTree.Nodes.Add("Scenes")
+    For Each scene As ZSc In ROMFiles.Levels
+      Dim sceneNode As TreeNode = scenesNode.Nodes.Add(scene.betterFilename)
+
+      For Each map As ZMap In scene.Maps
+        sceneNode.Nodes.Add(map.filename)
+      Next
+    Next
+
+    Dim othersNode As TreeNode = FileTree.Nodes.Add("Others")
+    For Each other As ZOtherData In ROMFiles.Others
+      othersNode.Nodes.Add(other.filename)
+    Next
   End Sub
 
   Public Sub PopulateCommonBanks()
@@ -5313,7 +5329,10 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
             Exit For
           End If
         Next
+
         GetROMFileTable(tSegOff, tNameOff, DebugROM)
+        PopulateFileTreeView()
+
         Me.Text = "Utility of Time R8 - " & LoadROM.FileName & " - " & ROMType
         ReDim ROMData(-1)
         IndMapFileName = ""
