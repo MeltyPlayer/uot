@@ -90,6 +90,9 @@
     </Compile>
     <Compile Include="ui\main\tabs\animation\FrameAdvancer.cs" />
     <Compile Include="ui\main\tabs\animation\Interfaces.cs" />
+    <Compile Include="ui\common\component\TransparentTrackBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="util\Debug.cs" />
     <Compile Include="displaylist\DlManager.cs" />
     <Compile Include="displaylist\DlShaderManager.cs" />

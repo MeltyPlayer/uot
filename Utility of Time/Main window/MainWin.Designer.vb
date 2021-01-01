@@ -302,4 +302,5 @@ Partial Class MainWin
     Friend WithEvents GrpContextMenu As System.Windows.Forms.ContextMenuStrip
     Friend WithEvents Button6 As System.Windows.Forms.Button
     Friend WithEvents AnimationPlaybackPanel As AnimationPlaybackPanel
+    Friend WithEvents SplitContainer1 As SplitContainer
 End Class

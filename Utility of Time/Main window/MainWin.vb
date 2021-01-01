@@ -179,6 +179,7 @@ Public Class MainWin
     Me.Label24 = New System.Windows.Forms.Label()
     Me.EditingTabs = New System.Windows.Forms.TabControl()
     Me.AnimationsTab = New System.Windows.Forms.TabPage()
+    Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
     Me.AnimationSetGroup = New System.Windows.Forms.GroupBox()
     Me.Label20 = New System.Windows.Forms.Label()
     Me.CheckBox2 = New System.Windows.Forms.CheckBox()
@@ -356,6 +357,10 @@ Public Class MainWin
     Me.GroupBox5.SuspendLayout()
     Me.EditingTabs.SuspendLayout()
     Me.AnimationsTab.SuspendLayout()
+    CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
+    Me.SplitContainer1.Panel1.SuspendLayout()
+    Me.SplitContainer1.Panel2.SuspendLayout()
+    Me.SplitContainer1.SuspendLayout()
     Me.AnimationSetGroup.SuspendLayout()
     Me.DLTab.SuspendLayout()
     Me.GroupBox7.SuspendLayout()
@@ -762,10 +767,10 @@ Public Class MainWin
     '
     Me.CollisionTab.Controls.Add(Me.GroupBox1)
     Me.CollisionTab.Controls.Add(Me.CollisionGroupBox)
-    Me.CollisionTab.Location = New System.Drawing.Point(4, 28)
+    Me.CollisionTab.Location = New System.Drawing.Point(4, 25)
     Me.CollisionTab.Name = "CollisionTab"
     Me.CollisionTab.Padding = New System.Windows.Forms.Padding(3)
-    Me.CollisionTab.Size = New System.Drawing.Size(224, 555)
+    Me.CollisionTab.Size = New System.Drawing.Size(224, 558)
     Me.CollisionTab.TabIndex = 4
     Me.CollisionTab.Text = "Collision"
     Me.CollisionTab.UseVisualStyleBackColor = True
@@ -1089,9 +1094,9 @@ Public Class MainWin
     Me.MiscTab.Controls.Add(Me.LimbStart)
     Me.MiscTab.Controls.Add(Me.GroupBox10)
     Me.MiscTab.Controls.Add(Me.GroupBox8)
-    Me.MiscTab.Location = New System.Drawing.Point(4, 55)
+    Me.MiscTab.Location = New System.Drawing.Point(4, 46)
     Me.MiscTab.Name = "MiscTab"
-    Me.MiscTab.Size = New System.Drawing.Size(224, 528)
+    Me.MiscTab.Size = New System.Drawing.Size(224, 537)
     Me.MiscTab.TabIndex = 3
     Me.MiscTab.Text = "Miscellaneous"
     Me.MiscTab.UseVisualStyleBackColor = True
@@ -1151,7 +1156,7 @@ Public Class MainWin
     '
     Me.Label45.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
     Me.Label45.AutoSize = True
-    Me.Label45.Location = New System.Drawing.Point(12, 412)
+    Me.Label45.Location = New System.Drawing.Point(12, 421)
     Me.Label45.Name = "Label45"
     Me.Label45.Size = New System.Drawing.Size(71, 16)
     Me.Label45.TabIndex = 94
@@ -1161,7 +1166,7 @@ Public Class MainWin
     'AnimStart
     '
     Me.AnimStart.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-    Me.AnimStart.Location = New System.Drawing.Point(14, 429)
+    Me.AnimStart.Location = New System.Drawing.Point(14, 438)
     Me.AnimStart.Name = "AnimStart"
     Me.AnimStart.Size = New System.Drawing.Size(100, 20)
     Me.AnimStart.TabIndex = 93
@@ -1171,7 +1176,7 @@ Public Class MainWin
     '
     Me.Label30.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
     Me.Label30.AutoSize = True
-    Me.Label30.Location = New System.Drawing.Point(12, 370)
+    Me.Label30.Location = New System.Drawing.Point(12, 379)
     Me.Label30.Name = "Label30"
     Me.Label30.Size = New System.Drawing.Size(72, 16)
     Me.Label30.TabIndex = 92
@@ -1181,7 +1186,7 @@ Public Class MainWin
     'LimbStart
     '
     Me.LimbStart.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-    Me.LimbStart.Location = New System.Drawing.Point(13, 389)
+    Me.LimbStart.Location = New System.Drawing.Point(13, 398)
     Me.LimbStart.Name = "LimbStart"
     Me.LimbStart.Size = New System.Drawing.Size(100, 20)
     Me.LimbStart.TabIndex = 91
@@ -1273,9 +1278,9 @@ Public Class MainWin
     '
     Me.LevelFlagsTab.BackColor = System.Drawing.Color.Transparent
     Me.LevelFlagsTab.Controls.Add(Me.GroupBox6)
-    Me.LevelFlagsTab.Location = New System.Drawing.Point(4, 28)
+    Me.LevelFlagsTab.Location = New System.Drawing.Point(4, 25)
     Me.LevelFlagsTab.Name = "LevelFlagsTab"
-    Me.LevelFlagsTab.Size = New System.Drawing.Size(224, 555)
+    Me.LevelFlagsTab.Size = New System.Drawing.Size(224, 558)
     Me.LevelFlagsTab.TabIndex = 2
     Me.LevelFlagsTab.Text = "Level Flags"
     Me.LevelFlagsTab.UseVisualStyleBackColor = True
@@ -1349,10 +1354,10 @@ Public Class MainWin
     Me.ActorsTab.Controls.Add(Me.Button2)
     Me.ActorsTab.Controls.Add(Me.GroupBox4)
     Me.ActorsTab.Controls.Add(Me.GroupBox5)
-    Me.ActorsTab.Location = New System.Drawing.Point(4, 55)
+    Me.ActorsTab.Location = New System.Drawing.Point(4, 46)
     Me.ActorsTab.Name = "ActorsTab"
     Me.ActorsTab.Padding = New System.Windows.Forms.Padding(3)
-    Me.ActorsTab.Size = New System.Drawing.Size(224, 528)
+    Me.ActorsTab.Size = New System.Drawing.Size(224, 537)
     Me.ActorsTab.TabIndex = 1
     Me.ActorsTab.Text = "Actors"
     Me.ActorsTab.UseVisualStyleBackColor = True
@@ -1618,7 +1623,6 @@ Public Class MainWin
     '
     Me.EditingTabs.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-    Me.EditingTabs.Appearance = System.Windows.Forms.TabAppearance.Buttons
     Me.EditingTabs.Controls.Add(Me.ActorsTab)
     Me.EditingTabs.Controls.Add(Me.LevelFlagsTab)
     Me.EditingTabs.Controls.Add(Me.CollisionTab)
@@ -1637,26 +1641,45 @@ Public Class MainWin
     '
     'AnimationsTab
     '
-    Me.AnimationsTab.Controls.Add(Me.AnimationSetGroup)
-    Me.AnimationsTab.Controls.Add(Me.AnimationPlaybackPanel)
-    Me.AnimationsTab.Location = New System.Drawing.Point(4, 55)
+    Me.AnimationsTab.Controls.Add(Me.SplitContainer1)
+    Me.AnimationsTab.Location = New System.Drawing.Point(4, 46)
     Me.AnimationsTab.Name = "AnimationsTab"
-    Me.AnimationsTab.Size = New System.Drawing.Size(224, 528)
+    Me.AnimationsTab.Size = New System.Drawing.Size(224, 537)
     Me.AnimationsTab.TabIndex = 7
     Me.AnimationsTab.Text = "Animations"
     Me.AnimationsTab.UseVisualStyleBackColor = True
     '
+    'SplitContainer1
+    '
+    Me.SplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill
+    Me.SplitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2
+    Me.SplitContainer1.IsSplitterFixed = True
+    Me.SplitContainer1.Location = New System.Drawing.Point(0, 0)
+    Me.SplitContainer1.Name = "SplitContainer1"
+    Me.SplitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal
+    '
+    'SplitContainer1.Panel1
+    '
+    Me.SplitContainer1.Panel1.Controls.Add(Me.AnimationSetGroup)
+    '
+    'SplitContainer1.Panel2
+    '
+    Me.SplitContainer1.Panel2.Controls.Add(Me.AnimationPlaybackPanel)
+    Me.SplitContainer1.Size = New System.Drawing.Size(224, 537)
+    Me.SplitContainer1.SplitterDistance = 363
+    Me.SplitContainer1.TabIndex = 15
+    '
     'AnimationSetGroup
     '
-    Me.AnimationSetGroup.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+    Me.AnimationSetGroup.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
     Me.AnimationSetGroup.Controls.Add(Me.Label20)
     Me.AnimationSetGroup.Controls.Add(Me.CheckBox2)
     Me.AnimationSetGroup.Controls.Add(Me.AnimationList)
     Me.AnimationSetGroup.Controls.Add(Me.animationbank)
-    Me.AnimationSetGroup.Location = New System.Drawing.Point(10, 4)
+    Me.AnimationSetGroup.Dock = System.Windows.Forms.DockStyle.Fill
+    Me.AnimationSetGroup.Location = New System.Drawing.Point(0, 0)
     Me.AnimationSetGroup.Name = "AnimationSetGroup"
-    Me.AnimationSetGroup.Size = New System.Drawing.Size(206, 338)
+    Me.AnimationSetGroup.Size = New System.Drawing.Size(224, 363)
     Me.AnimationSetGroup.TabIndex = 13
     Me.AnimationSetGroup.TabStop = False
     Me.AnimationSetGroup.Text = "Animation Sets"
@@ -1664,7 +1687,7 @@ Public Class MainWin
     'Label20
     '
     Me.Label20.AutoSize = True
-    Me.Label20.Location = New System.Drawing.Point(3, 29)
+    Me.Label20.Location = New System.Drawing.Point(3, 20)
     Me.Label20.Name = "Label20"
     Me.Label20.Size = New System.Drawing.Size(32, 16)
     Me.Label20.TabIndex = 10
@@ -1674,7 +1697,7 @@ Public Class MainWin
     '
     Me.CheckBox2.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.CheckBox2.AutoSize = True
-    Me.CheckBox2.Location = New System.Drawing.Point(6, 310)
+    Me.CheckBox2.Location = New System.Drawing.Point(6, 337)
     Me.CheckBox2.Name = "CheckBox2"
     Me.CheckBox2.Size = New System.Drawing.Size(56, 20)
     Me.CheckBox2.TabIndex = 4
@@ -1687,9 +1710,9 @@ Public Class MainWin
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
     Me.AnimationList.FormattingEnabled = True
     Me.AnimationList.ItemHeight = 16
-    Me.AnimationList.Location = New System.Drawing.Point(6, 58)
+    Me.AnimationList.Location = New System.Drawing.Point(6, 42)
     Me.AnimationList.Name = "AnimationList"
-    Me.AnimationList.Size = New System.Drawing.Size(192, 244)
+    Me.AnimationList.Size = New System.Drawing.Size(212, 292)
     Me.AnimationList.TabIndex = 0
     '
     'animationbank
@@ -1697,21 +1720,21 @@ Public Class MainWin
     Me.animationbank.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
     Me.animationbank.FormattingEnabled = True
     Me.animationbank.Items.AddRange(New Object() {"Inline with object"})
-    Me.animationbank.Location = New System.Drawing.Point(47, 25)
+    Me.animationbank.Location = New System.Drawing.Point(46, 16)
     Me.animationbank.Name = "animationbank"
-    Me.animationbank.Size = New System.Drawing.Size(151, 24)
+    Me.animationbank.Size = New System.Drawing.Size(171, 24)
     Me.animationbank.TabIndex = 9
     '
     'AnimationPlaybackPanel
     '
-    Me.AnimationPlaybackPanel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+    Me.AnimationPlaybackPanel.Dock = System.Windows.Forms.DockStyle.Fill
     Me.AnimationPlaybackPanel.Frame = 0R
     Me.AnimationPlaybackPanel.FrameRate = 20
     Me.AnimationPlaybackPanel.IsPlaying = False
-    Me.AnimationPlaybackPanel.Location = New System.Drawing.Point(7, 348)
+    Me.AnimationPlaybackPanel.Location = New System.Drawing.Point(0, 0)
     Me.AnimationPlaybackPanel.Name = "AnimationPlaybackPanel"
     Me.AnimationPlaybackPanel.ShouldLoop = False
-    Me.AnimationPlaybackPanel.Size = New System.Drawing.Size(212, 175)
+    Me.AnimationPlaybackPanel.Size = New System.Drawing.Size(224, 170)
     Me.AnimationPlaybackPanel.TabIndex = 14
     Me.AnimationPlaybackPanel.TotalFrames = 0
     '
@@ -1722,9 +1745,9 @@ Public Class MainWin
     Me.DLTab.Controls.Add(Me.DListSelection)
     Me.DLTab.Controls.Add(Me.RadioButton1)
     Me.DLTab.Controls.Add(Me.GroupBox3)
-    Me.DLTab.Location = New System.Drawing.Point(4, 55)
+    Me.DLTab.Location = New System.Drawing.Point(4, 46)
     Me.DLTab.Name = "DLTab"
-    Me.DLTab.Size = New System.Drawing.Size(224, 528)
+    Me.DLTab.Size = New System.Drawing.Size(224, 537)
     Me.DLTab.TabIndex = 8
     Me.DLTab.Text = "Graphics"
     Me.DLTab.UseVisualStyleBackColor = True
@@ -1759,7 +1782,7 @@ Public Class MainWin
     Me.GroupBox7.Controls.Add(Me.CommandsListbox)
     Me.GroupBox7.Location = New System.Drawing.Point(10, 176)
     Me.GroupBox7.Name = "GroupBox7"
-    Me.GroupBox7.Size = New System.Drawing.Size(206, 460)
+    Me.GroupBox7.Size = New System.Drawing.Size(206, 469)
     Me.GroupBox7.TabIndex = 69
     Me.GroupBox7.TabStop = False
     Me.GroupBox7.Text = "Commands"
@@ -1768,7 +1791,7 @@ Public Class MainWin
     '
     Me.WholeCommandTxt.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.WholeCommandTxt.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-    Me.WholeCommandTxt.Location = New System.Drawing.Point(7, 423)
+    Me.WholeCommandTxt.Location = New System.Drawing.Point(7, 432)
     Me.WholeCommandTxt.MaxLength = 32
     Me.WholeCommandTxt.Name = "WholeCommandTxt"
     Me.WholeCommandTxt.Size = New System.Drawing.Size(107, 20)
@@ -1778,7 +1801,7 @@ Public Class MainWin
     '
     Me.Label3.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.Label3.AutoSize = True
-    Me.Label3.Location = New System.Drawing.Point(3, 340)
+    Me.Label3.Location = New System.Drawing.Point(3, 349)
     Me.Label3.Name = "Label3"
     Me.Label3.Size = New System.Drawing.Size(47, 16)
     Me.Label3.TabIndex = 69
@@ -1787,7 +1810,7 @@ Public Class MainWin
     'Button8
     '
     Me.Button8.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.Button8.Location = New System.Drawing.Point(57, 336)
+    Me.Button8.Location = New System.Drawing.Point(57, 345)
     Me.Button8.Name = "Button8"
     Me.Button8.Size = New System.Drawing.Size(67, 23)
     Me.Button8.TabIndex = 68
@@ -1798,7 +1821,7 @@ Public Class MainWin
     '
     Me.HiwordText.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.HiwordText.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-    Me.HiwordText.Location = New System.Drawing.Point(109, 395)
+    Me.HiwordText.Location = New System.Drawing.Point(109, 404)
     Me.HiwordText.MaxLength = 8
     Me.HiwordText.Name = "HiwordText"
     Me.HiwordText.Size = New System.Drawing.Size(90, 20)
@@ -1807,7 +1830,7 @@ Public Class MainWin
     'Button1
     '
     Me.Button1.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.Button1.Location = New System.Drawing.Point(130, 336)
+    Me.Button1.Location = New System.Drawing.Point(130, 345)
     Me.Button1.Name = "Button1"
     Me.Button1.Size = New System.Drawing.Size(67, 23)
     Me.Button1.TabIndex = 67
@@ -1818,7 +1841,7 @@ Public Class MainWin
     '
     Me.LowordText.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.LowordText.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-    Me.LowordText.Location = New System.Drawing.Point(37, 395)
+    Me.LowordText.Location = New System.Drawing.Point(37, 404)
     Me.LowordText.MaxLength = 6
     Me.LowordText.Name = "LowordText"
     Me.LowordText.Size = New System.Drawing.Size(66, 20)
@@ -1828,7 +1851,7 @@ Public Class MainWin
     '
     Me.CommandCodeText.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.CommandCodeText.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-    Me.CommandCodeText.Location = New System.Drawing.Point(7, 395)
+    Me.CommandCodeText.Location = New System.Drawing.Point(7, 404)
     Me.CommandCodeText.MaxLength = 2
     Me.CommandCodeText.Name = "CommandCodeText"
     Me.CommandCodeText.Size = New System.Drawing.Size(24, 20)
@@ -1839,7 +1862,7 @@ Public Class MainWin
     Me.CommandJumpBox.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.CommandJumpBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
     Me.CommandJumpBox.FormattingEnabled = True
-    Me.CommandJumpBox.Location = New System.Drawing.Point(6, 306)
+    Me.CommandJumpBox.Location = New System.Drawing.Point(6, 315)
     Me.CommandJumpBox.Name = "CommandJumpBox"
     Me.CommandJumpBox.Size = New System.Drawing.Size(192, 24)
     Me.CommandJumpBox.TabIndex = 66
@@ -1848,7 +1871,7 @@ Public Class MainWin
     '
     Me.Label26.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.Label26.AutoSize = True
-    Me.Label26.Location = New System.Drawing.Point(132, 376)
+    Me.Label26.Location = New System.Drawing.Point(132, 385)
     Me.Label26.Name = "Label26"
     Me.Label26.Size = New System.Drawing.Size(44, 16)
     Me.Label26.TabIndex = 65
@@ -1858,7 +1881,7 @@ Public Class MainWin
     '
     Me.Label25.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.Label25.AutoSize = True
-    Me.Label25.Location = New System.Drawing.Point(48, 376)
+    Me.Label25.Location = New System.Drawing.Point(48, 385)
     Me.Label25.Name = "Label25"
     Me.Label25.Size = New System.Drawing.Size(44, 16)
     Me.Label25.TabIndex = 64
@@ -1868,7 +1891,7 @@ Public Class MainWin
     '
     Me.Label9.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.Label9.AutoSize = True
-    Me.Label9.Location = New System.Drawing.Point(5, 376)
+    Me.Label9.Location = New System.Drawing.Point(5, 385)
     Me.Label9.Name = "Label9"
     Me.Label9.Size = New System.Drawing.Size(29, 16)
     Me.Label9.TabIndex = 63
@@ -1877,7 +1900,7 @@ Public Class MainWin
     'Button4
     '
     Me.Button4.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.Button4.Location = New System.Drawing.Point(127, 421)
+    Me.Button4.Location = New System.Drawing.Point(127, 430)
     Me.Button4.Name = "Button4"
     Me.Button4.Size = New System.Drawing.Size(70, 23)
     Me.Button4.TabIndex = 62
@@ -2256,7 +2279,6 @@ Public Class MainWin
     '
     Me.ROMBrowser.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-    Me.ROMBrowser.Appearance = System.Windows.Forms.TabAppearance.Buttons
     Me.ROMBrowser.Controls.Add(Me.ROMDataTabs)
     Me.ROMBrowser.Controls.Add(Me.IndividualFiles)
     Me.ROMBrowser.HotTrack = True
@@ -2269,10 +2291,10 @@ Public Class MainWin
     'ROMDataTabs
     '
     Me.ROMDataTabs.Controls.Add(Me.Button7)
-    Me.ROMDataTabs.Location = New System.Drawing.Point(4, 25)
+    Me.ROMDataTabs.Location = New System.Drawing.Point(4, 22)
     Me.ROMDataTabs.Name = "ROMDataTabs"
     Me.ROMDataTabs.Padding = New System.Windows.Forms.Padding(3)
-    Me.ROMDataTabs.Size = New System.Drawing.Size(219, 558)
+    Me.ROMDataTabs.Size = New System.Drawing.Size(219, 561)
     Me.ROMDataTabs.TabIndex = 0
     Me.ROMDataTabs.Text = "ROM Files"
     Me.ROMDataTabs.UseVisualStyleBackColor = True
@@ -2280,7 +2302,7 @@ Public Class MainWin
     'Button7
     '
     Me.Button7.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-    Me.Button7.Location = New System.Drawing.Point(153, 526)
+    Me.Button7.Location = New System.Drawing.Point(153, 529)
     Me.Button7.Name = "Button7"
     Me.Button7.Size = New System.Drawing.Size(60, 23)
     Me.Button7.TabIndex = 0
@@ -2289,9 +2311,9 @@ Public Class MainWin
     '
     'IndividualFiles
     '
-    Me.IndividualFiles.Location = New System.Drawing.Point(4, 25)
+    Me.IndividualFiles.Location = New System.Drawing.Point(4, 22)
     Me.IndividualFiles.Name = "IndividualFiles"
-    Me.IndividualFiles.Size = New System.Drawing.Size(219, 558)
+    Me.IndividualFiles.Size = New System.Drawing.Size(219, 561)
     Me.IndividualFiles.TabIndex = 1
     Me.IndividualFiles.Text = "Individuals"
     Me.IndividualFiles.UseVisualStyleBackColor = True
@@ -2934,6 +2956,10 @@ Public Class MainWin
     Me.GroupBox5.PerformLayout()
     Me.EditingTabs.ResumeLayout(False)
     Me.AnimationsTab.ResumeLayout(False)
+    Me.SplitContainer1.Panel1.ResumeLayout(False)
+    Me.SplitContainer1.Panel2.ResumeLayout(False)
+    CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
+    Me.SplitContainer1.ResumeLayout(False)
     Me.AnimationSetGroup.ResumeLayout(False)
     Me.AnimationSetGroup.PerformLayout()
     Me.DLTab.ResumeLayout(False)
