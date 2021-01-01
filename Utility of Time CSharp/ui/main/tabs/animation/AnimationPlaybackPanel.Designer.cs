@@ -25,29 +25,29 @@
     private void InitializeComponent() {
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AnimationPlaybackPanel));
       this.PlaybackGroup = new System.Windows.Forms.GroupBox();
-      this.FrameRateSelector = new System.Windows.Forms.NumericUpDown();
+      this.frameRateSelector_ = new System.Windows.Forms.NumericUpDown();
       this.Label27 = new System.Windows.Forms.Label();
-      this.FrameNo = new System.Windows.Forms.Label();
-      this.AnimationElapse = new System.Windows.Forms.Label();
-      this.LoopCheckBox = new System.Windows.Forms.CheckBox();
-      this.PauseButton = new System.Windows.Forms.Button();
-      this.PlayButton = new System.Windows.Forms.Button();
-      this.FrameTrackBar = new UoT.TransparentTrackBar();
+      this.elapsedFrames_ = new System.Windows.Forms.Label();
+      this.elapsedSeconds_ = new System.Windows.Forms.Label();
+      this.loopCheckBox_ = new System.Windows.Forms.CheckBox();
+      this.pauseButton_ = new System.Windows.Forms.Button();
+      this.playButton_ = new System.Windows.Forms.Button();
+      this.frameTrackBar_ = new UoT.TransparentTrackBar();
       this.PlaybackGroup.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.FrameRateSelector)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.FrameTrackBar)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.frameRateSelector_)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.frameTrackBar_)).BeginInit();
       this.SuspendLayout();
       // 
       // PlaybackGroup
       // 
-      this.PlaybackGroup.Controls.Add(this.FrameRateSelector);
+      this.PlaybackGroup.Controls.Add(this.frameRateSelector_);
       this.PlaybackGroup.Controls.Add(this.Label27);
-      this.PlaybackGroup.Controls.Add(this.FrameNo);
-      this.PlaybackGroup.Controls.Add(this.AnimationElapse);
-      this.PlaybackGroup.Controls.Add(this.LoopCheckBox);
-      this.PlaybackGroup.Controls.Add(this.PauseButton);
-      this.PlaybackGroup.Controls.Add(this.PlayButton);
-      this.PlaybackGroup.Controls.Add(this.FrameTrackBar);
+      this.PlaybackGroup.Controls.Add(this.elapsedFrames_);
+      this.PlaybackGroup.Controls.Add(this.elapsedSeconds_);
+      this.PlaybackGroup.Controls.Add(this.loopCheckBox_);
+      this.PlaybackGroup.Controls.Add(this.pauseButton_);
+      this.PlaybackGroup.Controls.Add(this.playButton_);
+      this.PlaybackGroup.Controls.Add(this.frameTrackBar_);
       this.PlaybackGroup.Dock = System.Windows.Forms.DockStyle.Fill;
       this.PlaybackGroup.Location = new System.Drawing.Point(0, 0);
       this.PlaybackGroup.Name = "PlaybackGroup";
@@ -56,25 +56,25 @@
       this.PlaybackGroup.TabStop = false;
       this.PlaybackGroup.Text = "Playback";
       // 
-      // FrameRateSelector
+      // frameRateSelector_
       // 
-      this.FrameRateSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.FrameRateSelector.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.FrameRateSelector.Location = new System.Drawing.Point(134, 63);
-      this.FrameRateSelector.Maximum = new decimal(new int[] {
+      this.frameRateSelector_.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.frameRateSelector_.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.frameRateSelector_.Location = new System.Drawing.Point(134, 63);
+      this.frameRateSelector_.Maximum = new decimal(new int[] {
             60,
             0,
             0,
             0});
-      this.FrameRateSelector.Minimum = new decimal(new int[] {
+      this.frameRateSelector_.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-      this.FrameRateSelector.Name = "FrameRateSelector";
-      this.FrameRateSelector.Size = new System.Drawing.Size(40, 20);
-      this.FrameRateSelector.TabIndex = 11;
-      this.FrameRateSelector.Value = new decimal(new int[] {
+      this.frameRateSelector_.Name = "frameRateSelector_";
+      this.frameRateSelector_.Size = new System.Drawing.Size(40, 20);
+      this.frameRateSelector_.TabIndex = 11;
+      this.frameRateSelector_.Value = new decimal(new int[] {
             20,
             0,
             0,
@@ -90,73 +90,73 @@
       this.Label27.TabIndex = 12;
       this.Label27.Text = "FPS";
       // 
-      // FrameNo
+      // elapsedFrames_
       // 
-      this.FrameNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.FrameNo.AutoSize = true;
-      this.FrameNo.Location = new System.Drawing.Point(160, 17);
-      this.FrameNo.Name = "FrameNo";
-      this.FrameNo.Size = new System.Drawing.Size(24, 13);
-      this.FrameNo.TabIndex = 8;
-      this.FrameNo.Text = "0/0";
-      this.FrameNo.TextAlign = System.Drawing.ContentAlignment.TopRight;
+      this.elapsedFrames_.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.elapsedFrames_.AutoSize = true;
+      this.elapsedFrames_.Location = new System.Drawing.Point(160, 17);
+      this.elapsedFrames_.Name = "elapsedFrames_";
+      this.elapsedFrames_.Size = new System.Drawing.Size(24, 13);
+      this.elapsedFrames_.TabIndex = 8;
+      this.elapsedFrames_.Text = "0/0";
+      this.elapsedFrames_.TextAlign = System.Drawing.ContentAlignment.TopRight;
       // 
-      // AnimationElapse
+      // elapsedSeconds_
       // 
-      this.AnimationElapse.AutoSize = true;
-      this.AnimationElapse.Location = new System.Drawing.Point(12, 17);
-      this.AnimationElapse.Name = "AnimationElapse";
-      this.AnimationElapse.Size = new System.Drawing.Size(27, 13);
-      this.AnimationElapse.TabIndex = 7;
-      this.AnimationElapse.Text = "0:0s";
+      this.elapsedSeconds_.AutoSize = true;
+      this.elapsedSeconds_.Location = new System.Drawing.Point(12, 17);
+      this.elapsedSeconds_.Name = "elapsedSeconds_";
+      this.elapsedSeconds_.Size = new System.Drawing.Size(27, 13);
+      this.elapsedSeconds_.TabIndex = 7;
+      this.elapsedSeconds_.Text = "0.0s";
       // 
-      // LoopCheckBox
+      // loopCheckBox_
       // 
-      this.LoopCheckBox.Image = ((System.Drawing.Image)(resources.GetObject("LoopCheckBox.Image")));
-      this.LoopCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-      this.LoopCheckBox.Location = new System.Drawing.Point(16, 89);
-      this.LoopCheckBox.Name = "LoopCheckBox";
-      this.LoopCheckBox.Size = new System.Drawing.Size(70, 24);
-      this.LoopCheckBox.TabIndex = 3;
-      this.LoopCheckBox.Text = "Loop";
-      this.LoopCheckBox.UseVisualStyleBackColor = true;
+      this.loopCheckBox_.Image = ((System.Drawing.Image)(resources.GetObject("loopCheckBox_.Image")));
+      this.loopCheckBox_.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+      this.loopCheckBox_.Location = new System.Drawing.Point(16, 89);
+      this.loopCheckBox_.Name = "loopCheckBox_";
+      this.loopCheckBox_.Size = new System.Drawing.Size(70, 24);
+      this.loopCheckBox_.TabIndex = 3;
+      this.loopCheckBox_.Text = "Loop";
+      this.loopCheckBox_.UseVisualStyleBackColor = true;
       // 
-      // PauseButton
+      // pauseButton_
       // 
-      this.PauseButton.Image = ((System.Drawing.Image)(resources.GetObject("PauseButton.Image")));
-      this.PauseButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-      this.PauseButton.Location = new System.Drawing.Point(68, 59);
-      this.PauseButton.Name = "PauseButton";
-      this.PauseButton.Size = new System.Drawing.Size(60, 28);
-      this.PauseButton.TabIndex = 2;
-      this.PauseButton.Text = "Pause";
-      this.PauseButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-      this.PauseButton.UseVisualStyleBackColor = true;
+      this.pauseButton_.Image = ((System.Drawing.Image)(resources.GetObject("pauseButton_.Image")));
+      this.pauseButton_.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+      this.pauseButton_.Location = new System.Drawing.Point(68, 59);
+      this.pauseButton_.Name = "pauseButton_";
+      this.pauseButton_.Size = new System.Drawing.Size(60, 28);
+      this.pauseButton_.TabIndex = 2;
+      this.pauseButton_.Text = "Pause";
+      this.pauseButton_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this.pauseButton_.UseVisualStyleBackColor = true;
       // 
-      // PlayButton
+      // playButton_
       // 
-      this.PlayButton.Image = ((System.Drawing.Image)(resources.GetObject("PlayButton.Image")));
-      this.PlayButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-      this.PlayButton.Location = new System.Drawing.Point(15, 59);
-      this.PlayButton.Name = "PlayButton";
-      this.PlayButton.Size = new System.Drawing.Size(51, 28);
-      this.PlayButton.TabIndex = 1;
-      this.PlayButton.Text = "Play";
-      this.PlayButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-      this.PlayButton.UseVisualStyleBackColor = true;
+      this.playButton_.Image = ((System.Drawing.Image)(resources.GetObject("playButton_.Image")));
+      this.playButton_.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+      this.playButton_.Location = new System.Drawing.Point(15, 59);
+      this.playButton_.Name = "playButton_";
+      this.playButton_.Size = new System.Drawing.Size(51, 28);
+      this.playButton_.TabIndex = 1;
+      this.playButton_.Text = "Play";
+      this.playButton_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this.playButton_.UseVisualStyleBackColor = true;
       // 
-      // FrameTrackBar
+      // frameTrackBar_
       // 
-      this.FrameTrackBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+      this.frameTrackBar_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-      this.FrameTrackBar.AutoSize = false;
-      this.FrameTrackBar.BackColor = System.Drawing.SystemColors.Control;
-      this.FrameTrackBar.LargeChange = 2;
-      this.FrameTrackBar.Location = new System.Drawing.Point(8, 32);
-      this.FrameTrackBar.Maximum = 1;
-      this.FrameTrackBar.Name = "FrameTrackBar";
-      this.FrameTrackBar.Size = new System.Drawing.Size(197, 24);
-      this.FrameTrackBar.TabIndex = 14;
+      this.frameTrackBar_.AutoSize = false;
+      this.frameTrackBar_.BackColor = System.Drawing.SystemColors.Control;
+      this.frameTrackBar_.LargeChange = 2;
+      this.frameTrackBar_.Location = new System.Drawing.Point(8, 32);
+      this.frameTrackBar_.Maximum = 1;
+      this.frameTrackBar_.Name = "frameTrackBar_";
+      this.frameTrackBar_.Size = new System.Drawing.Size(197, 24);
+      this.frameTrackBar_.TabIndex = 14;
       // 
       // AnimationPlaybackPanel
       // 
@@ -167,8 +167,8 @@
       this.Size = new System.Drawing.Size(212, 117);
       this.PlaybackGroup.ResumeLayout(false);
       this.PlaybackGroup.PerformLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.FrameRateSelector)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.FrameTrackBar)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.frameRateSelector_)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.frameTrackBar_)).EndInit();
       this.ResumeLayout(false);
 
     }
@@ -176,12 +176,12 @@
     #endregion
     internal System.Windows.Forms.GroupBox PlaybackGroup;
     internal System.Windows.Forms.Label Label27;
-    internal System.Windows.Forms.Label FrameNo;
-    internal System.Windows.Forms.Label AnimationElapse;
-    private System.Windows.Forms.NumericUpDown FrameRateSelector;
-    private System.Windows.Forms.CheckBox LoopCheckBox;
-    private System.Windows.Forms.Button PauseButton;
-    private System.Windows.Forms.Button PlayButton;
-    private TransparentTrackBar FrameTrackBar;
+    internal System.Windows.Forms.Label elapsedFrames_;
+    internal System.Windows.Forms.Label elapsedSeconds_;
+    private System.Windows.Forms.NumericUpDown frameRateSelector_;
+    private System.Windows.Forms.CheckBox loopCheckBox_;
+    private System.Windows.Forms.Button pauseButton_;
+    private System.Windows.Forms.Button playButton_;
+    private TransparentTrackBar frameTrackBar_;
   }
 }

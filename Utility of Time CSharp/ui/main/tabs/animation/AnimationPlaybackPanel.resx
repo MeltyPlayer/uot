@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="LoopCheckBox.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="loopCheckBox_.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABGdBTUEAALGPC/xhBQAAAO5JREFUOE+t
         kyEWAVEUhieIgmVYhKCLokUIoiCIggUIoiAIgiAIFiCIgiBYgCAI/N97M4xn5r1hfOd8Z+4d5/xz350R
@@ -128,14 +128,14 @@
         AAAASUVORK5CYII=
 </value>
   </data>
-  <data name="PauseButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="pauseButton_.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABGdBTUEAALGPC/xhBQAAADVJREFUOE9j
         GFlAAYgdoBjEhgFc4jhBPRD/h2IQGwZwieMEowYRBqMGEQZUM4hqWWRYAAYGAJIqPrGzam21AAAAAElF
         TkSuQmCC
 </value>
   </data>
-  <data name="PlayButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="playButton_.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABGdBTUEAALGPC/xhBQAAAHtJREFUOE9j
         GJmABUpTDM4DsQmESRn4D8S/gbgbiHlAAuQCkEEwfB+I3YGYLIBsEAwvB2IRICYJYDMIhN8DcTwQEw2w

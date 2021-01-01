@@ -13,26 +13,26 @@ namespace UoT.ui.main.tabs.animation {
     public AnimationPlaybackPanel() {
       this.InitializeComponent();
 
-      this.PlayButton.Click += (object sender, EventArgs e) => {
+      this.playButton_.Click += (object sender, EventArgs e) => {
         this.IsPlaying = true;
       };
-      this.PauseButton.Click += (object sender, EventArgs e) => {
+      this.pauseButton_.Click += (object sender, EventArgs e) => {
         this.IsPlaying = false;
       };
-      this.LoopCheckBox.Click += (object sender, EventArgs e) => {
-        this.ShouldLoop = this.LoopCheckBox.Checked;
+      this.loopCheckBox_.Click += (object sender, EventArgs e) => {
+        this.ShouldLoop = this.loopCheckBox_.Checked;
       };
-      this.FrameTrackBar.Scroll += (object sender, EventArgs e) => {
-        this.Frame = this.FrameTrackBar.Value;
+      this.frameTrackBar_.Scroll += (object sender, EventArgs e) => {
+        this.Frame = this.frameTrackBar_.Value;
       };
-      this.FrameRateSelector.ValueChanged += (object sender, EventArgs e) => {
-        var newFrameRate = (int)Math.Floor(this.FrameRateSelector.Value);
+      this.frameRateSelector_.ValueChanged += (object sender, EventArgs e) => {
+        var newFrameRate = (int)Math.Floor(this.frameRateSelector_.Value);
         if (this.FrameRate != newFrameRate) {
           this.FrameRate = newFrameRate;
         }
       };
 
-      this.FrameRate = (int) Math.Floor(this.FrameRateSelector.Value);
+      this.FrameRate = (int) Math.Floor(this.frameRateSelector_.Value);
     }
 
     // TODO: Should carry over changes to form.
@@ -42,7 +42,7 @@ namespace UoT.ui.main.tabs.animation {
         this.impl_.Frame = value;
 
         if (this.TotalFrames > 0) {
-          this.FrameTrackBar.Value = (int)value;
+          this.frameTrackBar_.Value = (int)value;
         }
       } 
     }
@@ -50,7 +50,7 @@ namespace UoT.ui.main.tabs.animation {
       get => this.impl_.TotalFrames;
       set {
         this.impl_.TotalFrames = value;
-        this.FrameTrackBar.Maximum = value;
+        this.frameTrackBar_.Maximum = value;
       }
     }
 
@@ -58,7 +58,7 @@ namespace UoT.ui.main.tabs.animation {
       get => this.impl_.FrameRate;
       set {
         this.impl_.FrameRate = value;
-        this.FrameRateSelector.Value = value;
+        this.frameRateSelector_.Value = value;
       }
     }
 
@@ -71,7 +71,7 @@ namespace UoT.ui.main.tabs.animation {
       get => this.impl_.ShouldLoop;
       set {
         this.impl_.ShouldLoop = value;
-        this.LoopCheckBox.Checked = value;
+        this.loopCheckBox_.Checked = value;
       }
     }
 
@@ -84,29 +84,29 @@ namespace UoT.ui.main.tabs.animation {
     }
 
     private void Update_() {
-      string animationElapseText = "0:0s";
-      string frameNoText = "0/0";
+      var elapsedSecondsText = "0.0s";
+      var elapsedFramesText = "0/0";
 
       // TODO: What's with all these extra checks?
       if (this.TotalFrames > 0) {
         var frame = this.Frame;
         var frameIndex = (int)Math.Floor(frame);
 
-        this.FrameTrackBar.Value = frameIndex;
+        this.frameTrackBar_.Value = frameIndex;
 
         var seconds = frame / this.FrameRate;
         var secondsInt = (int)Math.Max(0, seconds);
         var secondsDelta = (int)(seconds * 1000 % 1000);
 
-        animationElapseText = secondsInt +
-                              ":" +
+        elapsedSecondsText = secondsInt +
+                              "." +
                               secondsDelta +
                               "s";
-        frameNoText = frameIndex + "/" + this.TotalFrames;
+        elapsedFramesText = frameIndex + "/" + this.TotalFrames;
       }
 
-      this.AnimationElapse.Text = animationElapseText;
-      this.FrameNo.Text = frameNoText;
+      this.elapsedSeconds_.Text = elapsedSecondsText;
+      this.elapsedFrames_.Text = elapsedFramesText;
     }
   }
 }
