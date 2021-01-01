@@ -93,6 +93,12 @@
     <Compile Include="ui\common\component\TransparentTrackBar.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ui\main\files\ZFileTree.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ui\main\files\ZFileTree.Designer.cs">
+      <DependentUpon>ZFileTree.cs</DependentUpon>
+    </Compile>
     <Compile Include="util\Debug.cs" />
     <Compile Include="displaylist\DlManager.cs" />
     <Compile Include="displaylist\DlShaderManager.cs" />
@@ -134,6 +140,9 @@
     <EmbeddedResource Include="ui\main\tabs\animation\AnimationPlaybackPanel.resx">
       <DependentUpon>AnimationPlaybackPanel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ui\main\files\ZFileTree.resx">
+      <DependentUpon>ZFileTree.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="displaylist\F3DEX_Defs.cs" />
@@ -163,8 +172,6 @@
     <None Include="Resources\Button-Refresh-icon.png" />
     <None Include="Resources\Button-Stop-icon.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ui\main\tabs\files\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
