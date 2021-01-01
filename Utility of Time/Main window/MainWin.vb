@@ -5,6 +5,7 @@ Imports System.IO
 Imports Tao.FreeGlut
 Imports System.Numerics
 Imports MathNet.Numerics.LinearAlgebra.Double
+Imports UoT.ui.main.tabs.animation
 
 Public Class MainWin
 
@@ -185,7 +186,7 @@ Public Class MainWin
     Me.CheckBox2 = New System.Windows.Forms.CheckBox()
     Me.AnimationList = New System.Windows.Forms.ListBox()
     Me.animationbank = New System.Windows.Forms.ComboBox()
-    Me.AnimationPlaybackPanel = New UoT.AnimationPlaybackPanel()
+    Me.AnimationPlaybackPanel = New AnimationPlaybackPanel()
     Me.DLTab = New System.Windows.Forms.TabPage()
     Me.RadioButton2 = New System.Windows.Forms.RadioButton()
     Me.GroupBox7 = New System.Windows.Forms.GroupBox()
@@ -7605,10 +7606,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
   Private Sub ToolStripMenuItem34_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
     Handles ToolStripMenuItem34.Click
     SaveROMAs.ShowDialog()
-  End Sub
-
-  Private Sub AnimationPlaybackPanel_Load(sender As Object, e As EventArgs) Handles AnimationPlaybackPanel.Load
-
   End Sub
 
   Private Sub SaveROMAs_FileOk(ByVal sender As System.Object, ByVal e As System.ComponentModel.CancelEventArgs) _

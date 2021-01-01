@@ -1,11 +1,8 @@
 ﻿using System.Windows.Forms;
 
-namespace UoT {
-  public interface IZFile {
-    string FileName { get; }
-    string BetterFileName { get; }
-  }
+using UoT.memory.files;
 
+namespace UoT.ui.main.files {
   public partial class ZFileTree : UserControl {
     public ZFileTree() {
       this.InitializeComponent();

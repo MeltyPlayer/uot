@@ -1,4 +1,4 @@
-﻿namespace UoT {
+﻿namespace UoT.animation.playback {
   /// <summary>
   ///   Helper interface for managing the dirty details of playing back an
   ///   animation for a model.

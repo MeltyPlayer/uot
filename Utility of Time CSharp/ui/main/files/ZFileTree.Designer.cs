@@ -1,4 +1,4 @@
-﻿namespace UoT {
+﻿namespace UoT.ui.main.files {
   partial class ZFileTree {
     /// <summary> 
     /// Required designer variable.
@@ -49,7 +49,6 @@
       // splitContainer1.Panel1
       // 
       this.splitContainer1.Panel1.Controls.Add(this.splitContainer2);
-      this.splitContainer1.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel1_Paint);
       // 
       // splitContainer1.Panel2
       // 

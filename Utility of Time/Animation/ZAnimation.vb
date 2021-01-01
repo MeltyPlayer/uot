@@ -1,4 +1,5 @@
 ﻿Imports System.Numerics
+Imports UoT.animation.playback
 
 Public Class ZAnimation
   ''' <summary>

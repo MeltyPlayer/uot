@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace UoT {
+namespace UoT.animation.playback {
   public class FrameAdvancer : IAnimationPlaybackManager {
     private readonly Stopwatch impl_ = new Stopwatch();
 

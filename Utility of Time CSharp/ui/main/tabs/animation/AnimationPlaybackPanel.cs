@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace UoT {
+using UoT.animation.playback;
+
+namespace UoT.ui.main.tabs.animation {
   public partial class AnimationPlaybackPanel : UserControl, IAnimationPlaybackManager {
     // TODO: Add tests.
     // TODO: How to right-align label?

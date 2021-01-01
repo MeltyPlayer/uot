@@ -1,4 +1,4 @@
-﻿namespace UoT {
+﻿namespace UoT.ui.main.tabs.animation {
   partial class AnimationPlaybackPanel {
     /// <summary> 
     /// Required designer variable.
