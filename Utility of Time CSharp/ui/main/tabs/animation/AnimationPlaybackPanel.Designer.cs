@@ -33,7 +33,7 @@
       this.LoopCheckBox = new System.Windows.Forms.CheckBox();
       this.StopButton = new System.Windows.Forms.Button();
       this.PlayButton = new System.Windows.Forms.Button();
-      ((System.ComponentModel.ISupportInitialize)(this.FrameTrackBar)).BeginInit();
+      this.FrameTrackBar = new UoT.TransparentTrackBar();
       this.PlaybackGroup.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.FrameRateSelector)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.FrameTrackBar)).BeginInit();
@@ -159,6 +159,16 @@
       this.PlayButton.Text = "Play";
       this.PlayButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
       this.PlayButton.UseVisualStyleBackColor = true;
+      // 
+      // FrameTrackBar
+      // 
+      this.FrameTrackBar.BackColor = System.Drawing.SystemColors.Control;
+      this.FrameTrackBar.LargeChange = 2;
+      this.FrameTrackBar.Location = new System.Drawing.Point(8, 44);
+      this.FrameTrackBar.Maximum = 1;
+      this.FrameTrackBar.Name = "FrameTrackBar";
+      this.FrameTrackBar.Size = new System.Drawing.Size(197, 45);
+      this.FrameTrackBar.TabIndex = 14;
       // 
       // AnimationPlaybackPanel
       // 
