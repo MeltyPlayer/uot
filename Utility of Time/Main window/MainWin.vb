@@ -341,2646 +341,2647 @@ Public Class MainWin
     Me.VarContextMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
     Me.NumContextMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
     Me.GrpContextMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
-    Me.UoTStatus.SuspendLayout()
-    CType(Me.TrackBar4, System.ComponentModel.ISupportInitialize).BeginInit()
-    Me.CollisionTab.SuspendLayout()
-    Me.GroupBox1.SuspendLayout()
-    Me.CollisionGroupBox.SuspendLayout()
-    Me.MiscTab.SuspendLayout()
-    Me.GroupBox9.SuspendLayout()
-    Me.GroupBox10.SuspendLayout()
-    Me.GroupBox8.SuspendLayout()
-    Me.LevelFlagsTab.SuspendLayout()
-    Me.GroupBox6.SuspendLayout()
-    Me.ActorsTab.SuspendLayout()
-    Me.GroupBox4.SuspendLayout()
-    Me.GroupBox5.SuspendLayout()
-    Me.EditingTabs.SuspendLayout()
-    Me.AnimationsTab.SuspendLayout()
-    CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
-    Me.SplitContainer1.Panel1.SuspendLayout()
-    Me.SplitContainer1.Panel2.SuspendLayout()
-    Me.SplitContainer1.SuspendLayout()
-    Me.AnimationSetGroup.SuspendLayout()
-    Me.DLTab.SuspendLayout()
-    Me.GroupBox7.SuspendLayout()
-    Me.DLEditorContextMenu.SuspendLayout()
-    Me.GroupBox3.SuspendLayout()
-    Me.BackupMenuStrip.SuspendLayout()
-    CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
-    Me.ActorContextMenu.SuspendLayout()
-    Me.ROMBrowser.SuspendLayout()
-    Me.ROMDataTabs.SuspendLayout()
-    Me.UoTMainMenu.SuspendLayout()
-    Me.VertContextMenu.SuspendLayout()
-    Me.SuspendLayout()
-    '
-    'LoadROM
-    '
-    Me.LoadROM.Filter = "N64 ROMs (*.z64, *.v64, *.n64, *.rom)|*.z64;*.v64;*.n64"
-    Me.LoadROM.Title = "Load Ocarina of Time Debug ROM"
-    '
-    'UoTStatus
-    '
-    Me.UoTStatus.AutoSize = False
-    Me.UoTStatus.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStatusLabel, Me.CamXLabel, Me.CamYLabel, Me.CamZLabel})
-    Me.UoTStatus.Location = New System.Drawing.Point(0, 620)
-    Me.UoTStatus.Name = "UoTStatus"
-    Me.UoTStatus.Size = New System.Drawing.Size(1160, 29)
-    Me.UoTStatus.TabIndex = 1
-    Me.UoTStatus.Text = "UoTStatusStrip"
-    '
-    'ToolStatusLabel
-    '
-    Me.ToolStatusLabel.Font = New System.Drawing.Font("Verdana", 9.75!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-    Me.ToolStatusLabel.ForeColor = System.Drawing.Color.Red
-    Me.ToolStatusLabel.Name = "ToolStatusLabel"
-    Me.ToolStatusLabel.Size = New System.Drawing.Size(95, 24)
-    Me.ToolStatusLabel.Text = "Tool: Camera"
-    '
-    'CamXLabel
-    '
-    Me.CamXLabel.Name = "CamXLabel"
-    Me.CamXLabel.Size = New System.Drawing.Size(45, 24)
-    Me.CamXLabel.Text = "Cam X:"
-    '
-    'CamYLabel
-    '
-    Me.CamYLabel.Name = "CamYLabel"
-    Me.CamYLabel.Size = New System.Drawing.Size(45, 24)
-    Me.CamYLabel.Text = "Cam Y:"
-    '
-    'CamZLabel
-    '
-    Me.CamZLabel.Name = "CamZLabel"
-    Me.CamZLabel.Size = New System.Drawing.Size(45, 24)
-    Me.CamZLabel.Text = "Cam Z:"
-    '
-    'ToolStripStatusLabel5
-    '
-    Me.ToolStripStatusLabel5.BorderSides = CType((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) _
+        Me.UoTStatus.SuspendLayout()
+        CType(Me.TrackBar4, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.CollisionTab.SuspendLayout()
+        Me.GroupBox1.SuspendLayout()
+        Me.CollisionGroupBox.SuspendLayout()
+        Me.MiscTab.SuspendLayout()
+        Me.GroupBox9.SuspendLayout()
+        Me.GroupBox10.SuspendLayout()
+        Me.GroupBox8.SuspendLayout()
+        Me.LevelFlagsTab.SuspendLayout()
+        Me.GroupBox6.SuspendLayout()
+        Me.ActorsTab.SuspendLayout()
+        Me.GroupBox4.SuspendLayout()
+        Me.GroupBox5.SuspendLayout()
+        Me.EditingTabs.SuspendLayout()
+        Me.AnimationsTab.SuspendLayout()
+        CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitContainer1.Panel1.SuspendLayout()
+        Me.SplitContainer1.Panel2.SuspendLayout()
+        Me.SplitContainer1.SuspendLayout()
+        Me.AnimationSetGroup.SuspendLayout()
+        Me.DLTab.SuspendLayout()
+        Me.GroupBox7.SuspendLayout()
+        Me.DLEditorContextMenu.SuspendLayout()
+        Me.GroupBox3.SuspendLayout()
+        Me.BackupMenuStrip.SuspendLayout()
+        CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.ActorContextMenu.SuspendLayout()
+        Me.ROMBrowser.SuspendLayout()
+        Me.ROMDataTabs.SuspendLayout()
+        Me.UoTMainMenu.SuspendLayout()
+        Me.VertContextMenu.SuspendLayout()
+        Me.SuspendLayout()
+        '
+        'LoadROM
+        '
+        Me.LoadROM.Filter = "N64 ROMs (*.z64, *.v64, *.n64, *.rom)|*.z64;*.v64;*.n64"
+        Me.LoadROM.Title = "Load Ocarina of Time Debug ROM"
+        '
+        'UoTStatus
+        '
+        Me.UoTStatus.AutoSize = False
+        Me.UoTStatus.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStatusLabel, Me.CamXLabel, Me.CamYLabel, Me.CamZLabel})
+        Me.UoTStatus.Location = New System.Drawing.Point(0, 620)
+        Me.UoTStatus.Name = "UoTStatus"
+        Me.UoTStatus.Size = New System.Drawing.Size(1160, 29)
+        Me.UoTStatus.TabIndex = 1
+        Me.UoTStatus.Text = "UoTStatusStrip"
+        '
+        'ToolStatusLabel
+        '
+        Me.ToolStatusLabel.Font = New System.Drawing.Font("Verdana", 9.75!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ToolStatusLabel.ForeColor = System.Drawing.Color.Red
+        Me.ToolStatusLabel.Name = "ToolStatusLabel"
+        Me.ToolStatusLabel.Size = New System.Drawing.Size(95, 24)
+        Me.ToolStatusLabel.Text = "Tool: Camera"
+        '
+        'CamXLabel
+        '
+        Me.CamXLabel.Name = "CamXLabel"
+        Me.CamXLabel.Size = New System.Drawing.Size(45, 24)
+        Me.CamXLabel.Text = "Cam X:"
+        '
+        'CamYLabel
+        '
+        Me.CamYLabel.Name = "CamYLabel"
+        Me.CamYLabel.Size = New System.Drawing.Size(45, 24)
+        Me.CamYLabel.Text = "Cam Y:"
+        '
+        'CamZLabel
+        '
+        Me.CamZLabel.Name = "CamZLabel"
+        Me.CamZLabel.Size = New System.Drawing.Size(45, 24)
+        Me.CamZLabel.Text = "Cam Z:"
+        '
+        'ToolStripStatusLabel5
+        '
+        Me.ToolStripStatusLabel5.BorderSides = CType((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) _
             Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) _
             Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom), System.Windows.Forms.ToolStripStatusLabelBorderSides)
-    Me.ToolStripStatusLabel5.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter
-    Me.ToolStripStatusLabel5.Name = "ToolStripStatusLabel5"
-    Me.ToolStripStatusLabel5.Size = New System.Drawing.Size(29, 22)
-    Me.ToolStripStatusLabel5.Text = "FPS"
-    '
-    'ToolStripStatusLabel4
-    '
-    Me.ToolStripStatusLabel4.BorderSides = CType((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) _
+        Me.ToolStripStatusLabel5.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter
+        Me.ToolStripStatusLabel5.Name = "ToolStripStatusLabel5"
+        Me.ToolStripStatusLabel5.Size = New System.Drawing.Size(29, 22)
+        Me.ToolStripStatusLabel5.Text = "FPS"
+        '
+        'ToolStripStatusLabel4
+        '
+        Me.ToolStripStatusLabel4.BorderSides = CType((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) _
             Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) _
             Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom), System.Windows.Forms.ToolStripStatusLabelBorderSides)
-    Me.ToolStripStatusLabel4.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter
-    Me.ToolStripStatusLabel4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-    Me.ToolStripStatusLabel4.Font = New System.Drawing.Font("Trebuchet MS", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-    Me.ToolStripStatusLabel4.Name = "ToolStripStatusLabel4"
-    Me.ToolStripStatusLabel4.Size = New System.Drawing.Size(111, 22)
-    Me.ToolStripStatusLabel4.Text = "Tool: Camera only"
-    '
-    'ToolStripSeparator4
-    '
-    Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
-    Me.ToolStripSeparator4.Size = New System.Drawing.Size(6, 41)
-    '
-    'ToolStripSeparator2
-    '
-    Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-    Me.ToolStripSeparator2.Size = New System.Drawing.Size(6, 41)
-    '
-    'ToolStripSeparator1
-    '
-    Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-    Me.ToolStripSeparator1.Size = New System.Drawing.Size(6, 41)
-    '
-    'ToolStripSeparator6
-    '
-    Me.ToolStripSeparator6.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-    Me.ToolStripSeparator6.Name = "ToolStripSeparator6"
-    Me.ToolStripSeparator6.RightToLeft = System.Windows.Forms.RightToLeft.No
-    Me.ToolStripSeparator6.Size = New System.Drawing.Size(6, 41)
-    '
-    'ToolStripSeparator5
-    '
-    Me.ToolStripSeparator5.Name = "ToolStripSeparator5"
-    Me.ToolStripSeparator5.Size = New System.Drawing.Size(6, 41)
-    '
-    'ToolStripSeparator3
-    '
-    Me.ToolStripSeparator3.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-    Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
-    Me.ToolStripSeparator3.RightToLeft = System.Windows.Forms.RightToLeft.No
-    Me.ToolStripSeparator3.Size = New System.Drawing.Size(6, 41)
-    '
-    'Label12
-    '
-    Me.Label12.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-    Me.Label12.AutoSize = True
-    Me.Label12.BackColor = System.Drawing.SystemColors.Control
-    Me.Label12.Font = New System.Drawing.Font("Trebuchet MS", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-    Me.Label12.Location = New System.Drawing.Point(946, 626)
-    Me.Label12.Name = "Label12"
-    Me.Label12.Size = New System.Drawing.Size(94, 18)
-    Me.Label12.TabIndex = 39
-    Me.Label12.Text = "Tool Sensitivity:"
-    '
-    'TrackBar4
-    '
-    Me.TrackBar4.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-    Me.TrackBar4.AutoSize = False
-    Me.TrackBar4.Cursor = System.Windows.Forms.Cursors.Hand
-    Me.TrackBar4.LargeChange = 1
-    Me.TrackBar4.Location = New System.Drawing.Point(1047, 627)
-    Me.TrackBar4.Maximum = 15
-    Me.TrackBar4.Minimum = 1
-    Me.TrackBar4.Name = "TrackBar4"
-    Me.TrackBar4.Size = New System.Drawing.Size(90, 15)
-    Me.TrackBar4.TabIndex = 99
-    Me.TrackBar4.Value = 2
-    '
-    'FileToolStripMenuItem
-    '
-    Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenModelToolStripMenuItem, Me.SaveChangesToolStripMenuItem, Me.ReloadCurrentFileToolStripMenuItem, Me.ImportCSVToolStripMenuItem, Me.ToolStripSeparator10, Me.QuitToolStripMenuItem})
-    Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
-    Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 17)
-    Me.FileToolStripMenuItem.Text = "File"
-    '
-    'OpenModelToolStripMenuItem
-    '
-    Me.OpenModelToolStripMenuItem.Name = "OpenModelToolStripMenuItem"
-    Me.OpenModelToolStripMenuItem.ShortcutKeyDisplayString = "Alt+O"
-    Me.OpenModelToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.O), System.Windows.Forms.Keys)
-    Me.OpenModelToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
-    Me.OpenModelToolStripMenuItem.Text = "&Open ROM..."
-    '
-    'SaveChangesToolStripMenuItem
-    '
-    Me.SaveChangesToolStripMenuItem.Name = "SaveChangesToolStripMenuItem"
-    Me.SaveChangesToolStripMenuItem.ShortcutKeyDisplayString = "Alt+S"
-    Me.SaveChangesToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
-    Me.SaveChangesToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
-    Me.SaveChangesToolStripMenuItem.Text = "&Save"
-    '
-    'ReloadCurrentFileToolStripMenuItem
-    '
-    Me.ReloadCurrentFileToolStripMenuItem.Name = "ReloadCurrentFileToolStripMenuItem"
-    Me.ReloadCurrentFileToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
-    Me.ReloadCurrentFileToolStripMenuItem.Text = "&Reload current file"
-    '
-    'ImportCSVToolStripMenuItem
-    '
-    Me.ImportCSVToolStripMenuItem.Name = "ImportCSVToolStripMenuItem"
-    Me.ImportCSVToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
-    Me.ImportCSVToolStripMenuItem.Text = "Convert Wavefront OBJ..."
-    '
-    'ToolStripSeparator10
-    '
-    Me.ToolStripSeparator10.Name = "ToolStripSeparator10"
-    Me.ToolStripSeparator10.Size = New System.Drawing.Size(203, 6)
-    '
-    'QuitToolStripMenuItem
-    '
-    Me.QuitToolStripMenuItem.Name = "QuitToolStripMenuItem"
-    Me.QuitToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
-    Me.QuitToolStripMenuItem.Text = "E&xit"
-    '
-    'EditToolStripMenuItem
-    '
-    Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ResetSelectedVerticesToolStripMenuItem, Me.ResetAllGraphicsToolStripMenuItem, Me.ResetAllCollisionToolStripMenuItem, Me.ToolStripSeparator11, Me.ResetSelectedActorToolStripMenuItem, Me.ResetAllActorsToolStripMenuItem, Me.ResetAllSceneActorsToolStripMenuItem, Me.ToolStripSeparator9, Me.SelectAllRoomActorsToolStripMenuItem, Me.SelectAllSceneActorsToolStripMenuItem, Me.SelectAllGraphicsToolStripMenuItem, Me.SelectAllCollisionToolStripMenuItem})
-    Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
-    Me.EditToolStripMenuItem.Size = New System.Drawing.Size(40, 17)
-    Me.EditToolStripMenuItem.Text = "Edit"
-    '
-    'ResetSelectedVerticesToolStripMenuItem
-    '
-    Me.ResetSelectedVerticesToolStripMenuItem.Name = "ResetSelectedVerticesToolStripMenuItem"
-    Me.ResetSelectedVerticesToolStripMenuItem.ShortcutKeyDisplayString = "V"
-    Me.ResetSelectedVerticesToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
-    Me.ResetSelectedVerticesToolStripMenuItem.Text = "Reset selected vertices"
-    '
-    'ResetAllGraphicsToolStripMenuItem
-    '
-    Me.ResetAllGraphicsToolStripMenuItem.Name = "ResetAllGraphicsToolStripMenuItem"
-    Me.ResetAllGraphicsToolStripMenuItem.ShortcutKeyDisplayString = ""
-    Me.ResetAllGraphicsToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.V), System.Windows.Forms.Keys)
-    Me.ResetAllGraphicsToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
-    Me.ResetAllGraphicsToolStripMenuItem.Text = "Reset all graphics"
-    '
-    'ResetAllCollisionToolStripMenuItem
-    '
-    Me.ResetAllCollisionToolStripMenuItem.Name = "ResetAllCollisionToolStripMenuItem"
-    Me.ResetAllCollisionToolStripMenuItem.ShortcutKeyDisplayString = ""
-    Me.ResetAllCollisionToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.C), System.Windows.Forms.Keys)
-    Me.ResetAllCollisionToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
-    Me.ResetAllCollisionToolStripMenuItem.Text = "Reset all collision"
-    '
-    'ToolStripSeparator11
-    '
-    Me.ToolStripSeparator11.Name = "ToolStripSeparator11"
-    Me.ToolStripSeparator11.Size = New System.Drawing.Size(225, 6)
-    '
-    'ResetSelectedActorToolStripMenuItem
-    '
-    Me.ResetSelectedActorToolStripMenuItem.Name = "ResetSelectedActorToolStripMenuItem"
-    Me.ResetSelectedActorToolStripMenuItem.ShortcutKeyDisplayString = "B"
-    Me.ResetSelectedActorToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
-    Me.ResetSelectedActorToolStripMenuItem.Text = "Reset selected actors"
-    '
-    'ResetAllActorsToolStripMenuItem
-    '
-    Me.ResetAllActorsToolStripMenuItem.Name = "ResetAllActorsToolStripMenuItem"
-    Me.ResetAllActorsToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.B), System.Windows.Forms.Keys)
-    Me.ResetAllActorsToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
-    Me.ResetAllActorsToolStripMenuItem.Text = "Reset all room actors"
-    '
-    'ResetAllSceneActorsToolStripMenuItem
-    '
-    Me.ResetAllSceneActorsToolStripMenuItem.Name = "ResetAllSceneActorsToolStripMenuItem"
-    Me.ResetAllSceneActorsToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.N), System.Windows.Forms.Keys)
-    Me.ResetAllSceneActorsToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
-    Me.ResetAllSceneActorsToolStripMenuItem.Text = "Reset all scene actors"
-    '
-    'ToolStripSeparator9
-    '
-    Me.ToolStripSeparator9.Name = "ToolStripSeparator9"
-    Me.ToolStripSeparator9.Size = New System.Drawing.Size(225, 6)
-    '
-    'SelectAllRoomActorsToolStripMenuItem
-    '
-    Me.SelectAllRoomActorsToolStripMenuItem.Name = "SelectAllRoomActorsToolStripMenuItem"
-    Me.SelectAllRoomActorsToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F11
-    Me.SelectAllRoomActorsToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
-    Me.SelectAllRoomActorsToolStripMenuItem.Text = "Select all room actors"
-    '
-    'SelectAllSceneActorsToolStripMenuItem
-    '
-    Me.SelectAllSceneActorsToolStripMenuItem.Name = "SelectAllSceneActorsToolStripMenuItem"
-    Me.SelectAllSceneActorsToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F12
-    Me.SelectAllSceneActorsToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
-    Me.SelectAllSceneActorsToolStripMenuItem.Text = "Select all scene actors"
-    '
-    'SelectAllGraphicsToolStripMenuItem
-    '
-    Me.SelectAllGraphicsToolStripMenuItem.Name = "SelectAllGraphicsToolStripMenuItem"
-    Me.SelectAllGraphicsToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
-    Me.SelectAllGraphicsToolStripMenuItem.Text = "Select all graphics"
-    '
-    'SelectAllCollisionToolStripMenuItem
-    '
-    Me.SelectAllCollisionToolStripMenuItem.Name = "SelectAllCollisionToolStripMenuItem"
-    Me.SelectAllCollisionToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
-    Me.SelectAllCollisionToolStripMenuItem.Text = "Select all collision"
-    '
-    'OptionsToolStripMenuItem
-    '
-    Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LaunchROMInPJ64ToolStripMenuItem, Me.ZeldaResourceExtractorToolStripMenuItem})
-    Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
-    Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(59, 17)
-    Me.OptionsToolStripMenuItem.Text = "Options"
-    '
-    'LaunchROMInPJ64ToolStripMenuItem
-    '
-    Me.LaunchROMInPJ64ToolStripMenuItem.Name = "LaunchROMInPJ64ToolStripMenuItem"
-    Me.LaunchROMInPJ64ToolStripMenuItem.ShortcutKeyDisplayString = ""
-    Me.LaunchROMInPJ64ToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.P), System.Windows.Forms.Keys)
-    Me.LaunchROMInPJ64ToolStripMenuItem.Size = New System.Drawing.Size(227, 22)
-    Me.LaunchROMInPJ64ToolStripMenuItem.Text = "&Launch ROM in &PJ64..."
-    '
-    'ZeldaResourceExtractorToolStripMenuItem
-    '
-    Me.ZeldaResourceExtractorToolStripMenuItem.Name = "ZeldaResourceExtractorToolStripMenuItem"
-    Me.ZeldaResourceExtractorToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.R), System.Windows.Forms.Keys)
-    Me.ZeldaResourceExtractorToolStripMenuItem.Size = New System.Drawing.Size(227, 22)
-    Me.ZeldaResourceExtractorToolStripMenuItem.Text = "Extract &ROM..."
-    '
-    'FeaturesToolStripMenuItem
-    '
-    Me.FeaturesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RenderModeToolStripMenuItem, Me.PrimitiveTypeToolStripMenuItem, Me.ToolStripSeparator8, Me.MouseToolToolStripMenuItem, Me.SetupToolStripMenuItem})
-    Me.FeaturesToolStripMenuItem.Name = "FeaturesToolStripMenuItem"
-    Me.FeaturesToolStripMenuItem.Size = New System.Drawing.Size(81, 17)
-    Me.FeaturesToolStripMenuItem.Text = "Preferences"
-    '
-    'RenderModeToolStripMenuItem
-    '
-    Me.RenderModeToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ViewingMeshToolStripMenuItem1, Me.CollisionMeshToolStripMenuItem})
-    Me.RenderModeToolStripMenuItem.Name = "RenderModeToolStripMenuItem"
-    Me.RenderModeToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.R), System.Windows.Forms.Keys)
-    Me.RenderModeToolStripMenuItem.Size = New System.Drawing.Size(174, 22)
-    Me.RenderModeToolStripMenuItem.Text = "&Render"
-    '
-    'ViewingMeshToolStripMenuItem1
-    '
-    Me.ViewingMeshToolStripMenuItem1.Checked = True
-    Me.ViewingMeshToolStripMenuItem1.CheckState = System.Windows.Forms.CheckState.Checked
-    Me.ViewingMeshToolStripMenuItem1.Name = "ViewingMeshToolStripMenuItem1"
-    Me.ViewingMeshToolStripMenuItem1.Size = New System.Drawing.Size(152, 22)
-    Me.ViewingMeshToolStripMenuItem1.Text = "Graphics Mesh"
-    '
-    'CollisionMeshToolStripMenuItem
-    '
-    Me.CollisionMeshToolStripMenuItem.Name = "CollisionMeshToolStripMenuItem"
-    Me.CollisionMeshToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
-    Me.CollisionMeshToolStripMenuItem.Text = "Collision Mesh"
-    '
-    'PrimitiveTypeToolStripMenuItem
-    '
-    Me.PrimitiveTypeToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FilledToolStripMenuItem, Me.WireframeToolStripMenuItem})
-    Me.PrimitiveTypeToolStripMenuItem.Name = "PrimitiveTypeToolStripMenuItem"
-    Me.PrimitiveTypeToolStripMenuItem.ShortcutKeyDisplayString = "F1"
-    Me.PrimitiveTypeToolStripMenuItem.Size = New System.Drawing.Size(174, 22)
-    Me.PrimitiveTypeToolStripMenuItem.Text = "&Primitive Mode"
-    '
-    'FilledToolStripMenuItem
-    '
-    Me.FilledToolStripMenuItem.AutoSize = False
-    Me.FilledToolStripMenuItem.Image = CType(resources.GetObject("FilledToolStripMenuItem.Image"), System.Drawing.Image)
-    Me.FilledToolStripMenuItem.Name = "FilledToolStripMenuItem"
-    Me.FilledToolStripMenuItem.Size = New System.Drawing.Size(152, 20)
-    Me.FilledToolStripMenuItem.Text = "&Filled"
-    '
-    'WireframeToolStripMenuItem
-    '
-    Me.WireframeToolStripMenuItem.AutoSize = False
-    Me.WireframeToolStripMenuItem.Image = CType(resources.GetObject("WireframeToolStripMenuItem.Image"), System.Drawing.Image)
-    Me.WireframeToolStripMenuItem.Name = "WireframeToolStripMenuItem"
-    Me.WireframeToolStripMenuItem.Size = New System.Drawing.Size(152, 20)
-    Me.WireframeToolStripMenuItem.Text = "&Wireframe"
-    '
-    'ToolStripSeparator8
-    '
-    Me.ToolStripSeparator8.Name = "ToolStripSeparator8"
-    Me.ToolStripSeparator8.Size = New System.Drawing.Size(171, 6)
-    '
-    'MouseToolToolStripMenuItem
-    '
-    Me.MouseToolToolStripMenuItem.Name = "MouseToolToolStripMenuItem"
-    Me.MouseToolToolStripMenuItem.Size = New System.Drawing.Size(174, 22)
-    Me.MouseToolToolStripMenuItem.Text = "&Mouse Tool..."
-    '
-    'SetupToolStripMenuItem
-    '
-    Me.SetupToolStripMenuItem.Name = "SetupToolStripMenuItem"
-    Me.SetupToolStripMenuItem.ShortcutKeyDisplayString = ""
-    Me.SetupToolStripMenuItem.Size = New System.Drawing.Size(174, 22)
-    Me.SetupToolStripMenuItem.Text = "&Setup..."
-    '
-    'HelpToolStripMenuItem
-    '
-    Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ControlsInfoToolStripMenuItem, Me.ToolStripSeparator7, Me.AboutToolStripMenuItem, Me.SearchForUpdatesToolStripMenuItem})
-    Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
-    Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(41, 17)
-    Me.HelpToolStripMenuItem.Text = "Help"
-    '
-    'ControlsInfoToolStripMenuItem
-    '
-    Me.ControlsInfoToolStripMenuItem.Name = "ControlsInfoToolStripMenuItem"
-    Me.ControlsInfoToolStripMenuItem.ShortcutKeyDisplayString = ""
-    Me.ControlsInfoToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.H), System.Windows.Forms.Keys)
-    Me.ControlsInfoToolStripMenuItem.Size = New System.Drawing.Size(227, 22)
-    Me.ControlsInfoToolStripMenuItem.Text = "&Controls"
-    '
-    'ToolStripSeparator7
-    '
-    Me.ToolStripSeparator7.Name = "ToolStripSeparator7"
-    Me.ToolStripSeparator7.Size = New System.Drawing.Size(224, 6)
-    '
-    'AboutToolStripMenuItem
-    '
-    Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
-    Me.AboutToolStripMenuItem.ShortcutKeyDisplayString = ""
-    Me.AboutToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Q), System.Windows.Forms.Keys)
-    Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(227, 22)
-    Me.AboutToolStripMenuItem.Text = "A&bout Utility of Time"
-    '
-    'SearchForUpdatesToolStripMenuItem
-    '
-    Me.SearchForUpdatesToolStripMenuItem.Name = "SearchForUpdatesToolStripMenuItem"
-    Me.SearchForUpdatesToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.U), System.Windows.Forms.Keys)
-    Me.SearchForUpdatesToolStripMenuItem.Size = New System.Drawing.Size(227, 22)
-    Me.SearchForUpdatesToolStripMenuItem.Text = "Search for updates..."
-    '
-    'ActorInputTimer
-    '
-    Me.ActorInputTimer.Interval = 1
-    '
-    'CollisionTab
-    '
-    Me.CollisionTab.Controls.Add(Me.GroupBox1)
-    Me.CollisionTab.Controls.Add(Me.CollisionGroupBox)
-    Me.CollisionTab.Location = New System.Drawing.Point(4, 25)
-    Me.CollisionTab.Name = "CollisionTab"
-    Me.CollisionTab.Padding = New System.Windows.Forms.Padding(3)
-    Me.CollisionTab.Size = New System.Drawing.Size(224, 558)
-    Me.CollisionTab.TabIndex = 4
-    Me.CollisionTab.Text = "Collision"
-    Me.CollisionTab.UseVisualStyleBackColor = True
-    '
-    'GroupBox1
-    '
-    Me.GroupBox1.Controls.Add(Me.Button9)
-    Me.GroupBox1.Controls.Add(Me.TriTypeText)
-    Me.GroupBox1.Controls.Add(Me.Label48)
-    Me.GroupBox1.Controls.Add(Me.Label47)
-    Me.GroupBox1.Controls.Add(Me.ColTriangleBox)
-    Me.GroupBox1.Location = New System.Drawing.Point(3, 9)
-    Me.GroupBox1.Name = "GroupBox1"
-    Me.GroupBox1.Size = New System.Drawing.Size(218, 112)
-    Me.GroupBox1.TabIndex = 93
-    Me.GroupBox1.TabStop = False
-    Me.GroupBox1.Text = "Triangles"
-    '
-    'Button9
-    '
-    Me.Button9.Location = New System.Drawing.Point(155, 83)
-    Me.Button9.Name = "Button9"
-    Me.Button9.Size = New System.Drawing.Size(56, 23)
-    Me.Button9.TabIndex = 4
-    Me.Button9.Text = "Apply"
-    Me.Button9.UseVisualStyleBackColor = True
-    '
-    'TriTypeText
-    '
-    Me.TriTypeText.Location = New System.Drawing.Point(138, 46)
-    Me.TriTypeText.Name = "TriTypeText"
-    Me.TriTypeText.Size = New System.Drawing.Size(56, 20)
-    Me.TriTypeText.TabIndex = 3
-    '
-    'Label48
-    '
-    Me.Label48.AutoSize = True
-    Me.Label48.Location = New System.Drawing.Point(9, 25)
-    Me.Label48.Name = "Label48"
-    Me.Label48.Size = New System.Drawing.Size(36, 16)
-    Me.Label48.TabIndex = 2
-    Me.Label48.Text = "Index"
-    '
-    'Label47
-    '
-    Me.Label47.AutoSize = True
-    Me.Label47.Location = New System.Drawing.Point(135, 25)
-    Me.Label47.Name = "Label47"
-    Me.Label47.Size = New System.Drawing.Size(31, 16)
-    Me.Label47.TabIndex = 1
-    Me.Label47.Text = "Type"
-    '
-    'ColTriangleBox
-    '
-    Me.ColTriangleBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-    Me.ColTriangleBox.FormattingEnabled = True
-    Me.ColTriangleBox.Location = New System.Drawing.Point(11, 44)
-    Me.ColTriangleBox.Name = "ColTriangleBox"
-    Me.ColTriangleBox.Size = New System.Drawing.Size(100, 24)
-    Me.ColTriangleBox.TabIndex = 0
-    '
-    'CollisionGroupBox
-    '
-    Me.CollisionGroupBox.Controls.Add(Me.Label36)
-    Me.CollisionGroupBox.Controls.Add(Me.ColWalkSound)
-    Me.CollisionGroupBox.Controls.Add(Me.Label38)
-    Me.CollisionGroupBox.Controls.Add(Me.Label37)
-    Me.CollisionGroupBox.Controls.Add(Me.Label35)
-    Me.CollisionGroupBox.Controls.Add(Me.Label33)
-    Me.CollisionGroupBox.Controls.Add(Me.Label32)
-    Me.CollisionGroupBox.Controls.Add(Me.Label23)
-    Me.CollisionGroupBox.Controls.Add(Me.Label13)
-    Me.CollisionGroupBox.Controls.Add(Me.Label1)
-    Me.CollisionGroupBox.Controls.Add(Me.ColVar4)
-    Me.CollisionGroupBox.Controls.Add(Me.ApplyCollisionButton)
-    Me.CollisionGroupBox.Controls.Add(Me.ColVar2)
-    Me.CollisionGroupBox.Controls.Add(Me.ColVar3)
-    Me.CollisionGroupBox.Controls.Add(Me.ColVar1)
-    Me.CollisionGroupBox.Controls.Add(Me.CollisionPresetButton)
-    Me.CollisionGroupBox.Controls.Add(Me.Label34)
-    Me.CollisionGroupBox.Controls.Add(Me.ColTypeText)
-    Me.CollisionGroupBox.Controls.Add(Me.ColTypeBox)
-    Me.CollisionGroupBox.Controls.Add(Me.Label31)
-    Me.CollisionGroupBox.Controls.Add(Me.ExitTextBox)
-    Me.CollisionGroupBox.Controls.Add(Me.ExitCombobox)
-    Me.CollisionGroupBox.Controls.Add(Me.Label10)
-    Me.CollisionGroupBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-    Me.CollisionGroupBox.Location = New System.Drawing.Point(3, 124)
-    Me.CollisionGroupBox.Name = "CollisionGroupBox"
-    Me.CollisionGroupBox.Size = New System.Drawing.Size(218, 342)
-    Me.CollisionGroupBox.TabIndex = 86
-    Me.CollisionGroupBox.TabStop = False
-    Me.CollisionGroupBox.Text = "Types"
-    '
-    'Label36
-    '
-    Me.Label36.AutoSize = True
-    Me.Label36.Location = New System.Drawing.Point(115, 135)
-    Me.Label36.Name = "Label36"
-    Me.Label36.Size = New System.Drawing.Size(20, 16)
-    Me.Label36.TabIndex = 107
-    Me.Label36.Text = "0x"
-    '
-    'ColWalkSound
-    '
-    Me.ColWalkSound.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
-    Me.ColWalkSound.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
-    Me.ColWalkSound.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-    Me.ColWalkSound.Location = New System.Drawing.Point(138, 128)
-    Me.ColWalkSound.MaxLength = 1
-    Me.ColWalkSound.Name = "ColWalkSound"
-    Me.ColWalkSound.Size = New System.Drawing.Size(55, 20)
-    Me.ColWalkSound.TabIndex = 105
-    '
-    'Label38
-    '
-    Me.Label38.AutoSize = True
-    Me.Label38.Location = New System.Drawing.Point(121, 109)
-    Me.Label38.Name = "Label38"
-    Me.Label38.Size = New System.Drawing.Size(90, 16)
-    Me.Label38.TabIndex = 106
-    Me.Label38.Text = "Walked on sound"
-    '
-    'Label37
-    '
-    Me.Label37.AutoSize = True
-    Me.Label37.Location = New System.Drawing.Point(9, 263)
-    Me.Label37.Name = "Label37"
-    Me.Label37.Size = New System.Drawing.Size(20, 16)
-    Me.Label37.TabIndex = 104
-    Me.Label37.Text = "0x"
-    '
-    'Label35
-    '
-    Me.Label35.AutoSize = True
-    Me.Label35.Location = New System.Drawing.Point(9, 221)
-    Me.Label35.Name = "Label35"
-    Me.Label35.Size = New System.Drawing.Size(20, 16)
-    Me.Label35.TabIndex = 103
-    Me.Label35.Text = "0x"
-    '
-    'Label33
-    '
-    Me.Label33.AutoSize = True
-    Me.Label33.Location = New System.Drawing.Point(9, 179)
-    Me.Label33.Name = "Label33"
-    Me.Label33.Size = New System.Drawing.Size(20, 16)
-    Me.Label33.TabIndex = 102
-    Me.Label33.Text = "0x"
-    '
-    'Label32
-    '
-    Me.Label32.AutoSize = True
-    Me.Label32.Location = New System.Drawing.Point(9, 135)
-    Me.Label32.Name = "Label32"
-    Me.Label32.Size = New System.Drawing.Size(20, 16)
-    Me.Label32.TabIndex = 101
-    Me.Label32.Text = "0x"
-    '
-    'Label23
-    '
-    Me.Label23.AutoSize = True
-    Me.Label23.Location = New System.Drawing.Point(27, 198)
-    Me.Label23.Name = "Label23"
-    Me.Label23.Size = New System.Drawing.Size(42, 16)
-    Me.Label23.TabIndex = 100
-    Me.Label23.Text = "Flags 3"
-    '
-    'Label13
-    '
-    Me.Label13.AutoSize = True
-    Me.Label13.Location = New System.Drawing.Point(27, 240)
-    Me.Label13.Name = "Label13"
-    Me.Label13.Size = New System.Drawing.Size(42, 16)
-    Me.Label13.TabIndex = 99
-    Me.Label13.Text = "Flags 4"
-    '
-    'Label1
-    '
-    Me.Label1.AutoSize = True
-    Me.Label1.Location = New System.Drawing.Point(26, 156)
-    Me.Label1.Name = "Label1"
-    Me.Label1.Size = New System.Drawing.Size(42, 16)
-    Me.Label1.TabIndex = 98
-    Me.Label1.Text = "Flags 2"
-    '
-    'ColVar4
-    '
-    Me.ColVar4.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
-    Me.ColVar4.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
-    Me.ColVar4.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-    Me.ColVar4.Location = New System.Drawing.Point(30, 256)
-    Me.ColVar4.MaxLength = 4
-    Me.ColVar4.Name = "ColVar4"
-    Me.ColVar4.Size = New System.Drawing.Size(55, 20)
-    Me.ColVar4.TabIndex = 17
-    '
-    'ApplyCollisionButton
-    '
-    Me.ApplyCollisionButton.BackColor = System.Drawing.SystemColors.Control
-    Me.ApplyCollisionButton.Location = New System.Drawing.Point(155, 313)
-    Me.ApplyCollisionButton.Name = "ApplyCollisionButton"
-    Me.ApplyCollisionButton.Size = New System.Drawing.Size(56, 23)
-    Me.ApplyCollisionButton.TabIndex = 18
-    Me.ApplyCollisionButton.Text = "Apply"
-    Me.ApplyCollisionButton.UseVisualStyleBackColor = True
-    '
-    'ColVar2
-    '
-    Me.ColVar2.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
-    Me.ColVar2.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
-    Me.ColVar2.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-    Me.ColVar2.Location = New System.Drawing.Point(29, 172)
-    Me.ColVar2.MaxLength = 4
-    Me.ColVar2.Name = "ColVar2"
-    Me.ColVar2.Size = New System.Drawing.Size(56, 20)
-    Me.ColVar2.TabIndex = 16
-    '
-    'ColVar3
-    '
-    Me.ColVar3.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
-    Me.ColVar3.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
-    Me.ColVar3.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-    Me.ColVar3.Location = New System.Drawing.Point(30, 214)
-    Me.ColVar3.MaxLength = 4
-    Me.ColVar3.Name = "ColVar3"
-    Me.ColVar3.Size = New System.Drawing.Size(55, 20)
-    Me.ColVar3.TabIndex = 15
-    '
-    'ColVar1
-    '
-    Me.ColVar1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
-    Me.ColVar1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
-    Me.ColVar1.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-    Me.ColVar1.Location = New System.Drawing.Point(30, 128)
-    Me.ColVar1.MaxLength = 4
-    Me.ColVar1.Name = "ColVar1"
-    Me.ColVar1.Size = New System.Drawing.Size(55, 20)
-    Me.ColVar1.TabIndex = 14
-    '
-    'CollisionPresetButton
-    '
-    Me.CollisionPresetButton.BackColor = System.Drawing.SystemColors.Control
-    Me.CollisionPresetButton.Location = New System.Drawing.Point(13, 297)
-    Me.CollisionPresetButton.Name = "CollisionPresetButton"
-    Me.CollisionPresetButton.Size = New System.Drawing.Size(101, 23)
-    Me.CollisionPresetButton.TabIndex = 13
-    Me.CollisionPresetButton.Text = "Preset Database"
-    Me.CollisionPresetButton.UseVisualStyleBackColor = False
-    '
-    'Label34
-    '
-    Me.Label34.AutoSize = True
-    Me.Label34.Location = New System.Drawing.Point(27, 112)
-    Me.Label34.Name = "Label34"
-    Me.Label34.Size = New System.Drawing.Size(42, 16)
-    Me.Label34.TabIndex = 97
-    Me.Label34.Text = "Flags 1"
-    '
-    'ColTypeText
-    '
-    Me.ColTypeText.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-    Me.ColTypeText.Location = New System.Drawing.Point(138, 78)
-    Me.ColTypeText.MaxLength = 4
-    Me.ColTypeText.Name = "ColTypeText"
-    Me.ColTypeText.ReadOnly = True
-    Me.ColTypeText.Size = New System.Drawing.Size(55, 20)
-    Me.ColTypeText.TabIndex = 91
-    '
-    'ColTypeBox
-    '
-    Me.ColTypeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-    Me.ColTypeBox.FormattingEnabled = True
-    Me.ColTypeBox.Location = New System.Drawing.Point(11, 78)
-    Me.ColTypeBox.Name = "ColTypeBox"
-    Me.ColTypeBox.Size = New System.Drawing.Size(102, 24)
-    Me.ColTypeBox.TabIndex = 12
-    '
-    'Label31
-    '
-    Me.Label31.AutoSize = True
-    Me.Label31.Location = New System.Drawing.Point(8, 62)
-    Me.Label31.Name = "Label31"
-    Me.Label31.Size = New System.Drawing.Size(53, 16)
-    Me.Label31.TabIndex = 87
-    Me.Label31.Text = "Variables"
-    '
-    'ExitTextBox
-    '
-    Me.ExitTextBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-    Me.ExitTextBox.Location = New System.Drawing.Point(138, 38)
-    Me.ExitTextBox.MaxLength = 4
-    Me.ExitTextBox.Name = "ExitTextBox"
-    Me.ExitTextBox.Size = New System.Drawing.Size(55, 20)
-    Me.ExitTextBox.TabIndex = 11
-    '
-    'ExitCombobox
-    '
-    Me.ExitCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-    Me.ExitCombobox.FormattingEnabled = True
-    Me.ExitCombobox.Location = New System.Drawing.Point(11, 38)
-    Me.ExitCombobox.Name = "ExitCombobox"
-    Me.ExitCombobox.Size = New System.Drawing.Size(102, 24)
-    Me.ExitCombobox.TabIndex = 10
-    '
-    'Label10
-    '
-    Me.Label10.AutoSize = True
-    Me.Label10.Location = New System.Drawing.Point(8, 20)
-    Me.Label10.Name = "Label10"
-    Me.Label10.Size = New System.Drawing.Size(33, 16)
-    Me.Label10.TabIndex = 83
-    Me.Label10.Text = "Exits"
-    '
-    'MiscTab
-    '
-    Me.MiscTab.Controls.Add(Me.GroupBox9)
-    Me.MiscTab.Controls.Add(Me.Label45)
-    Me.MiscTab.Controls.Add(Me.AnimStart)
-    Me.MiscTab.Controls.Add(Me.Label30)
-    Me.MiscTab.Controls.Add(Me.LimbStart)
-    Me.MiscTab.Controls.Add(Me.GroupBox10)
-    Me.MiscTab.Controls.Add(Me.GroupBox8)
-    Me.MiscTab.Location = New System.Drawing.Point(4, 46)
-    Me.MiscTab.Name = "MiscTab"
-    Me.MiscTab.Size = New System.Drawing.Size(224, 537)
-    Me.MiscTab.TabIndex = 3
-    Me.MiscTab.Text = "Miscellaneous"
-    Me.MiscTab.UseVisualStyleBackColor = True
-    '
-    'GroupBox9
-    '
-    Me.GroupBox9.Controls.Add(Me.ProgressBar1)
-    Me.GroupBox9.Controls.Add(Me.Label28)
-    Me.GroupBox9.Controls.Add(Me.Button16)
-    Me.GroupBox9.Controls.Add(Me.Button15)
-    Me.GroupBox9.Location = New System.Drawing.Point(28, 120)
-    Me.GroupBox9.Name = "GroupBox9"
-    Me.GroupBox9.Size = New System.Drawing.Size(173, 100)
-    Me.GroupBox9.TabIndex = 97
-    Me.GroupBox9.TabStop = False
-    Me.GroupBox9.Text = "Collision Matcher"
-    '
-    'ProgressBar1
-    '
-    Me.ProgressBar1.Location = New System.Drawing.Point(12, 77)
-    Me.ProgressBar1.Name = "ProgressBar1"
-    Me.ProgressBar1.Size = New System.Drawing.Size(150, 10)
-    Me.ProgressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous
-    Me.ProgressBar1.TabIndex = 92
-    '
-    'Label28
-    '
-    Me.Label28.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-    Me.Label28.AutoSize = True
-    Me.Label28.BackColor = System.Drawing.SystemColors.Control
-    Me.Label28.Location = New System.Drawing.Point(119, 0)
-    Me.Label28.Name = "Label28"
-    Me.Label28.Size = New System.Drawing.Size(49, 16)
-    Me.Label28.TabIndex = 89
-    Me.Label28.Text = "Working"
-    Me.Label28.Visible = False
-    '
-    'Button16
-    '
-    Me.Button16.Location = New System.Drawing.Point(12, 23)
-    Me.Button16.Name = "Button16"
-    Me.Button16.Size = New System.Drawing.Size(150, 23)
-    Me.Button16.TabIndex = 91
-    Me.Button16.Text = "Match collision to graphics"
-    Me.Button16.UseVisualStyleBackColor = True
-    '
-    'Button15
-    '
-    Me.Button15.Location = New System.Drawing.Point(12, 46)
-    Me.Button15.Name = "Button15"
-    Me.Button15.Size = New System.Drawing.Size(150, 23)
-    Me.Button15.TabIndex = 90
-    Me.Button15.Text = "Match graphics to collision"
-    Me.Button15.UseVisualStyleBackColor = True
-    '
-    'Label45
-    '
-    Me.Label45.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-    Me.Label45.AutoSize = True
-    Me.Label45.Location = New System.Drawing.Point(12, 421)
-    Me.Label45.Name = "Label45"
-    Me.Label45.Size = New System.Drawing.Size(71, 16)
-    Me.Label45.TabIndex = 94
-    Me.Label45.Text = "Animation at"
-    Me.Label45.Visible = False
-    '
-    'AnimStart
-    '
-    Me.AnimStart.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-    Me.AnimStart.Location = New System.Drawing.Point(14, 438)
-    Me.AnimStart.Name = "AnimStart"
-    Me.AnimStart.Size = New System.Drawing.Size(100, 20)
-    Me.AnimStart.TabIndex = 93
-    Me.AnimStart.Visible = False
-    '
-    'Label30
-    '
-    Me.Label30.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-    Me.Label30.AutoSize = True
-    Me.Label30.Location = New System.Drawing.Point(12, 379)
-    Me.Label30.Name = "Label30"
-    Me.Label30.Size = New System.Drawing.Size(72, 16)
-    Me.Label30.TabIndex = 92
-    Me.Label30.Text = "Heirarchy at"
-    Me.Label30.Visible = False
-    '
-    'LimbStart
-    '
-    Me.LimbStart.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-    Me.LimbStart.Location = New System.Drawing.Point(13, 398)
-    Me.LimbStart.Name = "LimbStart"
-    Me.LimbStart.Size = New System.Drawing.Size(100, 20)
-    Me.LimbStart.TabIndex = 91
-    Me.LimbStart.Visible = False
-    '
-    'GroupBox10
-    '
-    Me.GroupBox10.Controls.Add(Me.CheckBox5)
-    Me.GroupBox10.Controls.Add(Me.CheckBox15)
-    Me.GroupBox10.Controls.Add(Me.CheckBox14)
-    Me.GroupBox10.Controls.Add(Me.CheckBox13)
-    Me.GroupBox10.Location = New System.Drawing.Point(28, 9)
-    Me.GroupBox10.Name = "GroupBox10"
-    Me.GroupBox10.Size = New System.Drawing.Size(173, 105)
-    Me.GroupBox10.TabIndex = 90
-    Me.GroupBox10.TabStop = False
-    Me.GroupBox10.Text = "Hide"
-    '
-    'CheckBox5
-    '
-    Me.CheckBox5.AutoSize = True
-    Me.CheckBox5.Location = New System.Drawing.Point(12, 59)
-    Me.CheckBox5.Name = "CheckBox5"
-    Me.CheckBox5.Size = New System.Drawing.Size(111, 20)
-    Me.CheckBox5.TabIndex = 3
-    Me.CheckBox5.Text = "Link actor cubes"
-    Me.CheckBox5.UseVisualStyleBackColor = True
-    '
-    'CheckBox15
-    '
-    Me.CheckBox15.AutoSize = True
-    Me.CheckBox15.Location = New System.Drawing.Point(12, 77)
-    Me.CheckBox15.Name = "CheckBox15"
-    Me.CheckBox15.Size = New System.Drawing.Size(82, 20)
-    Me.CheckBox15.TabIndex = 2
-    Me.CheckBox15.Text = "Axis guides"
-    Me.CheckBox15.UseVisualStyleBackColor = True
-    '
-    'CheckBox14
-    '
-    Me.CheckBox14.AutoSize = True
-    Me.CheckBox14.Location = New System.Drawing.Point(12, 40)
-    Me.CheckBox14.Name = "CheckBox14"
-    Me.CheckBox14.Size = New System.Drawing.Size(119, 20)
-    Me.CheckBox14.TabIndex = 1
-    Me.CheckBox14.Text = "Scene actor cubes"
-    Me.CheckBox14.UseVisualStyleBackColor = True
-    '
-    'CheckBox13
-    '
-    Me.CheckBox13.AutoSize = True
-    Me.CheckBox13.Location = New System.Drawing.Point(12, 22)
-    Me.CheckBox13.Name = "CheckBox13"
-    Me.CheckBox13.Size = New System.Drawing.Size(116, 20)
-    Me.CheckBox13.TabIndex = 0
-    Me.CheckBox13.Text = "Room actor cubes"
-    Me.CheckBox13.UseVisualStyleBackColor = True
-    '
-    'GroupBox8
-    '
-    Me.GroupBox8.Controls.Add(Me.MapsCombobox)
-    Me.GroupBox8.Controls.Add(Me.Label46)
-    Me.GroupBox8.Location = New System.Drawing.Point(28, 227)
-    Me.GroupBox8.Name = "GroupBox8"
-    Me.GroupBox8.Size = New System.Drawing.Size(173, 85)
-    Me.GroupBox8.TabIndex = 98
-    Me.GroupBox8.TabStop = False
-    Me.GroupBox8.Text = "Individual level"
-    '
-    'MapsCombobox
-    '
-    Me.MapsCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-    Me.MapsCombobox.FormattingEnabled = True
-    Me.MapsCombobox.Location = New System.Drawing.Point(12, 43)
-    Me.MapsCombobox.Name = "MapsCombobox"
-    Me.MapsCombobox.Size = New System.Drawing.Size(150, 24)
-    Me.MapsCombobox.TabIndex = 95
-    '
-    'Label46
-    '
-    Me.Label46.AutoSize = True
-    Me.Label46.Location = New System.Drawing.Point(9, 24)
-    Me.Label46.Name = "Label46"
-    Me.Label46.Size = New System.Drawing.Size(93, 16)
-    Me.Label46.TabIndex = 96
-    Me.Label46.Text = "Referenced maps"
-    '
-    'LevelFlagsTab
-    '
-    Me.LevelFlagsTab.BackColor = System.Drawing.Color.Transparent
-    Me.LevelFlagsTab.Controls.Add(Me.GroupBox6)
-    Me.LevelFlagsTab.Location = New System.Drawing.Point(4, 25)
-    Me.LevelFlagsTab.Name = "LevelFlagsTab"
-    Me.LevelFlagsTab.Size = New System.Drawing.Size(224, 558)
-    Me.LevelFlagsTab.TabIndex = 2
-    Me.LevelFlagsTab.Text = "Level Flags"
-    Me.LevelFlagsTab.UseVisualStyleBackColor = True
-    '
-    'GroupBox6
-    '
-    Me.GroupBox6.Controls.Add(Me.ComboBox6)
-    Me.GroupBox6.Controls.Add(Me.Label2)
-    Me.GroupBox6.Controls.Add(Me.Button11)
-    Me.GroupBox6.Controls.Add(Me.TextBox13)
-    Me.GroupBox6.Controls.Add(Me.Label21)
-    Me.GroupBox6.Location = New System.Drawing.Point(3, 9)
-    Me.GroupBox6.Name = "GroupBox6"
-    Me.GroupBox6.Size = New System.Drawing.Size(218, 74)
-    Me.GroupBox6.TabIndex = 77
-    Me.GroupBox6.TabStop = False
-    Me.GroupBox6.Text = "Ambience"
-    '
-    'ComboBox6
-    '
-    Me.ComboBox6.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-    Me.ComboBox6.FormattingEnabled = True
-    Me.ComboBox6.Items.AddRange(New Object() {"No Change", "Morning", "Mid Day", "Night"})
-    Me.ComboBox6.Location = New System.Drawing.Point(10, 36)
-    Me.ComboBox6.Name = "ComboBox6"
-    Me.ComboBox6.Size = New System.Drawing.Size(82, 24)
-    Me.ComboBox6.TabIndex = 7
-    '
-    'Label2
-    '
-    Me.Label2.AutoSize = True
-    Me.Label2.Location = New System.Drawing.Point(7, 20)
-    Me.Label2.Name = "Label2"
-    Me.Label2.Size = New System.Drawing.Size(69, 16)
-    Me.Label2.TabIndex = 65
-    Me.Label2.Text = "Time of day:"
-    '
-    'Button11
-    '
-    Me.Button11.BackColor = System.Drawing.SystemColors.Control
-    Me.Button11.FlatStyle = System.Windows.Forms.FlatStyle.System
-    Me.Button11.Location = New System.Drawing.Point(137, 37)
-    Me.Button11.Name = "Button11"
-    Me.Button11.Size = New System.Drawing.Size(23, 23)
-    Me.Button11.TabIndex = 9
-    Me.Button11.Text = "?"
-    Me.Button11.UseVisualStyleBackColor = True
-    '
-    'TextBox13
-    '
-    Me.TextBox13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-    Me.TextBox13.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-    Me.TextBox13.Location = New System.Drawing.Point(96, 38)
-    Me.TextBox13.MaxLength = 2
-    Me.TextBox13.Name = "TextBox13"
-    Me.TextBox13.Size = New System.Drawing.Size(35, 20)
-    Me.TextBox13.TabIndex = 8
-    '
-    'Label21
-    '
-    Me.Label21.AutoSize = True
-    Me.Label21.Location = New System.Drawing.Point(93, 21)
-    Me.Label21.Name = "Label21"
-    Me.Label21.Size = New System.Drawing.Size(40, 16)
-    Me.Label21.TabIndex = 74
-    Me.Label21.Text = "Music:"
-    '
-    'ActorsTab
-    '
-    Me.ActorsTab.BackColor = System.Drawing.Color.Transparent
-    Me.ActorsTab.Controls.Add(Me.Button2)
-    Me.ActorsTab.Controls.Add(Me.GroupBox4)
-    Me.ActorsTab.Controls.Add(Me.GroupBox5)
-    Me.ActorsTab.Location = New System.Drawing.Point(4, 46)
-    Me.ActorsTab.Name = "ActorsTab"
-    Me.ActorsTab.Padding = New System.Windows.Forms.Padding(3)
-    Me.ActorsTab.Size = New System.Drawing.Size(224, 537)
-    Me.ActorsTab.TabIndex = 1
-    Me.ActorsTab.Text = "Actors"
-    Me.ActorsTab.UseVisualStyleBackColor = True
-    '
-    'Button2
-    '
-    Me.Button2.BackColor = System.Drawing.SystemColors.Control
-    Me.Button2.Location = New System.Drawing.Point(129, 378)
-    Me.Button2.Name = "Button2"
-    Me.Button2.Size = New System.Drawing.Size(85, 23)
-    Me.Button2.TabIndex = 14
-    Me.Button2.Text = "Apply"
-    Me.Button2.UseVisualStyleBackColor = True
-    '
-    'GroupBox4
-    '
-    Me.GroupBox4.Controls.Add(Me.Label14)
-    Me.GroupBox4.Controls.Add(Me.Label17)
-    Me.GroupBox4.Controls.Add(Me.TextBox9)
-    Me.GroupBox4.Controls.Add(Me.Label18)
-    Me.GroupBox4.Controls.Add(Me.TextBox8)
-    Me.GroupBox4.Controls.Add(Me.Label19)
-    Me.GroupBox4.Controls.Add(Me.TextBox7)
-    Me.GroupBox4.Controls.Add(Me.TextBox10)
-    Me.GroupBox4.Controls.Add(Me.Label16)
-    Me.GroupBox4.Controls.Add(Me.TextBox11)
-    Me.GroupBox4.Controls.Add(Me.Label15)
-    Me.GroupBox4.Controls.Add(Me.TextBox12)
-    Me.GroupBox4.Location = New System.Drawing.Point(3, 230)
-    Me.GroupBox4.Name = "GroupBox4"
-    Me.GroupBox4.Size = New System.Drawing.Size(218, 142)
-    Me.GroupBox4.TabIndex = 72
-    Me.GroupBox4.TabStop = False
-    Me.GroupBox4.Text = "Position"
-    '
-    'Label14
-    '
-    Me.Label14.AutoSize = True
-    Me.Label14.Location = New System.Drawing.Point(20, 19)
-    Me.Label14.Name = "Label14"
-    Me.Label14.Size = New System.Drawing.Size(69, 16)
-    Me.Label14.TabIndex = 59
-    Me.Label14.Text = "Actor X Pos."
-    '
-    'Label17
-    '
-    Me.Label17.AutoSize = True
-    Me.Label17.Location = New System.Drawing.Point(112, 19)
-    Me.Label17.Name = "Label17"
-    Me.Label17.Size = New System.Drawing.Size(70, 16)
-    Me.Label17.TabIndex = 66
-    Me.Label17.Text = "Actor X Rot."
-    '
-    'TextBox9
-    '
-    Me.TextBox9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-    Me.TextBox9.Location = New System.Drawing.Point(23, 113)
-    Me.TextBox9.Name = "TextBox9"
-    Me.TextBox9.Size = New System.Drawing.Size(84, 20)
-    Me.TextBox9.TabIndex = 10
-    '
-    'Label18
-    '
-    Me.Label18.AutoSize = True
-    Me.Label18.Location = New System.Drawing.Point(112, 58)
-    Me.Label18.Name = "Label18"
-    Me.Label18.Size = New System.Drawing.Size(70, 16)
-    Me.Label18.TabIndex = 67
-    Me.Label18.Text = "Actor Y Rot."
-    '
-    'TextBox8
-    '
-    Me.TextBox8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-    Me.TextBox8.Location = New System.Drawing.Point(23, 74)
-    Me.TextBox8.Name = "TextBox8"
-    Me.TextBox8.Size = New System.Drawing.Size(84, 20)
-    Me.TextBox8.TabIndex = 9
-    '
-    'Label19
-    '
-    Me.Label19.AutoSize = True
-    Me.Label19.Location = New System.Drawing.Point(112, 97)
-    Me.Label19.Name = "Label19"
-    Me.Label19.Size = New System.Drawing.Size(69, 16)
-    Me.Label19.TabIndex = 68
-    Me.Label19.Text = "Actor Z Rot."
-    '
-    'TextBox7
-    '
-    Me.TextBox7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-    Me.TextBox7.Location = New System.Drawing.Point(23, 35)
-    Me.TextBox7.Name = "TextBox7"
-    Me.TextBox7.Size = New System.Drawing.Size(84, 20)
-    Me.TextBox7.TabIndex = 8
-    '
-    'TextBox10
-    '
-    Me.TextBox10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-    Me.TextBox10.Location = New System.Drawing.Point(115, 35)
-    Me.TextBox10.Name = "TextBox10"
-    Me.TextBox10.Size = New System.Drawing.Size(83, 20)
-    Me.TextBox10.TabIndex = 11
-    '
-    'Label16
-    '
-    Me.Label16.AutoSize = True
-    Me.Label16.Location = New System.Drawing.Point(20, 97)
-    Me.Label16.Name = "Label16"
-    Me.Label16.Size = New System.Drawing.Size(68, 16)
-    Me.Label16.TabIndex = 61
-    Me.Label16.Text = "Actor Z Pos."
-    '
-    'TextBox11
-    '
-    Me.TextBox11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-    Me.TextBox11.Location = New System.Drawing.Point(115, 74)
-    Me.TextBox11.Name = "TextBox11"
-    Me.TextBox11.Size = New System.Drawing.Size(83, 20)
-    Me.TextBox11.TabIndex = 12
-    '
-    'Label15
-    '
-    Me.Label15.AutoSize = True
-    Me.Label15.Location = New System.Drawing.Point(20, 58)
-    Me.Label15.Name = "Label15"
-    Me.Label15.Size = New System.Drawing.Size(69, 16)
-    Me.Label15.TabIndex = 60
-    Me.Label15.Text = "Actor Y Pos."
-    '
-    'TextBox12
-    '
-    Me.TextBox12.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-    Me.TextBox12.Location = New System.Drawing.Point(115, 113)
-    Me.TextBox12.Name = "TextBox12"
-    Me.TextBox12.Size = New System.Drawing.Size(83, 20)
-    Me.TextBox12.TabIndex = 13
-    '
-    'GroupBox5
-    '
-    Me.GroupBox5.Controls.Add(Me.Button6)
-    Me.GroupBox5.Controls.Add(Me.SceneActorCombobox)
-    Me.GroupBox5.Controls.Add(Me.ActorNumberText)
-    Me.GroupBox5.Controls.Add(Me.Label7)
-    Me.GroupBox5.Controls.Add(Me.ActorVarText)
-    Me.GroupBox5.Controls.Add(Me.Label8)
-    Me.GroupBox5.Controls.Add(Me.Label6)
-    Me.GroupBox5.Controls.Add(Me.ActorGroupText)
-    Me.GroupBox5.Controls.Add(Me.Label22)
-    Me.GroupBox5.Controls.Add(Me.RoomActorCombobox)
-    Me.GroupBox5.Controls.Add(Me.Label24)
-    Me.GroupBox5.Location = New System.Drawing.Point(3, 9)
-    Me.GroupBox5.Name = "GroupBox5"
-    Me.GroupBox5.Size = New System.Drawing.Size(218, 215)
-    Me.GroupBox5.TabIndex = 73
-    Me.GroupBox5.TabStop = False
-    Me.GroupBox5.Text = "Actors"
-    '
-    'Button6
-    '
-    Me.Button6.BackColor = System.Drawing.SystemColors.Control
-    Me.Button6.Location = New System.Drawing.Point(123, 178)
-    Me.Button6.Name = "Button6"
-    Me.Button6.Size = New System.Drawing.Size(75, 23)
-    Me.Button6.TabIndex = 54
-    Me.Button6.Text = "Database"
-    Me.Button6.UseVisualStyleBackColor = False
-    '
-    'SceneActorCombobox
-    '
-    Me.SceneActorCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-    Me.SceneActorCombobox.FormattingEnabled = True
-    Me.SceneActorCombobox.Location = New System.Drawing.Point(19, 79)
-    Me.SceneActorCombobox.Name = "SceneActorCombobox"
-    Me.SceneActorCombobox.Size = New System.Drawing.Size(180, 24)
-    Me.SceneActorCombobox.TabIndex = 1
-    '
-    'ActorNumberText
-    '
-    Me.ActorNumberText.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-    Me.ActorNumberText.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-    Me.ActorNumberText.Location = New System.Drawing.Point(20, 128)
-    Me.ActorNumberText.MaxLength = 4
-    Me.ActorNumberText.Name = "ActorNumberText"
-    Me.ActorNumberText.Size = New System.Drawing.Size(83, 20)
-    Me.ActorNumberText.TabIndex = 2
-    '
-    'Label7
-    '
-    Me.Label7.AutoSize = True
-    Me.Label7.Location = New System.Drawing.Point(17, 160)
-    Me.Label7.Name = "Label7"
-    Me.Label7.Size = New System.Drawing.Size(86, 16)
-    Me.Label7.TabIndex = 39
-    Me.Label7.Text = "Models (groups)"
-    '
-    'ActorVarText
-    '
-    Me.ActorVarText.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-    Me.ActorVarText.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-    Me.ActorVarText.Location = New System.Drawing.Point(113, 128)
-    Me.ActorVarText.MaxLength = 4
-    Me.ActorVarText.Name = "ActorVarText"
-    Me.ActorVarText.Size = New System.Drawing.Size(85, 20)
-    Me.ActorVarText.TabIndex = 3
-    '
-    'Label8
-    '
-    Me.Label8.AutoSize = True
-    Me.Label8.Location = New System.Drawing.Point(17, 110)
-    Me.Label8.Name = "Label8"
-    Me.Label8.Size = New System.Drawing.Size(46, 16)
-    Me.Label8.TabIndex = 33
-    Me.Label8.Text = "Number"
-    '
-    'Label6
-    '
-    Me.Label6.AutoSize = True
-    Me.Label6.Location = New System.Drawing.Point(111, 111)
-    Me.Label6.Name = "Label6"
-    Me.Label6.Size = New System.Drawing.Size(48, 16)
-    Me.Label6.TabIndex = 34
-    Me.Label6.Text = "Variable"
-    '
-    'ActorGroupText
-    '
-    Me.ActorGroupText.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-    Me.ActorGroupText.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-    Me.ActorGroupText.Location = New System.Drawing.Point(20, 179)
-    Me.ActorGroupText.MaxLength = 4
-    Me.ActorGroupText.Name = "ActorGroupText"
-    Me.ActorGroupText.Size = New System.Drawing.Size(83, 20)
-    Me.ActorGroupText.TabIndex = 5
-    Me.ActorGroupText.Text = "0001"
-    '
-    'Label22
-    '
-    Me.Label22.AutoSize = True
-    Me.Label22.Location = New System.Drawing.Point(16, 18)
-    Me.Label22.Name = "Label22"
-    Me.Label22.Size = New System.Drawing.Size(69, 16)
-    Me.Label22.TabIndex = 52
-    Me.Label22.Text = "Room Actors"
-    '
-    'RoomActorCombobox
-    '
-    Me.RoomActorCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-    Me.RoomActorCombobox.FormattingEnabled = True
-    Me.RoomActorCombobox.Location = New System.Drawing.Point(19, 34)
-    Me.RoomActorCombobox.Name = "RoomActorCombobox"
-    Me.RoomActorCombobox.Size = New System.Drawing.Size(180, 24)
-    Me.RoomActorCombobox.TabIndex = 0
-    '
-    'Label24
-    '
-    Me.Label24.AutoSize = True
-    Me.Label24.Location = New System.Drawing.Point(17, 62)
-    Me.Label24.Name = "Label24"
-    Me.Label24.Size = New System.Drawing.Size(72, 16)
-    Me.Label24.TabIndex = 53
-    Me.Label24.Text = "Scene Actors"
-    '
-    'EditingTabs
-    '
-    Me.EditingTabs.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.ToolStripStatusLabel4.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter
+        Me.ToolStripStatusLabel4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.ToolStripStatusLabel4.Font = New System.Drawing.Font("Trebuchet MS", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ToolStripStatusLabel4.Name = "ToolStripStatusLabel4"
+        Me.ToolStripStatusLabel4.Size = New System.Drawing.Size(111, 22)
+        Me.ToolStripStatusLabel4.Text = "Tool: Camera only"
+        '
+        'ToolStripSeparator4
+        '
+        Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
+        Me.ToolStripSeparator4.Size = New System.Drawing.Size(6, 41)
+        '
+        'ToolStripSeparator2
+        '
+        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(6, 41)
+        '
+        'ToolStripSeparator1
+        '
+        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(6, 41)
+        '
+        'ToolStripSeparator6
+        '
+        Me.ToolStripSeparator6.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.ToolStripSeparator6.Name = "ToolStripSeparator6"
+        Me.ToolStripSeparator6.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.ToolStripSeparator6.Size = New System.Drawing.Size(6, 41)
+        '
+        'ToolStripSeparator5
+        '
+        Me.ToolStripSeparator5.Name = "ToolStripSeparator5"
+        Me.ToolStripSeparator5.Size = New System.Drawing.Size(6, 41)
+        '
+        'ToolStripSeparator3
+        '
+        Me.ToolStripSeparator3.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
+        Me.ToolStripSeparator3.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.ToolStripSeparator3.Size = New System.Drawing.Size(6, 41)
+        '
+        'Label12
+        '
+        Me.Label12.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label12.AutoSize = True
+        Me.Label12.BackColor = System.Drawing.SystemColors.Control
+        Me.Label12.Font = New System.Drawing.Font("Trebuchet MS", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label12.Location = New System.Drawing.Point(946, 626)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(94, 18)
+        Me.Label12.TabIndex = 39
+        Me.Label12.Text = "Tool Sensitivity:"
+        '
+        'TrackBar4
+        '
+        Me.TrackBar4.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TrackBar4.AutoSize = False
+        Me.TrackBar4.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.TrackBar4.LargeChange = 1
+        Me.TrackBar4.Location = New System.Drawing.Point(1047, 627)
+        Me.TrackBar4.Maximum = 15
+        Me.TrackBar4.Minimum = 1
+        Me.TrackBar4.Name = "TrackBar4"
+        Me.TrackBar4.Size = New System.Drawing.Size(90, 15)
+        Me.TrackBar4.TabIndex = 99
+        Me.TrackBar4.Value = 2
+        '
+        'FileToolStripMenuItem
+        '
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenModelToolStripMenuItem, Me.SaveChangesToolStripMenuItem, Me.ReloadCurrentFileToolStripMenuItem, Me.ImportCSVToolStripMenuItem, Me.ToolStripSeparator10, Me.QuitToolStripMenuItem})
+        Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
+        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 17)
+        Me.FileToolStripMenuItem.Text = "File"
+        '
+        'OpenModelToolStripMenuItem
+        '
+        Me.OpenModelToolStripMenuItem.Name = "OpenModelToolStripMenuItem"
+        Me.OpenModelToolStripMenuItem.ShortcutKeyDisplayString = "Alt+O"
+        Me.OpenModelToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.O), System.Windows.Forms.Keys)
+        Me.OpenModelToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
+        Me.OpenModelToolStripMenuItem.Text = "&Open ROM..."
+        '
+        'SaveChangesToolStripMenuItem
+        '
+        Me.SaveChangesToolStripMenuItem.Name = "SaveChangesToolStripMenuItem"
+        Me.SaveChangesToolStripMenuItem.ShortcutKeyDisplayString = "Alt+S"
+        Me.SaveChangesToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
+        Me.SaveChangesToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
+        Me.SaveChangesToolStripMenuItem.Text = "&Save"
+        '
+        'ReloadCurrentFileToolStripMenuItem
+        '
+        Me.ReloadCurrentFileToolStripMenuItem.Name = "ReloadCurrentFileToolStripMenuItem"
+        Me.ReloadCurrentFileToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
+        Me.ReloadCurrentFileToolStripMenuItem.Text = "&Reload current file"
+        '
+        'ImportCSVToolStripMenuItem
+        '
+        Me.ImportCSVToolStripMenuItem.Name = "ImportCSVToolStripMenuItem"
+        Me.ImportCSVToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
+        Me.ImportCSVToolStripMenuItem.Text = "Convert Wavefront OBJ..."
+        '
+        'ToolStripSeparator10
+        '
+        Me.ToolStripSeparator10.Name = "ToolStripSeparator10"
+        Me.ToolStripSeparator10.Size = New System.Drawing.Size(203, 6)
+        '
+        'QuitToolStripMenuItem
+        '
+        Me.QuitToolStripMenuItem.Name = "QuitToolStripMenuItem"
+        Me.QuitToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
+        Me.QuitToolStripMenuItem.Text = "E&xit"
+        '
+        'EditToolStripMenuItem
+        '
+        Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ResetSelectedVerticesToolStripMenuItem, Me.ResetAllGraphicsToolStripMenuItem, Me.ResetAllCollisionToolStripMenuItem, Me.ToolStripSeparator11, Me.ResetSelectedActorToolStripMenuItem, Me.ResetAllActorsToolStripMenuItem, Me.ResetAllSceneActorsToolStripMenuItem, Me.ToolStripSeparator9, Me.SelectAllRoomActorsToolStripMenuItem, Me.SelectAllSceneActorsToolStripMenuItem, Me.SelectAllGraphicsToolStripMenuItem, Me.SelectAllCollisionToolStripMenuItem})
+        Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
+        Me.EditToolStripMenuItem.Size = New System.Drawing.Size(40, 17)
+        Me.EditToolStripMenuItem.Text = "Edit"
+        '
+        'ResetSelectedVerticesToolStripMenuItem
+        '
+        Me.ResetSelectedVerticesToolStripMenuItem.Name = "ResetSelectedVerticesToolStripMenuItem"
+        Me.ResetSelectedVerticesToolStripMenuItem.ShortcutKeyDisplayString = "V"
+        Me.ResetSelectedVerticesToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
+        Me.ResetSelectedVerticesToolStripMenuItem.Text = "Reset selected vertices"
+        '
+        'ResetAllGraphicsToolStripMenuItem
+        '
+        Me.ResetAllGraphicsToolStripMenuItem.Name = "ResetAllGraphicsToolStripMenuItem"
+        Me.ResetAllGraphicsToolStripMenuItem.ShortcutKeyDisplayString = ""
+        Me.ResetAllGraphicsToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.V), System.Windows.Forms.Keys)
+        Me.ResetAllGraphicsToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
+        Me.ResetAllGraphicsToolStripMenuItem.Text = "Reset all graphics"
+        '
+        'ResetAllCollisionToolStripMenuItem
+        '
+        Me.ResetAllCollisionToolStripMenuItem.Name = "ResetAllCollisionToolStripMenuItem"
+        Me.ResetAllCollisionToolStripMenuItem.ShortcutKeyDisplayString = ""
+        Me.ResetAllCollisionToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.C), System.Windows.Forms.Keys)
+        Me.ResetAllCollisionToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
+        Me.ResetAllCollisionToolStripMenuItem.Text = "Reset all collision"
+        '
+        'ToolStripSeparator11
+        '
+        Me.ToolStripSeparator11.Name = "ToolStripSeparator11"
+        Me.ToolStripSeparator11.Size = New System.Drawing.Size(225, 6)
+        '
+        'ResetSelectedActorToolStripMenuItem
+        '
+        Me.ResetSelectedActorToolStripMenuItem.Name = "ResetSelectedActorToolStripMenuItem"
+        Me.ResetSelectedActorToolStripMenuItem.ShortcutKeyDisplayString = "B"
+        Me.ResetSelectedActorToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
+        Me.ResetSelectedActorToolStripMenuItem.Text = "Reset selected actors"
+        '
+        'ResetAllActorsToolStripMenuItem
+        '
+        Me.ResetAllActorsToolStripMenuItem.Name = "ResetAllActorsToolStripMenuItem"
+        Me.ResetAllActorsToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.B), System.Windows.Forms.Keys)
+        Me.ResetAllActorsToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
+        Me.ResetAllActorsToolStripMenuItem.Text = "Reset all room actors"
+        '
+        'ResetAllSceneActorsToolStripMenuItem
+        '
+        Me.ResetAllSceneActorsToolStripMenuItem.Name = "ResetAllSceneActorsToolStripMenuItem"
+        Me.ResetAllSceneActorsToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.N), System.Windows.Forms.Keys)
+        Me.ResetAllSceneActorsToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
+        Me.ResetAllSceneActorsToolStripMenuItem.Text = "Reset all scene actors"
+        '
+        'ToolStripSeparator9
+        '
+        Me.ToolStripSeparator9.Name = "ToolStripSeparator9"
+        Me.ToolStripSeparator9.Size = New System.Drawing.Size(225, 6)
+        '
+        'SelectAllRoomActorsToolStripMenuItem
+        '
+        Me.SelectAllRoomActorsToolStripMenuItem.Name = "SelectAllRoomActorsToolStripMenuItem"
+        Me.SelectAllRoomActorsToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F11
+        Me.SelectAllRoomActorsToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
+        Me.SelectAllRoomActorsToolStripMenuItem.Text = "Select all room actors"
+        '
+        'SelectAllSceneActorsToolStripMenuItem
+        '
+        Me.SelectAllSceneActorsToolStripMenuItem.Name = "SelectAllSceneActorsToolStripMenuItem"
+        Me.SelectAllSceneActorsToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F12
+        Me.SelectAllSceneActorsToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
+        Me.SelectAllSceneActorsToolStripMenuItem.Text = "Select all scene actors"
+        '
+        'SelectAllGraphicsToolStripMenuItem
+        '
+        Me.SelectAllGraphicsToolStripMenuItem.Name = "SelectAllGraphicsToolStripMenuItem"
+        Me.SelectAllGraphicsToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
+        Me.SelectAllGraphicsToolStripMenuItem.Text = "Select all graphics"
+        '
+        'SelectAllCollisionToolStripMenuItem
+        '
+        Me.SelectAllCollisionToolStripMenuItem.Name = "SelectAllCollisionToolStripMenuItem"
+        Me.SelectAllCollisionToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
+        Me.SelectAllCollisionToolStripMenuItem.Text = "Select all collision"
+        '
+        'OptionsToolStripMenuItem
+        '
+        Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LaunchROMInPJ64ToolStripMenuItem, Me.ZeldaResourceExtractorToolStripMenuItem})
+        Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
+        Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(59, 17)
+        Me.OptionsToolStripMenuItem.Text = "Options"
+        '
+        'LaunchROMInPJ64ToolStripMenuItem
+        '
+        Me.LaunchROMInPJ64ToolStripMenuItem.Name = "LaunchROMInPJ64ToolStripMenuItem"
+        Me.LaunchROMInPJ64ToolStripMenuItem.ShortcutKeyDisplayString = ""
+        Me.LaunchROMInPJ64ToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.P), System.Windows.Forms.Keys)
+        Me.LaunchROMInPJ64ToolStripMenuItem.Size = New System.Drawing.Size(227, 22)
+        Me.LaunchROMInPJ64ToolStripMenuItem.Text = "&Launch ROM in &PJ64..."
+        '
+        'ZeldaResourceExtractorToolStripMenuItem
+        '
+        Me.ZeldaResourceExtractorToolStripMenuItem.Name = "ZeldaResourceExtractorToolStripMenuItem"
+        Me.ZeldaResourceExtractorToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.R), System.Windows.Forms.Keys)
+        Me.ZeldaResourceExtractorToolStripMenuItem.Size = New System.Drawing.Size(227, 22)
+        Me.ZeldaResourceExtractorToolStripMenuItem.Text = "Extract &ROM..."
+        '
+        'FeaturesToolStripMenuItem
+        '
+        Me.FeaturesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RenderModeToolStripMenuItem, Me.PrimitiveTypeToolStripMenuItem, Me.ToolStripSeparator8, Me.MouseToolToolStripMenuItem, Me.SetupToolStripMenuItem})
+        Me.FeaturesToolStripMenuItem.Name = "FeaturesToolStripMenuItem"
+        Me.FeaturesToolStripMenuItem.Size = New System.Drawing.Size(81, 17)
+        Me.FeaturesToolStripMenuItem.Text = "Preferences"
+        '
+        'RenderModeToolStripMenuItem
+        '
+        Me.RenderModeToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ViewingMeshToolStripMenuItem1, Me.CollisionMeshToolStripMenuItem})
+        Me.RenderModeToolStripMenuItem.Name = "RenderModeToolStripMenuItem"
+        Me.RenderModeToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.R), System.Windows.Forms.Keys)
+        Me.RenderModeToolStripMenuItem.Size = New System.Drawing.Size(174, 22)
+        Me.RenderModeToolStripMenuItem.Text = "&Render"
+        '
+        'ViewingMeshToolStripMenuItem1
+        '
+        Me.ViewingMeshToolStripMenuItem1.Checked = True
+        Me.ViewingMeshToolStripMenuItem1.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.ViewingMeshToolStripMenuItem1.Name = "ViewingMeshToolStripMenuItem1"
+        Me.ViewingMeshToolStripMenuItem1.Size = New System.Drawing.Size(152, 22)
+        Me.ViewingMeshToolStripMenuItem1.Text = "Graphics Mesh"
+        '
+        'CollisionMeshToolStripMenuItem
+        '
+        Me.CollisionMeshToolStripMenuItem.Name = "CollisionMeshToolStripMenuItem"
+        Me.CollisionMeshToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.CollisionMeshToolStripMenuItem.Text = "Collision Mesh"
+        '
+        'PrimitiveTypeToolStripMenuItem
+        '
+        Me.PrimitiveTypeToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FilledToolStripMenuItem, Me.WireframeToolStripMenuItem})
+        Me.PrimitiveTypeToolStripMenuItem.Name = "PrimitiveTypeToolStripMenuItem"
+        Me.PrimitiveTypeToolStripMenuItem.ShortcutKeyDisplayString = "F1"
+        Me.PrimitiveTypeToolStripMenuItem.Size = New System.Drawing.Size(174, 22)
+        Me.PrimitiveTypeToolStripMenuItem.Text = "&Primitive Mode"
+        '
+        'FilledToolStripMenuItem
+        '
+        Me.FilledToolStripMenuItem.AutoSize = False
+        Me.FilledToolStripMenuItem.Image = CType(resources.GetObject("FilledToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.FilledToolStripMenuItem.Name = "FilledToolStripMenuItem"
+        Me.FilledToolStripMenuItem.Size = New System.Drawing.Size(152, 20)
+        Me.FilledToolStripMenuItem.Text = "&Filled"
+        '
+        'WireframeToolStripMenuItem
+        '
+        Me.WireframeToolStripMenuItem.AutoSize = False
+        Me.WireframeToolStripMenuItem.Image = CType(resources.GetObject("WireframeToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.WireframeToolStripMenuItem.Name = "WireframeToolStripMenuItem"
+        Me.WireframeToolStripMenuItem.Size = New System.Drawing.Size(152, 20)
+        Me.WireframeToolStripMenuItem.Text = "&Wireframe"
+        '
+        'ToolStripSeparator8
+        '
+        Me.ToolStripSeparator8.Name = "ToolStripSeparator8"
+        Me.ToolStripSeparator8.Size = New System.Drawing.Size(171, 6)
+        '
+        'MouseToolToolStripMenuItem
+        '
+        Me.MouseToolToolStripMenuItem.Name = "MouseToolToolStripMenuItem"
+        Me.MouseToolToolStripMenuItem.Size = New System.Drawing.Size(174, 22)
+        Me.MouseToolToolStripMenuItem.Text = "&Mouse Tool..."
+        '
+        'SetupToolStripMenuItem
+        '
+        Me.SetupToolStripMenuItem.Name = "SetupToolStripMenuItem"
+        Me.SetupToolStripMenuItem.ShortcutKeyDisplayString = ""
+        Me.SetupToolStripMenuItem.Size = New System.Drawing.Size(174, 22)
+        Me.SetupToolStripMenuItem.Text = "&Setup..."
+        '
+        'HelpToolStripMenuItem
+        '
+        Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ControlsInfoToolStripMenuItem, Me.ToolStripSeparator7, Me.AboutToolStripMenuItem, Me.SearchForUpdatesToolStripMenuItem})
+        Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
+        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(41, 17)
+        Me.HelpToolStripMenuItem.Text = "Help"
+        '
+        'ControlsInfoToolStripMenuItem
+        '
+        Me.ControlsInfoToolStripMenuItem.Name = "ControlsInfoToolStripMenuItem"
+        Me.ControlsInfoToolStripMenuItem.ShortcutKeyDisplayString = ""
+        Me.ControlsInfoToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.H), System.Windows.Forms.Keys)
+        Me.ControlsInfoToolStripMenuItem.Size = New System.Drawing.Size(227, 22)
+        Me.ControlsInfoToolStripMenuItem.Text = "&Controls"
+        '
+        'ToolStripSeparator7
+        '
+        Me.ToolStripSeparator7.Name = "ToolStripSeparator7"
+        Me.ToolStripSeparator7.Size = New System.Drawing.Size(224, 6)
+        '
+        'AboutToolStripMenuItem
+        '
+        Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
+        Me.AboutToolStripMenuItem.ShortcutKeyDisplayString = ""
+        Me.AboutToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Q), System.Windows.Forms.Keys)
+        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(227, 22)
+        Me.AboutToolStripMenuItem.Text = "A&bout Utility of Time"
+        '
+        'SearchForUpdatesToolStripMenuItem
+        '
+        Me.SearchForUpdatesToolStripMenuItem.Name = "SearchForUpdatesToolStripMenuItem"
+        Me.SearchForUpdatesToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.U), System.Windows.Forms.Keys)
+        Me.SearchForUpdatesToolStripMenuItem.Size = New System.Drawing.Size(227, 22)
+        Me.SearchForUpdatesToolStripMenuItem.Text = "Search for updates..."
+        '
+        'ActorInputTimer
+        '
+        Me.ActorInputTimer.Interval = 1
+        '
+        'CollisionTab
+        '
+        Me.CollisionTab.Controls.Add(Me.GroupBox1)
+        Me.CollisionTab.Controls.Add(Me.CollisionGroupBox)
+        Me.CollisionTab.Location = New System.Drawing.Point(4, 25)
+        Me.CollisionTab.Name = "CollisionTab"
+        Me.CollisionTab.Padding = New System.Windows.Forms.Padding(3)
+        Me.CollisionTab.Size = New System.Drawing.Size(224, 558)
+        Me.CollisionTab.TabIndex = 4
+        Me.CollisionTab.Text = "Collision"
+        Me.CollisionTab.UseVisualStyleBackColor = True
+        '
+        'GroupBox1
+        '
+        Me.GroupBox1.Controls.Add(Me.Button9)
+        Me.GroupBox1.Controls.Add(Me.TriTypeText)
+        Me.GroupBox1.Controls.Add(Me.Label48)
+        Me.GroupBox1.Controls.Add(Me.Label47)
+        Me.GroupBox1.Controls.Add(Me.ColTriangleBox)
+        Me.GroupBox1.Location = New System.Drawing.Point(3, 9)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(218, 112)
+        Me.GroupBox1.TabIndex = 93
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "Triangles"
+        '
+        'Button9
+        '
+        Me.Button9.Location = New System.Drawing.Point(155, 83)
+        Me.Button9.Name = "Button9"
+        Me.Button9.Size = New System.Drawing.Size(56, 23)
+        Me.Button9.TabIndex = 4
+        Me.Button9.Text = "Apply"
+        Me.Button9.UseVisualStyleBackColor = True
+        '
+        'TriTypeText
+        '
+        Me.TriTypeText.Location = New System.Drawing.Point(138, 46)
+        Me.TriTypeText.Name = "TriTypeText"
+        Me.TriTypeText.Size = New System.Drawing.Size(56, 20)
+        Me.TriTypeText.TabIndex = 3
+        '
+        'Label48
+        '
+        Me.Label48.AutoSize = True
+        Me.Label48.Location = New System.Drawing.Point(9, 25)
+        Me.Label48.Name = "Label48"
+        Me.Label48.Size = New System.Drawing.Size(36, 16)
+        Me.Label48.TabIndex = 2
+        Me.Label48.Text = "Index"
+        '
+        'Label47
+        '
+        Me.Label47.AutoSize = True
+        Me.Label47.Location = New System.Drawing.Point(135, 25)
+        Me.Label47.Name = "Label47"
+        Me.Label47.Size = New System.Drawing.Size(31, 16)
+        Me.Label47.TabIndex = 1
+        Me.Label47.Text = "Type"
+        '
+        'ColTriangleBox
+        '
+        Me.ColTriangleBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ColTriangleBox.FormattingEnabled = True
+        Me.ColTriangleBox.Location = New System.Drawing.Point(11, 44)
+        Me.ColTriangleBox.Name = "ColTriangleBox"
+        Me.ColTriangleBox.Size = New System.Drawing.Size(100, 24)
+        Me.ColTriangleBox.TabIndex = 0
+        '
+        'CollisionGroupBox
+        '
+        Me.CollisionGroupBox.Controls.Add(Me.Label36)
+        Me.CollisionGroupBox.Controls.Add(Me.ColWalkSound)
+        Me.CollisionGroupBox.Controls.Add(Me.Label38)
+        Me.CollisionGroupBox.Controls.Add(Me.Label37)
+        Me.CollisionGroupBox.Controls.Add(Me.Label35)
+        Me.CollisionGroupBox.Controls.Add(Me.Label33)
+        Me.CollisionGroupBox.Controls.Add(Me.Label32)
+        Me.CollisionGroupBox.Controls.Add(Me.Label23)
+        Me.CollisionGroupBox.Controls.Add(Me.Label13)
+        Me.CollisionGroupBox.Controls.Add(Me.Label1)
+        Me.CollisionGroupBox.Controls.Add(Me.ColVar4)
+        Me.CollisionGroupBox.Controls.Add(Me.ApplyCollisionButton)
+        Me.CollisionGroupBox.Controls.Add(Me.ColVar2)
+        Me.CollisionGroupBox.Controls.Add(Me.ColVar3)
+        Me.CollisionGroupBox.Controls.Add(Me.ColVar1)
+        Me.CollisionGroupBox.Controls.Add(Me.CollisionPresetButton)
+        Me.CollisionGroupBox.Controls.Add(Me.Label34)
+        Me.CollisionGroupBox.Controls.Add(Me.ColTypeText)
+        Me.CollisionGroupBox.Controls.Add(Me.ColTypeBox)
+        Me.CollisionGroupBox.Controls.Add(Me.Label31)
+        Me.CollisionGroupBox.Controls.Add(Me.ExitTextBox)
+        Me.CollisionGroupBox.Controls.Add(Me.ExitCombobox)
+        Me.CollisionGroupBox.Controls.Add(Me.Label10)
+        Me.CollisionGroupBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.CollisionGroupBox.Location = New System.Drawing.Point(3, 124)
+        Me.CollisionGroupBox.Name = "CollisionGroupBox"
+        Me.CollisionGroupBox.Size = New System.Drawing.Size(218, 342)
+        Me.CollisionGroupBox.TabIndex = 86
+        Me.CollisionGroupBox.TabStop = False
+        Me.CollisionGroupBox.Text = "Types"
+        '
+        'Label36
+        '
+        Me.Label36.AutoSize = True
+        Me.Label36.Location = New System.Drawing.Point(115, 135)
+        Me.Label36.Name = "Label36"
+        Me.Label36.Size = New System.Drawing.Size(20, 16)
+        Me.Label36.TabIndex = 107
+        Me.Label36.Text = "0x"
+        '
+        'ColWalkSound
+        '
+        Me.ColWalkSound.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
+        Me.ColWalkSound.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
+        Me.ColWalkSound.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.ColWalkSound.Location = New System.Drawing.Point(138, 128)
+        Me.ColWalkSound.MaxLength = 1
+        Me.ColWalkSound.Name = "ColWalkSound"
+        Me.ColWalkSound.Size = New System.Drawing.Size(55, 20)
+        Me.ColWalkSound.TabIndex = 105
+        '
+        'Label38
+        '
+        Me.Label38.AutoSize = True
+        Me.Label38.Location = New System.Drawing.Point(121, 109)
+        Me.Label38.Name = "Label38"
+        Me.Label38.Size = New System.Drawing.Size(90, 16)
+        Me.Label38.TabIndex = 106
+        Me.Label38.Text = "Walked on sound"
+        '
+        'Label37
+        '
+        Me.Label37.AutoSize = True
+        Me.Label37.Location = New System.Drawing.Point(9, 263)
+        Me.Label37.Name = "Label37"
+        Me.Label37.Size = New System.Drawing.Size(20, 16)
+        Me.Label37.TabIndex = 104
+        Me.Label37.Text = "0x"
+        '
+        'Label35
+        '
+        Me.Label35.AutoSize = True
+        Me.Label35.Location = New System.Drawing.Point(9, 221)
+        Me.Label35.Name = "Label35"
+        Me.Label35.Size = New System.Drawing.Size(20, 16)
+        Me.Label35.TabIndex = 103
+        Me.Label35.Text = "0x"
+        '
+        'Label33
+        '
+        Me.Label33.AutoSize = True
+        Me.Label33.Location = New System.Drawing.Point(9, 179)
+        Me.Label33.Name = "Label33"
+        Me.Label33.Size = New System.Drawing.Size(20, 16)
+        Me.Label33.TabIndex = 102
+        Me.Label33.Text = "0x"
+        '
+        'Label32
+        '
+        Me.Label32.AutoSize = True
+        Me.Label32.Location = New System.Drawing.Point(9, 135)
+        Me.Label32.Name = "Label32"
+        Me.Label32.Size = New System.Drawing.Size(20, 16)
+        Me.Label32.TabIndex = 101
+        Me.Label32.Text = "0x"
+        '
+        'Label23
+        '
+        Me.Label23.AutoSize = True
+        Me.Label23.Location = New System.Drawing.Point(27, 198)
+        Me.Label23.Name = "Label23"
+        Me.Label23.Size = New System.Drawing.Size(42, 16)
+        Me.Label23.TabIndex = 100
+        Me.Label23.Text = "Flags 3"
+        '
+        'Label13
+        '
+        Me.Label13.AutoSize = True
+        Me.Label13.Location = New System.Drawing.Point(27, 240)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(42, 16)
+        Me.Label13.TabIndex = 99
+        Me.Label13.Text = "Flags 4"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(26, 156)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(42, 16)
+        Me.Label1.TabIndex = 98
+        Me.Label1.Text = "Flags 2"
+        '
+        'ColVar4
+        '
+        Me.ColVar4.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
+        Me.ColVar4.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
+        Me.ColVar4.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.ColVar4.Location = New System.Drawing.Point(30, 256)
+        Me.ColVar4.MaxLength = 4
+        Me.ColVar4.Name = "ColVar4"
+        Me.ColVar4.Size = New System.Drawing.Size(55, 20)
+        Me.ColVar4.TabIndex = 17
+        '
+        'ApplyCollisionButton
+        '
+        Me.ApplyCollisionButton.BackColor = System.Drawing.SystemColors.Control
+        Me.ApplyCollisionButton.Location = New System.Drawing.Point(155, 313)
+        Me.ApplyCollisionButton.Name = "ApplyCollisionButton"
+        Me.ApplyCollisionButton.Size = New System.Drawing.Size(56, 23)
+        Me.ApplyCollisionButton.TabIndex = 18
+        Me.ApplyCollisionButton.Text = "Apply"
+        Me.ApplyCollisionButton.UseVisualStyleBackColor = True
+        '
+        'ColVar2
+        '
+        Me.ColVar2.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
+        Me.ColVar2.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
+        Me.ColVar2.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.ColVar2.Location = New System.Drawing.Point(29, 172)
+        Me.ColVar2.MaxLength = 4
+        Me.ColVar2.Name = "ColVar2"
+        Me.ColVar2.Size = New System.Drawing.Size(56, 20)
+        Me.ColVar2.TabIndex = 16
+        '
+        'ColVar3
+        '
+        Me.ColVar3.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
+        Me.ColVar3.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
+        Me.ColVar3.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.ColVar3.Location = New System.Drawing.Point(30, 214)
+        Me.ColVar3.MaxLength = 4
+        Me.ColVar3.Name = "ColVar3"
+        Me.ColVar3.Size = New System.Drawing.Size(55, 20)
+        Me.ColVar3.TabIndex = 15
+        '
+        'ColVar1
+        '
+        Me.ColVar1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.ColVar1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
+        Me.ColVar1.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.ColVar1.Location = New System.Drawing.Point(30, 128)
+        Me.ColVar1.MaxLength = 4
+        Me.ColVar1.Name = "ColVar1"
+        Me.ColVar1.Size = New System.Drawing.Size(55, 20)
+        Me.ColVar1.TabIndex = 14
+        '
+        'CollisionPresetButton
+        '
+        Me.CollisionPresetButton.BackColor = System.Drawing.SystemColors.Control
+        Me.CollisionPresetButton.Location = New System.Drawing.Point(13, 297)
+        Me.CollisionPresetButton.Name = "CollisionPresetButton"
+        Me.CollisionPresetButton.Size = New System.Drawing.Size(101, 23)
+        Me.CollisionPresetButton.TabIndex = 13
+        Me.CollisionPresetButton.Text = "Preset Database"
+        Me.CollisionPresetButton.UseVisualStyleBackColor = False
+        '
+        'Label34
+        '
+        Me.Label34.AutoSize = True
+        Me.Label34.Location = New System.Drawing.Point(27, 112)
+        Me.Label34.Name = "Label34"
+        Me.Label34.Size = New System.Drawing.Size(42, 16)
+        Me.Label34.TabIndex = 97
+        Me.Label34.Text = "Flags 1"
+        '
+        'ColTypeText
+        '
+        Me.ColTypeText.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.ColTypeText.Location = New System.Drawing.Point(138, 78)
+        Me.ColTypeText.MaxLength = 4
+        Me.ColTypeText.Name = "ColTypeText"
+        Me.ColTypeText.ReadOnly = True
+        Me.ColTypeText.Size = New System.Drawing.Size(55, 20)
+        Me.ColTypeText.TabIndex = 91
+        '
+        'ColTypeBox
+        '
+        Me.ColTypeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ColTypeBox.FormattingEnabled = True
+        Me.ColTypeBox.Location = New System.Drawing.Point(11, 78)
+        Me.ColTypeBox.Name = "ColTypeBox"
+        Me.ColTypeBox.Size = New System.Drawing.Size(102, 24)
+        Me.ColTypeBox.TabIndex = 12
+        '
+        'Label31
+        '
+        Me.Label31.AutoSize = True
+        Me.Label31.Location = New System.Drawing.Point(8, 62)
+        Me.Label31.Name = "Label31"
+        Me.Label31.Size = New System.Drawing.Size(53, 16)
+        Me.Label31.TabIndex = 87
+        Me.Label31.Text = "Variables"
+        '
+        'ExitTextBox
+        '
+        Me.ExitTextBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.ExitTextBox.Location = New System.Drawing.Point(138, 38)
+        Me.ExitTextBox.MaxLength = 4
+        Me.ExitTextBox.Name = "ExitTextBox"
+        Me.ExitTextBox.Size = New System.Drawing.Size(55, 20)
+        Me.ExitTextBox.TabIndex = 11
+        '
+        'ExitCombobox
+        '
+        Me.ExitCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ExitCombobox.FormattingEnabled = True
+        Me.ExitCombobox.Location = New System.Drawing.Point(11, 38)
+        Me.ExitCombobox.Name = "ExitCombobox"
+        Me.ExitCombobox.Size = New System.Drawing.Size(102, 24)
+        Me.ExitCombobox.TabIndex = 10
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Location = New System.Drawing.Point(8, 20)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(33, 16)
+        Me.Label10.TabIndex = 83
+        Me.Label10.Text = "Exits"
+        '
+        'MiscTab
+        '
+        Me.MiscTab.Controls.Add(Me.GroupBox9)
+        Me.MiscTab.Controls.Add(Me.Label45)
+        Me.MiscTab.Controls.Add(Me.AnimStart)
+        Me.MiscTab.Controls.Add(Me.Label30)
+        Me.MiscTab.Controls.Add(Me.LimbStart)
+        Me.MiscTab.Controls.Add(Me.GroupBox10)
+        Me.MiscTab.Controls.Add(Me.GroupBox8)
+        Me.MiscTab.Location = New System.Drawing.Point(4, 46)
+        Me.MiscTab.Name = "MiscTab"
+        Me.MiscTab.Size = New System.Drawing.Size(224, 537)
+        Me.MiscTab.TabIndex = 3
+        Me.MiscTab.Text = "Miscellaneous"
+        Me.MiscTab.UseVisualStyleBackColor = True
+        '
+        'GroupBox9
+        '
+        Me.GroupBox9.Controls.Add(Me.ProgressBar1)
+        Me.GroupBox9.Controls.Add(Me.Label28)
+        Me.GroupBox9.Controls.Add(Me.Button16)
+        Me.GroupBox9.Controls.Add(Me.Button15)
+        Me.GroupBox9.Location = New System.Drawing.Point(28, 120)
+        Me.GroupBox9.Name = "GroupBox9"
+        Me.GroupBox9.Size = New System.Drawing.Size(173, 100)
+        Me.GroupBox9.TabIndex = 97
+        Me.GroupBox9.TabStop = False
+        Me.GroupBox9.Text = "Collision Matcher"
+        '
+        'ProgressBar1
+        '
+        Me.ProgressBar1.Location = New System.Drawing.Point(12, 77)
+        Me.ProgressBar1.Name = "ProgressBar1"
+        Me.ProgressBar1.Size = New System.Drawing.Size(150, 10)
+        Me.ProgressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous
+        Me.ProgressBar1.TabIndex = 92
+        '
+        'Label28
+        '
+        Me.Label28.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label28.AutoSize = True
+        Me.Label28.BackColor = System.Drawing.SystemColors.Control
+        Me.Label28.Location = New System.Drawing.Point(119, 0)
+        Me.Label28.Name = "Label28"
+        Me.Label28.Size = New System.Drawing.Size(49, 16)
+        Me.Label28.TabIndex = 89
+        Me.Label28.Text = "Working"
+        Me.Label28.Visible = False
+        '
+        'Button16
+        '
+        Me.Button16.Location = New System.Drawing.Point(12, 23)
+        Me.Button16.Name = "Button16"
+        Me.Button16.Size = New System.Drawing.Size(150, 23)
+        Me.Button16.TabIndex = 91
+        Me.Button16.Text = "Match collision to graphics"
+        Me.Button16.UseVisualStyleBackColor = True
+        '
+        'Button15
+        '
+        Me.Button15.Location = New System.Drawing.Point(12, 46)
+        Me.Button15.Name = "Button15"
+        Me.Button15.Size = New System.Drawing.Size(150, 23)
+        Me.Button15.TabIndex = 90
+        Me.Button15.Text = "Match graphics to collision"
+        Me.Button15.UseVisualStyleBackColor = True
+        '
+        'Label45
+        '
+        Me.Label45.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Label45.AutoSize = True
+        Me.Label45.Location = New System.Drawing.Point(12, 421)
+        Me.Label45.Name = "Label45"
+        Me.Label45.Size = New System.Drawing.Size(71, 16)
+        Me.Label45.TabIndex = 94
+        Me.Label45.Text = "Animation at"
+        Me.Label45.Visible = False
+        '
+        'AnimStart
+        '
+        Me.AnimStart.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.AnimStart.Location = New System.Drawing.Point(14, 438)
+        Me.AnimStart.Name = "AnimStart"
+        Me.AnimStart.Size = New System.Drawing.Size(100, 20)
+        Me.AnimStart.TabIndex = 93
+        Me.AnimStart.Visible = False
+        '
+        'Label30
+        '
+        Me.Label30.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Label30.AutoSize = True
+        Me.Label30.Location = New System.Drawing.Point(12, 379)
+        Me.Label30.Name = "Label30"
+        Me.Label30.Size = New System.Drawing.Size(72, 16)
+        Me.Label30.TabIndex = 92
+        Me.Label30.Text = "Heirarchy at"
+        Me.Label30.Visible = False
+        '
+        'LimbStart
+        '
+        Me.LimbStart.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.LimbStart.Location = New System.Drawing.Point(13, 398)
+        Me.LimbStart.Name = "LimbStart"
+        Me.LimbStart.Size = New System.Drawing.Size(100, 20)
+        Me.LimbStart.TabIndex = 91
+        Me.LimbStart.Visible = False
+        '
+        'GroupBox10
+        '
+        Me.GroupBox10.Controls.Add(Me.CheckBox5)
+        Me.GroupBox10.Controls.Add(Me.CheckBox15)
+        Me.GroupBox10.Controls.Add(Me.CheckBox14)
+        Me.GroupBox10.Controls.Add(Me.CheckBox13)
+        Me.GroupBox10.Location = New System.Drawing.Point(28, 9)
+        Me.GroupBox10.Name = "GroupBox10"
+        Me.GroupBox10.Size = New System.Drawing.Size(173, 105)
+        Me.GroupBox10.TabIndex = 90
+        Me.GroupBox10.TabStop = False
+        Me.GroupBox10.Text = "Hide"
+        '
+        'CheckBox5
+        '
+        Me.CheckBox5.AutoSize = True
+        Me.CheckBox5.Location = New System.Drawing.Point(12, 59)
+        Me.CheckBox5.Name = "CheckBox5"
+        Me.CheckBox5.Size = New System.Drawing.Size(111, 20)
+        Me.CheckBox5.TabIndex = 3
+        Me.CheckBox5.Text = "Link actor cubes"
+        Me.CheckBox5.UseVisualStyleBackColor = True
+        '
+        'CheckBox15
+        '
+        Me.CheckBox15.AutoSize = True
+        Me.CheckBox15.Location = New System.Drawing.Point(12, 77)
+        Me.CheckBox15.Name = "CheckBox15"
+        Me.CheckBox15.Size = New System.Drawing.Size(82, 20)
+        Me.CheckBox15.TabIndex = 2
+        Me.CheckBox15.Text = "Axis guides"
+        Me.CheckBox15.UseVisualStyleBackColor = True
+        '
+        'CheckBox14
+        '
+        Me.CheckBox14.AutoSize = True
+        Me.CheckBox14.Location = New System.Drawing.Point(12, 40)
+        Me.CheckBox14.Name = "CheckBox14"
+        Me.CheckBox14.Size = New System.Drawing.Size(119, 20)
+        Me.CheckBox14.TabIndex = 1
+        Me.CheckBox14.Text = "Scene actor cubes"
+        Me.CheckBox14.UseVisualStyleBackColor = True
+        '
+        'CheckBox13
+        '
+        Me.CheckBox13.AutoSize = True
+        Me.CheckBox13.Location = New System.Drawing.Point(12, 22)
+        Me.CheckBox13.Name = "CheckBox13"
+        Me.CheckBox13.Size = New System.Drawing.Size(116, 20)
+        Me.CheckBox13.TabIndex = 0
+        Me.CheckBox13.Text = "Room actor cubes"
+        Me.CheckBox13.UseVisualStyleBackColor = True
+        '
+        'GroupBox8
+        '
+        Me.GroupBox8.Controls.Add(Me.MapsCombobox)
+        Me.GroupBox8.Controls.Add(Me.Label46)
+        Me.GroupBox8.Location = New System.Drawing.Point(28, 227)
+        Me.GroupBox8.Name = "GroupBox8"
+        Me.GroupBox8.Size = New System.Drawing.Size(173, 85)
+        Me.GroupBox8.TabIndex = 98
+        Me.GroupBox8.TabStop = False
+        Me.GroupBox8.Text = "Individual level"
+        '
+        'MapsCombobox
+        '
+        Me.MapsCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.MapsCombobox.FormattingEnabled = True
+        Me.MapsCombobox.Location = New System.Drawing.Point(12, 43)
+        Me.MapsCombobox.Name = "MapsCombobox"
+        Me.MapsCombobox.Size = New System.Drawing.Size(150, 24)
+        Me.MapsCombobox.TabIndex = 95
+        '
+        'Label46
+        '
+        Me.Label46.AutoSize = True
+        Me.Label46.Location = New System.Drawing.Point(9, 24)
+        Me.Label46.Name = "Label46"
+        Me.Label46.Size = New System.Drawing.Size(93, 16)
+        Me.Label46.TabIndex = 96
+        Me.Label46.Text = "Referenced maps"
+        '
+        'LevelFlagsTab
+        '
+        Me.LevelFlagsTab.BackColor = System.Drawing.Color.Transparent
+        Me.LevelFlagsTab.Controls.Add(Me.GroupBox6)
+        Me.LevelFlagsTab.Location = New System.Drawing.Point(4, 25)
+        Me.LevelFlagsTab.Name = "LevelFlagsTab"
+        Me.LevelFlagsTab.Size = New System.Drawing.Size(224, 558)
+        Me.LevelFlagsTab.TabIndex = 2
+        Me.LevelFlagsTab.Text = "Level Flags"
+        Me.LevelFlagsTab.UseVisualStyleBackColor = True
+        '
+        'GroupBox6
+        '
+        Me.GroupBox6.Controls.Add(Me.ComboBox6)
+        Me.GroupBox6.Controls.Add(Me.Label2)
+        Me.GroupBox6.Controls.Add(Me.Button11)
+        Me.GroupBox6.Controls.Add(Me.TextBox13)
+        Me.GroupBox6.Controls.Add(Me.Label21)
+        Me.GroupBox6.Location = New System.Drawing.Point(3, 9)
+        Me.GroupBox6.Name = "GroupBox6"
+        Me.GroupBox6.Size = New System.Drawing.Size(218, 74)
+        Me.GroupBox6.TabIndex = 77
+        Me.GroupBox6.TabStop = False
+        Me.GroupBox6.Text = "Ambience"
+        '
+        'ComboBox6
+        '
+        Me.ComboBox6.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBox6.FormattingEnabled = True
+        Me.ComboBox6.Items.AddRange(New Object() {"No Change", "Morning", "Mid Day", "Night"})
+        Me.ComboBox6.Location = New System.Drawing.Point(10, 36)
+        Me.ComboBox6.Name = "ComboBox6"
+        Me.ComboBox6.Size = New System.Drawing.Size(82, 24)
+        Me.ComboBox6.TabIndex = 7
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(7, 20)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(69, 16)
+        Me.Label2.TabIndex = 65
+        Me.Label2.Text = "Time of day:"
+        '
+        'Button11
+        '
+        Me.Button11.BackColor = System.Drawing.SystemColors.Control
+        Me.Button11.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.Button11.Location = New System.Drawing.Point(137, 37)
+        Me.Button11.Name = "Button11"
+        Me.Button11.Size = New System.Drawing.Size(23, 23)
+        Me.Button11.TabIndex = 9
+        Me.Button11.Text = "?"
+        Me.Button11.UseVisualStyleBackColor = True
+        '
+        'TextBox13
+        '
+        Me.TextBox13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.TextBox13.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.TextBox13.Location = New System.Drawing.Point(96, 38)
+        Me.TextBox13.MaxLength = 2
+        Me.TextBox13.Name = "TextBox13"
+        Me.TextBox13.Size = New System.Drawing.Size(35, 20)
+        Me.TextBox13.TabIndex = 8
+        '
+        'Label21
+        '
+        Me.Label21.AutoSize = True
+        Me.Label21.Location = New System.Drawing.Point(93, 21)
+        Me.Label21.Name = "Label21"
+        Me.Label21.Size = New System.Drawing.Size(40, 16)
+        Me.Label21.TabIndex = 74
+        Me.Label21.Text = "Music:"
+        '
+        'ActorsTab
+        '
+        Me.ActorsTab.BackColor = System.Drawing.Color.Transparent
+        Me.ActorsTab.Controls.Add(Me.Button2)
+        Me.ActorsTab.Controls.Add(Me.GroupBox4)
+        Me.ActorsTab.Controls.Add(Me.GroupBox5)
+        Me.ActorsTab.Location = New System.Drawing.Point(4, 46)
+        Me.ActorsTab.Name = "ActorsTab"
+        Me.ActorsTab.Padding = New System.Windows.Forms.Padding(3)
+        Me.ActorsTab.Size = New System.Drawing.Size(224, 537)
+        Me.ActorsTab.TabIndex = 1
+        Me.ActorsTab.Text = "Actors"
+        Me.ActorsTab.UseVisualStyleBackColor = True
+        '
+        'Button2
+        '
+        Me.Button2.BackColor = System.Drawing.SystemColors.Control
+        Me.Button2.Location = New System.Drawing.Point(129, 378)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(85, 23)
+        Me.Button2.TabIndex = 14
+        Me.Button2.Text = "Apply"
+        Me.Button2.UseVisualStyleBackColor = True
+        '
+        'GroupBox4
+        '
+        Me.GroupBox4.Controls.Add(Me.Label14)
+        Me.GroupBox4.Controls.Add(Me.Label17)
+        Me.GroupBox4.Controls.Add(Me.TextBox9)
+        Me.GroupBox4.Controls.Add(Me.Label18)
+        Me.GroupBox4.Controls.Add(Me.TextBox8)
+        Me.GroupBox4.Controls.Add(Me.Label19)
+        Me.GroupBox4.Controls.Add(Me.TextBox7)
+        Me.GroupBox4.Controls.Add(Me.TextBox10)
+        Me.GroupBox4.Controls.Add(Me.Label16)
+        Me.GroupBox4.Controls.Add(Me.TextBox11)
+        Me.GroupBox4.Controls.Add(Me.Label15)
+        Me.GroupBox4.Controls.Add(Me.TextBox12)
+        Me.GroupBox4.Location = New System.Drawing.Point(3, 230)
+        Me.GroupBox4.Name = "GroupBox4"
+        Me.GroupBox4.Size = New System.Drawing.Size(218, 142)
+        Me.GroupBox4.TabIndex = 72
+        Me.GroupBox4.TabStop = False
+        Me.GroupBox4.Text = "Position"
+        '
+        'Label14
+        '
+        Me.Label14.AutoSize = True
+        Me.Label14.Location = New System.Drawing.Point(20, 19)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(69, 16)
+        Me.Label14.TabIndex = 59
+        Me.Label14.Text = "Actor X Pos."
+        '
+        'Label17
+        '
+        Me.Label17.AutoSize = True
+        Me.Label17.Location = New System.Drawing.Point(112, 19)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(70, 16)
+        Me.Label17.TabIndex = 66
+        Me.Label17.Text = "Actor X Rot."
+        '
+        'TextBox9
+        '
+        Me.TextBox9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.TextBox9.Location = New System.Drawing.Point(23, 113)
+        Me.TextBox9.Name = "TextBox9"
+        Me.TextBox9.Size = New System.Drawing.Size(84, 20)
+        Me.TextBox9.TabIndex = 10
+        '
+        'Label18
+        '
+        Me.Label18.AutoSize = True
+        Me.Label18.Location = New System.Drawing.Point(112, 58)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(70, 16)
+        Me.Label18.TabIndex = 67
+        Me.Label18.Text = "Actor Y Rot."
+        '
+        'TextBox8
+        '
+        Me.TextBox8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.TextBox8.Location = New System.Drawing.Point(23, 74)
+        Me.TextBox8.Name = "TextBox8"
+        Me.TextBox8.Size = New System.Drawing.Size(84, 20)
+        Me.TextBox8.TabIndex = 9
+        '
+        'Label19
+        '
+        Me.Label19.AutoSize = True
+        Me.Label19.Location = New System.Drawing.Point(112, 97)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(69, 16)
+        Me.Label19.TabIndex = 68
+        Me.Label19.Text = "Actor Z Rot."
+        '
+        'TextBox7
+        '
+        Me.TextBox7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.TextBox7.Location = New System.Drawing.Point(23, 35)
+        Me.TextBox7.Name = "TextBox7"
+        Me.TextBox7.Size = New System.Drawing.Size(84, 20)
+        Me.TextBox7.TabIndex = 8
+        '
+        'TextBox10
+        '
+        Me.TextBox10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.TextBox10.Location = New System.Drawing.Point(115, 35)
+        Me.TextBox10.Name = "TextBox10"
+        Me.TextBox10.Size = New System.Drawing.Size(83, 20)
+        Me.TextBox10.TabIndex = 11
+        '
+        'Label16
+        '
+        Me.Label16.AutoSize = True
+        Me.Label16.Location = New System.Drawing.Point(20, 97)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(68, 16)
+        Me.Label16.TabIndex = 61
+        Me.Label16.Text = "Actor Z Pos."
+        '
+        'TextBox11
+        '
+        Me.TextBox11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.TextBox11.Location = New System.Drawing.Point(115, 74)
+        Me.TextBox11.Name = "TextBox11"
+        Me.TextBox11.Size = New System.Drawing.Size(83, 20)
+        Me.TextBox11.TabIndex = 12
+        '
+        'Label15
+        '
+        Me.Label15.AutoSize = True
+        Me.Label15.Location = New System.Drawing.Point(20, 58)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(69, 16)
+        Me.Label15.TabIndex = 60
+        Me.Label15.Text = "Actor Y Pos."
+        '
+        'TextBox12
+        '
+        Me.TextBox12.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.TextBox12.Location = New System.Drawing.Point(115, 113)
+        Me.TextBox12.Name = "TextBox12"
+        Me.TextBox12.Size = New System.Drawing.Size(83, 20)
+        Me.TextBox12.TabIndex = 13
+        '
+        'GroupBox5
+        '
+        Me.GroupBox5.Controls.Add(Me.Button6)
+        Me.GroupBox5.Controls.Add(Me.SceneActorCombobox)
+        Me.GroupBox5.Controls.Add(Me.ActorNumberText)
+        Me.GroupBox5.Controls.Add(Me.Label7)
+        Me.GroupBox5.Controls.Add(Me.ActorVarText)
+        Me.GroupBox5.Controls.Add(Me.Label8)
+        Me.GroupBox5.Controls.Add(Me.Label6)
+        Me.GroupBox5.Controls.Add(Me.ActorGroupText)
+        Me.GroupBox5.Controls.Add(Me.Label22)
+        Me.GroupBox5.Controls.Add(Me.RoomActorCombobox)
+        Me.GroupBox5.Controls.Add(Me.Label24)
+        Me.GroupBox5.Location = New System.Drawing.Point(3, 9)
+        Me.GroupBox5.Name = "GroupBox5"
+        Me.GroupBox5.Size = New System.Drawing.Size(218, 215)
+        Me.GroupBox5.TabIndex = 73
+        Me.GroupBox5.TabStop = False
+        Me.GroupBox5.Text = "Actors"
+        '
+        'Button6
+        '
+        Me.Button6.BackColor = System.Drawing.SystemColors.Control
+        Me.Button6.Location = New System.Drawing.Point(123, 178)
+        Me.Button6.Name = "Button6"
+        Me.Button6.Size = New System.Drawing.Size(75, 23)
+        Me.Button6.TabIndex = 54
+        Me.Button6.Text = "Database"
+        Me.Button6.UseVisualStyleBackColor = False
+        '
+        'SceneActorCombobox
+        '
+        Me.SceneActorCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.SceneActorCombobox.FormattingEnabled = True
+        Me.SceneActorCombobox.Location = New System.Drawing.Point(19, 79)
+        Me.SceneActorCombobox.Name = "SceneActorCombobox"
+        Me.SceneActorCombobox.Size = New System.Drawing.Size(180, 24)
+        Me.SceneActorCombobox.TabIndex = 1
+        '
+        'ActorNumberText
+        '
+        Me.ActorNumberText.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.ActorNumberText.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.ActorNumberText.Location = New System.Drawing.Point(20, 128)
+        Me.ActorNumberText.MaxLength = 4
+        Me.ActorNumberText.Name = "ActorNumberText"
+        Me.ActorNumberText.Size = New System.Drawing.Size(83, 20)
+        Me.ActorNumberText.TabIndex = 2
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Location = New System.Drawing.Point(17, 160)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(86, 16)
+        Me.Label7.TabIndex = 39
+        Me.Label7.Text = "Models (groups)"
+        '
+        'ActorVarText
+        '
+        Me.ActorVarText.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.ActorVarText.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.ActorVarText.Location = New System.Drawing.Point(113, 128)
+        Me.ActorVarText.MaxLength = 4
+        Me.ActorVarText.Name = "ActorVarText"
+        Me.ActorVarText.Size = New System.Drawing.Size(85, 20)
+        Me.ActorVarText.TabIndex = 3
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(17, 110)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(46, 16)
+        Me.Label8.TabIndex = 33
+        Me.Label8.Text = "Number"
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(111, 111)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(48, 16)
+        Me.Label6.TabIndex = 34
+        Me.Label6.Text = "Variable"
+        '
+        'ActorGroupText
+        '
+        Me.ActorGroupText.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.ActorGroupText.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.ActorGroupText.Location = New System.Drawing.Point(20, 179)
+        Me.ActorGroupText.MaxLength = 4
+        Me.ActorGroupText.Name = "ActorGroupText"
+        Me.ActorGroupText.Size = New System.Drawing.Size(83, 20)
+        Me.ActorGroupText.TabIndex = 5
+        Me.ActorGroupText.Text = "0001"
+        '
+        'Label22
+        '
+        Me.Label22.AutoSize = True
+        Me.Label22.Location = New System.Drawing.Point(16, 18)
+        Me.Label22.Name = "Label22"
+        Me.Label22.Size = New System.Drawing.Size(69, 16)
+        Me.Label22.TabIndex = 52
+        Me.Label22.Text = "Room Actors"
+        '
+        'RoomActorCombobox
+        '
+        Me.RoomActorCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.RoomActorCombobox.FormattingEnabled = True
+        Me.RoomActorCombobox.Location = New System.Drawing.Point(19, 34)
+        Me.RoomActorCombobox.Name = "RoomActorCombobox"
+        Me.RoomActorCombobox.Size = New System.Drawing.Size(180, 24)
+        Me.RoomActorCombobox.TabIndex = 0
+        '
+        'Label24
+        '
+        Me.Label24.AutoSize = True
+        Me.Label24.Location = New System.Drawing.Point(17, 62)
+        Me.Label24.Name = "Label24"
+        Me.Label24.Size = New System.Drawing.Size(72, 16)
+        Me.Label24.TabIndex = 53
+        Me.Label24.Text = "Scene Actors"
+        '
+        'EditingTabs
+        '
+        Me.EditingTabs.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-    Me.EditingTabs.Controls.Add(Me.ActorsTab)
-    Me.EditingTabs.Controls.Add(Me.LevelFlagsTab)
-    Me.EditingTabs.Controls.Add(Me.CollisionTab)
-    Me.EditingTabs.Controls.Add(Me.MiscTab)
-    Me.EditingTabs.Controls.Add(Me.AnimationsTab)
-    Me.EditingTabs.Controls.Add(Me.DLTab)
-    Me.EditingTabs.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-    Me.EditingTabs.HotTrack = True
-    Me.EditingTabs.Location = New System.Drawing.Point(930, 33)
-    Me.EditingTabs.Multiline = True
-    Me.EditingTabs.Name = "EditingTabs"
-    Me.EditingTabs.SelectedIndex = 0
-    Me.EditingTabs.Size = New System.Drawing.Size(232, 587)
-    Me.EditingTabs.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight
-    Me.EditingTabs.TabIndex = 3
-    '
-    'AnimationsTab
-    '
-    Me.AnimationsTab.Controls.Add(Me.SplitContainer1)
-    Me.AnimationsTab.Location = New System.Drawing.Point(4, 46)
-    Me.AnimationsTab.Name = "AnimationsTab"
-    Me.AnimationsTab.Size = New System.Drawing.Size(224, 537)
-    Me.AnimationsTab.TabIndex = 7
-    Me.AnimationsTab.Text = "Animations"
-    Me.AnimationsTab.UseVisualStyleBackColor = True
-    '
-    'SplitContainer1
-    '
-    Me.SplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill
-    Me.SplitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2
-    Me.SplitContainer1.IsSplitterFixed = True
-    Me.SplitContainer1.Location = New System.Drawing.Point(0, 0)
-    Me.SplitContainer1.Name = "SplitContainer1"
-    Me.SplitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal
-    '
-    'SplitContainer1.Panel1
-    '
-    Me.SplitContainer1.Panel1.Controls.Add(Me.AnimationSetGroup)
-    '
-    'SplitContainer1.Panel2
-    '
-    Me.SplitContainer1.Panel2.Controls.Add(Me.AnimationPlaybackPanel)
-    Me.SplitContainer1.Size = New System.Drawing.Size(224, 537)
-    Me.SplitContainer1.SplitterDistance = 363
-    Me.SplitContainer1.TabIndex = 15
-    '
-    'AnimationSetGroup
-    '
-    Me.AnimationSetGroup.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-    Me.AnimationSetGroup.Controls.Add(Me.Label20)
-    Me.AnimationSetGroup.Controls.Add(Me.CheckBox2)
-    Me.AnimationSetGroup.Controls.Add(Me.AnimationList)
-    Me.AnimationSetGroup.Controls.Add(Me.animationbank)
-    Me.AnimationSetGroup.Dock = System.Windows.Forms.DockStyle.Fill
-    Me.AnimationSetGroup.Location = New System.Drawing.Point(0, 0)
-    Me.AnimationSetGroup.Name = "AnimationSetGroup"
-    Me.AnimationSetGroup.Size = New System.Drawing.Size(224, 363)
-    Me.AnimationSetGroup.TabIndex = 13
-    Me.AnimationSetGroup.TabStop = False
-    Me.AnimationSetGroup.Text = "Animation Sets"
-    '
-    'Label20
-    '
-    Me.Label20.AutoSize = True
-    Me.Label20.Location = New System.Drawing.Point(3, 20)
-    Me.Label20.Name = "Label20"
-    Me.Label20.Size = New System.Drawing.Size(32, 16)
-    Me.Label20.TabIndex = 10
-    Me.Label20.Text = "Bank"
-    '
-    'CheckBox2
-    '
-    Me.CheckBox2.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.CheckBox2.AutoSize = True
-    Me.CheckBox2.Location = New System.Drawing.Point(6, 337)
-    Me.CheckBox2.Name = "CheckBox2"
-    Me.CheckBox2.Size = New System.Drawing.Size(56, 20)
-    Me.CheckBox2.TabIndex = 4
-    Me.CheckBox2.Text = "Bones"
-    Me.CheckBox2.UseVisualStyleBackColor = True
-    '
-    'AnimationList
-    '
-    Me.AnimationList.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.EditingTabs.Controls.Add(Me.ActorsTab)
+        Me.EditingTabs.Controls.Add(Me.LevelFlagsTab)
+        Me.EditingTabs.Controls.Add(Me.CollisionTab)
+        Me.EditingTabs.Controls.Add(Me.MiscTab)
+        Me.EditingTabs.Controls.Add(Me.AnimationsTab)
+        Me.EditingTabs.Controls.Add(Me.DLTab)
+        Me.EditingTabs.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.EditingTabs.HotTrack = True
+        Me.EditingTabs.Location = New System.Drawing.Point(930, 33)
+        Me.EditingTabs.Multiline = True
+        Me.EditingTabs.Name = "EditingTabs"
+        Me.EditingTabs.SelectedIndex = 0
+        Me.EditingTabs.Size = New System.Drawing.Size(232, 587)
+        Me.EditingTabs.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight
+        Me.EditingTabs.TabIndex = 3
+        '
+        'AnimationsTab
+        '
+        Me.AnimationsTab.Controls.Add(Me.SplitContainer1)
+        Me.AnimationsTab.Location = New System.Drawing.Point(4, 46)
+        Me.AnimationsTab.Name = "AnimationsTab"
+        Me.AnimationsTab.Size = New System.Drawing.Size(224, 537)
+        Me.AnimationsTab.TabIndex = 7
+        Me.AnimationsTab.Text = "Animations"
+        Me.AnimationsTab.UseVisualStyleBackColor = True
+        '
+        'SplitContainer1
+        '
+        Me.SplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SplitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2
+        Me.SplitContainer1.IsSplitterFixed = True
+        Me.SplitContainer1.Location = New System.Drawing.Point(0, 0)
+        Me.SplitContainer1.Name = "SplitContainer1"
+        Me.SplitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal
+        '
+        'SplitContainer1.Panel1
+        '
+        Me.SplitContainer1.Panel1.Controls.Add(Me.AnimationSetGroup)
+        '
+        'SplitContainer1.Panel2
+        '
+        Me.SplitContainer1.Panel2.Controls.Add(Me.AnimationPlaybackPanel)
+        Me.SplitContainer1.Panel2MinSize = 147
+        Me.SplitContainer1.Size = New System.Drawing.Size(224, 537)
+        Me.SplitContainer1.SplitterDistance = 390
+        Me.SplitContainer1.TabIndex = 15
+        '
+        'AnimationSetGroup
+        '
+        Me.AnimationSetGroup.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.AnimationSetGroup.Controls.Add(Me.Label20)
+        Me.AnimationSetGroup.Controls.Add(Me.CheckBox2)
+        Me.AnimationSetGroup.Controls.Add(Me.AnimationList)
+        Me.AnimationSetGroup.Controls.Add(Me.animationbank)
+        Me.AnimationSetGroup.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.AnimationSetGroup.Location = New System.Drawing.Point(0, 0)
+        Me.AnimationSetGroup.Name = "AnimationSetGroup"
+        Me.AnimationSetGroup.Size = New System.Drawing.Size(224, 390)
+        Me.AnimationSetGroup.TabIndex = 13
+        Me.AnimationSetGroup.TabStop = False
+        Me.AnimationSetGroup.Text = "Animation Sets"
+        '
+        'Label20
+        '
+        Me.Label20.AutoSize = True
+        Me.Label20.Location = New System.Drawing.Point(3, 20)
+        Me.Label20.Name = "Label20"
+        Me.Label20.Size = New System.Drawing.Size(32, 16)
+        Me.Label20.TabIndex = 10
+        Me.Label20.Text = "Bank"
+        '
+        'CheckBox2
+        '
+        Me.CheckBox2.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.CheckBox2.AutoSize = True
+        Me.CheckBox2.Location = New System.Drawing.Point(6, 364)
+        Me.CheckBox2.Name = "CheckBox2"
+        Me.CheckBox2.Size = New System.Drawing.Size(56, 20)
+        Me.CheckBox2.TabIndex = 4
+        Me.CheckBox2.Text = "Bones"
+        Me.CheckBox2.UseVisualStyleBackColor = True
+        '
+        'AnimationList
+        '
+        Me.AnimationList.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-    Me.AnimationList.FormattingEnabled = True
-    Me.AnimationList.ItemHeight = 16
-    Me.AnimationList.Location = New System.Drawing.Point(6, 42)
-    Me.AnimationList.Name = "AnimationList"
-    Me.AnimationList.Size = New System.Drawing.Size(212, 292)
-    Me.AnimationList.TabIndex = 0
-    '
-    'animationbank
-    '
-    Me.animationbank.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-    Me.animationbank.FormattingEnabled = True
-    Me.animationbank.Items.AddRange(New Object() {"Inline with object"})
-    Me.animationbank.Location = New System.Drawing.Point(46, 16)
-    Me.animationbank.Name = "animationbank"
-    Me.animationbank.Size = New System.Drawing.Size(171, 24)
-    Me.animationbank.TabIndex = 9
-    '
-    'AnimationPlaybackPanel
-    '
-    Me.AnimationPlaybackPanel.Dock = System.Windows.Forms.DockStyle.Fill
-    Me.AnimationPlaybackPanel.Frame = 0R
-    Me.AnimationPlaybackPanel.FrameRate = 20
-    Me.AnimationPlaybackPanel.IsPlaying = False
-    Me.AnimationPlaybackPanel.Location = New System.Drawing.Point(0, 0)
-    Me.AnimationPlaybackPanel.Name = "AnimationPlaybackPanel"
-    Me.AnimationPlaybackPanel.ShouldLoop = False
-    Me.AnimationPlaybackPanel.Size = New System.Drawing.Size(224, 170)
-    Me.AnimationPlaybackPanel.TabIndex = 14
-    Me.AnimationPlaybackPanel.TotalFrames = 0
-    '
-    'DLTab
-    '
-    Me.DLTab.Controls.Add(Me.RadioButton2)
-    Me.DLTab.Controls.Add(Me.GroupBox7)
-    Me.DLTab.Controls.Add(Me.DListSelection)
-    Me.DLTab.Controls.Add(Me.RadioButton1)
-    Me.DLTab.Controls.Add(Me.GroupBox3)
-    Me.DLTab.Location = New System.Drawing.Point(4, 46)
-    Me.DLTab.Name = "DLTab"
-    Me.DLTab.Size = New System.Drawing.Size(224, 537)
-    Me.DLTab.TabIndex = 8
-    Me.DLTab.Text = "Graphics"
-    Me.DLTab.UseVisualStyleBackColor = True
-    '
-    'RadioButton2
-    '
-    Me.RadioButton2.AutoSize = True
-    Me.RadioButton2.Location = New System.Drawing.Point(18, 85)
-    Me.RadioButton2.Name = "RadioButton2"
-    Me.RadioButton2.Size = New System.Drawing.Size(84, 20)
-    Me.RadioButton2.TabIndex = 67
-    Me.RadioButton2.TabStop = True
-    Me.RadioButton2.Text = "Hide others"
-    Me.RadioButton2.UseVisualStyleBackColor = True
-    '
-    'GroupBox7
-    '
-    Me.GroupBox7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.AnimationList.FormattingEnabled = True
+        Me.AnimationList.ItemHeight = 16
+        Me.AnimationList.Location = New System.Drawing.Point(6, 42)
+        Me.AnimationList.Name = "AnimationList"
+        Me.AnimationList.Size = New System.Drawing.Size(212, 292)
+        Me.AnimationList.TabIndex = 0
+        '
+        'animationbank
+        '
+        Me.animationbank.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.animationbank.FormattingEnabled = True
+        Me.animationbank.Items.AddRange(New Object() {"Inline with object"})
+        Me.animationbank.Location = New System.Drawing.Point(46, 16)
+        Me.animationbank.Name = "animationbank"
+        Me.animationbank.Size = New System.Drawing.Size(171, 24)
+        Me.animationbank.TabIndex = 9
+        '
+        'AnimationPlaybackPanel
+        '
+        Me.AnimationPlaybackPanel.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.AnimationPlaybackPanel.Frame = 0R
+        Me.AnimationPlaybackPanel.FrameRate = 20
+        Me.AnimationPlaybackPanel.IsPlaying = False
+        Me.AnimationPlaybackPanel.Location = New System.Drawing.Point(0, 0)
+        Me.AnimationPlaybackPanel.Name = "AnimationPlaybackPanel"
+        Me.AnimationPlaybackPanel.ShouldLoop = False
+        Me.AnimationPlaybackPanel.Size = New System.Drawing.Size(224, 143)
+        Me.AnimationPlaybackPanel.TabIndex = 14
+        Me.AnimationPlaybackPanel.TotalFrames = 0
+        '
+        'DLTab
+        '
+        Me.DLTab.Controls.Add(Me.RadioButton2)
+        Me.DLTab.Controls.Add(Me.GroupBox7)
+        Me.DLTab.Controls.Add(Me.DListSelection)
+        Me.DLTab.Controls.Add(Me.RadioButton1)
+        Me.DLTab.Controls.Add(Me.GroupBox3)
+        Me.DLTab.Location = New System.Drawing.Point(4, 46)
+        Me.DLTab.Name = "DLTab"
+        Me.DLTab.Size = New System.Drawing.Size(224, 537)
+        Me.DLTab.TabIndex = 8
+        Me.DLTab.Text = "Graphics"
+        Me.DLTab.UseVisualStyleBackColor = True
+        '
+        'RadioButton2
+        '
+        Me.RadioButton2.AutoSize = True
+        Me.RadioButton2.Location = New System.Drawing.Point(18, 85)
+        Me.RadioButton2.Name = "RadioButton2"
+        Me.RadioButton2.Size = New System.Drawing.Size(84, 20)
+        Me.RadioButton2.TabIndex = 67
+        Me.RadioButton2.TabStop = True
+        Me.RadioButton2.Text = "Hide others"
+        Me.RadioButton2.UseVisualStyleBackColor = True
+        '
+        'GroupBox7
+        '
+        Me.GroupBox7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-    Me.GroupBox7.Controls.Add(Me.WholeCommandTxt)
-    Me.GroupBox7.Controls.Add(Me.Label3)
-    Me.GroupBox7.Controls.Add(Me.Button8)
-    Me.GroupBox7.Controls.Add(Me.HiwordText)
-    Me.GroupBox7.Controls.Add(Me.Button1)
-    Me.GroupBox7.Controls.Add(Me.LowordText)
-    Me.GroupBox7.Controls.Add(Me.CommandCodeText)
-    Me.GroupBox7.Controls.Add(Me.CommandJumpBox)
-    Me.GroupBox7.Controls.Add(Me.Label26)
-    Me.GroupBox7.Controls.Add(Me.Label25)
-    Me.GroupBox7.Controls.Add(Me.Label9)
-    Me.GroupBox7.Controls.Add(Me.Button4)
-    Me.GroupBox7.Controls.Add(Me.CommandsListbox)
-    Me.GroupBox7.Location = New System.Drawing.Point(10, 176)
-    Me.GroupBox7.Name = "GroupBox7"
-    Me.GroupBox7.Size = New System.Drawing.Size(206, 469)
-    Me.GroupBox7.TabIndex = 69
-    Me.GroupBox7.TabStop = False
-    Me.GroupBox7.Text = "Commands"
-    '
-    'WholeCommandTxt
-    '
-    Me.WholeCommandTxt.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.WholeCommandTxt.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-    Me.WholeCommandTxt.Location = New System.Drawing.Point(7, 432)
-    Me.WholeCommandTxt.MaxLength = 32
-    Me.WholeCommandTxt.Name = "WholeCommandTxt"
-    Me.WholeCommandTxt.Size = New System.Drawing.Size(107, 20)
-    Me.WholeCommandTxt.TabIndex = 71
-    '
-    'Label3
-    '
-    Me.Label3.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.Label3.AutoSize = True
-    Me.Label3.Location = New System.Drawing.Point(3, 349)
-    Me.Label3.Name = "Label3"
-    Me.Label3.Size = New System.Drawing.Size(47, 16)
-    Me.Label3.TabIndex = 69
-    Me.Label3.Text = "Jump to"
-    '
-    'Button8
-    '
-    Me.Button8.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.Button8.Location = New System.Drawing.Point(57, 345)
-    Me.Button8.Name = "Button8"
-    Me.Button8.Size = New System.Drawing.Size(67, 23)
-    Me.Button8.TabIndex = 68
-    Me.Button8.Text = "Previous"
-    Me.Button8.UseVisualStyleBackColor = True
-    '
-    'HiwordText
-    '
-    Me.HiwordText.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.HiwordText.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-    Me.HiwordText.Location = New System.Drawing.Point(109, 404)
-    Me.HiwordText.MaxLength = 8
-    Me.HiwordText.Name = "HiwordText"
-    Me.HiwordText.Size = New System.Drawing.Size(90, 20)
-    Me.HiwordText.TabIndex = 65
-    '
-    'Button1
-    '
-    Me.Button1.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.Button1.Location = New System.Drawing.Point(130, 345)
-    Me.Button1.Name = "Button1"
-    Me.Button1.Size = New System.Drawing.Size(67, 23)
-    Me.Button1.TabIndex = 67
-    Me.Button1.Text = "Next"
-    Me.Button1.UseVisualStyleBackColor = True
-    '
-    'LowordText
-    '
-    Me.LowordText.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.LowordText.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-    Me.LowordText.Location = New System.Drawing.Point(37, 404)
-    Me.LowordText.MaxLength = 6
-    Me.LowordText.Name = "LowordText"
-    Me.LowordText.Size = New System.Drawing.Size(66, 20)
-    Me.LowordText.TabIndex = 64
-    '
-    'CommandCodeText
-    '
-    Me.CommandCodeText.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.CommandCodeText.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-    Me.CommandCodeText.Location = New System.Drawing.Point(7, 404)
-    Me.CommandCodeText.MaxLength = 2
-    Me.CommandCodeText.Name = "CommandCodeText"
-    Me.CommandCodeText.Size = New System.Drawing.Size(24, 20)
-    Me.CommandCodeText.TabIndex = 63
-    '
-    'CommandJumpBox
-    '
-    Me.CommandJumpBox.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.CommandJumpBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-    Me.CommandJumpBox.FormattingEnabled = True
-    Me.CommandJumpBox.Location = New System.Drawing.Point(6, 315)
-    Me.CommandJumpBox.Name = "CommandJumpBox"
-    Me.CommandJumpBox.Size = New System.Drawing.Size(192, 24)
-    Me.CommandJumpBox.TabIndex = 66
-    '
-    'Label26
-    '
-    Me.Label26.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.Label26.AutoSize = True
-    Me.Label26.Location = New System.Drawing.Point(132, 385)
-    Me.Label26.Name = "Label26"
-    Me.Label26.Size = New System.Drawing.Size(44, 16)
-    Me.Label26.TabIndex = 65
-    Me.Label26.Text = "Param1"
-    '
-    'Label25
-    '
-    Me.Label25.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.Label25.AutoSize = True
-    Me.Label25.Location = New System.Drawing.Point(48, 385)
-    Me.Label25.Name = "Label25"
-    Me.Label25.Size = New System.Drawing.Size(44, 16)
-    Me.Label25.TabIndex = 64
-    Me.Label25.Text = "Param0"
-    '
-    'Label9
-    '
-    Me.Label9.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.Label9.AutoSize = True
-    Me.Label9.Location = New System.Drawing.Point(5, 385)
-    Me.Label9.Name = "Label9"
-    Me.Label9.Size = New System.Drawing.Size(29, 16)
-    Me.Label9.TabIndex = 63
-    Me.Label9.Text = "Cmd"
-    '
-    'Button4
-    '
-    Me.Button4.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.Button4.Location = New System.Drawing.Point(127, 430)
-    Me.Button4.Name = "Button4"
-    Me.Button4.Size = New System.Drawing.Size(70, 23)
-    Me.Button4.TabIndex = 62
-    Me.Button4.Text = "Set"
-    Me.Button4.UseVisualStyleBackColor = True
-    '
-    'CommandsListbox
-    '
-    Me.CommandsListbox.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.GroupBox7.Controls.Add(Me.WholeCommandTxt)
+        Me.GroupBox7.Controls.Add(Me.Label3)
+        Me.GroupBox7.Controls.Add(Me.Button8)
+        Me.GroupBox7.Controls.Add(Me.HiwordText)
+        Me.GroupBox7.Controls.Add(Me.Button1)
+        Me.GroupBox7.Controls.Add(Me.LowordText)
+        Me.GroupBox7.Controls.Add(Me.CommandCodeText)
+        Me.GroupBox7.Controls.Add(Me.CommandJumpBox)
+        Me.GroupBox7.Controls.Add(Me.Label26)
+        Me.GroupBox7.Controls.Add(Me.Label25)
+        Me.GroupBox7.Controls.Add(Me.Label9)
+        Me.GroupBox7.Controls.Add(Me.Button4)
+        Me.GroupBox7.Controls.Add(Me.CommandsListbox)
+        Me.GroupBox7.Location = New System.Drawing.Point(10, 176)
+        Me.GroupBox7.Name = "GroupBox7"
+        Me.GroupBox7.Size = New System.Drawing.Size(206, 469)
+        Me.GroupBox7.TabIndex = 69
+        Me.GroupBox7.TabStop = False
+        Me.GroupBox7.Text = "Commands"
+        '
+        'WholeCommandTxt
+        '
+        Me.WholeCommandTxt.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.WholeCommandTxt.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.WholeCommandTxt.Location = New System.Drawing.Point(7, 432)
+        Me.WholeCommandTxt.MaxLength = 32
+        Me.WholeCommandTxt.Name = "WholeCommandTxt"
+        Me.WholeCommandTxt.Size = New System.Drawing.Size(107, 20)
+        Me.WholeCommandTxt.TabIndex = 71
+        '
+        'Label3
+        '
+        Me.Label3.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(3, 349)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(47, 16)
+        Me.Label3.TabIndex = 69
+        Me.Label3.Text = "Jump to"
+        '
+        'Button8
+        '
+        Me.Button8.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.Button8.Location = New System.Drawing.Point(57, 345)
+        Me.Button8.Name = "Button8"
+        Me.Button8.Size = New System.Drawing.Size(67, 23)
+        Me.Button8.TabIndex = 68
+        Me.Button8.Text = "Previous"
+        Me.Button8.UseVisualStyleBackColor = True
+        '
+        'HiwordText
+        '
+        Me.HiwordText.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.HiwordText.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.HiwordText.Location = New System.Drawing.Point(109, 404)
+        Me.HiwordText.MaxLength = 8
+        Me.HiwordText.Name = "HiwordText"
+        Me.HiwordText.Size = New System.Drawing.Size(90, 20)
+        Me.HiwordText.TabIndex = 65
+        '
+        'Button1
+        '
+        Me.Button1.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.Button1.Location = New System.Drawing.Point(130, 345)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(67, 23)
+        Me.Button1.TabIndex = 67
+        Me.Button1.Text = "Next"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
+        'LowordText
+        '
+        Me.LowordText.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.LowordText.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.LowordText.Location = New System.Drawing.Point(37, 404)
+        Me.LowordText.MaxLength = 6
+        Me.LowordText.Name = "LowordText"
+        Me.LowordText.Size = New System.Drawing.Size(66, 20)
+        Me.LowordText.TabIndex = 64
+        '
+        'CommandCodeText
+        '
+        Me.CommandCodeText.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.CommandCodeText.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.CommandCodeText.Location = New System.Drawing.Point(7, 404)
+        Me.CommandCodeText.MaxLength = 2
+        Me.CommandCodeText.Name = "CommandCodeText"
+        Me.CommandCodeText.Size = New System.Drawing.Size(24, 20)
+        Me.CommandCodeText.TabIndex = 63
+        '
+        'CommandJumpBox
+        '
+        Me.CommandJumpBox.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.CommandJumpBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.CommandJumpBox.FormattingEnabled = True
+        Me.CommandJumpBox.Location = New System.Drawing.Point(6, 315)
+        Me.CommandJumpBox.Name = "CommandJumpBox"
+        Me.CommandJumpBox.Size = New System.Drawing.Size(192, 24)
+        Me.CommandJumpBox.TabIndex = 66
+        '
+        'Label26
+        '
+        Me.Label26.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.Label26.AutoSize = True
+        Me.Label26.Location = New System.Drawing.Point(132, 385)
+        Me.Label26.Name = "Label26"
+        Me.Label26.Size = New System.Drawing.Size(44, 16)
+        Me.Label26.TabIndex = 65
+        Me.Label26.Text = "Param1"
+        '
+        'Label25
+        '
+        Me.Label25.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.Label25.AutoSize = True
+        Me.Label25.Location = New System.Drawing.Point(48, 385)
+        Me.Label25.Name = "Label25"
+        Me.Label25.Size = New System.Drawing.Size(44, 16)
+        Me.Label25.TabIndex = 64
+        Me.Label25.Text = "Param0"
+        '
+        'Label9
+        '
+        Me.Label9.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.Label9.AutoSize = True
+        Me.Label9.Location = New System.Drawing.Point(5, 385)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(29, 16)
+        Me.Label9.TabIndex = 63
+        Me.Label9.Text = "Cmd"
+        '
+        'Button4
+        '
+        Me.Button4.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.Button4.Location = New System.Drawing.Point(127, 430)
+        Me.Button4.Name = "Button4"
+        Me.Button4.Size = New System.Drawing.Size(70, 23)
+        Me.Button4.TabIndex = 62
+        Me.Button4.Text = "Set"
+        Me.Button4.UseVisualStyleBackColor = True
+        '
+        'CommandsListbox
+        '
+        Me.CommandsListbox.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-    Me.CommandsListbox.ContextMenuStrip = Me.DLEditorContextMenu
-    Me.CommandsListbox.FormattingEnabled = True
-    Me.CommandsListbox.ItemHeight = 16
-    Me.CommandsListbox.Location = New System.Drawing.Point(6, 22)
-    Me.CommandsListbox.Name = "CommandsListbox"
-    Me.CommandsListbox.Size = New System.Drawing.Size(192, 452)
-    Me.CommandsListbox.TabIndex = 61
-    '
-    'DLEditorContextMenu
-    '
-    Me.DLEditorContextMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Copy, Me.Paste, Me.Reset})
-    Me.DLEditorContextMenu.Name = "DLEditorContextMenu"
-    Me.DLEditorContextMenu.Size = New System.Drawing.Size(103, 70)
-    '
-    'Copy
-    '
-    Me.Copy.Name = "Copy"
-    Me.Copy.Size = New System.Drawing.Size(102, 22)
-    Me.Copy.Text = "Copy"
-    '
-    'Paste
-    '
-    Me.Paste.Name = "Paste"
-    Me.Paste.Size = New System.Drawing.Size(102, 22)
-    Me.Paste.Text = "Paste"
-    Me.Paste.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-    '
-    'Reset
-    '
-    Me.Reset.Name = "Reset"
-    Me.Reset.Size = New System.Drawing.Size(102, 22)
-    Me.Reset.Text = "Reset"
-    '
-    'DListSelection
-    '
-    Me.DListSelection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-    Me.DListSelection.FormattingEnabled = True
-    Me.DListSelection.Location = New System.Drawing.Point(18, 29)
-    Me.DListSelection.Name = "DListSelection"
-    Me.DListSelection.Size = New System.Drawing.Size(192, 24)
-    Me.DListSelection.TabIndex = 58
-    '
-    'RadioButton1
-    '
-    Me.RadioButton1.AutoSize = True
-    Me.RadioButton1.Checked = True
-    Me.RadioButton1.Location = New System.Drawing.Point(18, 59)
-    Me.RadioButton1.Name = "RadioButton1"
-    Me.RadioButton1.Size = New System.Drawing.Size(132, 20)
-    Me.RadioButton1.TabIndex = 66
-    Me.RadioButton1.TabStop = True
-    Me.RadioButton1.Text = "Highlight and draw all"
-    Me.RadioButton1.UseVisualStyleBackColor = True
-    '
-    'GroupBox3
-    '
-    Me.GroupBox3.Controls.Add(Me.Button12)
-    Me.GroupBox3.Controls.Add(Me.Label4)
-    Me.GroupBox3.Controls.Add(Me.Button10)
-    Me.GroupBox3.Location = New System.Drawing.Point(10, 4)
-    Me.GroupBox3.Name = "GroupBox3"
-    Me.GroupBox3.Size = New System.Drawing.Size(206, 166)
-    Me.GroupBox3.TabIndex = 68
-    Me.GroupBox3.TabStop = False
-    Me.GroupBox3.Text = "Display Lists"
-    '
-    'Button12
-    '
-    Me.Button12.Location = New System.Drawing.Point(85, 130)
-    Me.Button12.Name = "Button12"
-    Me.Button12.Size = New System.Drawing.Size(66, 23)
-    Me.Button12.TabIndex = 2
-    Me.Button12.Text = "All "
-    Me.Button12.UseVisualStyleBackColor = True
-    '
-    'Label4
-    '
-    Me.Label4.AutoSize = True
-    Me.Label4.Location = New System.Drawing.Point(8, 111)
-    Me.Label4.Name = "Label4"
-    Me.Label4.Size = New System.Drawing.Size(83, 16)
-    Me.Label4.TabIndex = 1
-    Me.Label4.Text = "Dump raw data"
-    '
-    'Button10
-    '
-    Me.Button10.Location = New System.Drawing.Point(9, 130)
-    Me.Button10.Name = "Button10"
-    Me.Button10.Size = New System.Drawing.Size(68, 23)
-    Me.Button10.TabIndex = 0
-    Me.Button10.Text = "Selected"
-    Me.Button10.UseVisualStyleBackColor = True
-    '
-    'BackupMenuStrip
-    '
-    Me.BackupMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RestorToolStripMenuItem})
-    Me.BackupMenuStrip.Name = "BackupMenuStrip"
-    Me.BackupMenuStrip.Size = New System.Drawing.Size(185, 26)
-    '
-    'RestorToolStripMenuItem
-    '
-    Me.RestorToolStripMenuItem.Name = "RestorToolStripMenuItem"
-    Me.RestorToolStripMenuItem.Size = New System.Drawing.Size(184, 22)
-    Me.RestorToolStripMenuItem.Text = "Restore from backup"
-    '
-    'Label43
-    '
-    Me.Label43.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-    Me.Label43.AutoSize = True
-    Me.Label43.Font = New System.Drawing.Font("Trebuchet MS", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-    Me.Label43.Location = New System.Drawing.Point(763, 626)
-    Me.Label43.Name = "Label43"
-    Me.Label43.Size = New System.Drawing.Size(89, 18)
-    Me.Label43.TabIndex = 102
-    Me.Label43.Text = "Camera speed:"
-    '
-    'TrackBar1
-    '
-    Me.TrackBar1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-    Me.TrackBar1.AutoSize = False
-    Me.TrackBar1.Cursor = System.Windows.Forms.Cursors.Hand
-    Me.TrackBar1.Location = New System.Drawing.Point(850, 628)
-    Me.TrackBar1.Maximum = 40
-    Me.TrackBar1.Minimum = 1
-    Me.TrackBar1.Name = "TrackBar1"
-    Me.TrackBar1.Size = New System.Drawing.Size(90, 15)
-    Me.TrackBar1.TabIndex = 103
-    Me.TrackBar1.Value = 20
-    '
-    'UoTRender
-    '
-    Me.UoTRender.AccumBits = CType(0, Byte)
-    Me.UoTRender.AllowDrop = True
-    Me.UoTRender.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.CommandsListbox.ContextMenuStrip = Me.DLEditorContextMenu
+        Me.CommandsListbox.FormattingEnabled = True
+        Me.CommandsListbox.ItemHeight = 16
+        Me.CommandsListbox.Location = New System.Drawing.Point(6, 22)
+        Me.CommandsListbox.Name = "CommandsListbox"
+        Me.CommandsListbox.Size = New System.Drawing.Size(192, 452)
+        Me.CommandsListbox.TabIndex = 61
+        '
+        'DLEditorContextMenu
+        '
+        Me.DLEditorContextMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Copy, Me.Paste, Me.Reset})
+        Me.DLEditorContextMenu.Name = "DLEditorContextMenu"
+        Me.DLEditorContextMenu.Size = New System.Drawing.Size(103, 70)
+        '
+        'Copy
+        '
+        Me.Copy.Name = "Copy"
+        Me.Copy.Size = New System.Drawing.Size(102, 22)
+        Me.Copy.Text = "Copy"
+        '
+        'Paste
+        '
+        Me.Paste.Name = "Paste"
+        Me.Paste.Size = New System.Drawing.Size(102, 22)
+        Me.Paste.Text = "Paste"
+        Me.Paste.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Reset
+        '
+        Me.Reset.Name = "Reset"
+        Me.Reset.Size = New System.Drawing.Size(102, 22)
+        Me.Reset.Text = "Reset"
+        '
+        'DListSelection
+        '
+        Me.DListSelection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.DListSelection.FormattingEnabled = True
+        Me.DListSelection.Location = New System.Drawing.Point(18, 29)
+        Me.DListSelection.Name = "DListSelection"
+        Me.DListSelection.Size = New System.Drawing.Size(192, 24)
+        Me.DListSelection.TabIndex = 58
+        '
+        'RadioButton1
+        '
+        Me.RadioButton1.AutoSize = True
+        Me.RadioButton1.Checked = True
+        Me.RadioButton1.Location = New System.Drawing.Point(18, 59)
+        Me.RadioButton1.Name = "RadioButton1"
+        Me.RadioButton1.Size = New System.Drawing.Size(132, 20)
+        Me.RadioButton1.TabIndex = 66
+        Me.RadioButton1.TabStop = True
+        Me.RadioButton1.Text = "Highlight and draw all"
+        Me.RadioButton1.UseVisualStyleBackColor = True
+        '
+        'GroupBox3
+        '
+        Me.GroupBox3.Controls.Add(Me.Button12)
+        Me.GroupBox3.Controls.Add(Me.Label4)
+        Me.GroupBox3.Controls.Add(Me.Button10)
+        Me.GroupBox3.Location = New System.Drawing.Point(10, 4)
+        Me.GroupBox3.Name = "GroupBox3"
+        Me.GroupBox3.Size = New System.Drawing.Size(206, 166)
+        Me.GroupBox3.TabIndex = 68
+        Me.GroupBox3.TabStop = False
+        Me.GroupBox3.Text = "Display Lists"
+        '
+        'Button12
+        '
+        Me.Button12.Location = New System.Drawing.Point(85, 130)
+        Me.Button12.Name = "Button12"
+        Me.Button12.Size = New System.Drawing.Size(66, 23)
+        Me.Button12.TabIndex = 2
+        Me.Button12.Text = "All "
+        Me.Button12.UseVisualStyleBackColor = True
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(8, 111)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(83, 16)
+        Me.Label4.TabIndex = 1
+        Me.Label4.Text = "Dump raw data"
+        '
+        'Button10
+        '
+        Me.Button10.Location = New System.Drawing.Point(9, 130)
+        Me.Button10.Name = "Button10"
+        Me.Button10.Size = New System.Drawing.Size(68, 23)
+        Me.Button10.TabIndex = 0
+        Me.Button10.Text = "Selected"
+        Me.Button10.UseVisualStyleBackColor = True
+        '
+        'BackupMenuStrip
+        '
+        Me.BackupMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RestorToolStripMenuItem})
+        Me.BackupMenuStrip.Name = "BackupMenuStrip"
+        Me.BackupMenuStrip.Size = New System.Drawing.Size(185, 26)
+        '
+        'RestorToolStripMenuItem
+        '
+        Me.RestorToolStripMenuItem.Name = "RestorToolStripMenuItem"
+        Me.RestorToolStripMenuItem.Size = New System.Drawing.Size(184, 22)
+        Me.RestorToolStripMenuItem.Text = "Restore from backup"
+        '
+        'Label43
+        '
+        Me.Label43.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label43.AutoSize = True
+        Me.Label43.Font = New System.Drawing.Font("Trebuchet MS", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label43.Location = New System.Drawing.Point(763, 626)
+        Me.Label43.Name = "Label43"
+        Me.Label43.Size = New System.Drawing.Size(89, 18)
+        Me.Label43.TabIndex = 102
+        Me.Label43.Text = "Camera speed:"
+        '
+        'TrackBar1
+        '
+        Me.TrackBar1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TrackBar1.AutoSize = False
+        Me.TrackBar1.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.TrackBar1.Location = New System.Drawing.Point(850, 628)
+        Me.TrackBar1.Maximum = 40
+        Me.TrackBar1.Minimum = 1
+        Me.TrackBar1.Name = "TrackBar1"
+        Me.TrackBar1.Size = New System.Drawing.Size(90, 15)
+        Me.TrackBar1.TabIndex = 103
+        Me.TrackBar1.Value = 20
+        '
+        'UoTRender
+        '
+        Me.UoTRender.AccumBits = CType(0, Byte)
+        Me.UoTRender.AllowDrop = True
+        Me.UoTRender.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-    Me.UoTRender.AutoCheckErrors = False
-    Me.UoTRender.AutoFinish = True
-    Me.UoTRender.AutoMakeCurrent = True
-    Me.UoTRender.AutoSize = True
-    Me.UoTRender.AutoSwapBuffers = False
-    Me.UoTRender.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange
-    Me.UoTRender.BackColor = System.Drawing.Color.Black
-    Me.UoTRender.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-    Me.UoTRender.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-    Me.UoTRender.ColorBits = CType(32, Byte)
-    Me.UoTRender.Cursor = System.Windows.Forms.Cursors.Default
-    Me.UoTRender.DepthBits = CType(24, Byte)
-    Me.UoTRender.Location = New System.Drawing.Point(229, 33)
-    Me.UoTRender.Name = "UoTRender"
-    Me.UoTRender.Size = New System.Drawing.Size(700, 586)
-    Me.UoTRender.StencilBits = CType(0, Byte)
-    Me.UoTRender.TabIndex = 0
-    '
-    'ActorContextMenu
-    '
-    Me.ActorContextMenu.BackColor = System.Drawing.SystemColors.Control
-    Me.ActorContextMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DeselectToolStripMenuItem, Me.ToolStripSeparator14, Me.EditToolStripMenuItem2, Me.AlignToolItem, Me.ToolStripSeparator13, Me.CopyToolStripMenuItem, Me.PasteToolStripMenuItem, Me.ClearClipboardToolStripMenuItem})
-    Me.ActorContextMenu.Name = "ContextMenuStrip4"
-    Me.ActorContextMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
-    Me.ActorContextMenu.Size = New System.Drawing.Size(156, 148)
-    '
-    'DeselectToolStripMenuItem
-    '
-    Me.DeselectToolStripMenuItem.Name = "DeselectToolStripMenuItem"
-    Me.DeselectToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
-    Me.DeselectToolStripMenuItem.Text = "Deselect"
-    '
-    'ToolStripSeparator14
-    '
-    Me.ToolStripSeparator14.Name = "ToolStripSeparator14"
-    Me.ToolStripSeparator14.Size = New System.Drawing.Size(152, 6)
-    '
-    'EditToolStripMenuItem2
-    '
-    Me.EditToolStripMenuItem2.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CamXRotationToolStripMenuItem, Me.CamYRotationToolStripMenuItem, Me.CamZRotationToolStripMenuItem})
-    Me.EditToolStripMenuItem2.Name = "EditToolStripMenuItem2"
-    Me.EditToolStripMenuItem2.Size = New System.Drawing.Size(155, 22)
-    Me.EditToolStripMenuItem2.Text = "Rotate"
-    '
-    'CamXRotationToolStripMenuItem
-    '
-    Me.CamXRotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DegreesToolStripMenuItem, Me.DegreesToolStripMenuItem1})
-    Me.CamXRotationToolStripMenuItem.Name = "CamXRotationToolStripMenuItem"
-    Me.CamXRotationToolStripMenuItem.Size = New System.Drawing.Size(81, 22)
-    Me.CamXRotationToolStripMenuItem.Text = "X"
-    '
-    'DegreesToolStripMenuItem
-    '
-    Me.DegreesToolStripMenuItem.Name = "DegreesToolStripMenuItem"
-    Me.DegreesToolStripMenuItem.Size = New System.Drawing.Size(141, 22)
-    Me.DegreesToolStripMenuItem.Text = "+ 90 degrees"
-    '
-    'DegreesToolStripMenuItem1
-    '
-    Me.DegreesToolStripMenuItem1.Name = "DegreesToolStripMenuItem1"
-    Me.DegreesToolStripMenuItem1.Size = New System.Drawing.Size(141, 22)
-    Me.DegreesToolStripMenuItem1.Text = "- 90 degrees"
-    '
-    'CamYRotationToolStripMenuItem
-    '
-    Me.CamYRotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DegreesToolStripMenuItem2, Me.DegreesToolStripMenuItem3})
-    Me.CamYRotationToolStripMenuItem.Name = "CamYRotationToolStripMenuItem"
-    Me.CamYRotationToolStripMenuItem.Size = New System.Drawing.Size(81, 22)
-    Me.CamYRotationToolStripMenuItem.Text = "Y"
-    '
-    'DegreesToolStripMenuItem2
-    '
-    Me.DegreesToolStripMenuItem2.Name = "DegreesToolStripMenuItem2"
-    Me.DegreesToolStripMenuItem2.Size = New System.Drawing.Size(144, 22)
-    Me.DegreesToolStripMenuItem2.Text = " + 90 degrees"
-    '
-    'DegreesToolStripMenuItem3
-    '
-    Me.DegreesToolStripMenuItem3.Name = "DegreesToolStripMenuItem3"
-    Me.DegreesToolStripMenuItem3.Size = New System.Drawing.Size(144, 22)
-    Me.DegreesToolStripMenuItem3.Text = "- 90 degrees"
-    '
-    'CamZRotationToolStripMenuItem
-    '
-    Me.CamZRotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DegreesToolStripMenuItem4, Me.DegreesToolStripMenuItem5})
-    Me.CamZRotationToolStripMenuItem.Name = "CamZRotationToolStripMenuItem"
-    Me.CamZRotationToolStripMenuItem.Size = New System.Drawing.Size(81, 22)
-    Me.CamZRotationToolStripMenuItem.Text = "Z"
-    '
-    'DegreesToolStripMenuItem4
-    '
-    Me.DegreesToolStripMenuItem4.Name = "DegreesToolStripMenuItem4"
-    Me.DegreesToolStripMenuItem4.Size = New System.Drawing.Size(141, 22)
-    Me.DegreesToolStripMenuItem4.Text = "+ 90 degrees"
-    '
-    'DegreesToolStripMenuItem5
-    '
-    Me.DegreesToolStripMenuItem5.Name = "DegreesToolStripMenuItem5"
-    Me.DegreesToolStripMenuItem5.Size = New System.Drawing.Size(141, 22)
-    Me.DegreesToolStripMenuItem5.Text = "- 90 degrees"
-    '
-    'AlignToolItem
-    '
-    Me.AlignToolItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.XToolStripMenuItem3, Me.YToolStripMenuItem3, Me.ZToolStripMenuItem2})
-    Me.AlignToolItem.Name = "AlignToolItem"
-    Me.AlignToolItem.Size = New System.Drawing.Size(155, 22)
-    Me.AlignToolItem.Text = "Align"
-    '
-    'XToolStripMenuItem3
-    '
-    Me.XToolStripMenuItem3.Name = "XToolStripMenuItem3"
-    Me.XToolStripMenuItem3.Size = New System.Drawing.Size(81, 22)
-    Me.XToolStripMenuItem3.Text = "X"
-    '
-    'YToolStripMenuItem3
-    '
-    Me.YToolStripMenuItem3.Name = "YToolStripMenuItem3"
-    Me.YToolStripMenuItem3.Size = New System.Drawing.Size(81, 22)
-    Me.YToolStripMenuItem3.Text = "Y"
-    '
-    'ZToolStripMenuItem2
-    '
-    Me.ZToolStripMenuItem2.Name = "ZToolStripMenuItem2"
-    Me.ZToolStripMenuItem2.Size = New System.Drawing.Size(81, 22)
-    Me.ZToolStripMenuItem2.Text = "Z"
-    '
-    'ToolStripSeparator13
-    '
-    Me.ToolStripSeparator13.Name = "ToolStripSeparator13"
-    Me.ToolStripSeparator13.Size = New System.Drawing.Size(152, 6)
-    '
-    'CopyToolStripMenuItem
-    '
-    Me.CopyToolStripMenuItem.Name = "CopyToolStripMenuItem"
-    Me.CopyToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
-    Me.CopyToolStripMenuItem.Text = "Copy attributes"
-    '
-    'PasteToolStripMenuItem
-    '
-    Me.PasteToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PositionToolStripMenuItem, Me.RotationToolStripMenuItem, Me.NumberAndVariableToolStripMenuItem})
-    Me.PasteToolStripMenuItem.Enabled = False
-    Me.PasteToolStripMenuItem.Name = "PasteToolStripMenuItem"
-    Me.PasteToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
-    Me.PasteToolStripMenuItem.Text = "Paste attributes"
-    '
-    'PositionToolStripMenuItem
-    '
-    Me.PositionToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.XToolStripMenuItem1, Me.YToolStripMenuItem1, Me.ZToolStripMenuItem, Me.AllToolStripMenuItem1})
-    Me.PositionToolStripMenuItem.Name = "PositionToolStripMenuItem"
-    Me.PositionToolStripMenuItem.Size = New System.Drawing.Size(185, 22)
-    Me.PositionToolStripMenuItem.Text = "Position"
-    '
-    'XToolStripMenuItem1
-    '
-    Me.XToolStripMenuItem1.Name = "XToolStripMenuItem1"
-    Me.XToolStripMenuItem1.Size = New System.Drawing.Size(88, 22)
-    Me.XToolStripMenuItem1.Text = "X"
-    '
-    'YToolStripMenuItem1
-    '
-    Me.YToolStripMenuItem1.Name = "YToolStripMenuItem1"
-    Me.YToolStripMenuItem1.Size = New System.Drawing.Size(88, 22)
-    Me.YToolStripMenuItem1.Text = "Y"
-    '
-    'ZToolStripMenuItem
-    '
-    Me.ZToolStripMenuItem.Name = "ZToolStripMenuItem"
-    Me.ZToolStripMenuItem.Size = New System.Drawing.Size(88, 22)
-    Me.ZToolStripMenuItem.Text = "Z"
-    '
-    'AllToolStripMenuItem1
-    '
-    Me.AllToolStripMenuItem1.Name = "AllToolStripMenuItem1"
-    Me.AllToolStripMenuItem1.Size = New System.Drawing.Size(88, 22)
-    Me.AllToolStripMenuItem1.Text = "All"
-    '
-    'RotationToolStripMenuItem
-    '
-    Me.RotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.XToolStripMenuItem2, Me.YToolStripMenuItem2, Me.ZToolStripMenuItem1, Me.AllToolStripMenuItem})
-    Me.RotationToolStripMenuItem.Name = "RotationToolStripMenuItem"
-    Me.RotationToolStripMenuItem.Size = New System.Drawing.Size(185, 22)
-    Me.RotationToolStripMenuItem.Text = "Rotation"
-    '
-    'XToolStripMenuItem2
-    '
-    Me.XToolStripMenuItem2.Name = "XToolStripMenuItem2"
-    Me.XToolStripMenuItem2.Size = New System.Drawing.Size(88, 22)
-    Me.XToolStripMenuItem2.Text = "X"
-    '
-    'YToolStripMenuItem2
-    '
-    Me.YToolStripMenuItem2.Name = "YToolStripMenuItem2"
-    Me.YToolStripMenuItem2.Size = New System.Drawing.Size(88, 22)
-    Me.YToolStripMenuItem2.Text = "Y"
-    '
-    'ZToolStripMenuItem1
-    '
-    Me.ZToolStripMenuItem1.Name = "ZToolStripMenuItem1"
-    Me.ZToolStripMenuItem1.Size = New System.Drawing.Size(88, 22)
-    Me.ZToolStripMenuItem1.Text = "Z"
-    '
-    'AllToolStripMenuItem
-    '
-    Me.AllToolStripMenuItem.Name = "AllToolStripMenuItem"
-    Me.AllToolStripMenuItem.Size = New System.Drawing.Size(88, 22)
-    Me.AllToolStripMenuItem.Text = "All"
-    '
-    'NumberAndVariableToolStripMenuItem
-    '
-    Me.NumberAndVariableToolStripMenuItem.Name = "NumberAndVariableToolStripMenuItem"
-    Me.NumberAndVariableToolStripMenuItem.Size = New System.Drawing.Size(185, 22)
-    Me.NumberAndVariableToolStripMenuItem.Text = "Number and Variable"
-    '
-    'ClearClipboardToolStripMenuItem
-    '
-    Me.ClearClipboardToolStripMenuItem.Enabled = False
-    Me.ClearClipboardToolStripMenuItem.Name = "ClearClipboardToolStripMenuItem"
-    Me.ClearClipboardToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
-    Me.ClearClipboardToolStripMenuItem.Text = "Clear clipboard"
-    '
-    'RotationTimer
-    '
-    Me.RotationTimer.Interval = 1
-    '
-    'LoadIndividual
-    '
-    Me.LoadIndividual.Filter = "Levels (*.scene)|*.zscene|ZOBJ Files (*.zobj)|*.zobj"
-    '
-    'ROMBrowser
-    '
-    Me.ROMBrowser.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.UoTRender.AutoCheckErrors = False
+        Me.UoTRender.AutoFinish = True
+        Me.UoTRender.AutoMakeCurrent = True
+        Me.UoTRender.AutoSize = True
+        Me.UoTRender.AutoSwapBuffers = False
+        Me.UoTRender.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange
+        Me.UoTRender.BackColor = System.Drawing.Color.Black
+        Me.UoTRender.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.UoTRender.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.UoTRender.ColorBits = CType(32, Byte)
+        Me.UoTRender.Cursor = System.Windows.Forms.Cursors.Default
+        Me.UoTRender.DepthBits = CType(24, Byte)
+        Me.UoTRender.Location = New System.Drawing.Point(229, 33)
+        Me.UoTRender.Name = "UoTRender"
+        Me.UoTRender.Size = New System.Drawing.Size(700, 586)
+        Me.UoTRender.StencilBits = CType(0, Byte)
+        Me.UoTRender.TabIndex = 0
+        '
+        'ActorContextMenu
+        '
+        Me.ActorContextMenu.BackColor = System.Drawing.SystemColors.Control
+        Me.ActorContextMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DeselectToolStripMenuItem, Me.ToolStripSeparator14, Me.EditToolStripMenuItem2, Me.AlignToolItem, Me.ToolStripSeparator13, Me.CopyToolStripMenuItem, Me.PasteToolStripMenuItem, Me.ClearClipboardToolStripMenuItem})
+        Me.ActorContextMenu.Name = "ContextMenuStrip4"
+        Me.ActorContextMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
+        Me.ActorContextMenu.Size = New System.Drawing.Size(156, 148)
+        '
+        'DeselectToolStripMenuItem
+        '
+        Me.DeselectToolStripMenuItem.Name = "DeselectToolStripMenuItem"
+        Me.DeselectToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
+        Me.DeselectToolStripMenuItem.Text = "Deselect"
+        '
+        'ToolStripSeparator14
+        '
+        Me.ToolStripSeparator14.Name = "ToolStripSeparator14"
+        Me.ToolStripSeparator14.Size = New System.Drawing.Size(152, 6)
+        '
+        'EditToolStripMenuItem2
+        '
+        Me.EditToolStripMenuItem2.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CamXRotationToolStripMenuItem, Me.CamYRotationToolStripMenuItem, Me.CamZRotationToolStripMenuItem})
+        Me.EditToolStripMenuItem2.Name = "EditToolStripMenuItem2"
+        Me.EditToolStripMenuItem2.Size = New System.Drawing.Size(155, 22)
+        Me.EditToolStripMenuItem2.Text = "Rotate"
+        '
+        'CamXRotationToolStripMenuItem
+        '
+        Me.CamXRotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DegreesToolStripMenuItem, Me.DegreesToolStripMenuItem1})
+        Me.CamXRotationToolStripMenuItem.Name = "CamXRotationToolStripMenuItem"
+        Me.CamXRotationToolStripMenuItem.Size = New System.Drawing.Size(81, 22)
+        Me.CamXRotationToolStripMenuItem.Text = "X"
+        '
+        'DegreesToolStripMenuItem
+        '
+        Me.DegreesToolStripMenuItem.Name = "DegreesToolStripMenuItem"
+        Me.DegreesToolStripMenuItem.Size = New System.Drawing.Size(141, 22)
+        Me.DegreesToolStripMenuItem.Text = "+ 90 degrees"
+        '
+        'DegreesToolStripMenuItem1
+        '
+        Me.DegreesToolStripMenuItem1.Name = "DegreesToolStripMenuItem1"
+        Me.DegreesToolStripMenuItem1.Size = New System.Drawing.Size(141, 22)
+        Me.DegreesToolStripMenuItem1.Text = "- 90 degrees"
+        '
+        'CamYRotationToolStripMenuItem
+        '
+        Me.CamYRotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DegreesToolStripMenuItem2, Me.DegreesToolStripMenuItem3})
+        Me.CamYRotationToolStripMenuItem.Name = "CamYRotationToolStripMenuItem"
+        Me.CamYRotationToolStripMenuItem.Size = New System.Drawing.Size(81, 22)
+        Me.CamYRotationToolStripMenuItem.Text = "Y"
+        '
+        'DegreesToolStripMenuItem2
+        '
+        Me.DegreesToolStripMenuItem2.Name = "DegreesToolStripMenuItem2"
+        Me.DegreesToolStripMenuItem2.Size = New System.Drawing.Size(144, 22)
+        Me.DegreesToolStripMenuItem2.Text = " + 90 degrees"
+        '
+        'DegreesToolStripMenuItem3
+        '
+        Me.DegreesToolStripMenuItem3.Name = "DegreesToolStripMenuItem3"
+        Me.DegreesToolStripMenuItem3.Size = New System.Drawing.Size(144, 22)
+        Me.DegreesToolStripMenuItem3.Text = "- 90 degrees"
+        '
+        'CamZRotationToolStripMenuItem
+        '
+        Me.CamZRotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DegreesToolStripMenuItem4, Me.DegreesToolStripMenuItem5})
+        Me.CamZRotationToolStripMenuItem.Name = "CamZRotationToolStripMenuItem"
+        Me.CamZRotationToolStripMenuItem.Size = New System.Drawing.Size(81, 22)
+        Me.CamZRotationToolStripMenuItem.Text = "Z"
+        '
+        'DegreesToolStripMenuItem4
+        '
+        Me.DegreesToolStripMenuItem4.Name = "DegreesToolStripMenuItem4"
+        Me.DegreesToolStripMenuItem4.Size = New System.Drawing.Size(141, 22)
+        Me.DegreesToolStripMenuItem4.Text = "+ 90 degrees"
+        '
+        'DegreesToolStripMenuItem5
+        '
+        Me.DegreesToolStripMenuItem5.Name = "DegreesToolStripMenuItem5"
+        Me.DegreesToolStripMenuItem5.Size = New System.Drawing.Size(141, 22)
+        Me.DegreesToolStripMenuItem5.Text = "- 90 degrees"
+        '
+        'AlignToolItem
+        '
+        Me.AlignToolItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.XToolStripMenuItem3, Me.YToolStripMenuItem3, Me.ZToolStripMenuItem2})
+        Me.AlignToolItem.Name = "AlignToolItem"
+        Me.AlignToolItem.Size = New System.Drawing.Size(155, 22)
+        Me.AlignToolItem.Text = "Align"
+        '
+        'XToolStripMenuItem3
+        '
+        Me.XToolStripMenuItem3.Name = "XToolStripMenuItem3"
+        Me.XToolStripMenuItem3.Size = New System.Drawing.Size(81, 22)
+        Me.XToolStripMenuItem3.Text = "X"
+        '
+        'YToolStripMenuItem3
+        '
+        Me.YToolStripMenuItem3.Name = "YToolStripMenuItem3"
+        Me.YToolStripMenuItem3.Size = New System.Drawing.Size(81, 22)
+        Me.YToolStripMenuItem3.Text = "Y"
+        '
+        'ZToolStripMenuItem2
+        '
+        Me.ZToolStripMenuItem2.Name = "ZToolStripMenuItem2"
+        Me.ZToolStripMenuItem2.Size = New System.Drawing.Size(81, 22)
+        Me.ZToolStripMenuItem2.Text = "Z"
+        '
+        'ToolStripSeparator13
+        '
+        Me.ToolStripSeparator13.Name = "ToolStripSeparator13"
+        Me.ToolStripSeparator13.Size = New System.Drawing.Size(152, 6)
+        '
+        'CopyToolStripMenuItem
+        '
+        Me.CopyToolStripMenuItem.Name = "CopyToolStripMenuItem"
+        Me.CopyToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
+        Me.CopyToolStripMenuItem.Text = "Copy attributes"
+        '
+        'PasteToolStripMenuItem
+        '
+        Me.PasteToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PositionToolStripMenuItem, Me.RotationToolStripMenuItem, Me.NumberAndVariableToolStripMenuItem})
+        Me.PasteToolStripMenuItem.Enabled = False
+        Me.PasteToolStripMenuItem.Name = "PasteToolStripMenuItem"
+        Me.PasteToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
+        Me.PasteToolStripMenuItem.Text = "Paste attributes"
+        '
+        'PositionToolStripMenuItem
+        '
+        Me.PositionToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.XToolStripMenuItem1, Me.YToolStripMenuItem1, Me.ZToolStripMenuItem, Me.AllToolStripMenuItem1})
+        Me.PositionToolStripMenuItem.Name = "PositionToolStripMenuItem"
+        Me.PositionToolStripMenuItem.Size = New System.Drawing.Size(185, 22)
+        Me.PositionToolStripMenuItem.Text = "Position"
+        '
+        'XToolStripMenuItem1
+        '
+        Me.XToolStripMenuItem1.Name = "XToolStripMenuItem1"
+        Me.XToolStripMenuItem1.Size = New System.Drawing.Size(88, 22)
+        Me.XToolStripMenuItem1.Text = "X"
+        '
+        'YToolStripMenuItem1
+        '
+        Me.YToolStripMenuItem1.Name = "YToolStripMenuItem1"
+        Me.YToolStripMenuItem1.Size = New System.Drawing.Size(88, 22)
+        Me.YToolStripMenuItem1.Text = "Y"
+        '
+        'ZToolStripMenuItem
+        '
+        Me.ZToolStripMenuItem.Name = "ZToolStripMenuItem"
+        Me.ZToolStripMenuItem.Size = New System.Drawing.Size(88, 22)
+        Me.ZToolStripMenuItem.Text = "Z"
+        '
+        'AllToolStripMenuItem1
+        '
+        Me.AllToolStripMenuItem1.Name = "AllToolStripMenuItem1"
+        Me.AllToolStripMenuItem1.Size = New System.Drawing.Size(88, 22)
+        Me.AllToolStripMenuItem1.Text = "All"
+        '
+        'RotationToolStripMenuItem
+        '
+        Me.RotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.XToolStripMenuItem2, Me.YToolStripMenuItem2, Me.ZToolStripMenuItem1, Me.AllToolStripMenuItem})
+        Me.RotationToolStripMenuItem.Name = "RotationToolStripMenuItem"
+        Me.RotationToolStripMenuItem.Size = New System.Drawing.Size(185, 22)
+        Me.RotationToolStripMenuItem.Text = "Rotation"
+        '
+        'XToolStripMenuItem2
+        '
+        Me.XToolStripMenuItem2.Name = "XToolStripMenuItem2"
+        Me.XToolStripMenuItem2.Size = New System.Drawing.Size(88, 22)
+        Me.XToolStripMenuItem2.Text = "X"
+        '
+        'YToolStripMenuItem2
+        '
+        Me.YToolStripMenuItem2.Name = "YToolStripMenuItem2"
+        Me.YToolStripMenuItem2.Size = New System.Drawing.Size(88, 22)
+        Me.YToolStripMenuItem2.Text = "Y"
+        '
+        'ZToolStripMenuItem1
+        '
+        Me.ZToolStripMenuItem1.Name = "ZToolStripMenuItem1"
+        Me.ZToolStripMenuItem1.Size = New System.Drawing.Size(88, 22)
+        Me.ZToolStripMenuItem1.Text = "Z"
+        '
+        'AllToolStripMenuItem
+        '
+        Me.AllToolStripMenuItem.Name = "AllToolStripMenuItem"
+        Me.AllToolStripMenuItem.Size = New System.Drawing.Size(88, 22)
+        Me.AllToolStripMenuItem.Text = "All"
+        '
+        'NumberAndVariableToolStripMenuItem
+        '
+        Me.NumberAndVariableToolStripMenuItem.Name = "NumberAndVariableToolStripMenuItem"
+        Me.NumberAndVariableToolStripMenuItem.Size = New System.Drawing.Size(185, 22)
+        Me.NumberAndVariableToolStripMenuItem.Text = "Number and Variable"
+        '
+        'ClearClipboardToolStripMenuItem
+        '
+        Me.ClearClipboardToolStripMenuItem.Enabled = False
+        Me.ClearClipboardToolStripMenuItem.Name = "ClearClipboardToolStripMenuItem"
+        Me.ClearClipboardToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
+        Me.ClearClipboardToolStripMenuItem.Text = "Clear clipboard"
+        '
+        'RotationTimer
+        '
+        Me.RotationTimer.Interval = 1
+        '
+        'LoadIndividual
+        '
+        Me.LoadIndividual.Filter = "Levels (*.scene)|*.zscene|ZOBJ Files (*.zobj)|*.zobj"
+        '
+        'ROMBrowser
+        '
+        Me.ROMBrowser.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-    Me.ROMBrowser.Controls.Add(Me.ROMDataTabs)
-    Me.ROMBrowser.Controls.Add(Me.IndividualFiles)
-    Me.ROMBrowser.HotTrack = True
-    Me.ROMBrowser.Location = New System.Drawing.Point(0, 33)
-    Me.ROMBrowser.Name = "ROMBrowser"
-    Me.ROMBrowser.SelectedIndex = 0
-    Me.ROMBrowser.Size = New System.Drawing.Size(227, 587)
-    Me.ROMBrowser.TabIndex = 104
-    '
-    'ROMDataTabs
-    '
-    Me.ROMDataTabs.Controls.Add(Me.Button7)
-    Me.ROMDataTabs.Location = New System.Drawing.Point(4, 22)
-    Me.ROMDataTabs.Name = "ROMDataTabs"
-    Me.ROMDataTabs.Padding = New System.Windows.Forms.Padding(3)
-    Me.ROMDataTabs.Size = New System.Drawing.Size(219, 561)
-    Me.ROMDataTabs.TabIndex = 0
-    Me.ROMDataTabs.Text = "ROM Files"
-    Me.ROMDataTabs.UseVisualStyleBackColor = True
-    '
-    'Button7
-    '
-    Me.Button7.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-    Me.Button7.Location = New System.Drawing.Point(153, 529)
-    Me.Button7.Name = "Button7"
-    Me.Button7.Size = New System.Drawing.Size(60, 23)
-    Me.Button7.TabIndex = 0
-    Me.Button7.Text = "Search"
-    Me.Button7.UseVisualStyleBackColor = True
-    '
-    'IndividualFiles
-    '
-    Me.IndividualFiles.Location = New System.Drawing.Point(4, 22)
-    Me.IndividualFiles.Name = "IndividualFiles"
-    Me.IndividualFiles.Size = New System.Drawing.Size(219, 561)
-    Me.IndividualFiles.TabIndex = 1
-    Me.IndividualFiles.Text = "Individuals"
-    Me.IndividualFiles.UseVisualStyleBackColor = True
-    '
-    'Label29
-    '
-    Me.Label29.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-    Me.Label29.AutoSize = True
-    Me.Label29.Location = New System.Drawing.Point(7, 567)
-    Me.Label29.Name = "Label29"
-    Me.Label29.Size = New System.Drawing.Size(27, 13)
-    Me.Label29.TabIndex = 13
-    Me.Label29.Text = "Find"
-    '
-    'TreeFind
-    '
-    Me.TreeFind.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-    Me.TreeFind.Location = New System.Drawing.Point(10, 586)
-    Me.TreeFind.Name = "TreeFind"
-    Me.TreeFind.Size = New System.Drawing.Size(141, 20)
-    Me.TreeFind.TabIndex = 12
-    '
-    'FileTree
-    '
-    Me.FileTree.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.ROMBrowser.Controls.Add(Me.ROMDataTabs)
+        Me.ROMBrowser.Controls.Add(Me.IndividualFiles)
+        Me.ROMBrowser.HotTrack = True
+        Me.ROMBrowser.Location = New System.Drawing.Point(0, 33)
+        Me.ROMBrowser.Name = "ROMBrowser"
+        Me.ROMBrowser.SelectedIndex = 0
+        Me.ROMBrowser.Size = New System.Drawing.Size(227, 587)
+        Me.ROMBrowser.TabIndex = 104
+        '
+        'ROMDataTabs
+        '
+        Me.ROMDataTabs.Controls.Add(Me.Button7)
+        Me.ROMDataTabs.Location = New System.Drawing.Point(4, 22)
+        Me.ROMDataTabs.Name = "ROMDataTabs"
+        Me.ROMDataTabs.Padding = New System.Windows.Forms.Padding(3)
+        Me.ROMDataTabs.Size = New System.Drawing.Size(219, 561)
+        Me.ROMDataTabs.TabIndex = 0
+        Me.ROMDataTabs.Text = "ROM Files"
+        Me.ROMDataTabs.UseVisualStyleBackColor = True
+        '
+        'Button7
+        '
+        Me.Button7.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Button7.Location = New System.Drawing.Point(153, 529)
+        Me.Button7.Name = "Button7"
+        Me.Button7.Size = New System.Drawing.Size(60, 23)
+        Me.Button7.TabIndex = 0
+        Me.Button7.Text = "Search"
+        Me.Button7.UseVisualStyleBackColor = True
+        '
+        'IndividualFiles
+        '
+        Me.IndividualFiles.Location = New System.Drawing.Point(4, 22)
+        Me.IndividualFiles.Name = "IndividualFiles"
+        Me.IndividualFiles.Size = New System.Drawing.Size(219, 561)
+        Me.IndividualFiles.TabIndex = 1
+        Me.IndividualFiles.Text = "Individuals"
+        Me.IndividualFiles.UseVisualStyleBackColor = True
+        '
+        'Label29
+        '
+        Me.Label29.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Label29.AutoSize = True
+        Me.Label29.Location = New System.Drawing.Point(7, 567)
+        Me.Label29.Name = "Label29"
+        Me.Label29.Size = New System.Drawing.Size(27, 13)
+        Me.Label29.TabIndex = 13
+        Me.Label29.Text = "Find"
+        '
+        'TreeFind
+        '
+        Me.TreeFind.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.TreeFind.Location = New System.Drawing.Point(10, 586)
+        Me.TreeFind.Name = "TreeFind"
+        Me.TreeFind.Size = New System.Drawing.Size(141, 20)
+        Me.TreeFind.TabIndex = 12
+        '
+        'FileTree
+        '
+        Me.FileTree.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-    Me.FileTree.ContextMenuStrip = Me.BackupMenuStrip
-    Me.FileTree.HideSelection = False
-    Me.FileTree.HotTracking = True
-    Me.FileTree.Location = New System.Drawing.Point(7, 62)
-    Me.FileTree.Name = "FileTree"
-    Me.FileTree.Size = New System.Drawing.Size(210, 496)
-    Me.FileTree.TabIndex = 10
-    '
-    'FileToolStripMenuItem1
-    '
-    Me.FileToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem35, Me.ToolStripMenuItem2, Me.CustomLevel, Me.toolStripSeparator, Me.SaveToolStripMenuItem, Me.ToolStripMenuItem34, Me.toolStripSeparator12, Me.ExitToolStripMenuItem})
-    Me.FileToolStripMenuItem1.Name = "FileToolStripMenuItem1"
-    Me.FileToolStripMenuItem1.Size = New System.Drawing.Size(37, 27)
-    Me.FileToolStripMenuItem1.Text = "&File"
-    '
-    'ToolStripMenuItem35
-    '
-    Me.ToolStripMenuItem35.Image = CType(resources.GetObject("ToolStripMenuItem35.Image"), System.Drawing.Image)
-    Me.ToolStripMenuItem35.ImageTransparentColor = System.Drawing.Color.Magenta
-    Me.ToolStripMenuItem35.Name = "ToolStripMenuItem35"
-    Me.ToolStripMenuItem35.Size = New System.Drawing.Size(153, 22)
-    Me.ToolStripMenuItem35.Text = "&Open ROM"
-    '
-    'ToolStripMenuItem2
-    '
-    Me.ToolStripMenuItem2.Image = CType(resources.GetObject("ToolStripMenuItem2.Image"), System.Drawing.Image)
-    Me.ToolStripMenuItem2.ImageTransparentColor = System.Drawing.Color.Magenta
-    Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-    Me.ToolStripMenuItem2.Size = New System.Drawing.Size(153, 22)
-    Me.ToolStripMenuItem2.Text = "&Open Individual"
-    '
-    'CustomLevel
-    '
-    Me.CustomLevel.Name = "CustomLevel"
-    Me.CustomLevel.Size = New System.Drawing.Size(153, 22)
-    Me.CustomLevel.Text = "New level..."
-    Me.CustomLevel.Visible = False
-    '
-    'toolStripSeparator
-    '
-    Me.toolStripSeparator.Name = "toolStripSeparator"
-    Me.toolStripSeparator.Size = New System.Drawing.Size(150, 6)
-    '
-    'SaveToolStripMenuItem
-    '
-    Me.SaveToolStripMenuItem.Image = CType(resources.GetObject("SaveToolStripMenuItem.Image"), System.Drawing.Image)
-    Me.SaveToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
-    Me.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem"
-    Me.SaveToolStripMenuItem.ShowShortcutKeys = False
-    Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(153, 22)
-    Me.SaveToolStripMenuItem.Text = "&Save ROM"
-    '
-    'ToolStripMenuItem34
-    '
-    Me.ToolStripMenuItem34.Name = "ToolStripMenuItem34"
-    Me.ToolStripMenuItem34.Size = New System.Drawing.Size(153, 22)
-    Me.ToolStripMenuItem34.Text = "Save ROM &As"
-    Me.ToolStripMenuItem34.Visible = False
-    '
-    'toolStripSeparator12
-    '
-    Me.toolStripSeparator12.Name = "toolStripSeparator12"
-    Me.toolStripSeparator12.Size = New System.Drawing.Size(150, 6)
-    '
-    'ExitToolStripMenuItem
-    '
-    Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-    Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(153, 22)
-    Me.ExitToolStripMenuItem.Text = "E&xit"
-    '
-    'EditToolStripMenuItem1
-    '
-    Me.EditToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UndoToolStripMenuItem, Me.WireframeModeToolStripMenuItem, Me.RenderToolStripMenuItem})
-    Me.EditToolStripMenuItem1.Name = "EditToolStripMenuItem1"
-    Me.EditToolStripMenuItem1.Size = New System.Drawing.Size(44, 27)
-    Me.EditToolStripMenuItem1.Text = "&View"
-    '
-    'UndoToolStripMenuItem
-    '
-    Me.UndoToolStripMenuItem.Name = "UndoToolStripMenuItem"
-    Me.UndoToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1
-    Me.UndoToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
-    Me.UndoToolStripMenuItem.Text = "Editor tabs"
-    '
-    'WireframeModeToolStripMenuItem
-    '
-    Me.WireframeModeToolStripMenuItem.CheckOnClick = True
-    Me.WireframeModeToolStripMenuItem.Name = "WireframeModeToolStripMenuItem"
-    Me.WireframeModeToolStripMenuItem.ShortcutKeyDisplayString = "F4"
-    Me.WireframeModeToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F4
-    Me.WireframeModeToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
-    Me.WireframeModeToolStripMenuItem.Text = "Wireframe"
-    '
-    'RenderToolStripMenuItem
-    '
-    Me.RenderToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.GraphicsToolStripMenuItem, Me.CollisionOverlayToolStripMenuItem})
-    Me.RenderToolStripMenuItem.Name = "RenderToolStripMenuItem"
-    Me.RenderToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+R"
-    Me.RenderToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
-    Me.RenderToolStripMenuItem.Text = "Render"
-    '
-    'GraphicsToolStripMenuItem
-    '
-    Me.GraphicsToolStripMenuItem.Checked = True
-    Me.GraphicsToolStripMenuItem.CheckOnClick = True
-    Me.GraphicsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-    Me.GraphicsToolStripMenuItem.Name = "GraphicsToolStripMenuItem"
-    Me.GraphicsToolStripMenuItem.Size = New System.Drawing.Size(156, 22)
-    Me.GraphicsToolStripMenuItem.Text = "Graphics"
-    '
-    'CollisionOverlayToolStripMenuItem
-    '
-    Me.CollisionOverlayToolStripMenuItem.Checked = True
-    Me.CollisionOverlayToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-    Me.CollisionOverlayToolStripMenuItem.Name = "CollisionOverlayToolStripMenuItem"
-    Me.CollisionOverlayToolStripMenuItem.Size = New System.Drawing.Size(156, 22)
-    Me.CollisionOverlayToolStripMenuItem.Text = "Collision overlay"
-    '
-    'ToolsToolStripMenuItem1
-    '
-    Me.ToolsToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MouseToolToolStripMenuItem1, Me.LockAxesToolStripMenuItem, Me.OptionsToolStripMenuItem2})
-    Me.ToolsToolStripMenuItem1.Name = "ToolsToolStripMenuItem1"
-    Me.ToolsToolStripMenuItem1.Size = New System.Drawing.Size(44, 27)
-    Me.ToolsToolStripMenuItem1.Text = "&Tools"
-    '
-    'MouseToolToolStripMenuItem1
-    '
-    Me.MouseToolToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CameraOnlyMenu, Me.ActorSelectorMenu, Me.CollisionToolStripMenuItem, Me.CollisionSelectorMenu, Me.DisplayListSelectorToolStripMenuItem})
-    Me.MouseToolToolStripMenuItem1.Name = "MouseToolToolStripMenuItem1"
-    Me.MouseToolToolStripMenuItem1.ShortcutKeyDisplayString = ""
-    Me.MouseToolToolStripMenuItem1.Size = New System.Drawing.Size(163, 22)
-    Me.MouseToolToolStripMenuItem1.Text = "Mouse Tool"
-    '
-    'CameraOnlyMenu
-    '
-    Me.CameraOnlyMenu.Name = "CameraOnlyMenu"
-    Me.CameraOnlyMenu.ShortcutKeyDisplayString = "1"
-    Me.CameraOnlyMenu.Size = New System.Drawing.Size(191, 22)
-    Me.CameraOnlyMenu.Text = "Camera only"
-    '
-    'ActorSelectorMenu
-    '
-    Me.ActorSelectorMenu.Name = "ActorSelectorMenu"
-    Me.ActorSelectorMenu.ShortcutKeyDisplayString = "2"
-    Me.ActorSelectorMenu.Size = New System.Drawing.Size(191, 22)
-    Me.ActorSelectorMenu.Text = "Actor Selector"
-    '
-    'CollisionToolStripMenuItem
-    '
-    Me.CollisionToolStripMenuItem.Name = "CollisionToolStripMenuItem"
-    Me.CollisionToolStripMenuItem.ShortcutKeyDisplayString = "3"
-    Me.CollisionToolStripMenuItem.Size = New System.Drawing.Size(191, 22)
-    Me.CollisionToolStripMenuItem.Text = "Collision Tri Selector"
-    '
-    'CollisionSelectorMenu
-    '
-    Me.CollisionSelectorMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EdgeToolStripMenuItem, Me.TriangleToolStripMenuItem, Me.VertexToolStripMenuItem})
-    Me.CollisionSelectorMenu.Name = "CollisionSelectorMenu"
-    Me.CollisionSelectorMenu.ShortcutKeyDisplayString = ""
-    Me.CollisionSelectorMenu.Size = New System.Drawing.Size(191, 22)
-    Me.CollisionSelectorMenu.Text = "Geometry Editor"
-    Me.CollisionSelectorMenu.Visible = False
-    '
-    'EdgeToolStripMenuItem
-    '
-    Me.EdgeToolStripMenuItem.Name = "EdgeToolStripMenuItem"
-    Me.EdgeToolStripMenuItem.ShortcutKeyDisplayString = "4"
-    Me.EdgeToolStripMenuItem.Size = New System.Drawing.Size(129, 22)
-    Me.EdgeToolStripMenuItem.Text = "Edge"
-    '
-    'TriangleToolStripMenuItem
-    '
-    Me.TriangleToolStripMenuItem.Name = "TriangleToolStripMenuItem"
-    Me.TriangleToolStripMenuItem.ShortcutKeyDisplayString = "5"
-    Me.TriangleToolStripMenuItem.Size = New System.Drawing.Size(129, 22)
-    Me.TriangleToolStripMenuItem.Text = "Triangle"
-    '
-    'VertexToolStripMenuItem
-    '
-    Me.VertexToolStripMenuItem.Name = "VertexToolStripMenuItem"
-    Me.VertexToolStripMenuItem.ShortcutKeyDisplayString = "6"
-    Me.VertexToolStripMenuItem.Size = New System.Drawing.Size(129, 22)
-    Me.VertexToolStripMenuItem.Text = "Vertex"
-    '
-    'DisplayListSelectorToolStripMenuItem
-    '
-    Me.DisplayListSelectorToolStripMenuItem.Name = "DisplayListSelectorToolStripMenuItem"
-    Me.DisplayListSelectorToolStripMenuItem.ShortcutKeyDisplayString = "7"
-    Me.DisplayListSelectorToolStripMenuItem.Size = New System.Drawing.Size(191, 22)
-    Me.DisplayListSelectorToolStripMenuItem.Text = "Display List selector"
-    '
-    'LockAxesToolStripMenuItem
-    '
-    Me.LockAxesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.XToolStripMenuItem, Me.YToolStripMenuItem, Me.DisableToolStripMenuItem})
-    Me.LockAxesToolStripMenuItem.Name = "LockAxesToolStripMenuItem"
-    Me.LockAxesToolStripMenuItem.ShortcutKeyDisplayString = "Space"
-    Me.LockAxesToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
-    Me.LockAxesToolStripMenuItem.Text = "Lock axes"
-    '
-    'XToolStripMenuItem
-    '
-    Me.XToolStripMenuItem.Name = "XToolStripMenuItem"
-    Me.XToolStripMenuItem.ShortcutKeyDisplayString = ""
-    Me.XToolStripMenuItem.Size = New System.Drawing.Size(111, 22)
-    Me.XToolStripMenuItem.Text = "X"
-    '
-    'YToolStripMenuItem
-    '
-    Me.YToolStripMenuItem.Name = "YToolStripMenuItem"
-    Me.YToolStripMenuItem.ShortcutKeyDisplayString = ""
-    Me.YToolStripMenuItem.Size = New System.Drawing.Size(111, 22)
-    Me.YToolStripMenuItem.Text = "Y"
-    '
-    'DisableToolStripMenuItem
-    '
-    Me.DisableToolStripMenuItem.Name = "DisableToolStripMenuItem"
-    Me.DisableToolStripMenuItem.ShortcutKeyDisplayString = ""
-    Me.DisableToolStripMenuItem.Size = New System.Drawing.Size(111, 22)
-    Me.DisableToolStripMenuItem.Text = "Disable"
-    '
-    'OptionsToolStripMenuItem2
-    '
-    Me.OptionsToolStripMenuItem2.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DisableDepthTestToolStripMenuItem})
-    Me.OptionsToolStripMenuItem2.Name = "OptionsToolStripMenuItem2"
-    Me.OptionsToolStripMenuItem2.Size = New System.Drawing.Size(163, 22)
-    Me.OptionsToolStripMenuItem2.Text = "Options"
-    '
-    'DisableDepthTestToolStripMenuItem
-    '
-    Me.DisableDepthTestToolStripMenuItem.CheckOnClick = True
-    Me.DisableDepthTestToolStripMenuItem.Name = "DisableDepthTestToolStripMenuItem"
-    Me.DisableDepthTestToolStripMenuItem.Size = New System.Drawing.Size(224, 22)
-    Me.DisableDepthTestToolStripMenuItem.Text = "Select actors behind graphics"
-    '
-    'ToolsToolStripMenuItem
-    '
-    Me.ToolsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OptionsToolStripMenuItem1, Me.RendererToolStripMenuItem})
-    Me.ToolsToolStripMenuItem.Name = "ToolsToolStripMenuItem"
-    Me.ToolsToolStripMenuItem.Size = New System.Drawing.Size(80, 27)
-    Me.ToolsToolStripMenuItem.Text = "&Preferences"
-    '
-    'OptionsToolStripMenuItem1
-    '
-    Me.OptionsToolStripMenuItem1.Name = "OptionsToolStripMenuItem1"
-    Me.OptionsToolStripMenuItem1.Size = New System.Drawing.Size(122, 22)
-    Me.OptionsToolStripMenuItem1.Text = "&Setup"
-    '
-    'RendererToolStripMenuItem
-    '
-    Me.RendererToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TexturesToolStripMenuItem, Me.ColorCombinerToolStripMenuItem, Me.AnisotropicFilteringToolStripMenuItem, Me.FullSceneAntialiasingToolStripMenuItem})
-    Me.RendererToolStripMenuItem.Name = "RendererToolStripMenuItem"
-    Me.RendererToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
-    Me.RendererToolStripMenuItem.Text = "Renderer"
-    '
-    'TexturesToolStripMenuItem
-    '
-    Me.TexturesToolStripMenuItem.Checked = True
-    Me.TexturesToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-    Me.TexturesToolStripMenuItem.Name = "TexturesToolStripMenuItem"
-    Me.TexturesToolStripMenuItem.Size = New System.Drawing.Size(183, 22)
-    Me.TexturesToolStripMenuItem.Text = "Textures"
-    '
-    'ColorCombinerToolStripMenuItem
-    '
-    Me.ColorCombinerToolStripMenuItem.Checked = True
-    Me.ColorCombinerToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-    Me.ColorCombinerToolStripMenuItem.Name = "ColorCombinerToolStripMenuItem"
-    Me.ColorCombinerToolStripMenuItem.Size = New System.Drawing.Size(183, 22)
-    Me.ColorCombinerToolStripMenuItem.Text = "Color Combiner"
-    '
-    'AnisotropicFilteringToolStripMenuItem
-    '
-    Me.AnisotropicFilteringToolStripMenuItem.Checked = True
-    Me.AnisotropicFilteringToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-    Me.AnisotropicFilteringToolStripMenuItem.Name = "AnisotropicFilteringToolStripMenuItem"
-    Me.AnisotropicFilteringToolStripMenuItem.Size = New System.Drawing.Size(183, 22)
-    Me.AnisotropicFilteringToolStripMenuItem.Text = "Anisotropic Filtering"
-    '
-    'FullSceneAntialiasingToolStripMenuItem
-    '
-    Me.FullSceneAntialiasingToolStripMenuItem.Checked = True
-    Me.FullSceneAntialiasingToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-    Me.FullSceneAntialiasingToolStripMenuItem.Name = "FullSceneAntialiasingToolStripMenuItem"
-    Me.FullSceneAntialiasingToolStripMenuItem.Size = New System.Drawing.Size(183, 22)
-    Me.FullSceneAntialiasingToolStripMenuItem.Text = "Full Scene Antialiasing"
-    '
-    'HelpToolStripMenuItem1
-    '
-    Me.HelpToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ContentsToolStripMenuItem, Me.AboutUoTToolStripMenuItem})
-    Me.HelpToolStripMenuItem1.Name = "HelpToolStripMenuItem1"
-    Me.HelpToolStripMenuItem1.Size = New System.Drawing.Size(41, 27)
-    Me.HelpToolStripMenuItem1.Text = "&Help"
-    '
-    'ContentsToolStripMenuItem
-    '
-    Me.ContentsToolStripMenuItem.Name = "ContentsToolStripMenuItem"
-    Me.ContentsToolStripMenuItem.Size = New System.Drawing.Size(127, 22)
-    Me.ContentsToolStripMenuItem.Text = "&Contents"
-    '
-    'AboutUoTToolStripMenuItem
-    '
-    Me.AboutUoTToolStripMenuItem.Name = "AboutUoTToolStripMenuItem"
-    Me.AboutUoTToolStripMenuItem.Size = New System.Drawing.Size(127, 22)
-    Me.AboutUoTToolStripMenuItem.Text = "&About UoT"
-    '
-    'UoTMainMenu
-    '
-    Me.UoTMainMenu.AllowMerge = False
-    Me.UoTMainMenu.AutoSize = False
-    Me.UoTMainMenu.BackColor = System.Drawing.SystemColors.ControlLight
-    Me.UoTMainMenu.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-    Me.UoTMainMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem1, Me.ToolStripMenuItem3, Me.EditToolStripMenuItem1, Me.ToolsToolStripMenuItem, Me.ToolsToolStripMenuItem1, Me.HelpToolStripMenuItem1})
-    Me.UoTMainMenu.Location = New System.Drawing.Point(0, 0)
-    Me.UoTMainMenu.Name = "UoTMainMenu"
-    Me.UoTMainMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
-    Me.UoTMainMenu.Size = New System.Drawing.Size(1160, 31)
-    Me.UoTMainMenu.Stretch = False
-    Me.UoTMainMenu.TabIndex = 40
-    Me.UoTMainMenu.Text = "MenuStrip1"
-    '
-    'ToolStripMenuItem3
-    '
-    Me.ToolStripMenuItem3.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UndoToolStripMenuItem1, Me.RedoToolStripMenuItem})
-    Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
-    Me.ToolStripMenuItem3.Size = New System.Drawing.Size(40, 27)
-    Me.ToolStripMenuItem3.Text = "Edit"
-    Me.ToolStripMenuItem3.Visible = False
-    '
-    'UndoToolStripMenuItem1
-    '
-    Me.UndoToolStripMenuItem1.Name = "UndoToolStripMenuItem1"
-    Me.UndoToolStripMenuItem1.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Z), System.Windows.Forms.Keys)
-    Me.UndoToolStripMenuItem1.Size = New System.Drawing.Size(140, 22)
-    Me.UndoToolStripMenuItem1.Text = "&Undo"
-    '
-    'RedoToolStripMenuItem
-    '
-    Me.RedoToolStripMenuItem.Name = "RedoToolStripMenuItem"
-    Me.RedoToolStripMenuItem.Size = New System.Drawing.Size(140, 22)
-    Me.RedoToolStripMenuItem.Text = "&Redo"
-    Me.RedoToolStripMenuItem.Visible = False
-    '
-    'VertContextMenu
-    '
-    Me.VertContextMenu.BackColor = System.Drawing.SystemColors.Control
-    Me.VertContextMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem5, Me.ToolStripSeparator15, Me.ToolStripMenuItem6, Me.ToolStripMenuItem16, Me.ToolStripSeparator16, Me.ToolStripMenuItem20, Me.ToolStripMenuItem21, Me.ToolStripMenuItem33})
-    Me.VertContextMenu.Name = "ContextMenuStrip4"
-    Me.VertContextMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
-    Me.VertContextMenu.Size = New System.Drawing.Size(156, 148)
-    '
-    'ToolStripMenuItem5
-    '
-    Me.ToolStripMenuItem5.Name = "ToolStripMenuItem5"
-    Me.ToolStripMenuItem5.Size = New System.Drawing.Size(155, 22)
-    Me.ToolStripMenuItem5.Text = "Deselect"
-    '
-    'ToolStripSeparator15
-    '
-    Me.ToolStripSeparator15.Name = "ToolStripSeparator15"
-    Me.ToolStripSeparator15.Size = New System.Drawing.Size(152, 6)
-    '
-    'ToolStripMenuItem6
-    '
-    Me.ToolStripMenuItem6.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem7, Me.ToolStripMenuItem10, Me.ToolStripMenuItem13})
-    Me.ToolStripMenuItem6.Name = "ToolStripMenuItem6"
-    Me.ToolStripMenuItem6.Size = New System.Drawing.Size(155, 22)
-    Me.ToolStripMenuItem6.Text = "Rotate"
-    '
-    'ToolStripMenuItem7
-    '
-    Me.ToolStripMenuItem7.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem8, Me.ToolStripMenuItem9})
-    Me.ToolStripMenuItem7.Name = "ToolStripMenuItem7"
-    Me.ToolStripMenuItem7.Size = New System.Drawing.Size(81, 22)
-    Me.ToolStripMenuItem7.Text = "X"
-    '
-    'ToolStripMenuItem8
-    '
-    Me.ToolStripMenuItem8.Name = "ToolStripMenuItem8"
-    Me.ToolStripMenuItem8.Size = New System.Drawing.Size(141, 22)
-    Me.ToolStripMenuItem8.Text = "+ 90 degrees"
-    '
-    'ToolStripMenuItem9
-    '
-    Me.ToolStripMenuItem9.Name = "ToolStripMenuItem9"
-    Me.ToolStripMenuItem9.Size = New System.Drawing.Size(141, 22)
-    Me.ToolStripMenuItem9.Text = "- 90 degrees"
-    '
-    'ToolStripMenuItem10
-    '
-    Me.ToolStripMenuItem10.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem11, Me.ToolStripMenuItem12})
-    Me.ToolStripMenuItem10.Name = "ToolStripMenuItem10"
-    Me.ToolStripMenuItem10.Size = New System.Drawing.Size(81, 22)
-    Me.ToolStripMenuItem10.Text = "Y"
-    '
-    'ToolStripMenuItem11
-    '
-    Me.ToolStripMenuItem11.Name = "ToolStripMenuItem11"
-    Me.ToolStripMenuItem11.Size = New System.Drawing.Size(144, 22)
-    Me.ToolStripMenuItem11.Text = " + 90 degrees"
-    '
-    'ToolStripMenuItem12
-    '
-    Me.ToolStripMenuItem12.Name = "ToolStripMenuItem12"
-    Me.ToolStripMenuItem12.Size = New System.Drawing.Size(144, 22)
-    Me.ToolStripMenuItem12.Text = "- 90 degrees"
-    '
-    'ToolStripMenuItem13
-    '
-    Me.ToolStripMenuItem13.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem14, Me.ToolStripMenuItem15})
-    Me.ToolStripMenuItem13.Name = "ToolStripMenuItem13"
-    Me.ToolStripMenuItem13.Size = New System.Drawing.Size(81, 22)
-    Me.ToolStripMenuItem13.Text = "Z"
-    '
-    'ToolStripMenuItem14
-    '
-    Me.ToolStripMenuItem14.Name = "ToolStripMenuItem14"
-    Me.ToolStripMenuItem14.Size = New System.Drawing.Size(141, 22)
-    Me.ToolStripMenuItem14.Text = "+ 90 degrees"
-    '
-    'ToolStripMenuItem15
-    '
-    Me.ToolStripMenuItem15.Name = "ToolStripMenuItem15"
-    Me.ToolStripMenuItem15.Size = New System.Drawing.Size(141, 22)
-    Me.ToolStripMenuItem15.Text = "- 90 degrees"
-    '
-    'ToolStripMenuItem16
-    '
-    Me.ToolStripMenuItem16.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem17, Me.ToolStripMenuItem18, Me.ToolStripMenuItem19})
-    Me.ToolStripMenuItem16.Name = "ToolStripMenuItem16"
-    Me.ToolStripMenuItem16.Size = New System.Drawing.Size(155, 22)
-    Me.ToolStripMenuItem16.Text = "Align"
-    '
-    'ToolStripMenuItem17
-    '
-    Me.ToolStripMenuItem17.Name = "ToolStripMenuItem17"
-    Me.ToolStripMenuItem17.Size = New System.Drawing.Size(81, 22)
-    Me.ToolStripMenuItem17.Text = "X"
-    '
-    'ToolStripMenuItem18
-    '
-    Me.ToolStripMenuItem18.Name = "ToolStripMenuItem18"
-    Me.ToolStripMenuItem18.Size = New System.Drawing.Size(81, 22)
-    Me.ToolStripMenuItem18.Text = "Y"
-    '
-    'ToolStripMenuItem19
-    '
-    Me.ToolStripMenuItem19.Name = "ToolStripMenuItem19"
-    Me.ToolStripMenuItem19.Size = New System.Drawing.Size(81, 22)
-    Me.ToolStripMenuItem19.Text = "Z"
-    '
-    'ToolStripSeparator16
-    '
-    Me.ToolStripSeparator16.Name = "ToolStripSeparator16"
-    Me.ToolStripSeparator16.Size = New System.Drawing.Size(152, 6)
-    '
-    'ToolStripMenuItem20
-    '
-    Me.ToolStripMenuItem20.Name = "ToolStripMenuItem20"
-    Me.ToolStripMenuItem20.Size = New System.Drawing.Size(155, 22)
-    Me.ToolStripMenuItem20.Text = "Copy attributes"
-    '
-    'ToolStripMenuItem21
-    '
-    Me.ToolStripMenuItem21.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem22, Me.ToolStripMenuItem27, Me.ToolStripMenuItem32})
-    Me.ToolStripMenuItem21.Enabled = False
-    Me.ToolStripMenuItem21.Name = "ToolStripMenuItem21"
-    Me.ToolStripMenuItem21.Size = New System.Drawing.Size(155, 22)
-    Me.ToolStripMenuItem21.Text = "Paste attributes"
-    '
-    'ToolStripMenuItem22
-    '
-    Me.ToolStripMenuItem22.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem23, Me.ToolStripMenuItem24, Me.ToolStripMenuItem25, Me.ToolStripMenuItem26})
-    Me.ToolStripMenuItem22.Name = "ToolStripMenuItem22"
-    Me.ToolStripMenuItem22.Size = New System.Drawing.Size(185, 22)
-    Me.ToolStripMenuItem22.Text = "Position"
-    '
-    'ToolStripMenuItem23
-    '
-    Me.ToolStripMenuItem23.Name = "ToolStripMenuItem23"
-    Me.ToolStripMenuItem23.Size = New System.Drawing.Size(88, 22)
-    Me.ToolStripMenuItem23.Text = "X"
-    '
-    'ToolStripMenuItem24
-    '
-    Me.ToolStripMenuItem24.Name = "ToolStripMenuItem24"
-    Me.ToolStripMenuItem24.Size = New System.Drawing.Size(88, 22)
-    Me.ToolStripMenuItem24.Text = "Y"
-    '
-    'ToolStripMenuItem25
-    '
-    Me.ToolStripMenuItem25.Name = "ToolStripMenuItem25"
-    Me.ToolStripMenuItem25.Size = New System.Drawing.Size(88, 22)
-    Me.ToolStripMenuItem25.Text = "Z"
-    '
-    'ToolStripMenuItem26
-    '
-    Me.ToolStripMenuItem26.Name = "ToolStripMenuItem26"
-    Me.ToolStripMenuItem26.Size = New System.Drawing.Size(88, 22)
-    Me.ToolStripMenuItem26.Text = "All"
-    '
-    'ToolStripMenuItem27
-    '
-    Me.ToolStripMenuItem27.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem28, Me.ToolStripMenuItem29, Me.ToolStripMenuItem30, Me.ToolStripMenuItem31})
-    Me.ToolStripMenuItem27.Name = "ToolStripMenuItem27"
-    Me.ToolStripMenuItem27.Size = New System.Drawing.Size(185, 22)
-    Me.ToolStripMenuItem27.Text = "Rotation"
-    '
-    'ToolStripMenuItem28
-    '
-    Me.ToolStripMenuItem28.Name = "ToolStripMenuItem28"
-    Me.ToolStripMenuItem28.Size = New System.Drawing.Size(88, 22)
-    Me.ToolStripMenuItem28.Text = "X"
-    '
-    'ToolStripMenuItem29
-    '
-    Me.ToolStripMenuItem29.Name = "ToolStripMenuItem29"
-    Me.ToolStripMenuItem29.Size = New System.Drawing.Size(88, 22)
-    Me.ToolStripMenuItem29.Text = "Y"
-    '
-    'ToolStripMenuItem30
-    '
-    Me.ToolStripMenuItem30.Name = "ToolStripMenuItem30"
-    Me.ToolStripMenuItem30.Size = New System.Drawing.Size(88, 22)
-    Me.ToolStripMenuItem30.Text = "Z"
-    '
-    'ToolStripMenuItem31
-    '
-    Me.ToolStripMenuItem31.Name = "ToolStripMenuItem31"
-    Me.ToolStripMenuItem31.Size = New System.Drawing.Size(88, 22)
-    Me.ToolStripMenuItem31.Text = "All"
-    '
-    'ToolStripMenuItem32
-    '
-    Me.ToolStripMenuItem32.Name = "ToolStripMenuItem32"
-    Me.ToolStripMenuItem32.Size = New System.Drawing.Size(185, 22)
-    Me.ToolStripMenuItem32.Text = "Number and Variable"
-    '
-    'ToolStripMenuItem33
-    '
-    Me.ToolStripMenuItem33.Enabled = False
-    Me.ToolStripMenuItem33.Name = "ToolStripMenuItem33"
-    Me.ToolStripMenuItem33.Size = New System.Drawing.Size(155, 22)
-    Me.ToolStripMenuItem33.Text = "Clear clipboard"
-    '
-    'RipDL
-    '
-    Me.RipDL.Filter = "RAW F3DEX2 Display List (*.f3dex2)|*.f3dex2"
-    '
-    'SaveROMAs
-    '
-    Me.SaveROMAs.Filter = "N64 ROMs|*.z64;*.n64;*.v64;*.rom"
-    '
-    'VarContextMenu
-    '
-    Me.VarContextMenu.Name = "VarContextMenu"
-    Me.VarContextMenu.Size = New System.Drawing.Size(61, 4)
-    '
-    'NumContextMenu
-    '
-    Me.NumContextMenu.Name = "NumContextMenu"
-    Me.NumContextMenu.Size = New System.Drawing.Size(61, 4)
-    '
-    'GrpContextMenu
-    '
-    Me.GrpContextMenu.Name = "GrpContextMenu"
-    Me.GrpContextMenu.Size = New System.Drawing.Size(61, 4)
-    '
-    'MainWin
-    '
-    Me.AllowDrop = True
-    Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
-    Me.ClientSize = New System.Drawing.Size(1160, 649)
-    Me.Controls.Add(Me.Label29)
-    Me.Controls.Add(Me.TreeFind)
-    Me.Controls.Add(Me.FileTree)
-    Me.Controls.Add(Me.ROMBrowser)
-    Me.Controls.Add(Me.Label12)
-    Me.Controls.Add(Me.Label43)
-    Me.Controls.Add(Me.EditingTabs)
-    Me.Controls.Add(Me.TrackBar1)
-    Me.Controls.Add(Me.TrackBar4)
-    Me.Controls.Add(Me.UoTStatus)
-    Me.Controls.Add(Me.UoTMainMenu)
-    Me.Controls.Add(Me.UoTRender)
-    Me.DoubleBuffered = True
-    Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-    Me.MainMenuStrip = Me.UoTMainMenu
-    Me.Name = "MainWin"
-    Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show
-    Me.Text = "Utility of Time R8"
-    Me.UoTStatus.ResumeLayout(False)
-    Me.UoTStatus.PerformLayout()
-    CType(Me.TrackBar4, System.ComponentModel.ISupportInitialize).EndInit()
-    Me.CollisionTab.ResumeLayout(False)
-    Me.GroupBox1.ResumeLayout(False)
-    Me.GroupBox1.PerformLayout()
-    Me.CollisionGroupBox.ResumeLayout(False)
-    Me.CollisionGroupBox.PerformLayout()
-    Me.MiscTab.ResumeLayout(False)
-    Me.MiscTab.PerformLayout()
-    Me.GroupBox9.ResumeLayout(False)
-    Me.GroupBox9.PerformLayout()
-    Me.GroupBox10.ResumeLayout(False)
-    Me.GroupBox10.PerformLayout()
-    Me.GroupBox8.ResumeLayout(False)
-    Me.GroupBox8.PerformLayout()
-    Me.LevelFlagsTab.ResumeLayout(False)
-    Me.GroupBox6.ResumeLayout(False)
-    Me.GroupBox6.PerformLayout()
-    Me.ActorsTab.ResumeLayout(False)
-    Me.GroupBox4.ResumeLayout(False)
-    Me.GroupBox4.PerformLayout()
-    Me.GroupBox5.ResumeLayout(False)
-    Me.GroupBox5.PerformLayout()
-    Me.EditingTabs.ResumeLayout(False)
-    Me.AnimationsTab.ResumeLayout(False)
-    Me.SplitContainer1.Panel1.ResumeLayout(False)
-    Me.SplitContainer1.Panel2.ResumeLayout(False)
-    CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
-    Me.SplitContainer1.ResumeLayout(False)
-    Me.AnimationSetGroup.ResumeLayout(False)
-    Me.AnimationSetGroup.PerformLayout()
-    Me.DLTab.ResumeLayout(False)
-    Me.DLTab.PerformLayout()
-    Me.GroupBox7.ResumeLayout(False)
-    Me.GroupBox7.PerformLayout()
-    Me.DLEditorContextMenu.ResumeLayout(False)
-    Me.GroupBox3.ResumeLayout(False)
-    Me.GroupBox3.PerformLayout()
-    Me.BackupMenuStrip.ResumeLayout(False)
-    CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).EndInit()
-    Me.ActorContextMenu.ResumeLayout(False)
-    Me.ROMBrowser.ResumeLayout(False)
-    Me.ROMDataTabs.ResumeLayout(False)
-    Me.UoTMainMenu.ResumeLayout(False)
-    Me.UoTMainMenu.PerformLayout()
-    Me.VertContextMenu.ResumeLayout(False)
-    Me.ResumeLayout(False)
-    Me.PerformLayout()
+        Me.FileTree.ContextMenuStrip = Me.BackupMenuStrip
+        Me.FileTree.HideSelection = False
+        Me.FileTree.HotTracking = True
+        Me.FileTree.Location = New System.Drawing.Point(7, 62)
+        Me.FileTree.Name = "FileTree"
+        Me.FileTree.Size = New System.Drawing.Size(210, 496)
+        Me.FileTree.TabIndex = 10
+        '
+        'FileToolStripMenuItem1
+        '
+        Me.FileToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem35, Me.ToolStripMenuItem2, Me.CustomLevel, Me.toolStripSeparator, Me.SaveToolStripMenuItem, Me.ToolStripMenuItem34, Me.toolStripSeparator12, Me.ExitToolStripMenuItem})
+        Me.FileToolStripMenuItem1.Name = "FileToolStripMenuItem1"
+        Me.FileToolStripMenuItem1.Size = New System.Drawing.Size(37, 27)
+        Me.FileToolStripMenuItem1.Text = "&File"
+        '
+        'ToolStripMenuItem35
+        '
+        Me.ToolStripMenuItem35.Image = CType(resources.GetObject("ToolStripMenuItem35.Image"), System.Drawing.Image)
+        Me.ToolStripMenuItem35.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripMenuItem35.Name = "ToolStripMenuItem35"
+        Me.ToolStripMenuItem35.Size = New System.Drawing.Size(153, 22)
+        Me.ToolStripMenuItem35.Text = "&Open ROM"
+        '
+        'ToolStripMenuItem2
+        '
+        Me.ToolStripMenuItem2.Image = CType(resources.GetObject("ToolStripMenuItem2.Image"), System.Drawing.Image)
+        Me.ToolStripMenuItem2.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(153, 22)
+        Me.ToolStripMenuItem2.Text = "&Open Individual"
+        '
+        'CustomLevel
+        '
+        Me.CustomLevel.Name = "CustomLevel"
+        Me.CustomLevel.Size = New System.Drawing.Size(153, 22)
+        Me.CustomLevel.Text = "New level..."
+        Me.CustomLevel.Visible = False
+        '
+        'toolStripSeparator
+        '
+        Me.toolStripSeparator.Name = "toolStripSeparator"
+        Me.toolStripSeparator.Size = New System.Drawing.Size(150, 6)
+        '
+        'SaveToolStripMenuItem
+        '
+        Me.SaveToolStripMenuItem.Image = CType(resources.GetObject("SaveToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.SaveToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem"
+        Me.SaveToolStripMenuItem.ShowShortcutKeys = False
+        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(153, 22)
+        Me.SaveToolStripMenuItem.Text = "&Save ROM"
+        '
+        'ToolStripMenuItem34
+        '
+        Me.ToolStripMenuItem34.Name = "ToolStripMenuItem34"
+        Me.ToolStripMenuItem34.Size = New System.Drawing.Size(153, 22)
+        Me.ToolStripMenuItem34.Text = "Save ROM &As"
+        Me.ToolStripMenuItem34.Visible = False
+        '
+        'toolStripSeparator12
+        '
+        Me.toolStripSeparator12.Name = "toolStripSeparator12"
+        Me.toolStripSeparator12.Size = New System.Drawing.Size(150, 6)
+        '
+        'ExitToolStripMenuItem
+        '
+        Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(153, 22)
+        Me.ExitToolStripMenuItem.Text = "E&xit"
+        '
+        'EditToolStripMenuItem1
+        '
+        Me.EditToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UndoToolStripMenuItem, Me.WireframeModeToolStripMenuItem, Me.RenderToolStripMenuItem})
+        Me.EditToolStripMenuItem1.Name = "EditToolStripMenuItem1"
+        Me.EditToolStripMenuItem1.Size = New System.Drawing.Size(44, 27)
+        Me.EditToolStripMenuItem1.Text = "&View"
+        '
+        'UndoToolStripMenuItem
+        '
+        Me.UndoToolStripMenuItem.Name = "UndoToolStripMenuItem"
+        Me.UndoToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1
+        Me.UndoToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.UndoToolStripMenuItem.Text = "Editor tabs"
+        '
+        'WireframeModeToolStripMenuItem
+        '
+        Me.WireframeModeToolStripMenuItem.CheckOnClick = True
+        Me.WireframeModeToolStripMenuItem.Name = "WireframeModeToolStripMenuItem"
+        Me.WireframeModeToolStripMenuItem.ShortcutKeyDisplayString = "F4"
+        Me.WireframeModeToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F4
+        Me.WireframeModeToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.WireframeModeToolStripMenuItem.Text = "Wireframe"
+        '
+        'RenderToolStripMenuItem
+        '
+        Me.RenderToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.GraphicsToolStripMenuItem, Me.CollisionOverlayToolStripMenuItem})
+        Me.RenderToolStripMenuItem.Name = "RenderToolStripMenuItem"
+        Me.RenderToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+R"
+        Me.RenderToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.RenderToolStripMenuItem.Text = "Render"
+        '
+        'GraphicsToolStripMenuItem
+        '
+        Me.GraphicsToolStripMenuItem.Checked = True
+        Me.GraphicsToolStripMenuItem.CheckOnClick = True
+        Me.GraphicsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.GraphicsToolStripMenuItem.Name = "GraphicsToolStripMenuItem"
+        Me.GraphicsToolStripMenuItem.Size = New System.Drawing.Size(156, 22)
+        Me.GraphicsToolStripMenuItem.Text = "Graphics"
+        '
+        'CollisionOverlayToolStripMenuItem
+        '
+        Me.CollisionOverlayToolStripMenuItem.Checked = True
+        Me.CollisionOverlayToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CollisionOverlayToolStripMenuItem.Name = "CollisionOverlayToolStripMenuItem"
+        Me.CollisionOverlayToolStripMenuItem.Size = New System.Drawing.Size(156, 22)
+        Me.CollisionOverlayToolStripMenuItem.Text = "Collision overlay"
+        '
+        'ToolsToolStripMenuItem1
+        '
+        Me.ToolsToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MouseToolToolStripMenuItem1, Me.LockAxesToolStripMenuItem, Me.OptionsToolStripMenuItem2})
+        Me.ToolsToolStripMenuItem1.Name = "ToolsToolStripMenuItem1"
+        Me.ToolsToolStripMenuItem1.Size = New System.Drawing.Size(44, 27)
+        Me.ToolsToolStripMenuItem1.Text = "&Tools"
+        '
+        'MouseToolToolStripMenuItem1
+        '
+        Me.MouseToolToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CameraOnlyMenu, Me.ActorSelectorMenu, Me.CollisionToolStripMenuItem, Me.CollisionSelectorMenu, Me.DisplayListSelectorToolStripMenuItem})
+        Me.MouseToolToolStripMenuItem1.Name = "MouseToolToolStripMenuItem1"
+        Me.MouseToolToolStripMenuItem1.ShortcutKeyDisplayString = ""
+        Me.MouseToolToolStripMenuItem1.Size = New System.Drawing.Size(163, 22)
+        Me.MouseToolToolStripMenuItem1.Text = "Mouse Tool"
+        '
+        'CameraOnlyMenu
+        '
+        Me.CameraOnlyMenu.Name = "CameraOnlyMenu"
+        Me.CameraOnlyMenu.ShortcutKeyDisplayString = "1"
+        Me.CameraOnlyMenu.Size = New System.Drawing.Size(191, 22)
+        Me.CameraOnlyMenu.Text = "Camera only"
+        '
+        'ActorSelectorMenu
+        '
+        Me.ActorSelectorMenu.Name = "ActorSelectorMenu"
+        Me.ActorSelectorMenu.ShortcutKeyDisplayString = "2"
+        Me.ActorSelectorMenu.Size = New System.Drawing.Size(191, 22)
+        Me.ActorSelectorMenu.Text = "Actor Selector"
+        '
+        'CollisionToolStripMenuItem
+        '
+        Me.CollisionToolStripMenuItem.Name = "CollisionToolStripMenuItem"
+        Me.CollisionToolStripMenuItem.ShortcutKeyDisplayString = "3"
+        Me.CollisionToolStripMenuItem.Size = New System.Drawing.Size(191, 22)
+        Me.CollisionToolStripMenuItem.Text = "Collision Tri Selector"
+        '
+        'CollisionSelectorMenu
+        '
+        Me.CollisionSelectorMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EdgeToolStripMenuItem, Me.TriangleToolStripMenuItem, Me.VertexToolStripMenuItem})
+        Me.CollisionSelectorMenu.Name = "CollisionSelectorMenu"
+        Me.CollisionSelectorMenu.ShortcutKeyDisplayString = ""
+        Me.CollisionSelectorMenu.Size = New System.Drawing.Size(191, 22)
+        Me.CollisionSelectorMenu.Text = "Geometry Editor"
+        Me.CollisionSelectorMenu.Visible = False
+        '
+        'EdgeToolStripMenuItem
+        '
+        Me.EdgeToolStripMenuItem.Name = "EdgeToolStripMenuItem"
+        Me.EdgeToolStripMenuItem.ShortcutKeyDisplayString = "4"
+        Me.EdgeToolStripMenuItem.Size = New System.Drawing.Size(129, 22)
+        Me.EdgeToolStripMenuItem.Text = "Edge"
+        '
+        'TriangleToolStripMenuItem
+        '
+        Me.TriangleToolStripMenuItem.Name = "TriangleToolStripMenuItem"
+        Me.TriangleToolStripMenuItem.ShortcutKeyDisplayString = "5"
+        Me.TriangleToolStripMenuItem.Size = New System.Drawing.Size(129, 22)
+        Me.TriangleToolStripMenuItem.Text = "Triangle"
+        '
+        'VertexToolStripMenuItem
+        '
+        Me.VertexToolStripMenuItem.Name = "VertexToolStripMenuItem"
+        Me.VertexToolStripMenuItem.ShortcutKeyDisplayString = "6"
+        Me.VertexToolStripMenuItem.Size = New System.Drawing.Size(129, 22)
+        Me.VertexToolStripMenuItem.Text = "Vertex"
+        '
+        'DisplayListSelectorToolStripMenuItem
+        '
+        Me.DisplayListSelectorToolStripMenuItem.Name = "DisplayListSelectorToolStripMenuItem"
+        Me.DisplayListSelectorToolStripMenuItem.ShortcutKeyDisplayString = "7"
+        Me.DisplayListSelectorToolStripMenuItem.Size = New System.Drawing.Size(191, 22)
+        Me.DisplayListSelectorToolStripMenuItem.Text = "Display List selector"
+        '
+        'LockAxesToolStripMenuItem
+        '
+        Me.LockAxesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.XToolStripMenuItem, Me.YToolStripMenuItem, Me.DisableToolStripMenuItem})
+        Me.LockAxesToolStripMenuItem.Name = "LockAxesToolStripMenuItem"
+        Me.LockAxesToolStripMenuItem.ShortcutKeyDisplayString = "Space"
+        Me.LockAxesToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
+        Me.LockAxesToolStripMenuItem.Text = "Lock axes"
+        '
+        'XToolStripMenuItem
+        '
+        Me.XToolStripMenuItem.Name = "XToolStripMenuItem"
+        Me.XToolStripMenuItem.ShortcutKeyDisplayString = ""
+        Me.XToolStripMenuItem.Size = New System.Drawing.Size(111, 22)
+        Me.XToolStripMenuItem.Text = "X"
+        '
+        'YToolStripMenuItem
+        '
+        Me.YToolStripMenuItem.Name = "YToolStripMenuItem"
+        Me.YToolStripMenuItem.ShortcutKeyDisplayString = ""
+        Me.YToolStripMenuItem.Size = New System.Drawing.Size(111, 22)
+        Me.YToolStripMenuItem.Text = "Y"
+        '
+        'DisableToolStripMenuItem
+        '
+        Me.DisableToolStripMenuItem.Name = "DisableToolStripMenuItem"
+        Me.DisableToolStripMenuItem.ShortcutKeyDisplayString = ""
+        Me.DisableToolStripMenuItem.Size = New System.Drawing.Size(111, 22)
+        Me.DisableToolStripMenuItem.Text = "Disable"
+        '
+        'OptionsToolStripMenuItem2
+        '
+        Me.OptionsToolStripMenuItem2.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DisableDepthTestToolStripMenuItem})
+        Me.OptionsToolStripMenuItem2.Name = "OptionsToolStripMenuItem2"
+        Me.OptionsToolStripMenuItem2.Size = New System.Drawing.Size(163, 22)
+        Me.OptionsToolStripMenuItem2.Text = "Options"
+        '
+        'DisableDepthTestToolStripMenuItem
+        '
+        Me.DisableDepthTestToolStripMenuItem.CheckOnClick = True
+        Me.DisableDepthTestToolStripMenuItem.Name = "DisableDepthTestToolStripMenuItem"
+        Me.DisableDepthTestToolStripMenuItem.Size = New System.Drawing.Size(224, 22)
+        Me.DisableDepthTestToolStripMenuItem.Text = "Select actors behind graphics"
+        '
+        'ToolsToolStripMenuItem
+        '
+        Me.ToolsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OptionsToolStripMenuItem1, Me.RendererToolStripMenuItem})
+        Me.ToolsToolStripMenuItem.Name = "ToolsToolStripMenuItem"
+        Me.ToolsToolStripMenuItem.Size = New System.Drawing.Size(80, 27)
+        Me.ToolsToolStripMenuItem.Text = "&Preferences"
+        '
+        'OptionsToolStripMenuItem1
+        '
+        Me.OptionsToolStripMenuItem1.Name = "OptionsToolStripMenuItem1"
+        Me.OptionsToolStripMenuItem1.Size = New System.Drawing.Size(122, 22)
+        Me.OptionsToolStripMenuItem1.Text = "&Setup"
+        '
+        'RendererToolStripMenuItem
+        '
+        Me.RendererToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TexturesToolStripMenuItem, Me.ColorCombinerToolStripMenuItem, Me.AnisotropicFilteringToolStripMenuItem, Me.FullSceneAntialiasingToolStripMenuItem})
+        Me.RendererToolStripMenuItem.Name = "RendererToolStripMenuItem"
+        Me.RendererToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
+        Me.RendererToolStripMenuItem.Text = "Renderer"
+        '
+        'TexturesToolStripMenuItem
+        '
+        Me.TexturesToolStripMenuItem.Checked = True
+        Me.TexturesToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.TexturesToolStripMenuItem.Name = "TexturesToolStripMenuItem"
+        Me.TexturesToolStripMenuItem.Size = New System.Drawing.Size(183, 22)
+        Me.TexturesToolStripMenuItem.Text = "Textures"
+        '
+        'ColorCombinerToolStripMenuItem
+        '
+        Me.ColorCombinerToolStripMenuItem.Checked = True
+        Me.ColorCombinerToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.ColorCombinerToolStripMenuItem.Name = "ColorCombinerToolStripMenuItem"
+        Me.ColorCombinerToolStripMenuItem.Size = New System.Drawing.Size(183, 22)
+        Me.ColorCombinerToolStripMenuItem.Text = "Color Combiner"
+        '
+        'AnisotropicFilteringToolStripMenuItem
+        '
+        Me.AnisotropicFilteringToolStripMenuItem.Checked = True
+        Me.AnisotropicFilteringToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.AnisotropicFilteringToolStripMenuItem.Name = "AnisotropicFilteringToolStripMenuItem"
+        Me.AnisotropicFilteringToolStripMenuItem.Size = New System.Drawing.Size(183, 22)
+        Me.AnisotropicFilteringToolStripMenuItem.Text = "Anisotropic Filtering"
+        '
+        'FullSceneAntialiasingToolStripMenuItem
+        '
+        Me.FullSceneAntialiasingToolStripMenuItem.Checked = True
+        Me.FullSceneAntialiasingToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.FullSceneAntialiasingToolStripMenuItem.Name = "FullSceneAntialiasingToolStripMenuItem"
+        Me.FullSceneAntialiasingToolStripMenuItem.Size = New System.Drawing.Size(183, 22)
+        Me.FullSceneAntialiasingToolStripMenuItem.Text = "Full Scene Antialiasing"
+        '
+        'HelpToolStripMenuItem1
+        '
+        Me.HelpToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ContentsToolStripMenuItem, Me.AboutUoTToolStripMenuItem})
+        Me.HelpToolStripMenuItem1.Name = "HelpToolStripMenuItem1"
+        Me.HelpToolStripMenuItem1.Size = New System.Drawing.Size(41, 27)
+        Me.HelpToolStripMenuItem1.Text = "&Help"
+        '
+        'ContentsToolStripMenuItem
+        '
+        Me.ContentsToolStripMenuItem.Name = "ContentsToolStripMenuItem"
+        Me.ContentsToolStripMenuItem.Size = New System.Drawing.Size(127, 22)
+        Me.ContentsToolStripMenuItem.Text = "&Contents"
+        '
+        'AboutUoTToolStripMenuItem
+        '
+        Me.AboutUoTToolStripMenuItem.Name = "AboutUoTToolStripMenuItem"
+        Me.AboutUoTToolStripMenuItem.Size = New System.Drawing.Size(127, 22)
+        Me.AboutUoTToolStripMenuItem.Text = "&About UoT"
+        '
+        'UoTMainMenu
+        '
+        Me.UoTMainMenu.AllowMerge = False
+        Me.UoTMainMenu.AutoSize = False
+        Me.UoTMainMenu.BackColor = System.Drawing.SystemColors.ControlLight
+        Me.UoTMainMenu.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.UoTMainMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem1, Me.ToolStripMenuItem3, Me.EditToolStripMenuItem1, Me.ToolsToolStripMenuItem, Me.ToolsToolStripMenuItem1, Me.HelpToolStripMenuItem1})
+        Me.UoTMainMenu.Location = New System.Drawing.Point(0, 0)
+        Me.UoTMainMenu.Name = "UoTMainMenu"
+        Me.UoTMainMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
+        Me.UoTMainMenu.Size = New System.Drawing.Size(1160, 31)
+        Me.UoTMainMenu.Stretch = False
+        Me.UoTMainMenu.TabIndex = 40
+        Me.UoTMainMenu.Text = "MenuStrip1"
+        '
+        'ToolStripMenuItem3
+        '
+        Me.ToolStripMenuItem3.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UndoToolStripMenuItem1, Me.RedoToolStripMenuItem})
+        Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
+        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(40, 27)
+        Me.ToolStripMenuItem3.Text = "Edit"
+        Me.ToolStripMenuItem3.Visible = False
+        '
+        'UndoToolStripMenuItem1
+        '
+        Me.UndoToolStripMenuItem1.Name = "UndoToolStripMenuItem1"
+        Me.UndoToolStripMenuItem1.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Z), System.Windows.Forms.Keys)
+        Me.UndoToolStripMenuItem1.Size = New System.Drawing.Size(140, 22)
+        Me.UndoToolStripMenuItem1.Text = "&Undo"
+        '
+        'RedoToolStripMenuItem
+        '
+        Me.RedoToolStripMenuItem.Name = "RedoToolStripMenuItem"
+        Me.RedoToolStripMenuItem.Size = New System.Drawing.Size(140, 22)
+        Me.RedoToolStripMenuItem.Text = "&Redo"
+        Me.RedoToolStripMenuItem.Visible = False
+        '
+        'VertContextMenu
+        '
+        Me.VertContextMenu.BackColor = System.Drawing.SystemColors.Control
+        Me.VertContextMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem5, Me.ToolStripSeparator15, Me.ToolStripMenuItem6, Me.ToolStripMenuItem16, Me.ToolStripSeparator16, Me.ToolStripMenuItem20, Me.ToolStripMenuItem21, Me.ToolStripMenuItem33})
+        Me.VertContextMenu.Name = "ContextMenuStrip4"
+        Me.VertContextMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
+        Me.VertContextMenu.Size = New System.Drawing.Size(156, 148)
+        '
+        'ToolStripMenuItem5
+        '
+        Me.ToolStripMenuItem5.Name = "ToolStripMenuItem5"
+        Me.ToolStripMenuItem5.Size = New System.Drawing.Size(155, 22)
+        Me.ToolStripMenuItem5.Text = "Deselect"
+        '
+        'ToolStripSeparator15
+        '
+        Me.ToolStripSeparator15.Name = "ToolStripSeparator15"
+        Me.ToolStripSeparator15.Size = New System.Drawing.Size(152, 6)
+        '
+        'ToolStripMenuItem6
+        '
+        Me.ToolStripMenuItem6.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem7, Me.ToolStripMenuItem10, Me.ToolStripMenuItem13})
+        Me.ToolStripMenuItem6.Name = "ToolStripMenuItem6"
+        Me.ToolStripMenuItem6.Size = New System.Drawing.Size(155, 22)
+        Me.ToolStripMenuItem6.Text = "Rotate"
+        '
+        'ToolStripMenuItem7
+        '
+        Me.ToolStripMenuItem7.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem8, Me.ToolStripMenuItem9})
+        Me.ToolStripMenuItem7.Name = "ToolStripMenuItem7"
+        Me.ToolStripMenuItem7.Size = New System.Drawing.Size(81, 22)
+        Me.ToolStripMenuItem7.Text = "X"
+        '
+        'ToolStripMenuItem8
+        '
+        Me.ToolStripMenuItem8.Name = "ToolStripMenuItem8"
+        Me.ToolStripMenuItem8.Size = New System.Drawing.Size(141, 22)
+        Me.ToolStripMenuItem8.Text = "+ 90 degrees"
+        '
+        'ToolStripMenuItem9
+        '
+        Me.ToolStripMenuItem9.Name = "ToolStripMenuItem9"
+        Me.ToolStripMenuItem9.Size = New System.Drawing.Size(141, 22)
+        Me.ToolStripMenuItem9.Text = "- 90 degrees"
+        '
+        'ToolStripMenuItem10
+        '
+        Me.ToolStripMenuItem10.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem11, Me.ToolStripMenuItem12})
+        Me.ToolStripMenuItem10.Name = "ToolStripMenuItem10"
+        Me.ToolStripMenuItem10.Size = New System.Drawing.Size(81, 22)
+        Me.ToolStripMenuItem10.Text = "Y"
+        '
+        'ToolStripMenuItem11
+        '
+        Me.ToolStripMenuItem11.Name = "ToolStripMenuItem11"
+        Me.ToolStripMenuItem11.Size = New System.Drawing.Size(144, 22)
+        Me.ToolStripMenuItem11.Text = " + 90 degrees"
+        '
+        'ToolStripMenuItem12
+        '
+        Me.ToolStripMenuItem12.Name = "ToolStripMenuItem12"
+        Me.ToolStripMenuItem12.Size = New System.Drawing.Size(144, 22)
+        Me.ToolStripMenuItem12.Text = "- 90 degrees"
+        '
+        'ToolStripMenuItem13
+        '
+        Me.ToolStripMenuItem13.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem14, Me.ToolStripMenuItem15})
+        Me.ToolStripMenuItem13.Name = "ToolStripMenuItem13"
+        Me.ToolStripMenuItem13.Size = New System.Drawing.Size(81, 22)
+        Me.ToolStripMenuItem13.Text = "Z"
+        '
+        'ToolStripMenuItem14
+        '
+        Me.ToolStripMenuItem14.Name = "ToolStripMenuItem14"
+        Me.ToolStripMenuItem14.Size = New System.Drawing.Size(141, 22)
+        Me.ToolStripMenuItem14.Text = "+ 90 degrees"
+        '
+        'ToolStripMenuItem15
+        '
+        Me.ToolStripMenuItem15.Name = "ToolStripMenuItem15"
+        Me.ToolStripMenuItem15.Size = New System.Drawing.Size(141, 22)
+        Me.ToolStripMenuItem15.Text = "- 90 degrees"
+        '
+        'ToolStripMenuItem16
+        '
+        Me.ToolStripMenuItem16.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem17, Me.ToolStripMenuItem18, Me.ToolStripMenuItem19})
+        Me.ToolStripMenuItem16.Name = "ToolStripMenuItem16"
+        Me.ToolStripMenuItem16.Size = New System.Drawing.Size(155, 22)
+        Me.ToolStripMenuItem16.Text = "Align"
+        '
+        'ToolStripMenuItem17
+        '
+        Me.ToolStripMenuItem17.Name = "ToolStripMenuItem17"
+        Me.ToolStripMenuItem17.Size = New System.Drawing.Size(81, 22)
+        Me.ToolStripMenuItem17.Text = "X"
+        '
+        'ToolStripMenuItem18
+        '
+        Me.ToolStripMenuItem18.Name = "ToolStripMenuItem18"
+        Me.ToolStripMenuItem18.Size = New System.Drawing.Size(81, 22)
+        Me.ToolStripMenuItem18.Text = "Y"
+        '
+        'ToolStripMenuItem19
+        '
+        Me.ToolStripMenuItem19.Name = "ToolStripMenuItem19"
+        Me.ToolStripMenuItem19.Size = New System.Drawing.Size(81, 22)
+        Me.ToolStripMenuItem19.Text = "Z"
+        '
+        'ToolStripSeparator16
+        '
+        Me.ToolStripSeparator16.Name = "ToolStripSeparator16"
+        Me.ToolStripSeparator16.Size = New System.Drawing.Size(152, 6)
+        '
+        'ToolStripMenuItem20
+        '
+        Me.ToolStripMenuItem20.Name = "ToolStripMenuItem20"
+        Me.ToolStripMenuItem20.Size = New System.Drawing.Size(155, 22)
+        Me.ToolStripMenuItem20.Text = "Copy attributes"
+        '
+        'ToolStripMenuItem21
+        '
+        Me.ToolStripMenuItem21.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem22, Me.ToolStripMenuItem27, Me.ToolStripMenuItem32})
+        Me.ToolStripMenuItem21.Enabled = False
+        Me.ToolStripMenuItem21.Name = "ToolStripMenuItem21"
+        Me.ToolStripMenuItem21.Size = New System.Drawing.Size(155, 22)
+        Me.ToolStripMenuItem21.Text = "Paste attributes"
+        '
+        'ToolStripMenuItem22
+        '
+        Me.ToolStripMenuItem22.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem23, Me.ToolStripMenuItem24, Me.ToolStripMenuItem25, Me.ToolStripMenuItem26})
+        Me.ToolStripMenuItem22.Name = "ToolStripMenuItem22"
+        Me.ToolStripMenuItem22.Size = New System.Drawing.Size(185, 22)
+        Me.ToolStripMenuItem22.Text = "Position"
+        '
+        'ToolStripMenuItem23
+        '
+        Me.ToolStripMenuItem23.Name = "ToolStripMenuItem23"
+        Me.ToolStripMenuItem23.Size = New System.Drawing.Size(88, 22)
+        Me.ToolStripMenuItem23.Text = "X"
+        '
+        'ToolStripMenuItem24
+        '
+        Me.ToolStripMenuItem24.Name = "ToolStripMenuItem24"
+        Me.ToolStripMenuItem24.Size = New System.Drawing.Size(88, 22)
+        Me.ToolStripMenuItem24.Text = "Y"
+        '
+        'ToolStripMenuItem25
+        '
+        Me.ToolStripMenuItem25.Name = "ToolStripMenuItem25"
+        Me.ToolStripMenuItem25.Size = New System.Drawing.Size(88, 22)
+        Me.ToolStripMenuItem25.Text = "Z"
+        '
+        'ToolStripMenuItem26
+        '
+        Me.ToolStripMenuItem26.Name = "ToolStripMenuItem26"
+        Me.ToolStripMenuItem26.Size = New System.Drawing.Size(88, 22)
+        Me.ToolStripMenuItem26.Text = "All"
+        '
+        'ToolStripMenuItem27
+        '
+        Me.ToolStripMenuItem27.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem28, Me.ToolStripMenuItem29, Me.ToolStripMenuItem30, Me.ToolStripMenuItem31})
+        Me.ToolStripMenuItem27.Name = "ToolStripMenuItem27"
+        Me.ToolStripMenuItem27.Size = New System.Drawing.Size(185, 22)
+        Me.ToolStripMenuItem27.Text = "Rotation"
+        '
+        'ToolStripMenuItem28
+        '
+        Me.ToolStripMenuItem28.Name = "ToolStripMenuItem28"
+        Me.ToolStripMenuItem28.Size = New System.Drawing.Size(88, 22)
+        Me.ToolStripMenuItem28.Text = "X"
+        '
+        'ToolStripMenuItem29
+        '
+        Me.ToolStripMenuItem29.Name = "ToolStripMenuItem29"
+        Me.ToolStripMenuItem29.Size = New System.Drawing.Size(88, 22)
+        Me.ToolStripMenuItem29.Text = "Y"
+        '
+        'ToolStripMenuItem30
+        '
+        Me.ToolStripMenuItem30.Name = "ToolStripMenuItem30"
+        Me.ToolStripMenuItem30.Size = New System.Drawing.Size(88, 22)
+        Me.ToolStripMenuItem30.Text = "Z"
+        '
+        'ToolStripMenuItem31
+        '
+        Me.ToolStripMenuItem31.Name = "ToolStripMenuItem31"
+        Me.ToolStripMenuItem31.Size = New System.Drawing.Size(88, 22)
+        Me.ToolStripMenuItem31.Text = "All"
+        '
+        'ToolStripMenuItem32
+        '
+        Me.ToolStripMenuItem32.Name = "ToolStripMenuItem32"
+        Me.ToolStripMenuItem32.Size = New System.Drawing.Size(185, 22)
+        Me.ToolStripMenuItem32.Text = "Number and Variable"
+        '
+        'ToolStripMenuItem33
+        '
+        Me.ToolStripMenuItem33.Enabled = False
+        Me.ToolStripMenuItem33.Name = "ToolStripMenuItem33"
+        Me.ToolStripMenuItem33.Size = New System.Drawing.Size(155, 22)
+        Me.ToolStripMenuItem33.Text = "Clear clipboard"
+        '
+        'RipDL
+        '
+        Me.RipDL.Filter = "RAW F3DEX2 Display List (*.f3dex2)|*.f3dex2"
+        '
+        'SaveROMAs
+        '
+        Me.SaveROMAs.Filter = "N64 ROMs|*.z64;*.n64;*.v64;*.rom"
+        '
+        'VarContextMenu
+        '
+        Me.VarContextMenu.Name = "VarContextMenu"
+        Me.VarContextMenu.Size = New System.Drawing.Size(61, 4)
+        '
+        'NumContextMenu
+        '
+        Me.NumContextMenu.Name = "NumContextMenu"
+        Me.NumContextMenu.Size = New System.Drawing.Size(61, 4)
+        '
+        'GrpContextMenu
+        '
+        Me.GrpContextMenu.Name = "GrpContextMenu"
+        Me.GrpContextMenu.Size = New System.Drawing.Size(61, 4)
+        '
+        'MainWin
+        '
+        Me.AllowDrop = True
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
+        Me.ClientSize = New System.Drawing.Size(1160, 649)
+        Me.Controls.Add(Me.Label29)
+        Me.Controls.Add(Me.TreeFind)
+        Me.Controls.Add(Me.FileTree)
+        Me.Controls.Add(Me.ROMBrowser)
+        Me.Controls.Add(Me.Label12)
+        Me.Controls.Add(Me.Label43)
+        Me.Controls.Add(Me.EditingTabs)
+        Me.Controls.Add(Me.TrackBar1)
+        Me.Controls.Add(Me.TrackBar4)
+        Me.Controls.Add(Me.UoTStatus)
+        Me.Controls.Add(Me.UoTMainMenu)
+        Me.Controls.Add(Me.UoTRender)
+        Me.DoubleBuffered = True
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MainMenuStrip = Me.UoTMainMenu
+        Me.Name = "MainWin"
+        Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show
+        Me.Text = "Utility of Time R8"
+        Me.UoTStatus.ResumeLayout(False)
+        Me.UoTStatus.PerformLayout()
+        CType(Me.TrackBar4, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.CollisionTab.ResumeLayout(False)
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
+        Me.CollisionGroupBox.ResumeLayout(False)
+        Me.CollisionGroupBox.PerformLayout()
+        Me.MiscTab.ResumeLayout(False)
+        Me.MiscTab.PerformLayout()
+        Me.GroupBox9.ResumeLayout(False)
+        Me.GroupBox9.PerformLayout()
+        Me.GroupBox10.ResumeLayout(False)
+        Me.GroupBox10.PerformLayout()
+        Me.GroupBox8.ResumeLayout(False)
+        Me.GroupBox8.PerformLayout()
+        Me.LevelFlagsTab.ResumeLayout(False)
+        Me.GroupBox6.ResumeLayout(False)
+        Me.GroupBox6.PerformLayout()
+        Me.ActorsTab.ResumeLayout(False)
+        Me.GroupBox4.ResumeLayout(False)
+        Me.GroupBox4.PerformLayout()
+        Me.GroupBox5.ResumeLayout(False)
+        Me.GroupBox5.PerformLayout()
+        Me.EditingTabs.ResumeLayout(False)
+        Me.AnimationsTab.ResumeLayout(False)
+        Me.SplitContainer1.Panel1.ResumeLayout(False)
+        Me.SplitContainer1.Panel2.ResumeLayout(False)
+        CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitContainer1.ResumeLayout(False)
+        Me.AnimationSetGroup.ResumeLayout(False)
+        Me.AnimationSetGroup.PerformLayout()
+        Me.DLTab.ResumeLayout(False)
+        Me.DLTab.PerformLayout()
+        Me.GroupBox7.ResumeLayout(False)
+        Me.GroupBox7.PerformLayout()
+        Me.DLEditorContextMenu.ResumeLayout(False)
+        Me.GroupBox3.ResumeLayout(False)
+        Me.GroupBox3.PerformLayout()
+        Me.BackupMenuStrip.ResumeLayout(False)
+        CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ActorContextMenu.ResumeLayout(False)
+        Me.ROMBrowser.ResumeLayout(False)
+        Me.ROMDataTabs.ResumeLayout(False)
+        Me.UoTMainMenu.ResumeLayout(False)
+        Me.UoTMainMenu.PerformLayout()
+        Me.VertContextMenu.ResumeLayout(False)
+        Me.ResumeLayout(False)
+        Me.PerformLayout()
 
-  End Sub
+    End Sub
 
 #End Region
 
@@ -2989,7 +2990,7 @@ Public Class MainWin
 
 #Region "ROM HANDLING RELATED"
 
-  Private ActorTable() As ActorTbl
+    Private ActorTable() As ActorTbl
   Private ObjectTable() As ObjectTbl
   Private RecentROMCount As Integer = 0
   Private RecentIndCount As Integer = 0

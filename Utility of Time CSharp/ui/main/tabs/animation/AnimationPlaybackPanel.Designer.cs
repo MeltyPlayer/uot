@@ -24,7 +24,6 @@
     /// </summary>
     private void InitializeComponent() {
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AnimationPlaybackPanel));
-      this.Label5 = new System.Windows.Forms.Label();
       this.PlaybackGroup = new System.Windows.Forms.GroupBox();
       this.FrameRateSelector = new System.Windows.Forms.NumericUpDown();
       this.Label27 = new System.Windows.Forms.Label();
@@ -39,16 +38,6 @@
       ((System.ComponentModel.ISupportInitialize)(this.FrameTrackBar)).BeginInit();
       this.SuspendLayout();
       // 
-      // Label5
-      // 
-      this.Label5.Anchor = System.Windows.Forms.AnchorStyles.Top;
-      this.Label5.AutoSize = true;
-      this.Label5.Location = new System.Drawing.Point(12, 23);
-      this.Label5.Name = "Label5";
-      this.Label5.Size = new System.Drawing.Size(40, 13);
-      this.Label5.TabIndex = 16;
-      this.Label5.Text = "Tracks";
-      // 
       // PlaybackGroup
       // 
       this.PlaybackGroup.Controls.Add(this.FrameRateSelector);
@@ -62,16 +51,16 @@
       this.PlaybackGroup.Dock = System.Windows.Forms.DockStyle.Fill;
       this.PlaybackGroup.Location = new System.Drawing.Point(0, 0);
       this.PlaybackGroup.Name = "PlaybackGroup";
-      this.PlaybackGroup.Size = new System.Drawing.Size(212, 133);
+      this.PlaybackGroup.Size = new System.Drawing.Size(212, 117);
       this.PlaybackGroup.TabIndex = 17;
       this.PlaybackGroup.TabStop = false;
       this.PlaybackGroup.Text = "Playback";
       // 
       // FrameRateSelector
       // 
-      this.FrameRateSelector.Anchor = System.Windows.Forms.AnchorStyles.Top;
+      this.FrameRateSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
       this.FrameRateSelector.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.FrameRateSelector.Location = new System.Drawing.Point(131, 100);
+      this.FrameRateSelector.Location = new System.Drawing.Point(134, 63);
       this.FrameRateSelector.Maximum = new decimal(new int[] {
             60,
             0,
@@ -93,9 +82,9 @@
       // 
       // Label27
       // 
-      this.Label27.Anchor = System.Windows.Forms.AnchorStyles.Top;
+      this.Label27.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
       this.Label27.AutoSize = true;
-      this.Label27.Location = new System.Drawing.Point(176, 102);
+      this.Label27.Location = new System.Drawing.Point(176, 65);
       this.Label27.Name = "Label27";
       this.Label27.Size = new System.Drawing.Size(27, 13);
       this.Label27.TabIndex = 12;
@@ -104,19 +93,17 @@
       // FrameNo
       // 
       this.FrameNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.FrameNo.AutoSize = true;
-      this.FrameNo.Location = new System.Drawing.Point(169, 74);
+      this.FrameNo.Location = new System.Drawing.Point(160, 17);
       this.FrameNo.Name = "FrameNo";
-      this.FrameNo.Size = new System.Drawing.Size(24, 13);
+      this.FrameNo.Size = new System.Drawing.Size(41, 13);
       this.FrameNo.TabIndex = 8;
       this.FrameNo.Text = "0/0";
       this.FrameNo.TextAlign = System.Drawing.ContentAlignment.TopRight;
       // 
       // AnimationElapse
       // 
-      this.AnimationElapse.Anchor = System.Windows.Forms.AnchorStyles.Top;
       this.AnimationElapse.AutoSize = true;
-      this.AnimationElapse.Location = new System.Drawing.Point(12, 74);
+      this.AnimationElapse.Location = new System.Drawing.Point(12, 17);
       this.AnimationElapse.Name = "AnimationElapse";
       this.AnimationElapse.Size = new System.Drawing.Size(27, 13);
       this.AnimationElapse.TabIndex = 7;
@@ -124,10 +111,9 @@
       // 
       // LoopCheckBox
       // 
-      this.LoopCheckBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
       this.LoopCheckBox.Image = global::UoT.Properties.Resources.Button_Refresh_icon;
       this.LoopCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-      this.LoopCheckBox.Location = new System.Drawing.Point(129, 9);
+      this.LoopCheckBox.Location = new System.Drawing.Point(16, 89);
       this.LoopCheckBox.Name = "LoopCheckBox";
       this.LoopCheckBox.Size = new System.Drawing.Size(70, 24);
       this.LoopCheckBox.TabIndex = 3;
@@ -136,12 +122,11 @@
       // 
       // StopButton
       // 
-      this.StopButton.Anchor = System.Windows.Forms.AnchorStyles.Top;
       this.StopButton.Image = global::UoT.Properties.Resources.Button_Stop_icon;
       this.StopButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-      this.StopButton.Location = new System.Drawing.Point(72, 95);
+      this.StopButton.Location = new System.Drawing.Point(68, 59);
       this.StopButton.Name = "StopButton";
-      this.StopButton.Size = new System.Drawing.Size(53, 28);
+      this.StopButton.Size = new System.Drawing.Size(51, 28);
       this.StopButton.TabIndex = 2;
       this.StopButton.Text = "Stop";
       this.StopButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -149,12 +134,11 @@
       // 
       // PlayButton
       // 
-      this.PlayButton.Anchor = System.Windows.Forms.AnchorStyles.Top;
       this.PlayButton.Image = ((System.Drawing.Image)(resources.GetObject("PlayButton.Image")));
       this.PlayButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-      this.PlayButton.Location = new System.Drawing.Point(15, 95);
+      this.PlayButton.Location = new System.Drawing.Point(15, 59);
       this.PlayButton.Name = "PlayButton";
-      this.PlayButton.Size = new System.Drawing.Size(51, 27);
+      this.PlayButton.Size = new System.Drawing.Size(51, 28);
       this.PlayButton.TabIndex = 1;
       this.PlayButton.Text = "Play";
       this.PlayButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -162,34 +146,33 @@
       // 
       // FrameTrackBar
       // 
+      this.FrameTrackBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.FrameTrackBar.AutoSize = false;
       this.FrameTrackBar.BackColor = System.Drawing.SystemColors.Control;
       this.FrameTrackBar.LargeChange = 2;
-      this.FrameTrackBar.Location = new System.Drawing.Point(8, 44);
+      this.FrameTrackBar.Location = new System.Drawing.Point(8, 32);
       this.FrameTrackBar.Maximum = 1;
       this.FrameTrackBar.Name = "FrameTrackBar";
-      this.FrameTrackBar.Size = new System.Drawing.Size(197, 45);
+      this.FrameTrackBar.Size = new System.Drawing.Size(197, 24);
       this.FrameTrackBar.TabIndex = 14;
       // 
       // AnimationPlaybackPanel
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.Controls.Add(this.Label5);
       this.Controls.Add(this.PlaybackGroup);
       this.Name = "AnimationPlaybackPanel";
-      this.Size = new System.Drawing.Size(212, 133);
+      this.Size = new System.Drawing.Size(212, 117);
       this.PlaybackGroup.ResumeLayout(false);
       this.PlaybackGroup.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.FrameRateSelector)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.FrameTrackBar)).EndInit();
       this.ResumeLayout(false);
-      this.PerformLayout();
 
     }
 
     #endregion
-
-    internal System.Windows.Forms.Label Label5;
     internal System.Windows.Forms.GroupBox PlaybackGroup;
     internal System.Windows.Forms.Label Label27;
     internal System.Windows.Forms.Label FrameNo;
