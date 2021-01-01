@@ -285,9 +285,6 @@
     <Content Include="Tao GL Libs\Tao.Platform.Windows.xml" />
     <None Include="packages.config" />
     <None Include="Resources\icon_txt.gif" />
-    <None Include="Resources\Button-Refresh-icon.png" />
-    <None Include="Resources\Button-Stop-icon.png" />
-    <None Include="Resources\Button-Play-icon.png" />
     <Compile Include="Animation\ZAnimation.vb" />
     <Compile Include="ApplicationEvents.vb" />
     <Compile Include="Databases\PresetReader.vb" />

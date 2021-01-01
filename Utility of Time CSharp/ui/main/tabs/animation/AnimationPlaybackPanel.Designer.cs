@@ -30,7 +30,7 @@
       this.FrameNo = new System.Windows.Forms.Label();
       this.AnimationElapse = new System.Windows.Forms.Label();
       this.LoopCheckBox = new System.Windows.Forms.CheckBox();
-      this.StopButton = new System.Windows.Forms.Button();
+      this.PauseButton = new System.Windows.Forms.Button();
       this.PlayButton = new System.Windows.Forms.Button();
       this.FrameTrackBar = new UoT.TransparentTrackBar();
       this.PlaybackGroup.SuspendLayout();
@@ -45,7 +45,7 @@
       this.PlaybackGroup.Controls.Add(this.FrameNo);
       this.PlaybackGroup.Controls.Add(this.AnimationElapse);
       this.PlaybackGroup.Controls.Add(this.LoopCheckBox);
-      this.PlaybackGroup.Controls.Add(this.StopButton);
+      this.PlaybackGroup.Controls.Add(this.PauseButton);
       this.PlaybackGroup.Controls.Add(this.PlayButton);
       this.PlaybackGroup.Controls.Add(this.FrameTrackBar);
       this.PlaybackGroup.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -93,9 +93,10 @@
       // FrameNo
       // 
       this.FrameNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.FrameNo.AutoSize = true;
       this.FrameNo.Location = new System.Drawing.Point(160, 17);
       this.FrameNo.Name = "FrameNo";
-      this.FrameNo.Size = new System.Drawing.Size(41, 13);
+      this.FrameNo.Size = new System.Drawing.Size(24, 13);
       this.FrameNo.TabIndex = 8;
       this.FrameNo.Text = "0/0";
       this.FrameNo.TextAlign = System.Drawing.ContentAlignment.TopRight;
@@ -111,7 +112,7 @@
       // 
       // LoopCheckBox
       // 
-      this.LoopCheckBox.Image = global::UoT.Properties.Resources.Button_Refresh_icon;
+      this.LoopCheckBox.Image = ((System.Drawing.Image)(resources.GetObject("LoopCheckBox.Image")));
       this.LoopCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
       this.LoopCheckBox.Location = new System.Drawing.Point(16, 89);
       this.LoopCheckBox.Name = "LoopCheckBox";
@@ -120,17 +121,17 @@
       this.LoopCheckBox.Text = "Loop";
       this.LoopCheckBox.UseVisualStyleBackColor = true;
       // 
-      // StopButton
+      // PauseButton
       // 
-      this.StopButton.Image = global::UoT.Properties.Resources.Button_Stop_icon;
-      this.StopButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-      this.StopButton.Location = new System.Drawing.Point(68, 59);
-      this.StopButton.Name = "StopButton";
-      this.StopButton.Size = new System.Drawing.Size(51, 28);
-      this.StopButton.TabIndex = 2;
-      this.StopButton.Text = "Stop";
-      this.StopButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-      this.StopButton.UseVisualStyleBackColor = true;
+      this.PauseButton.Image = ((System.Drawing.Image)(resources.GetObject("PauseButton.Image")));
+      this.PauseButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+      this.PauseButton.Location = new System.Drawing.Point(68, 59);
+      this.PauseButton.Name = "PauseButton";
+      this.PauseButton.Size = new System.Drawing.Size(60, 28);
+      this.PauseButton.TabIndex = 2;
+      this.PauseButton.Text = "Pause";
+      this.PauseButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this.PauseButton.UseVisualStyleBackColor = true;
       // 
       // PlayButton
       // 
@@ -179,7 +180,7 @@
     internal System.Windows.Forms.Label AnimationElapse;
     private System.Windows.Forms.NumericUpDown FrameRateSelector;
     private System.Windows.Forms.CheckBox LoopCheckBox;
-    private System.Windows.Forms.Button StopButton;
+    private System.Windows.Forms.Button PauseButton;
     private System.Windows.Forms.Button PlayButton;
     private TransparentTrackBar FrameTrackBar;
   }

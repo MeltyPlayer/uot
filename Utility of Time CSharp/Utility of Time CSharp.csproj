@@ -126,6 +126,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="TaoButton.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -162,6 +163,8 @@
     <None Include="Resources\Button-Refresh-icon.png" />
     <None Include="Resources\Button-Stop-icon.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ui\main\tabs\files\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

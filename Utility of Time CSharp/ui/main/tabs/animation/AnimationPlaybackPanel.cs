@@ -4,6 +4,7 @@ using System.Windows.Forms;
 namespace UoT {
   public partial class AnimationPlaybackPanel : UserControl, IAnimationPlaybackManager {
     // TODO: Add tests.
+    // TODO: How to right-align label?
 
     private readonly IAnimationPlaybackManager impl_ = new FrameAdvancer();
 
@@ -13,7 +14,7 @@ namespace UoT {
       this.PlayButton.Click += (object sender, EventArgs e) => {
         this.IsPlaying = true;
       };
-      this.StopButton.Click += (object sender, EventArgs e) => {
+      this.PauseButton.Click += (object sender, EventArgs e) => {
         this.IsPlaying = false;
       };
       this.LoopCheckBox.Click += (object sender, EventArgs e) => {
