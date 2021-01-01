@@ -5,6 +5,7 @@ Imports System.IO
 Imports Tao.FreeGlut
 Imports System.Numerics
 Imports MathNet.Numerics.LinearAlgebra.Double
+Imports UoT.memory.files
 Imports UoT.ui.main.tabs.animation
 
 Public Class MainWin
@@ -5102,56 +5103,60 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
         Case "gameplay_field_keep"
 
         Case "gameplay_dangeon_keep"
-
       End Select
+
+      Dim file As IZFile
+
       If curfilename.Contains("_scene") Then
         sccount += 1
+
+        file = New ZSc
+
         ReDim Preserve ROMFiles.Levels(sccount)
-        With ROMFiles.Levels(sccount)
-          .filename = curfilename
-          .betterFilename = betterFilename
-          .startoff = tempstart(nameinc)
-          .endoff = tempend(nameinc)
-        End With
+        ROMFiles.Levels(sccount) = file
+
         mapcount = 0
       ElseIf curfilename.Contains("room_") Then
+        file = New ZMap
+
         ReDim Preserve ROMFiles.Levels(sccount).Maps(mapcount)
-        With ROMFiles.Levels(sccount).Maps(mapcount)
-          .filename = curfilename
-          .startoff = tempstart(nameinc)
-          .endoff = tempend(nameinc)
-        End With
+        ROMFiles.Levels(sccount).Maps(mapcount) = file
+
         mapcount += 1
       ElseIf Mid(curfilename, 1, 7).ToLower = "object_" Then
+        file = New ZObj
+
         ReDim Preserve ROMFiles.Objects(objcount)
-        With ROMFiles.Objects(objcount)
-          .filename = curfilename
-          .betterFilename = betterFilename
-          .startoff = tempstart(nameinc)
-          .endoff = tempend(nameinc)
-        End With
+        ROMFiles.Objects(objcount) = file
+
         objcount += 1
         mapcount = 0
         sccount = -1
       ElseIf Mid(curfilename, 1, 4).ToLower = "ovl_" Then
+        file = New ZCodeFiles
+
         ReDim Preserve ROMFiles.ActorCode(codecount)
-        With ROMFiles.ActorCode(codecount)
-          .filename = curfilename
-          .startoff = tempstart(nameinc)
-          .endoff = tempend(nameinc)
-        End With
+        ROMFiles.ActorCode(codecount) = file
+
         codecount += 1
       Else
+        file = New ZOtherData
+
         ReDim Preserve ROMFiles.Others(othercount)
-        With ROMFiles.Others(othercount)
-          .filename = curfilename
-          .startoff = tempstart(nameinc)
-          .endoff = tempend(nameinc)
-        End With
+        ROMFiles.Others(othercount) = file
+
         othercount += 1
         mapcount = 0
         sccount = -1
       End If
+
+      With file
+        .FileName = curfilename
+        .BetterFileName = betterFilename
+        .StartOffset = tempstart(nameinc)
+        .EndOffset = tempend(nameinc)
+      End With
+
       nameinc += 1
     End While
     PopulateCommonBanks()
@@ -5203,26 +5208,26 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       RamBanks.CommonBankUse = commonBankUse
 
       For i As Integer = 0 To ROMFiles.Others.Length - 1
-        fileSize = ROMFiles.Others(i).endoff - ROMFiles.Others(i).startoff
+        fileSize = ROMFiles.Others(i).EndOffset - ROMFiles.Others(i).StartOffset
         If ROMFiles.Others(i).filename = "gameplay_keep" Then
           .Bank4.Banks(0).Data = New SimpleRamBank
-          .Bank4.Banks(0).Data.PopulateFromStream(romFS, ROMFiles.Others(i).startoff, fileSize)
-          .Bank4.Banks(0).StartOffset = ROMFiles.Others(i).startoff
-          .Bank4.Banks(0).EndOffset = ROMFiles.Others(i).endoff
+          .Bank4.Banks(0).Data.PopulateFromStream(romFS, ROMFiles.Others(i).StartOffset, fileSize)
+          .Bank4.Banks(0).StartOffset = ROMFiles.Others(i).StartOffset
+          .Bank4.Banks(0).EndOffset = ROMFiles.Others(i).EndOffset
         ElseIf ROMFiles.Others(i).filename = "gameplay_field_keep" Then
           .Bank5.Banks(0).Data = New SimpleRamBank
-          .Bank5.Banks(0).Data.PopulateFromStream(romFS, ROMFiles.Others(i).startoff, fileSize)
-          .Bank5.Banks(0).StartOffset = ROMFiles.Others(i).startoff
-          .Bank5.Banks(0).EndOffset = ROMFiles.Others(i).endoff
+          .Bank5.Banks(0).Data.PopulateFromStream(romFS, ROMFiles.Others(i).StartOffset, fileSize)
+          .Bank5.Banks(0).StartOffset = ROMFiles.Others(i).StartOffset
+          .Bank5.Banks(0).EndOffset = ROMFiles.Others(i).EndOffset
         ElseIf ROMFiles.Others(i).filename = "gameplay_dangeon_keep" Then
           .Bank5.Banks(1).Data = New SimpleRamBank
-          .Bank5.Banks(1).Data.PopulateFromStream(romFS, ROMFiles.Others(i).startoff, fileSize)
-          .Bank5.Banks(1).StartOffset = ROMFiles.Others(i).startoff
-          .Bank5.Banks(1).EndOffset = ROMFiles.Others(i).endoff
+          .Bank5.Banks(1).Data.PopulateFromStream(romFS, ROMFiles.Others(i).StartOffset, fileSize)
+          .Bank5.Banks(1).StartOffset = ROMFiles.Others(i).StartOffset
+          .Bank5.Banks(1).EndOffset = ROMFiles.Others(i).EndOffset
         ElseIf ROMFiles.Others(i).filename = "icon_item_static" Then
-          RamBanks.IconItemStatic.PopulateFromStream(romFS, ROMFiles.Others(i).startoff, fileSize)
+          RamBanks.IconItemStatic.PopulateFromStream(romFS, ROMFiles.Others(i).StartOffset, fileSize)
         ElseIf ROMFiles.Others(i).filename = "icon_item_24_static" Then
-          RamBanks.IconItem24Static.PopulateFromStream(romFS, ROMFiles.Others(i).startoff, fileSize)
+          RamBanks.IconItem24Static.PopulateFromStream(romFS, ROMFiles.Others(i).StartOffset, fileSize)
         End If
       Next
       Dim animBankCnt As Integer = 0
@@ -5230,29 +5235,29 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       animationbank.Items.Add("Inline with model")
 
       For i As Integer = 0 To ROMFiles.Others.Length - 1
-        fileSize = ROMFiles.Others(i).endoff - ROMFiles.Others(i).startoff
+        fileSize = ROMFiles.Others(i).EndOffset - ROMFiles.Others(i).StartOffset
         If ROMFiles.Others(i).filename = "link_animetion" Then
           animationbank.Items.Add(ROMFiles.Others(i).filename)
           ReDim Preserve .Anims.Banks(animBankCnt)
           .Anims.Banks(animBankCnt).Data = New SimpleRamBank
-          .Anims.Banks(animBankCnt).Data.PopulateFromStream(romFS, ROMFiles.Others(i).startoff, fileSize)
-          .Anims.Banks(animBankCnt).StartOffset = ROMFiles.Others(i).startoff
-          .Anims.Banks(animBankCnt).EndOffset = ROMFiles.Others(i).endoff
+          .Anims.Banks(animBankCnt).Data.PopulateFromStream(romFS, ROMFiles.Others(i).StartOffset, fileSize)
+          .Anims.Banks(animBankCnt).StartOffset = ROMFiles.Others(i).StartOffset
+          .Anims.Banks(animBankCnt).EndOffset = ROMFiles.Others(i).EndOffset
           animBankCnt += 1
         End If
       Next
 
       For i As Integer = 0 To ROMFiles.Objects.Length - 1
-        fileSize = ROMFiles.Objects(i).endoff - ROMFiles.Objects(i).startoff
+        fileSize = ROMFiles.Objects(i).EndOffset - ROMFiles.Objects(i).StartOffset
         If _
           (ROMFiles.Objects(i).filename.ToLower.Contains("object_") And
            ROMFiles.Objects(i).filename.ToLower.Contains("_anime")) Then
           animationbank.Items.Add(ROMFiles.Objects(i).betterFilename)
           ReDim Preserve .Anims.Banks(animBankCnt)
           .Anims.Banks(animBankCnt).Data = New SimpleRamBank
-          .Anims.Banks(animBankCnt).Data.PopulateFromStream(romFS, ROMFiles.Objects(i).startoff, fileSize)
-          .Anims.Banks(animBankCnt).StartOffset = ROMFiles.Objects(i).startoff
-          .Anims.Banks(animBankCnt).EndOffset = ROMFiles.Objects(i).endoff
+          .Anims.Banks(animBankCnt).Data.PopulateFromStream(romFS, ROMFiles.Objects(i).StartOffset, fileSize)
+          .Anims.Banks(animBankCnt).StartOffset = ROMFiles.Objects(i).StartOffset
+          .Anims.Banks(animBankCnt).EndOffset = ROMFiles.Objects(i).EndOffset
           animBankCnt += 1
         End If
       Next
@@ -7279,11 +7284,12 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     Dim CurrentNodeText As String = FileTree.SelectedNode.Text
 
     Select Case CurrentNodeText
-      Case "Actor models", "Levels", "Others", "Actor code"
+      Case "Actor models", "Scenes", "Others", "Actor code"
         Exit Sub
     End Select
 
     Dim CurrentNodeParent As String = FileTree.SelectedNode.Parent.Text
+    Dim ParentOfParent As String = FileTree.SelectedNode.Parent?.Parent?.Text
     Dim filetype As Integer = FileTree.SelectedNode.Parent.Index
     Dim filename As Integer = FileTree.SelectedNode.Index
 
@@ -7292,15 +7298,17 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     ROMFileStream.Close()
     ROMFileStream = New FileStream(DefROM, FileMode.Open)
 
-    If CurrentNodeParent.Contains("_scene") Then
-      SceneSt = ROMFiles.Levels(filetype).startoff
-      MapSt = ROMFiles.Levels(filetype).Maps(filename).startoff
 
-      MapBuffSize = (ROMFiles.Levels(filetype).Maps(filename).endoff - MapSt)
-      ScBuffSize = (ROMFiles.Levels(filetype).endoff - SceneSt)
+    ' TODO: Switch based on filetype instead.
+    If ParentOfParent = "Scenes" Then
+      SceneSt = ROMFiles.Levels(filetype).StartOffset
+      MapSt = ROMFiles.Levels(filetype).Maps(filename).StartOffset
 
-      MapFilename = ROMFiles.Levels(filetype).Maps(filename).filename
-      ScFilename = ROMFiles.Levels(filetype).filename
+      MapBuffSize = (ROMFiles.Levels(filetype).Maps(filename).EndOffset - MapSt)
+      ScBuffSize = (ROMFiles.Levels(filetype).EndOffset - SceneSt)
+
+      MapFilename = ROMFiles.Levels(filetype).Maps(filename).FileName
+      ScFilename = ROMFiles.Levels(filetype).FileName
 
       RamBanks.ZSceneBuffer.PopulateFromStream(ROMFileStream, SceneSt, ScBuffSize)
       RamBanks.ZFileBuffer.PopulateFromStream(ROMFileStream, MapSt, MapBuffSize)
@@ -7316,11 +7324,11 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     Else
       Select Case CurrentNodeParent
         Case "Actor models"
-          Dim selectedObject = ROMFiles.Objects(filename)
+          Dim selectedObject As ZObj = ROMFiles.Objects(filename)
 
-          ObjectFilename = selectedObject.filename
-          ObjBuffSize = (selectedObject.endoff - selectedObject.startoff)
-          RamBanks.ZFileBuffer.PopulateFromStream(ROMFileStream, selectedObject.startoff, ObjBuffSize)
+          ObjectFilename = selectedObject.FileName
+          ObjBuffSize = (selectedObject.EndOffset - selectedObject.StartOffset)
+          RamBanks.ZFileBuffer.PopulateFromStream(ROMFileStream, selectedObject.StartOffset, ObjBuffSize)
 
           SetVariables(SceneFileType.ZOBJ)
 
@@ -7338,9 +7346,9 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
           ScannedObjSet = True
           ProcessMapHeader()
         Case "Actor Code"
-          ActorFilename = ROMFiles.ActorCode(filename).filename
-          ActorBuffSize = (ROMFiles.ActorCode(filename).endoff - ROMFiles.ActorCode(filename).startoff)
-          RamBanks.ZFileBuffer.PopulateFromStream(ROMFileStream, ROMFiles.ActorCode(filename).startoff, ActorBuffSize)
+          ActorFilename = ROMFiles.ActorCode(filename).FileName
+          ActorBuffSize = (ROMFiles.ActorCode(filename).EndOffset - ROMFiles.ActorCode(filename).StartOffset)
+          RamBanks.ZFileBuffer.PopulateFromStream(ROMFileStream, ROMFiles.ActorCode(filename).StartOffset, ActorBuffSize)
 
           'RSPInterpreter.Parse(ZFileBuffer)
 
@@ -7350,9 +7358,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
           MapsCombobox.Items.Clear()
           MapsCombobox.Enabled = False
           oldSelectedNode = FileTree.SelectedNode
-        Case "Levels"
-
-          Exit Sub
+        Case "Scenes"
         Case "Others"
           RamBanks.CurrentBank = 1
           RenderGraphics = True
@@ -7360,9 +7366,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
           If ToolModes.CurrentTool = ToolID.ACTOR Then
             ToolModes.CurrentTool = ToolID.CAMERA
           End If
-          Exit Sub
         Case Else
-          Exit Sub
       End Select
     End If
     ROMFileStream.Close()

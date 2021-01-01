@@ -77,7 +77,7 @@
     <Compile Include="hacks\face\ZeldaAdultFaceHack.cs" />
     <Compile Include="hacks\face\ZeldaChildFaceHack.cs" />
     <Compile Include="hacks\face\LinkFaceHack.cs" />
-    <Compile Include="memory\files\Interfaces.cs" />
+    <Compile Include="memory\files\ZFiles.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

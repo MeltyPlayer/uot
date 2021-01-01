@@ -209,13 +209,6 @@ namespace UoT {
     public SimpleRamBank Data;
   }
 
-  public struct ZFileTypes {
-    public ZSc[] Levels;
-    public ZObj[] Objects;
-    public ZCodeFiles[] ActorCode;
-    public ZOtherData[] Others;
-  }
-
   public struct ZSeg {
     public uint Offset;
     public byte Bank;
@@ -227,38 +220,6 @@ namespace UoT {
     }
   }
 
-  public struct ZMap {
-    public int startoff;
-    public int endoff;
-    public string filename;
-  }
-
-  public struct ZSc {
-    public int startoff;
-    public int endoff;
-    public string filename;
-    public string betterFilename;
-    public ZMap[] Maps;
-  }
-
-  public struct ZObj {
-    public int startoff;
-    public int endoff;
-    public string filename;
-    public string betterFilename;
-  }
-
-  public struct ZCodeFiles {
-    public int startoff;
-    public int endoff;
-    public string filename;
-  }
-
-  public struct ZOtherData {
-    public int startoff;
-    public int endoff;
-    public string filename;
-  }
 
   public struct FileBuffers {
     public byte[] Level;
