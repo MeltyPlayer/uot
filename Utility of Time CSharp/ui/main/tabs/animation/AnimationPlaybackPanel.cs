@@ -13,19 +13,19 @@ namespace UoT.ui.main.tabs.animation {
     public AnimationPlaybackPanel() {
       this.InitializeComponent();
 
-      this.playButton_.Click += (object sender, EventArgs e) => {
+      this.playButton_.Click += (sender, args) => {
         this.IsPlaying = true;
       };
-      this.pauseButton_.Click += (object sender, EventArgs e) => {
+      this.pauseButton_.Click += (sender, args) => {
         this.IsPlaying = false;
       };
-      this.loopCheckBox_.Click += (object sender, EventArgs e) => {
+      this.loopCheckBox_.Click += (sender, args) => {
         this.ShouldLoop = this.loopCheckBox_.Checked;
       };
-      this.frameTrackBar_.Scroll += (object sender, EventArgs e) => {
+      this.frameTrackBar_.Scroll += (sender, args) => {
         this.Frame = this.frameTrackBar_.Value;
       };
-      this.frameRateSelector_.ValueChanged += (object sender, EventArgs e) => {
+      this.frameRateSelector_.ValueChanged += (sender, args) => {
         var newFrameRate = (int)Math.Floor(this.frameRateSelector_.Value);
         if (this.FrameRate != newFrameRate) {
           this.FrameRate = newFrameRate;

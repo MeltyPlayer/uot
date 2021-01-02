@@ -25,10 +25,10 @@
     private void InitializeComponent() {
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZFileTreeView));
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-      this.searchTextBox = new System.Windows.Forms.TextBox();
-      this.fileTreeView = new System.Windows.Forms.TreeView();
-      this.searchButton = new System.Windows.Forms.Button();
       this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+      this.searchTextBox_ = new System.Windows.Forms.TextBox();
+      this.searchButton_ = new System.Windows.Forms.Button();
+      this.fileTreeView_ = new System.Windows.Forms.TreeView();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
       this.splitContainer1.Panel1.SuspendLayout();
       this.splitContainer1.Panel2.SuspendLayout();
@@ -52,38 +52,10 @@
       // 
       // splitContainer1.Panel2
       // 
-      this.splitContainer1.Panel2.Controls.Add(this.fileTreeView);
+      this.splitContainer1.Panel2.Controls.Add(this.fileTreeView_);
       this.splitContainer1.Size = new System.Drawing.Size(225, 627);
       this.splitContainer1.SplitterDistance = 25;
       this.splitContainer1.TabIndex = 0;
-      // 
-      // searchTextBox
-      // 
-      this.searchTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.searchTextBox.Location = new System.Drawing.Point(0, 0);
-      this.searchTextBox.Name = "searchTextBox";
-      this.searchTextBox.Size = new System.Drawing.Size(195, 20);
-      this.searchTextBox.TabIndex = 16;
-      // 
-      // fileTreeView
-      // 
-      this.fileTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.fileTreeView.HideSelection = false;
-      this.fileTreeView.HotTracking = true;
-      this.fileTreeView.Location = new System.Drawing.Point(0, 0);
-      this.fileTreeView.Name = "fileTreeView";
-      this.fileTreeView.Size = new System.Drawing.Size(225, 598);
-      this.fileTreeView.TabIndex = 15;
-      // 
-      // searchButton
-      // 
-      this.searchButton.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.searchButton.Image = ((System.Drawing.Image)(resources.GetObject("searchButton.Image")));
-      this.searchButton.Location = new System.Drawing.Point(0, 0);
-      this.searchButton.Name = "searchButton";
-      this.searchButton.Size = new System.Drawing.Size(26, 25);
-      this.searchButton.TabIndex = 14;
-      this.searchButton.UseVisualStyleBackColor = true;
       // 
       // splitContainer2
       // 
@@ -94,21 +66,49 @@
       // 
       // splitContainer2.Panel1
       // 
-      this.splitContainer2.Panel1.Controls.Add(this.searchTextBox);
+      this.splitContainer2.Panel1.Controls.Add(this.searchTextBox_);
       // 
       // splitContainer2.Panel2
       // 
-      this.splitContainer2.Panel2.Controls.Add(this.searchButton);
+      this.splitContainer2.Panel2.Controls.Add(this.searchButton_);
       this.splitContainer2.Size = new System.Drawing.Size(225, 25);
       this.splitContainer2.SplitterDistance = 195;
       this.splitContainer2.TabIndex = 0;
       // 
-      // ZFileTree
+      // searchTextBox_
+      // 
+      this.searchTextBox_.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.searchTextBox_.Location = new System.Drawing.Point(0, 0);
+      this.searchTextBox_.Name = "searchTextBox_";
+      this.searchTextBox_.Size = new System.Drawing.Size(195, 20);
+      this.searchTextBox_.TabIndex = 16;
+      // 
+      // searchButton_
+      // 
+      this.searchButton_.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.searchButton_.Image = ((System.Drawing.Image)(resources.GetObject("searchButton_.Image")));
+      this.searchButton_.Location = new System.Drawing.Point(0, 0);
+      this.searchButton_.Name = "searchButton_";
+      this.searchButton_.Size = new System.Drawing.Size(26, 25);
+      this.searchButton_.TabIndex = 14;
+      this.searchButton_.UseVisualStyleBackColor = true;
+      // 
+      // fileTreeView_
+      // 
+      this.fileTreeView_.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.fileTreeView_.HideSelection = false;
+      this.fileTreeView_.HotTracking = true;
+      this.fileTreeView_.Location = new System.Drawing.Point(0, 0);
+      this.fileTreeView_.Name = "fileTreeView_";
+      this.fileTreeView_.Size = new System.Drawing.Size(225, 598);
+      this.fileTreeView_.TabIndex = 15;
+      // 
+      // ZFileTreeView
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.splitContainer1);
-      this.Name = "ZFileTree";
+      this.Name = "ZFileTreeView";
       this.Size = new System.Drawing.Size(225, 627);
       this.splitContainer1.Panel1.ResumeLayout(false);
       this.splitContainer1.Panel2.ResumeLayout(false);
@@ -127,8 +127,8 @@
 
     private System.Windows.Forms.SplitContainer splitContainer1;
     private System.Windows.Forms.SplitContainer splitContainer2;
-    private System.Windows.Forms.TextBox searchTextBox;
-    private System.Windows.Forms.Button searchButton;
-    private System.Windows.Forms.TreeView fileTreeView;
+    private System.Windows.Forms.TextBox searchTextBox_;
+    private System.Windows.Forms.Button searchButton_;
+    private System.Windows.Forms.TreeView fileTreeView_;
   }
 }
