@@ -65,10 +65,15 @@ namespace UoT {
     public void PopulateFromFile(string filename)
       => this.impl_ = File.ReadAllBytes(filename);
 
-    public void PopulateFromStream(FileStream fs, int fsOffset, int count) {
+    public void PopulateFromBytes(byte[] src, int srcOffset, int count) {
       this.Resize(count);
-      fs.Position = fsOffset;
-      fs.Read(this.impl_, 0, count);
+      Buffer.BlockCopy(src, srcOffset, this.impl_, 0, count);
+    }
+
+    public void PopulateFromStream(FileStream src, int srcOffset, int count) {
+      this.Resize(count);
+      src.Position = srcOffset;
+      src.Read(this.impl_, 0, count);
     }
 
     public void WriteToFile(string filename)

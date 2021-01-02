@@ -9,7 +9,7 @@ namespace UoT.memory.files {
     public ZOtherData[] Others;
 
     public static ZFiles FromRom(string filename) {
-      var romBytes = ZFiles.GetRomBytes(filename);
+      var romBytes = ZFiles.LoadRomBytes(filename);
 
       //var segments = ZFiles.GetSegments_(romBytes);
 
@@ -17,7 +17,7 @@ namespace UoT.memory.files {
     }
 
     // TODO: Make private.
-    public static byte[] GetRomBytes(string filename) 
+    public static byte[] LoadRomBytes(string filename) 
       => File.ReadAllBytes(filename);
 
     public class Header {

@@ -2046,944 +2046,944 @@ Public Class MainWin
         'UoTRender
         '
         Me.UoTRender.AccumBits = CType(0, Byte)
-        Me.UoTRender.AllowDrop = True
-        Me.UoTRender.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+    Me.UoTRender.AllowDrop = True
+    Me.UoTRender.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.UoTRender.AutoCheckErrors = False
-        Me.UoTRender.AutoFinish = True
-        Me.UoTRender.AutoMakeCurrent = True
-        Me.UoTRender.AutoSize = True
-        Me.UoTRender.AutoSwapBuffers = False
-        Me.UoTRender.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange
-        Me.UoTRender.BackColor = System.Drawing.Color.Black
-        Me.UoTRender.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.UoTRender.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.UoTRender.ColorBits = CType(32, Byte)
-        Me.UoTRender.Cursor = System.Windows.Forms.Cursors.Default
-        Me.UoTRender.DepthBits = CType(24, Byte)
-        Me.UoTRender.Location = New System.Drawing.Point(229, 33)
-        Me.UoTRender.Name = "UoTRender"
-        Me.UoTRender.Size = New System.Drawing.Size(700, 586)
-        Me.UoTRender.StencilBits = CType(0, Byte)
-        Me.UoTRender.TabIndex = 0
-        '
-        'ActorContextMenu
-        '
-        Me.ActorContextMenu.BackColor = System.Drawing.SystemColors.Control
-        Me.ActorContextMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DeselectToolStripMenuItem, Me.ToolStripSeparator14, Me.EditToolStripMenuItem2, Me.AlignToolItem, Me.ToolStripSeparator13, Me.CopyToolStripMenuItem, Me.PasteToolStripMenuItem, Me.ClearClipboardToolStripMenuItem})
-        Me.ActorContextMenu.Name = "ContextMenuStrip4"
-        Me.ActorContextMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
-        Me.ActorContextMenu.Size = New System.Drawing.Size(156, 148)
-        '
-        'DeselectToolStripMenuItem
-        '
-        Me.DeselectToolStripMenuItem.Name = "DeselectToolStripMenuItem"
-        Me.DeselectToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
-        Me.DeselectToolStripMenuItem.Text = "Deselect"
-        '
-        'ToolStripSeparator14
-        '
-        Me.ToolStripSeparator14.Name = "ToolStripSeparator14"
-        Me.ToolStripSeparator14.Size = New System.Drawing.Size(152, 6)
-        '
-        'EditToolStripMenuItem2
-        '
-        Me.EditToolStripMenuItem2.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CamXRotationToolStripMenuItem, Me.CamYRotationToolStripMenuItem, Me.CamZRotationToolStripMenuItem})
-        Me.EditToolStripMenuItem2.Name = "EditToolStripMenuItem2"
-        Me.EditToolStripMenuItem2.Size = New System.Drawing.Size(155, 22)
-        Me.EditToolStripMenuItem2.Text = "Rotate"
-        '
-        'CamXRotationToolStripMenuItem
-        '
-        Me.CamXRotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DegreesToolStripMenuItem, Me.DegreesToolStripMenuItem1})
-        Me.CamXRotationToolStripMenuItem.Name = "CamXRotationToolStripMenuItem"
-        Me.CamXRotationToolStripMenuItem.Size = New System.Drawing.Size(81, 22)
-        Me.CamXRotationToolStripMenuItem.Text = "X"
-        '
-        'DegreesToolStripMenuItem
-        '
-        Me.DegreesToolStripMenuItem.Name = "DegreesToolStripMenuItem"
-        Me.DegreesToolStripMenuItem.Size = New System.Drawing.Size(141, 22)
-        Me.DegreesToolStripMenuItem.Text = "+ 90 degrees"
-        '
-        'DegreesToolStripMenuItem1
-        '
-        Me.DegreesToolStripMenuItem1.Name = "DegreesToolStripMenuItem1"
-        Me.DegreesToolStripMenuItem1.Size = New System.Drawing.Size(141, 22)
-        Me.DegreesToolStripMenuItem1.Text = "- 90 degrees"
-        '
-        'CamYRotationToolStripMenuItem
-        '
-        Me.CamYRotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DegreesToolStripMenuItem2, Me.DegreesToolStripMenuItem3})
-        Me.CamYRotationToolStripMenuItem.Name = "CamYRotationToolStripMenuItem"
-        Me.CamYRotationToolStripMenuItem.Size = New System.Drawing.Size(81, 22)
-        Me.CamYRotationToolStripMenuItem.Text = "Y"
-        '
-        'DegreesToolStripMenuItem2
-        '
-        Me.DegreesToolStripMenuItem2.Name = "DegreesToolStripMenuItem2"
-        Me.DegreesToolStripMenuItem2.Size = New System.Drawing.Size(144, 22)
-        Me.DegreesToolStripMenuItem2.Text = " + 90 degrees"
-        '
-        'DegreesToolStripMenuItem3
-        '
-        Me.DegreesToolStripMenuItem3.Name = "DegreesToolStripMenuItem3"
-        Me.DegreesToolStripMenuItem3.Size = New System.Drawing.Size(144, 22)
-        Me.DegreesToolStripMenuItem3.Text = "- 90 degrees"
-        '
-        'CamZRotationToolStripMenuItem
-        '
-        Me.CamZRotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DegreesToolStripMenuItem4, Me.DegreesToolStripMenuItem5})
-        Me.CamZRotationToolStripMenuItem.Name = "CamZRotationToolStripMenuItem"
-        Me.CamZRotationToolStripMenuItem.Size = New System.Drawing.Size(81, 22)
-        Me.CamZRotationToolStripMenuItem.Text = "Z"
-        '
-        'DegreesToolStripMenuItem4
-        '
-        Me.DegreesToolStripMenuItem4.Name = "DegreesToolStripMenuItem4"
-        Me.DegreesToolStripMenuItem4.Size = New System.Drawing.Size(141, 22)
-        Me.DegreesToolStripMenuItem4.Text = "+ 90 degrees"
-        '
-        'DegreesToolStripMenuItem5
-        '
-        Me.DegreesToolStripMenuItem5.Name = "DegreesToolStripMenuItem5"
-        Me.DegreesToolStripMenuItem5.Size = New System.Drawing.Size(141, 22)
-        Me.DegreesToolStripMenuItem5.Text = "- 90 degrees"
-        '
-        'AlignToolItem
-        '
-        Me.AlignToolItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.XToolStripMenuItem3, Me.YToolStripMenuItem3, Me.ZToolStripMenuItem2})
-        Me.AlignToolItem.Name = "AlignToolItem"
-        Me.AlignToolItem.Size = New System.Drawing.Size(155, 22)
-        Me.AlignToolItem.Text = "Align"
-        '
-        'XToolStripMenuItem3
-        '
-        Me.XToolStripMenuItem3.Name = "XToolStripMenuItem3"
-        Me.XToolStripMenuItem3.Size = New System.Drawing.Size(81, 22)
-        Me.XToolStripMenuItem3.Text = "X"
-        '
-        'YToolStripMenuItem3
-        '
-        Me.YToolStripMenuItem3.Name = "YToolStripMenuItem3"
-        Me.YToolStripMenuItem3.Size = New System.Drawing.Size(81, 22)
-        Me.YToolStripMenuItem3.Text = "Y"
-        '
-        'ZToolStripMenuItem2
-        '
-        Me.ZToolStripMenuItem2.Name = "ZToolStripMenuItem2"
-        Me.ZToolStripMenuItem2.Size = New System.Drawing.Size(81, 22)
-        Me.ZToolStripMenuItem2.Text = "Z"
-        '
-        'ToolStripSeparator13
-        '
-        Me.ToolStripSeparator13.Name = "ToolStripSeparator13"
-        Me.ToolStripSeparator13.Size = New System.Drawing.Size(152, 6)
-        '
-        'CopyToolStripMenuItem
-        '
-        Me.CopyToolStripMenuItem.Name = "CopyToolStripMenuItem"
-        Me.CopyToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
-        Me.CopyToolStripMenuItem.Text = "Copy attributes"
-        '
-        'PasteToolStripMenuItem
-        '
-        Me.PasteToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PositionToolStripMenuItem, Me.RotationToolStripMenuItem, Me.NumberAndVariableToolStripMenuItem})
-        Me.PasteToolStripMenuItem.Enabled = False
-        Me.PasteToolStripMenuItem.Name = "PasteToolStripMenuItem"
-        Me.PasteToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
-        Me.PasteToolStripMenuItem.Text = "Paste attributes"
-        '
-        'PositionToolStripMenuItem
-        '
-        Me.PositionToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.XToolStripMenuItem1, Me.YToolStripMenuItem1, Me.ZToolStripMenuItem, Me.AllToolStripMenuItem1})
-        Me.PositionToolStripMenuItem.Name = "PositionToolStripMenuItem"
-        Me.PositionToolStripMenuItem.Size = New System.Drawing.Size(185, 22)
-        Me.PositionToolStripMenuItem.Text = "Position"
-        '
-        'XToolStripMenuItem1
-        '
-        Me.XToolStripMenuItem1.Name = "XToolStripMenuItem1"
-        Me.XToolStripMenuItem1.Size = New System.Drawing.Size(88, 22)
-        Me.XToolStripMenuItem1.Text = "X"
-        '
-        'YToolStripMenuItem1
-        '
-        Me.YToolStripMenuItem1.Name = "YToolStripMenuItem1"
-        Me.YToolStripMenuItem1.Size = New System.Drawing.Size(88, 22)
-        Me.YToolStripMenuItem1.Text = "Y"
-        '
-        'ZToolStripMenuItem
-        '
-        Me.ZToolStripMenuItem.Name = "ZToolStripMenuItem"
-        Me.ZToolStripMenuItem.Size = New System.Drawing.Size(88, 22)
-        Me.ZToolStripMenuItem.Text = "Z"
-        '
-        'AllToolStripMenuItem1
-        '
-        Me.AllToolStripMenuItem1.Name = "AllToolStripMenuItem1"
-        Me.AllToolStripMenuItem1.Size = New System.Drawing.Size(88, 22)
-        Me.AllToolStripMenuItem1.Text = "All"
-        '
-        'RotationToolStripMenuItem
-        '
-        Me.RotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.XToolStripMenuItem2, Me.YToolStripMenuItem2, Me.ZToolStripMenuItem1, Me.AllToolStripMenuItem})
-        Me.RotationToolStripMenuItem.Name = "RotationToolStripMenuItem"
-        Me.RotationToolStripMenuItem.Size = New System.Drawing.Size(185, 22)
-        Me.RotationToolStripMenuItem.Text = "Rotation"
-        '
-        'XToolStripMenuItem2
-        '
-        Me.XToolStripMenuItem2.Name = "XToolStripMenuItem2"
-        Me.XToolStripMenuItem2.Size = New System.Drawing.Size(88, 22)
-        Me.XToolStripMenuItem2.Text = "X"
-        '
-        'YToolStripMenuItem2
-        '
-        Me.YToolStripMenuItem2.Name = "YToolStripMenuItem2"
-        Me.YToolStripMenuItem2.Size = New System.Drawing.Size(88, 22)
-        Me.YToolStripMenuItem2.Text = "Y"
-        '
-        'ZToolStripMenuItem1
-        '
-        Me.ZToolStripMenuItem1.Name = "ZToolStripMenuItem1"
-        Me.ZToolStripMenuItem1.Size = New System.Drawing.Size(88, 22)
-        Me.ZToolStripMenuItem1.Text = "Z"
-        '
-        'AllToolStripMenuItem
-        '
-        Me.AllToolStripMenuItem.Name = "AllToolStripMenuItem"
-        Me.AllToolStripMenuItem.Size = New System.Drawing.Size(88, 22)
-        Me.AllToolStripMenuItem.Text = "All"
-        '
-        'NumberAndVariableToolStripMenuItem
-        '
-        Me.NumberAndVariableToolStripMenuItem.Name = "NumberAndVariableToolStripMenuItem"
-        Me.NumberAndVariableToolStripMenuItem.Size = New System.Drawing.Size(185, 22)
-        Me.NumberAndVariableToolStripMenuItem.Text = "Number and Variable"
-        '
-        'ClearClipboardToolStripMenuItem
-        '
-        Me.ClearClipboardToolStripMenuItem.Enabled = False
-        Me.ClearClipboardToolStripMenuItem.Name = "ClearClipboardToolStripMenuItem"
-        Me.ClearClipboardToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
-        Me.ClearClipboardToolStripMenuItem.Text = "Clear clipboard"
-        '
-        'RotationTimer
-        '
-        Me.RotationTimer.Interval = 1
-        '
-        'LoadIndividual
-        '
-        Me.LoadIndividual.Filter = "Levels (*.scene)|*.zscene|ZOBJ Files (*.zobj)|*.zobj"
-        '
-        'ROMBrowser
-        '
-        Me.ROMBrowser.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+    Me.UoTRender.AutoCheckErrors = False
+    Me.UoTRender.AutoFinish = True
+    Me.UoTRender.AutoMakeCurrent = True
+    Me.UoTRender.AutoSize = True
+    Me.UoTRender.AutoSwapBuffers = False
+    Me.UoTRender.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange
+    Me.UoTRender.BackColor = System.Drawing.Color.Black
+    Me.UoTRender.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+    Me.UoTRender.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+    Me.UoTRender.ColorBits = CType(32, Byte)
+    Me.UoTRender.Cursor = System.Windows.Forms.Cursors.Default
+    Me.UoTRender.DepthBits = CType(24, Byte)
+    Me.UoTRender.Location = New System.Drawing.Point(229, 33)
+    Me.UoTRender.Name = "UoTRender"
+    Me.UoTRender.Size = New System.Drawing.Size(700, 586)
+    Me.UoTRender.StencilBits = CType(0, Byte)
+    Me.UoTRender.TabIndex = 0
+    '
+    'ActorContextMenu
+    '
+    Me.ActorContextMenu.BackColor = System.Drawing.SystemColors.Control
+    Me.ActorContextMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DeselectToolStripMenuItem, Me.ToolStripSeparator14, Me.EditToolStripMenuItem2, Me.AlignToolItem, Me.ToolStripSeparator13, Me.CopyToolStripMenuItem, Me.PasteToolStripMenuItem, Me.ClearClipboardToolStripMenuItem})
+    Me.ActorContextMenu.Name = "ContextMenuStrip4"
+    Me.ActorContextMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
+    Me.ActorContextMenu.Size = New System.Drawing.Size(156, 148)
+    '
+    'DeselectToolStripMenuItem
+    '
+    Me.DeselectToolStripMenuItem.Name = "DeselectToolStripMenuItem"
+    Me.DeselectToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
+    Me.DeselectToolStripMenuItem.Text = "Deselect"
+    '
+    'ToolStripSeparator14
+    '
+    Me.ToolStripSeparator14.Name = "ToolStripSeparator14"
+    Me.ToolStripSeparator14.Size = New System.Drawing.Size(152, 6)
+    '
+    'EditToolStripMenuItem2
+    '
+    Me.EditToolStripMenuItem2.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CamXRotationToolStripMenuItem, Me.CamYRotationToolStripMenuItem, Me.CamZRotationToolStripMenuItem})
+    Me.EditToolStripMenuItem2.Name = "EditToolStripMenuItem2"
+    Me.EditToolStripMenuItem2.Size = New System.Drawing.Size(155, 22)
+    Me.EditToolStripMenuItem2.Text = "Rotate"
+    '
+    'CamXRotationToolStripMenuItem
+    '
+    Me.CamXRotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DegreesToolStripMenuItem, Me.DegreesToolStripMenuItem1})
+    Me.CamXRotationToolStripMenuItem.Name = "CamXRotationToolStripMenuItem"
+    Me.CamXRotationToolStripMenuItem.Size = New System.Drawing.Size(81, 22)
+    Me.CamXRotationToolStripMenuItem.Text = "X"
+    '
+    'DegreesToolStripMenuItem
+    '
+    Me.DegreesToolStripMenuItem.Name = "DegreesToolStripMenuItem"
+    Me.DegreesToolStripMenuItem.Size = New System.Drawing.Size(141, 22)
+    Me.DegreesToolStripMenuItem.Text = "+ 90 degrees"
+    '
+    'DegreesToolStripMenuItem1
+    '
+    Me.DegreesToolStripMenuItem1.Name = "DegreesToolStripMenuItem1"
+    Me.DegreesToolStripMenuItem1.Size = New System.Drawing.Size(141, 22)
+    Me.DegreesToolStripMenuItem1.Text = "- 90 degrees"
+    '
+    'CamYRotationToolStripMenuItem
+    '
+    Me.CamYRotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DegreesToolStripMenuItem2, Me.DegreesToolStripMenuItem3})
+    Me.CamYRotationToolStripMenuItem.Name = "CamYRotationToolStripMenuItem"
+    Me.CamYRotationToolStripMenuItem.Size = New System.Drawing.Size(81, 22)
+    Me.CamYRotationToolStripMenuItem.Text = "Y"
+    '
+    'DegreesToolStripMenuItem2
+    '
+    Me.DegreesToolStripMenuItem2.Name = "DegreesToolStripMenuItem2"
+    Me.DegreesToolStripMenuItem2.Size = New System.Drawing.Size(144, 22)
+    Me.DegreesToolStripMenuItem2.Text = " + 90 degrees"
+    '
+    'DegreesToolStripMenuItem3
+    '
+    Me.DegreesToolStripMenuItem3.Name = "DegreesToolStripMenuItem3"
+    Me.DegreesToolStripMenuItem3.Size = New System.Drawing.Size(144, 22)
+    Me.DegreesToolStripMenuItem3.Text = "- 90 degrees"
+    '
+    'CamZRotationToolStripMenuItem
+    '
+    Me.CamZRotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DegreesToolStripMenuItem4, Me.DegreesToolStripMenuItem5})
+    Me.CamZRotationToolStripMenuItem.Name = "CamZRotationToolStripMenuItem"
+    Me.CamZRotationToolStripMenuItem.Size = New System.Drawing.Size(81, 22)
+    Me.CamZRotationToolStripMenuItem.Text = "Z"
+    '
+    'DegreesToolStripMenuItem4
+    '
+    Me.DegreesToolStripMenuItem4.Name = "DegreesToolStripMenuItem4"
+    Me.DegreesToolStripMenuItem4.Size = New System.Drawing.Size(141, 22)
+    Me.DegreesToolStripMenuItem4.Text = "+ 90 degrees"
+    '
+    'DegreesToolStripMenuItem5
+    '
+    Me.DegreesToolStripMenuItem5.Name = "DegreesToolStripMenuItem5"
+    Me.DegreesToolStripMenuItem5.Size = New System.Drawing.Size(141, 22)
+    Me.DegreesToolStripMenuItem5.Text = "- 90 degrees"
+    '
+    'AlignToolItem
+    '
+    Me.AlignToolItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.XToolStripMenuItem3, Me.YToolStripMenuItem3, Me.ZToolStripMenuItem2})
+    Me.AlignToolItem.Name = "AlignToolItem"
+    Me.AlignToolItem.Size = New System.Drawing.Size(155, 22)
+    Me.AlignToolItem.Text = "Align"
+    '
+    'XToolStripMenuItem3
+    '
+    Me.XToolStripMenuItem3.Name = "XToolStripMenuItem3"
+    Me.XToolStripMenuItem3.Size = New System.Drawing.Size(81, 22)
+    Me.XToolStripMenuItem3.Text = "X"
+    '
+    'YToolStripMenuItem3
+    '
+    Me.YToolStripMenuItem3.Name = "YToolStripMenuItem3"
+    Me.YToolStripMenuItem3.Size = New System.Drawing.Size(81, 22)
+    Me.YToolStripMenuItem3.Text = "Y"
+    '
+    'ZToolStripMenuItem2
+    '
+    Me.ZToolStripMenuItem2.Name = "ZToolStripMenuItem2"
+    Me.ZToolStripMenuItem2.Size = New System.Drawing.Size(81, 22)
+    Me.ZToolStripMenuItem2.Text = "Z"
+    '
+    'ToolStripSeparator13
+    '
+    Me.ToolStripSeparator13.Name = "ToolStripSeparator13"
+    Me.ToolStripSeparator13.Size = New System.Drawing.Size(152, 6)
+    '
+    'CopyToolStripMenuItem
+    '
+    Me.CopyToolStripMenuItem.Name = "CopyToolStripMenuItem"
+    Me.CopyToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
+    Me.CopyToolStripMenuItem.Text = "Copy attributes"
+    '
+    'PasteToolStripMenuItem
+    '
+    Me.PasteToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PositionToolStripMenuItem, Me.RotationToolStripMenuItem, Me.NumberAndVariableToolStripMenuItem})
+    Me.PasteToolStripMenuItem.Enabled = False
+    Me.PasteToolStripMenuItem.Name = "PasteToolStripMenuItem"
+    Me.PasteToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
+    Me.PasteToolStripMenuItem.Text = "Paste attributes"
+    '
+    'PositionToolStripMenuItem
+    '
+    Me.PositionToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.XToolStripMenuItem1, Me.YToolStripMenuItem1, Me.ZToolStripMenuItem, Me.AllToolStripMenuItem1})
+    Me.PositionToolStripMenuItem.Name = "PositionToolStripMenuItem"
+    Me.PositionToolStripMenuItem.Size = New System.Drawing.Size(185, 22)
+    Me.PositionToolStripMenuItem.Text = "Position"
+    '
+    'XToolStripMenuItem1
+    '
+    Me.XToolStripMenuItem1.Name = "XToolStripMenuItem1"
+    Me.XToolStripMenuItem1.Size = New System.Drawing.Size(88, 22)
+    Me.XToolStripMenuItem1.Text = "X"
+    '
+    'YToolStripMenuItem1
+    '
+    Me.YToolStripMenuItem1.Name = "YToolStripMenuItem1"
+    Me.YToolStripMenuItem1.Size = New System.Drawing.Size(88, 22)
+    Me.YToolStripMenuItem1.Text = "Y"
+    '
+    'ZToolStripMenuItem
+    '
+    Me.ZToolStripMenuItem.Name = "ZToolStripMenuItem"
+    Me.ZToolStripMenuItem.Size = New System.Drawing.Size(88, 22)
+    Me.ZToolStripMenuItem.Text = "Z"
+    '
+    'AllToolStripMenuItem1
+    '
+    Me.AllToolStripMenuItem1.Name = "AllToolStripMenuItem1"
+    Me.AllToolStripMenuItem1.Size = New System.Drawing.Size(88, 22)
+    Me.AllToolStripMenuItem1.Text = "All"
+    '
+    'RotationToolStripMenuItem
+    '
+    Me.RotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.XToolStripMenuItem2, Me.YToolStripMenuItem2, Me.ZToolStripMenuItem1, Me.AllToolStripMenuItem})
+    Me.RotationToolStripMenuItem.Name = "RotationToolStripMenuItem"
+    Me.RotationToolStripMenuItem.Size = New System.Drawing.Size(185, 22)
+    Me.RotationToolStripMenuItem.Text = "Rotation"
+    '
+    'XToolStripMenuItem2
+    '
+    Me.XToolStripMenuItem2.Name = "XToolStripMenuItem2"
+    Me.XToolStripMenuItem2.Size = New System.Drawing.Size(88, 22)
+    Me.XToolStripMenuItem2.Text = "X"
+    '
+    'YToolStripMenuItem2
+    '
+    Me.YToolStripMenuItem2.Name = "YToolStripMenuItem2"
+    Me.YToolStripMenuItem2.Size = New System.Drawing.Size(88, 22)
+    Me.YToolStripMenuItem2.Text = "Y"
+    '
+    'ZToolStripMenuItem1
+    '
+    Me.ZToolStripMenuItem1.Name = "ZToolStripMenuItem1"
+    Me.ZToolStripMenuItem1.Size = New System.Drawing.Size(88, 22)
+    Me.ZToolStripMenuItem1.Text = "Z"
+    '
+    'AllToolStripMenuItem
+    '
+    Me.AllToolStripMenuItem.Name = "AllToolStripMenuItem"
+    Me.AllToolStripMenuItem.Size = New System.Drawing.Size(88, 22)
+    Me.AllToolStripMenuItem.Text = "All"
+    '
+    'NumberAndVariableToolStripMenuItem
+    '
+    Me.NumberAndVariableToolStripMenuItem.Name = "NumberAndVariableToolStripMenuItem"
+    Me.NumberAndVariableToolStripMenuItem.Size = New System.Drawing.Size(185, 22)
+    Me.NumberAndVariableToolStripMenuItem.Text = "Number and Variable"
+    '
+    'ClearClipboardToolStripMenuItem
+    '
+    Me.ClearClipboardToolStripMenuItem.Enabled = False
+    Me.ClearClipboardToolStripMenuItem.Name = "ClearClipboardToolStripMenuItem"
+    Me.ClearClipboardToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
+    Me.ClearClipboardToolStripMenuItem.Text = "Clear clipboard"
+    '
+    'RotationTimer
+    '
+    Me.RotationTimer.Interval = 1
+    '
+    'LoadIndividual
+    '
+    Me.LoadIndividual.Filter = "Levels (*.scene)|*.zscene|ZOBJ Files (*.zobj)|*.zobj"
+    '
+    'ROMBrowser
+    '
+    Me.ROMBrowser.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.ROMBrowser.Controls.Add(Me.ROMDataTabs)
-        Me.ROMBrowser.Controls.Add(Me.IndividualFiles)
-        Me.ROMBrowser.HotTrack = True
-        Me.ROMBrowser.Location = New System.Drawing.Point(0, 33)
-        Me.ROMBrowser.Name = "ROMBrowser"
-        Me.ROMBrowser.SelectedIndex = 0
-        Me.ROMBrowser.Size = New System.Drawing.Size(227, 587)
-        Me.ROMBrowser.TabIndex = 104
-        '
-        'ROMDataTabs
-        '
-        Me.ROMDataTabs.Controls.Add(Me.Button7)
-        Me.ROMDataTabs.Location = New System.Drawing.Point(4, 22)
-        Me.ROMDataTabs.Name = "ROMDataTabs"
-        Me.ROMDataTabs.Padding = New System.Windows.Forms.Padding(3)
-        Me.ROMDataTabs.Size = New System.Drawing.Size(219, 561)
-        Me.ROMDataTabs.TabIndex = 0
-        Me.ROMDataTabs.Text = "ROM Files"
-        Me.ROMDataTabs.UseVisualStyleBackColor = True
-        '
-        'Button7
-        '
-        Me.Button7.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Button7.Location = New System.Drawing.Point(153, 529)
-        Me.Button7.Name = "Button7"
-        Me.Button7.Size = New System.Drawing.Size(60, 23)
-        Me.Button7.TabIndex = 0
-        Me.Button7.Text = "Search"
-        Me.Button7.UseVisualStyleBackColor = True
-        '
-        'IndividualFiles
-        '
-        Me.IndividualFiles.Location = New System.Drawing.Point(4, 22)
-        Me.IndividualFiles.Name = "IndividualFiles"
-        Me.IndividualFiles.Size = New System.Drawing.Size(219, 561)
-        Me.IndividualFiles.TabIndex = 1
-        Me.IndividualFiles.Text = "Individuals"
-        Me.IndividualFiles.UseVisualStyleBackColor = True
-        '
-        'Label29
-        '
-        Me.Label29.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Label29.AutoSize = True
-        Me.Label29.Location = New System.Drawing.Point(7, 567)
-        Me.Label29.Name = "Label29"
-        Me.Label29.Size = New System.Drawing.Size(27, 13)
-        Me.Label29.TabIndex = 13
-        Me.Label29.Text = "Find"
-        '
-        'TreeFind
-        '
-        Me.TreeFind.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.TreeFind.Location = New System.Drawing.Point(10, 586)
-        Me.TreeFind.Name = "TreeFind"
-        Me.TreeFind.Size = New System.Drawing.Size(141, 20)
-        Me.TreeFind.TabIndex = 12
-        '
-        'FileTree
-        '
-        Me.FileTree.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+    Me.ROMBrowser.Controls.Add(Me.ROMDataTabs)
+    Me.ROMBrowser.Controls.Add(Me.IndividualFiles)
+    Me.ROMBrowser.HotTrack = True
+    Me.ROMBrowser.Location = New System.Drawing.Point(0, 33)
+    Me.ROMBrowser.Name = "ROMBrowser"
+    Me.ROMBrowser.SelectedIndex = 0
+    Me.ROMBrowser.Size = New System.Drawing.Size(227, 587)
+    Me.ROMBrowser.TabIndex = 104
+    '
+    'ROMDataTabs
+    '
+    Me.ROMDataTabs.Controls.Add(Me.Button7)
+    Me.ROMDataTabs.Location = New System.Drawing.Point(4, 22)
+    Me.ROMDataTabs.Name = "ROMDataTabs"
+    Me.ROMDataTabs.Padding = New System.Windows.Forms.Padding(3)
+    Me.ROMDataTabs.Size = New System.Drawing.Size(219, 561)
+    Me.ROMDataTabs.TabIndex = 0
+    Me.ROMDataTabs.Text = "ROM Files"
+    Me.ROMDataTabs.UseVisualStyleBackColor = True
+    '
+    'Button7
+    '
+    Me.Button7.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+    Me.Button7.Location = New System.Drawing.Point(153, 529)
+    Me.Button7.Name = "Button7"
+    Me.Button7.Size = New System.Drawing.Size(60, 23)
+    Me.Button7.TabIndex = 0
+    Me.Button7.Text = "Search"
+    Me.Button7.UseVisualStyleBackColor = True
+    '
+    'IndividualFiles
+    '
+    Me.IndividualFiles.Location = New System.Drawing.Point(4, 22)
+    Me.IndividualFiles.Name = "IndividualFiles"
+    Me.IndividualFiles.Size = New System.Drawing.Size(219, 561)
+    Me.IndividualFiles.TabIndex = 1
+    Me.IndividualFiles.Text = "Individuals"
+    Me.IndividualFiles.UseVisualStyleBackColor = True
+    '
+    'Label29
+    '
+    Me.Label29.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+    Me.Label29.AutoSize = True
+    Me.Label29.Location = New System.Drawing.Point(7, 567)
+    Me.Label29.Name = "Label29"
+    Me.Label29.Size = New System.Drawing.Size(27, 13)
+    Me.Label29.TabIndex = 13
+    Me.Label29.Text = "Find"
+    '
+    'TreeFind
+    '
+    Me.TreeFind.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+    Me.TreeFind.Location = New System.Drawing.Point(10, 586)
+    Me.TreeFind.Name = "TreeFind"
+    Me.TreeFind.Size = New System.Drawing.Size(141, 20)
+    Me.TreeFind.TabIndex = 12
+    '
+    'FileTree
+    '
+    Me.FileTree.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.FileTree.ContextMenuStrip = Me.BackupMenuStrip
-        Me.FileTree.HideSelection = False
-        Me.FileTree.HotTracking = True
-        Me.FileTree.Location = New System.Drawing.Point(7, 62)
-        Me.FileTree.Name = "FileTree"
-        Me.FileTree.Size = New System.Drawing.Size(210, 496)
-        Me.FileTree.TabIndex = 10
-        '
-        'FileToolStripMenuItem1
-        '
-        Me.FileToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem35, Me.ToolStripMenuItem2, Me.CustomLevel, Me.toolStripSeparator, Me.SaveToolStripMenuItem, Me.ToolStripMenuItem34, Me.toolStripSeparator12, Me.ExitToolStripMenuItem})
-        Me.FileToolStripMenuItem1.Name = "FileToolStripMenuItem1"
-        Me.FileToolStripMenuItem1.Size = New System.Drawing.Size(37, 27)
-        Me.FileToolStripMenuItem1.Text = "&File"
-        '
-        'ToolStripMenuItem35
-        '
-        Me.ToolStripMenuItem35.Image = CType(resources.GetObject("ToolStripMenuItem35.Image"), System.Drawing.Image)
-        Me.ToolStripMenuItem35.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripMenuItem35.Name = "ToolStripMenuItem35"
-        Me.ToolStripMenuItem35.Size = New System.Drawing.Size(153, 22)
-        Me.ToolStripMenuItem35.Text = "&Open ROM"
-        '
-        'ToolStripMenuItem2
-        '
-        Me.ToolStripMenuItem2.Image = CType(resources.GetObject("ToolStripMenuItem2.Image"), System.Drawing.Image)
-        Me.ToolStripMenuItem2.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(153, 22)
-        Me.ToolStripMenuItem2.Text = "&Open Individual"
-        '
-        'CustomLevel
-        '
-        Me.CustomLevel.Name = "CustomLevel"
-        Me.CustomLevel.Size = New System.Drawing.Size(153, 22)
-        Me.CustomLevel.Text = "New level..."
-        Me.CustomLevel.Visible = False
-        '
-        'toolStripSeparator
-        '
-        Me.toolStripSeparator.Name = "toolStripSeparator"
-        Me.toolStripSeparator.Size = New System.Drawing.Size(150, 6)
-        '
-        'SaveToolStripMenuItem
-        '
-        Me.SaveToolStripMenuItem.Image = CType(resources.GetObject("SaveToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.SaveToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem"
-        Me.SaveToolStripMenuItem.ShowShortcutKeys = False
-        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(153, 22)
-        Me.SaveToolStripMenuItem.Text = "&Save ROM"
-        '
-        'ToolStripMenuItem34
-        '
-        Me.ToolStripMenuItem34.Name = "ToolStripMenuItem34"
-        Me.ToolStripMenuItem34.Size = New System.Drawing.Size(153, 22)
-        Me.ToolStripMenuItem34.Text = "Save ROM &As"
-        Me.ToolStripMenuItem34.Visible = False
-        '
-        'toolStripSeparator12
-        '
-        Me.toolStripSeparator12.Name = "toolStripSeparator12"
-        Me.toolStripSeparator12.Size = New System.Drawing.Size(150, 6)
-        '
-        'ExitToolStripMenuItem
-        '
-        Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(153, 22)
-        Me.ExitToolStripMenuItem.Text = "E&xit"
-        '
-        'EditToolStripMenuItem1
-        '
-        Me.EditToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UndoToolStripMenuItem, Me.WireframeModeToolStripMenuItem, Me.RenderToolStripMenuItem})
-        Me.EditToolStripMenuItem1.Name = "EditToolStripMenuItem1"
-        Me.EditToolStripMenuItem1.Size = New System.Drawing.Size(44, 27)
-        Me.EditToolStripMenuItem1.Text = "&View"
-        '
-        'UndoToolStripMenuItem
-        '
-        Me.UndoToolStripMenuItem.Name = "UndoToolStripMenuItem"
-        Me.UndoToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1
-        Me.UndoToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
-        Me.UndoToolStripMenuItem.Text = "Editor tabs"
-        '
-        'WireframeModeToolStripMenuItem
-        '
-        Me.WireframeModeToolStripMenuItem.CheckOnClick = True
-        Me.WireframeModeToolStripMenuItem.Name = "WireframeModeToolStripMenuItem"
-        Me.WireframeModeToolStripMenuItem.ShortcutKeyDisplayString = "F4"
-        Me.WireframeModeToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F4
-        Me.WireframeModeToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
-        Me.WireframeModeToolStripMenuItem.Text = "Wireframe"
-        '
-        'RenderToolStripMenuItem
-        '
-        Me.RenderToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.GraphicsToolStripMenuItem, Me.CollisionOverlayToolStripMenuItem})
-        Me.RenderToolStripMenuItem.Name = "RenderToolStripMenuItem"
-        Me.RenderToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+R"
-        Me.RenderToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
-        Me.RenderToolStripMenuItem.Text = "Render"
-        '
-        'GraphicsToolStripMenuItem
-        '
-        Me.GraphicsToolStripMenuItem.Checked = True
-        Me.GraphicsToolStripMenuItem.CheckOnClick = True
-        Me.GraphicsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.GraphicsToolStripMenuItem.Name = "GraphicsToolStripMenuItem"
-        Me.GraphicsToolStripMenuItem.Size = New System.Drawing.Size(156, 22)
-        Me.GraphicsToolStripMenuItem.Text = "Graphics"
-        '
-        'CollisionOverlayToolStripMenuItem
-        '
-        Me.CollisionOverlayToolStripMenuItem.Checked = True
-        Me.CollisionOverlayToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CollisionOverlayToolStripMenuItem.Name = "CollisionOverlayToolStripMenuItem"
-        Me.CollisionOverlayToolStripMenuItem.Size = New System.Drawing.Size(156, 22)
-        Me.CollisionOverlayToolStripMenuItem.Text = "Collision overlay"
-        '
-        'ToolsToolStripMenuItem1
-        '
-        Me.ToolsToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MouseToolToolStripMenuItem1, Me.LockAxesToolStripMenuItem, Me.OptionsToolStripMenuItem2})
-        Me.ToolsToolStripMenuItem1.Name = "ToolsToolStripMenuItem1"
-        Me.ToolsToolStripMenuItem1.Size = New System.Drawing.Size(44, 27)
-        Me.ToolsToolStripMenuItem1.Text = "&Tools"
-        '
-        'MouseToolToolStripMenuItem1
-        '
-        Me.MouseToolToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CameraOnlyMenu, Me.ActorSelectorMenu, Me.CollisionToolStripMenuItem, Me.CollisionSelectorMenu, Me.DisplayListSelectorToolStripMenuItem})
-        Me.MouseToolToolStripMenuItem1.Name = "MouseToolToolStripMenuItem1"
-        Me.MouseToolToolStripMenuItem1.ShortcutKeyDisplayString = ""
-        Me.MouseToolToolStripMenuItem1.Size = New System.Drawing.Size(163, 22)
-        Me.MouseToolToolStripMenuItem1.Text = "Mouse Tool"
-        '
-        'CameraOnlyMenu
-        '
-        Me.CameraOnlyMenu.Name = "CameraOnlyMenu"
-        Me.CameraOnlyMenu.ShortcutKeyDisplayString = "1"
-        Me.CameraOnlyMenu.Size = New System.Drawing.Size(191, 22)
-        Me.CameraOnlyMenu.Text = "Camera only"
-        '
-        'ActorSelectorMenu
-        '
-        Me.ActorSelectorMenu.Name = "ActorSelectorMenu"
-        Me.ActorSelectorMenu.ShortcutKeyDisplayString = "2"
-        Me.ActorSelectorMenu.Size = New System.Drawing.Size(191, 22)
-        Me.ActorSelectorMenu.Text = "Actor Selector"
-        '
-        'CollisionToolStripMenuItem
-        '
-        Me.CollisionToolStripMenuItem.Name = "CollisionToolStripMenuItem"
-        Me.CollisionToolStripMenuItem.ShortcutKeyDisplayString = "3"
-        Me.CollisionToolStripMenuItem.Size = New System.Drawing.Size(191, 22)
-        Me.CollisionToolStripMenuItem.Text = "Collision Tri Selector"
-        '
-        'CollisionSelectorMenu
-        '
-        Me.CollisionSelectorMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EdgeToolStripMenuItem, Me.TriangleToolStripMenuItem, Me.VertexToolStripMenuItem})
-        Me.CollisionSelectorMenu.Name = "CollisionSelectorMenu"
-        Me.CollisionSelectorMenu.ShortcutKeyDisplayString = ""
-        Me.CollisionSelectorMenu.Size = New System.Drawing.Size(191, 22)
-        Me.CollisionSelectorMenu.Text = "Geometry Editor"
-        Me.CollisionSelectorMenu.Visible = False
-        '
-        'EdgeToolStripMenuItem
-        '
-        Me.EdgeToolStripMenuItem.Name = "EdgeToolStripMenuItem"
-        Me.EdgeToolStripMenuItem.ShortcutKeyDisplayString = "4"
-        Me.EdgeToolStripMenuItem.Size = New System.Drawing.Size(129, 22)
-        Me.EdgeToolStripMenuItem.Text = "Edge"
-        '
-        'TriangleToolStripMenuItem
-        '
-        Me.TriangleToolStripMenuItem.Name = "TriangleToolStripMenuItem"
-        Me.TriangleToolStripMenuItem.ShortcutKeyDisplayString = "5"
-        Me.TriangleToolStripMenuItem.Size = New System.Drawing.Size(129, 22)
-        Me.TriangleToolStripMenuItem.Text = "Triangle"
-        '
-        'VertexToolStripMenuItem
-        '
-        Me.VertexToolStripMenuItem.Name = "VertexToolStripMenuItem"
-        Me.VertexToolStripMenuItem.ShortcutKeyDisplayString = "6"
-        Me.VertexToolStripMenuItem.Size = New System.Drawing.Size(129, 22)
-        Me.VertexToolStripMenuItem.Text = "Vertex"
-        '
-        'DisplayListSelectorToolStripMenuItem
-        '
-        Me.DisplayListSelectorToolStripMenuItem.Name = "DisplayListSelectorToolStripMenuItem"
-        Me.DisplayListSelectorToolStripMenuItem.ShortcutKeyDisplayString = "7"
-        Me.DisplayListSelectorToolStripMenuItem.Size = New System.Drawing.Size(191, 22)
-        Me.DisplayListSelectorToolStripMenuItem.Text = "Display List selector"
-        '
-        'LockAxesToolStripMenuItem
-        '
-        Me.LockAxesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.XToolStripMenuItem, Me.YToolStripMenuItem, Me.DisableToolStripMenuItem})
-        Me.LockAxesToolStripMenuItem.Name = "LockAxesToolStripMenuItem"
-        Me.LockAxesToolStripMenuItem.ShortcutKeyDisplayString = "Space"
-        Me.LockAxesToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
-        Me.LockAxesToolStripMenuItem.Text = "Lock axes"
-        '
-        'XToolStripMenuItem
-        '
-        Me.XToolStripMenuItem.Name = "XToolStripMenuItem"
-        Me.XToolStripMenuItem.ShortcutKeyDisplayString = ""
-        Me.XToolStripMenuItem.Size = New System.Drawing.Size(111, 22)
-        Me.XToolStripMenuItem.Text = "X"
-        '
-        'YToolStripMenuItem
-        '
-        Me.YToolStripMenuItem.Name = "YToolStripMenuItem"
-        Me.YToolStripMenuItem.ShortcutKeyDisplayString = ""
-        Me.YToolStripMenuItem.Size = New System.Drawing.Size(111, 22)
-        Me.YToolStripMenuItem.Text = "Y"
-        '
-        'DisableToolStripMenuItem
-        '
-        Me.DisableToolStripMenuItem.Name = "DisableToolStripMenuItem"
-        Me.DisableToolStripMenuItem.ShortcutKeyDisplayString = ""
-        Me.DisableToolStripMenuItem.Size = New System.Drawing.Size(111, 22)
-        Me.DisableToolStripMenuItem.Text = "Disable"
-        '
-        'OptionsToolStripMenuItem2
-        '
-        Me.OptionsToolStripMenuItem2.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DisableDepthTestToolStripMenuItem})
-        Me.OptionsToolStripMenuItem2.Name = "OptionsToolStripMenuItem2"
-        Me.OptionsToolStripMenuItem2.Size = New System.Drawing.Size(163, 22)
-        Me.OptionsToolStripMenuItem2.Text = "Options"
-        '
-        'DisableDepthTestToolStripMenuItem
-        '
-        Me.DisableDepthTestToolStripMenuItem.CheckOnClick = True
-        Me.DisableDepthTestToolStripMenuItem.Name = "DisableDepthTestToolStripMenuItem"
-        Me.DisableDepthTestToolStripMenuItem.Size = New System.Drawing.Size(224, 22)
-        Me.DisableDepthTestToolStripMenuItem.Text = "Select actors behind graphics"
-        '
-        'ToolsToolStripMenuItem
-        '
-        Me.ToolsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OptionsToolStripMenuItem1, Me.RendererToolStripMenuItem})
-        Me.ToolsToolStripMenuItem.Name = "ToolsToolStripMenuItem"
-        Me.ToolsToolStripMenuItem.Size = New System.Drawing.Size(80, 27)
-        Me.ToolsToolStripMenuItem.Text = "&Preferences"
-        '
-        'OptionsToolStripMenuItem1
-        '
-        Me.OptionsToolStripMenuItem1.Name = "OptionsToolStripMenuItem1"
-        Me.OptionsToolStripMenuItem1.Size = New System.Drawing.Size(122, 22)
-        Me.OptionsToolStripMenuItem1.Text = "&Setup"
-        '
-        'RendererToolStripMenuItem
-        '
-        Me.RendererToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TexturesToolStripMenuItem, Me.ColorCombinerToolStripMenuItem, Me.AnisotropicFilteringToolStripMenuItem, Me.FullSceneAntialiasingToolStripMenuItem})
-        Me.RendererToolStripMenuItem.Name = "RendererToolStripMenuItem"
-        Me.RendererToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
-        Me.RendererToolStripMenuItem.Text = "Renderer"
-        '
-        'TexturesToolStripMenuItem
-        '
-        Me.TexturesToolStripMenuItem.Checked = True
-        Me.TexturesToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.TexturesToolStripMenuItem.Name = "TexturesToolStripMenuItem"
-        Me.TexturesToolStripMenuItem.Size = New System.Drawing.Size(183, 22)
-        Me.TexturesToolStripMenuItem.Text = "Textures"
-        '
-        'ColorCombinerToolStripMenuItem
-        '
-        Me.ColorCombinerToolStripMenuItem.Checked = True
-        Me.ColorCombinerToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.ColorCombinerToolStripMenuItem.Name = "ColorCombinerToolStripMenuItem"
-        Me.ColorCombinerToolStripMenuItem.Size = New System.Drawing.Size(183, 22)
-        Me.ColorCombinerToolStripMenuItem.Text = "Color Combiner"
-        '
-        'AnisotropicFilteringToolStripMenuItem
-        '
-        Me.AnisotropicFilteringToolStripMenuItem.Checked = True
-        Me.AnisotropicFilteringToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.AnisotropicFilteringToolStripMenuItem.Name = "AnisotropicFilteringToolStripMenuItem"
-        Me.AnisotropicFilteringToolStripMenuItem.Size = New System.Drawing.Size(183, 22)
-        Me.AnisotropicFilteringToolStripMenuItem.Text = "Anisotropic Filtering"
-        '
-        'FullSceneAntialiasingToolStripMenuItem
-        '
-        Me.FullSceneAntialiasingToolStripMenuItem.Checked = True
-        Me.FullSceneAntialiasingToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.FullSceneAntialiasingToolStripMenuItem.Name = "FullSceneAntialiasingToolStripMenuItem"
-        Me.FullSceneAntialiasingToolStripMenuItem.Size = New System.Drawing.Size(183, 22)
-        Me.FullSceneAntialiasingToolStripMenuItem.Text = "Full Scene Antialiasing"
-        '
-        'HelpToolStripMenuItem1
-        '
-        Me.HelpToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ContentsToolStripMenuItem, Me.AboutUoTToolStripMenuItem})
-        Me.HelpToolStripMenuItem1.Name = "HelpToolStripMenuItem1"
-        Me.HelpToolStripMenuItem1.Size = New System.Drawing.Size(41, 27)
-        Me.HelpToolStripMenuItem1.Text = "&Help"
-        '
-        'ContentsToolStripMenuItem
-        '
-        Me.ContentsToolStripMenuItem.Name = "ContentsToolStripMenuItem"
-        Me.ContentsToolStripMenuItem.Size = New System.Drawing.Size(127, 22)
-        Me.ContentsToolStripMenuItem.Text = "&Contents"
-        '
-        'AboutUoTToolStripMenuItem
-        '
-        Me.AboutUoTToolStripMenuItem.Name = "AboutUoTToolStripMenuItem"
-        Me.AboutUoTToolStripMenuItem.Size = New System.Drawing.Size(127, 22)
-        Me.AboutUoTToolStripMenuItem.Text = "&About UoT"
-        '
-        'UoTMainMenu
-        '
-        Me.UoTMainMenu.AllowMerge = False
-        Me.UoTMainMenu.AutoSize = False
-        Me.UoTMainMenu.BackColor = System.Drawing.SystemColors.ControlLight
-        Me.UoTMainMenu.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.UoTMainMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem1, Me.ToolStripMenuItem3, Me.EditToolStripMenuItem1, Me.ToolsToolStripMenuItem, Me.ToolsToolStripMenuItem1, Me.HelpToolStripMenuItem1})
-        Me.UoTMainMenu.Location = New System.Drawing.Point(0, 0)
-        Me.UoTMainMenu.Name = "UoTMainMenu"
-        Me.UoTMainMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
-        Me.UoTMainMenu.Size = New System.Drawing.Size(1160, 31)
-        Me.UoTMainMenu.Stretch = False
-        Me.UoTMainMenu.TabIndex = 40
-        Me.UoTMainMenu.Text = "MenuStrip1"
-        '
-        'ToolStripMenuItem3
-        '
-        Me.ToolStripMenuItem3.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UndoToolStripMenuItem1, Me.RedoToolStripMenuItem})
-        Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
-        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(40, 27)
-        Me.ToolStripMenuItem3.Text = "Edit"
-        Me.ToolStripMenuItem3.Visible = False
-        '
-        'UndoToolStripMenuItem1
-        '
-        Me.UndoToolStripMenuItem1.Name = "UndoToolStripMenuItem1"
-        Me.UndoToolStripMenuItem1.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Z), System.Windows.Forms.Keys)
-        Me.UndoToolStripMenuItem1.Size = New System.Drawing.Size(140, 22)
-        Me.UndoToolStripMenuItem1.Text = "&Undo"
-        '
-        'RedoToolStripMenuItem
-        '
-        Me.RedoToolStripMenuItem.Name = "RedoToolStripMenuItem"
-        Me.RedoToolStripMenuItem.Size = New System.Drawing.Size(140, 22)
-        Me.RedoToolStripMenuItem.Text = "&Redo"
-        Me.RedoToolStripMenuItem.Visible = False
-        '
-        'VertContextMenu
-        '
-        Me.VertContextMenu.BackColor = System.Drawing.SystemColors.Control
-        Me.VertContextMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem5, Me.ToolStripSeparator15, Me.ToolStripMenuItem6, Me.ToolStripMenuItem16, Me.ToolStripSeparator16, Me.ToolStripMenuItem20, Me.ToolStripMenuItem21, Me.ToolStripMenuItem33})
-        Me.VertContextMenu.Name = "ContextMenuStrip4"
-        Me.VertContextMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
-        Me.VertContextMenu.Size = New System.Drawing.Size(156, 148)
-        '
-        'ToolStripMenuItem5
-        '
-        Me.ToolStripMenuItem5.Name = "ToolStripMenuItem5"
-        Me.ToolStripMenuItem5.Size = New System.Drawing.Size(155, 22)
-        Me.ToolStripMenuItem5.Text = "Deselect"
-        '
-        'ToolStripSeparator15
-        '
-        Me.ToolStripSeparator15.Name = "ToolStripSeparator15"
-        Me.ToolStripSeparator15.Size = New System.Drawing.Size(152, 6)
-        '
-        'ToolStripMenuItem6
-        '
-        Me.ToolStripMenuItem6.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem7, Me.ToolStripMenuItem10, Me.ToolStripMenuItem13})
-        Me.ToolStripMenuItem6.Name = "ToolStripMenuItem6"
-        Me.ToolStripMenuItem6.Size = New System.Drawing.Size(155, 22)
-        Me.ToolStripMenuItem6.Text = "Rotate"
-        '
-        'ToolStripMenuItem7
-        '
-        Me.ToolStripMenuItem7.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem8, Me.ToolStripMenuItem9})
-        Me.ToolStripMenuItem7.Name = "ToolStripMenuItem7"
-        Me.ToolStripMenuItem7.Size = New System.Drawing.Size(81, 22)
-        Me.ToolStripMenuItem7.Text = "X"
-        '
-        'ToolStripMenuItem8
-        '
-        Me.ToolStripMenuItem8.Name = "ToolStripMenuItem8"
-        Me.ToolStripMenuItem8.Size = New System.Drawing.Size(141, 22)
-        Me.ToolStripMenuItem8.Text = "+ 90 degrees"
-        '
-        'ToolStripMenuItem9
-        '
-        Me.ToolStripMenuItem9.Name = "ToolStripMenuItem9"
-        Me.ToolStripMenuItem9.Size = New System.Drawing.Size(141, 22)
-        Me.ToolStripMenuItem9.Text = "- 90 degrees"
-        '
-        'ToolStripMenuItem10
-        '
-        Me.ToolStripMenuItem10.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem11, Me.ToolStripMenuItem12})
-        Me.ToolStripMenuItem10.Name = "ToolStripMenuItem10"
-        Me.ToolStripMenuItem10.Size = New System.Drawing.Size(81, 22)
-        Me.ToolStripMenuItem10.Text = "Y"
-        '
-        'ToolStripMenuItem11
-        '
-        Me.ToolStripMenuItem11.Name = "ToolStripMenuItem11"
-        Me.ToolStripMenuItem11.Size = New System.Drawing.Size(144, 22)
-        Me.ToolStripMenuItem11.Text = " + 90 degrees"
-        '
-        'ToolStripMenuItem12
-        '
-        Me.ToolStripMenuItem12.Name = "ToolStripMenuItem12"
-        Me.ToolStripMenuItem12.Size = New System.Drawing.Size(144, 22)
-        Me.ToolStripMenuItem12.Text = "- 90 degrees"
-        '
-        'ToolStripMenuItem13
-        '
-        Me.ToolStripMenuItem13.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem14, Me.ToolStripMenuItem15})
-        Me.ToolStripMenuItem13.Name = "ToolStripMenuItem13"
-        Me.ToolStripMenuItem13.Size = New System.Drawing.Size(81, 22)
-        Me.ToolStripMenuItem13.Text = "Z"
-        '
-        'ToolStripMenuItem14
-        '
-        Me.ToolStripMenuItem14.Name = "ToolStripMenuItem14"
-        Me.ToolStripMenuItem14.Size = New System.Drawing.Size(141, 22)
-        Me.ToolStripMenuItem14.Text = "+ 90 degrees"
-        '
-        'ToolStripMenuItem15
-        '
-        Me.ToolStripMenuItem15.Name = "ToolStripMenuItem15"
-        Me.ToolStripMenuItem15.Size = New System.Drawing.Size(141, 22)
-        Me.ToolStripMenuItem15.Text = "- 90 degrees"
-        '
-        'ToolStripMenuItem16
-        '
-        Me.ToolStripMenuItem16.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem17, Me.ToolStripMenuItem18, Me.ToolStripMenuItem19})
-        Me.ToolStripMenuItem16.Name = "ToolStripMenuItem16"
-        Me.ToolStripMenuItem16.Size = New System.Drawing.Size(155, 22)
-        Me.ToolStripMenuItem16.Text = "Align"
-        '
-        'ToolStripMenuItem17
-        '
-        Me.ToolStripMenuItem17.Name = "ToolStripMenuItem17"
-        Me.ToolStripMenuItem17.Size = New System.Drawing.Size(81, 22)
-        Me.ToolStripMenuItem17.Text = "X"
-        '
-        'ToolStripMenuItem18
-        '
-        Me.ToolStripMenuItem18.Name = "ToolStripMenuItem18"
-        Me.ToolStripMenuItem18.Size = New System.Drawing.Size(81, 22)
-        Me.ToolStripMenuItem18.Text = "Y"
-        '
-        'ToolStripMenuItem19
-        '
-        Me.ToolStripMenuItem19.Name = "ToolStripMenuItem19"
-        Me.ToolStripMenuItem19.Size = New System.Drawing.Size(81, 22)
-        Me.ToolStripMenuItem19.Text = "Z"
-        '
-        'ToolStripSeparator16
-        '
-        Me.ToolStripSeparator16.Name = "ToolStripSeparator16"
-        Me.ToolStripSeparator16.Size = New System.Drawing.Size(152, 6)
-        '
-        'ToolStripMenuItem20
-        '
-        Me.ToolStripMenuItem20.Name = "ToolStripMenuItem20"
-        Me.ToolStripMenuItem20.Size = New System.Drawing.Size(155, 22)
-        Me.ToolStripMenuItem20.Text = "Copy attributes"
-        '
-        'ToolStripMenuItem21
-        '
-        Me.ToolStripMenuItem21.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem22, Me.ToolStripMenuItem27, Me.ToolStripMenuItem32})
-        Me.ToolStripMenuItem21.Enabled = False
-        Me.ToolStripMenuItem21.Name = "ToolStripMenuItem21"
-        Me.ToolStripMenuItem21.Size = New System.Drawing.Size(155, 22)
-        Me.ToolStripMenuItem21.Text = "Paste attributes"
-        '
-        'ToolStripMenuItem22
-        '
-        Me.ToolStripMenuItem22.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem23, Me.ToolStripMenuItem24, Me.ToolStripMenuItem25, Me.ToolStripMenuItem26})
-        Me.ToolStripMenuItem22.Name = "ToolStripMenuItem22"
-        Me.ToolStripMenuItem22.Size = New System.Drawing.Size(185, 22)
-        Me.ToolStripMenuItem22.Text = "Position"
-        '
-        'ToolStripMenuItem23
-        '
-        Me.ToolStripMenuItem23.Name = "ToolStripMenuItem23"
-        Me.ToolStripMenuItem23.Size = New System.Drawing.Size(88, 22)
-        Me.ToolStripMenuItem23.Text = "X"
-        '
-        'ToolStripMenuItem24
-        '
-        Me.ToolStripMenuItem24.Name = "ToolStripMenuItem24"
-        Me.ToolStripMenuItem24.Size = New System.Drawing.Size(88, 22)
-        Me.ToolStripMenuItem24.Text = "Y"
-        '
-        'ToolStripMenuItem25
-        '
-        Me.ToolStripMenuItem25.Name = "ToolStripMenuItem25"
-        Me.ToolStripMenuItem25.Size = New System.Drawing.Size(88, 22)
-        Me.ToolStripMenuItem25.Text = "Z"
-        '
-        'ToolStripMenuItem26
-        '
-        Me.ToolStripMenuItem26.Name = "ToolStripMenuItem26"
-        Me.ToolStripMenuItem26.Size = New System.Drawing.Size(88, 22)
-        Me.ToolStripMenuItem26.Text = "All"
-        '
-        'ToolStripMenuItem27
-        '
-        Me.ToolStripMenuItem27.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem28, Me.ToolStripMenuItem29, Me.ToolStripMenuItem30, Me.ToolStripMenuItem31})
-        Me.ToolStripMenuItem27.Name = "ToolStripMenuItem27"
-        Me.ToolStripMenuItem27.Size = New System.Drawing.Size(185, 22)
-        Me.ToolStripMenuItem27.Text = "Rotation"
-        '
-        'ToolStripMenuItem28
-        '
-        Me.ToolStripMenuItem28.Name = "ToolStripMenuItem28"
-        Me.ToolStripMenuItem28.Size = New System.Drawing.Size(88, 22)
-        Me.ToolStripMenuItem28.Text = "X"
-        '
-        'ToolStripMenuItem29
-        '
-        Me.ToolStripMenuItem29.Name = "ToolStripMenuItem29"
-        Me.ToolStripMenuItem29.Size = New System.Drawing.Size(88, 22)
-        Me.ToolStripMenuItem29.Text = "Y"
-        '
-        'ToolStripMenuItem30
-        '
-        Me.ToolStripMenuItem30.Name = "ToolStripMenuItem30"
-        Me.ToolStripMenuItem30.Size = New System.Drawing.Size(88, 22)
-        Me.ToolStripMenuItem30.Text = "Z"
-        '
-        'ToolStripMenuItem31
-        '
-        Me.ToolStripMenuItem31.Name = "ToolStripMenuItem31"
-        Me.ToolStripMenuItem31.Size = New System.Drawing.Size(88, 22)
-        Me.ToolStripMenuItem31.Text = "All"
-        '
-        'ToolStripMenuItem32
-        '
-        Me.ToolStripMenuItem32.Name = "ToolStripMenuItem32"
-        Me.ToolStripMenuItem32.Size = New System.Drawing.Size(185, 22)
-        Me.ToolStripMenuItem32.Text = "Number and Variable"
-        '
-        'ToolStripMenuItem33
-        '
-        Me.ToolStripMenuItem33.Enabled = False
-        Me.ToolStripMenuItem33.Name = "ToolStripMenuItem33"
-        Me.ToolStripMenuItem33.Size = New System.Drawing.Size(155, 22)
-        Me.ToolStripMenuItem33.Text = "Clear clipboard"
-        '
-        'RipDL
-        '
-        Me.RipDL.Filter = "RAW F3DEX2 Display List (*.f3dex2)|*.f3dex2"
-        '
-        'SaveROMAs
-        '
-        Me.SaveROMAs.Filter = "N64 ROMs|*.z64;*.n64;*.v64;*.rom"
-        '
-        'VarContextMenu
-        '
-        Me.VarContextMenu.Name = "VarContextMenu"
-        Me.VarContextMenu.Size = New System.Drawing.Size(61, 4)
-        '
-        'NumContextMenu
-        '
-        Me.NumContextMenu.Name = "NumContextMenu"
-        Me.NumContextMenu.Size = New System.Drawing.Size(61, 4)
-        '
-        'GrpContextMenu
-        '
-        Me.GrpContextMenu.Name = "GrpContextMenu"
-        Me.GrpContextMenu.Size = New System.Drawing.Size(61, 4)
-        '
-        'MainWin
-        '
-        Me.AllowDrop = True
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
-        Me.ClientSize = New System.Drawing.Size(1160, 649)
-        Me.Controls.Add(Me.Label29)
-        Me.Controls.Add(Me.TreeFind)
-        Me.Controls.Add(Me.FileTree)
-        Me.Controls.Add(Me.ROMBrowser)
-        Me.Controls.Add(Me.Label12)
-        Me.Controls.Add(Me.Label43)
-        Me.Controls.Add(Me.EditingTabs)
-        Me.Controls.Add(Me.TrackBar1)
-        Me.Controls.Add(Me.TrackBar4)
-        Me.Controls.Add(Me.UoTStatus)
-        Me.Controls.Add(Me.UoTMainMenu)
-        Me.Controls.Add(Me.UoTRender)
-        Me.DoubleBuffered = True
-        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.MainMenuStrip = Me.UoTMainMenu
-        Me.Name = "MainWin"
-        Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show
-        Me.Text = "Utility of Time R8"
-        Me.UoTStatus.ResumeLayout(False)
-        Me.UoTStatus.PerformLayout()
-        CType(Me.TrackBar4, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.CollisionTab.ResumeLayout(False)
-        Me.GroupBox1.ResumeLayout(False)
-        Me.GroupBox1.PerformLayout()
-        Me.CollisionGroupBox.ResumeLayout(False)
-        Me.CollisionGroupBox.PerformLayout()
-        Me.MiscTab.ResumeLayout(False)
-        Me.MiscTab.PerformLayout()
-        Me.GroupBox9.ResumeLayout(False)
-        Me.GroupBox9.PerformLayout()
-        Me.GroupBox10.ResumeLayout(False)
-        Me.GroupBox10.PerformLayout()
-        Me.GroupBox8.ResumeLayout(False)
-        Me.GroupBox8.PerformLayout()
-        Me.LevelFlagsTab.ResumeLayout(False)
-        Me.GroupBox6.ResumeLayout(False)
-        Me.GroupBox6.PerformLayout()
-        Me.ActorsTab.ResumeLayout(False)
-        Me.GroupBox4.ResumeLayout(False)
-        Me.GroupBox4.PerformLayout()
-        Me.GroupBox5.ResumeLayout(False)
-        Me.GroupBox5.PerformLayout()
-        Me.EditingTabs.ResumeLayout(False)
-        Me.AnimationsTab.ResumeLayout(False)
-        Me.SplitContainer1.Panel1.ResumeLayout(False)
-        Me.SplitContainer1.Panel2.ResumeLayout(False)
-        CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SplitContainer1.ResumeLayout(False)
-        Me.AnimationSetGroup.ResumeLayout(False)
-        Me.AnimationSetGroup.PerformLayout()
-        Me.DLTab.ResumeLayout(False)
-        Me.DLTab.PerformLayout()
-        Me.GroupBox7.ResumeLayout(False)
-        Me.GroupBox7.PerformLayout()
-        Me.DLEditorContextMenu.ResumeLayout(False)
-        Me.GroupBox3.ResumeLayout(False)
-        Me.GroupBox3.PerformLayout()
-        Me.BackupMenuStrip.ResumeLayout(False)
-        CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.ActorContextMenu.ResumeLayout(False)
-        Me.ROMBrowser.ResumeLayout(False)
-        Me.ROMDataTabs.ResumeLayout(False)
-        Me.UoTMainMenu.ResumeLayout(False)
-        Me.UoTMainMenu.PerformLayout()
-        Me.VertContextMenu.ResumeLayout(False)
-        Me.ResumeLayout(False)
-        Me.PerformLayout()
+    Me.FileTree.ContextMenuStrip = Me.BackupMenuStrip
+    Me.FileTree.HideSelection = False
+    Me.FileTree.HotTracking = True
+    Me.FileTree.Location = New System.Drawing.Point(7, 62)
+    Me.FileTree.Name = "FileTree"
+    Me.FileTree.Size = New System.Drawing.Size(210, 496)
+    Me.FileTree.TabIndex = 10
+    '
+    'FileToolStripMenuItem1
+    '
+    Me.FileToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem35, Me.ToolStripMenuItem2, Me.CustomLevel, Me.toolStripSeparator, Me.SaveToolStripMenuItem, Me.ToolStripMenuItem34, Me.toolStripSeparator12, Me.ExitToolStripMenuItem})
+    Me.FileToolStripMenuItem1.Name = "FileToolStripMenuItem1"
+    Me.FileToolStripMenuItem1.Size = New System.Drawing.Size(37, 27)
+    Me.FileToolStripMenuItem1.Text = "&File"
+    '
+    'ToolStripMenuItem35
+    '
+    Me.ToolStripMenuItem35.Image = CType(resources.GetObject("ToolStripMenuItem35.Image"), System.Drawing.Image)
+    Me.ToolStripMenuItem35.ImageTransparentColor = System.Drawing.Color.Magenta
+    Me.ToolStripMenuItem35.Name = "ToolStripMenuItem35"
+    Me.ToolStripMenuItem35.Size = New System.Drawing.Size(153, 22)
+    Me.ToolStripMenuItem35.Text = "&Open ROM"
+    '
+    'ToolStripMenuItem2
+    '
+    Me.ToolStripMenuItem2.Image = CType(resources.GetObject("ToolStripMenuItem2.Image"), System.Drawing.Image)
+    Me.ToolStripMenuItem2.ImageTransparentColor = System.Drawing.Color.Magenta
+    Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
+    Me.ToolStripMenuItem2.Size = New System.Drawing.Size(153, 22)
+    Me.ToolStripMenuItem2.Text = "&Open Individual"
+    '
+    'CustomLevel
+    '
+    Me.CustomLevel.Name = "CustomLevel"
+    Me.CustomLevel.Size = New System.Drawing.Size(153, 22)
+    Me.CustomLevel.Text = "New level..."
+    Me.CustomLevel.Visible = False
+    '
+    'toolStripSeparator
+    '
+    Me.toolStripSeparator.Name = "toolStripSeparator"
+    Me.toolStripSeparator.Size = New System.Drawing.Size(150, 6)
+    '
+    'SaveToolStripMenuItem
+    '
+    Me.SaveToolStripMenuItem.Image = CType(resources.GetObject("SaveToolStripMenuItem.Image"), System.Drawing.Image)
+    Me.SaveToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
+    Me.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem"
+    Me.SaveToolStripMenuItem.ShowShortcutKeys = False
+    Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(153, 22)
+    Me.SaveToolStripMenuItem.Text = "&Save ROM"
+    '
+    'ToolStripMenuItem34
+    '
+    Me.ToolStripMenuItem34.Name = "ToolStripMenuItem34"
+    Me.ToolStripMenuItem34.Size = New System.Drawing.Size(153, 22)
+    Me.ToolStripMenuItem34.Text = "Save ROM &As"
+    Me.ToolStripMenuItem34.Visible = False
+    '
+    'toolStripSeparator12
+    '
+    Me.toolStripSeparator12.Name = "toolStripSeparator12"
+    Me.toolStripSeparator12.Size = New System.Drawing.Size(150, 6)
+    '
+    'ExitToolStripMenuItem
+    '
+    Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
+    Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(153, 22)
+    Me.ExitToolStripMenuItem.Text = "E&xit"
+    '
+    'EditToolStripMenuItem1
+    '
+    Me.EditToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UndoToolStripMenuItem, Me.WireframeModeToolStripMenuItem, Me.RenderToolStripMenuItem})
+    Me.EditToolStripMenuItem1.Name = "EditToolStripMenuItem1"
+    Me.EditToolStripMenuItem1.Size = New System.Drawing.Size(44, 27)
+    Me.EditToolStripMenuItem1.Text = "&View"
+    '
+    'UndoToolStripMenuItem
+    '
+    Me.UndoToolStripMenuItem.Name = "UndoToolStripMenuItem"
+    Me.UndoToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1
+    Me.UndoToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+    Me.UndoToolStripMenuItem.Text = "Editor tabs"
+    '
+    'WireframeModeToolStripMenuItem
+    '
+    Me.WireframeModeToolStripMenuItem.CheckOnClick = True
+    Me.WireframeModeToolStripMenuItem.Name = "WireframeModeToolStripMenuItem"
+    Me.WireframeModeToolStripMenuItem.ShortcutKeyDisplayString = "F4"
+    Me.WireframeModeToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F4
+    Me.WireframeModeToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+    Me.WireframeModeToolStripMenuItem.Text = "Wireframe"
+    '
+    'RenderToolStripMenuItem
+    '
+    Me.RenderToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.GraphicsToolStripMenuItem, Me.CollisionOverlayToolStripMenuItem})
+    Me.RenderToolStripMenuItem.Name = "RenderToolStripMenuItem"
+    Me.RenderToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+R"
+    Me.RenderToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+    Me.RenderToolStripMenuItem.Text = "Render"
+    '
+    'GraphicsToolStripMenuItem
+    '
+    Me.GraphicsToolStripMenuItem.Checked = True
+    Me.GraphicsToolStripMenuItem.CheckOnClick = True
+    Me.GraphicsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+    Me.GraphicsToolStripMenuItem.Name = "GraphicsToolStripMenuItem"
+    Me.GraphicsToolStripMenuItem.Size = New System.Drawing.Size(156, 22)
+    Me.GraphicsToolStripMenuItem.Text = "Graphics"
+    '
+    'CollisionOverlayToolStripMenuItem
+    '
+    Me.CollisionOverlayToolStripMenuItem.Checked = True
+    Me.CollisionOverlayToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+    Me.CollisionOverlayToolStripMenuItem.Name = "CollisionOverlayToolStripMenuItem"
+    Me.CollisionOverlayToolStripMenuItem.Size = New System.Drawing.Size(156, 22)
+    Me.CollisionOverlayToolStripMenuItem.Text = "Collision overlay"
+    '
+    'ToolsToolStripMenuItem1
+    '
+    Me.ToolsToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MouseToolToolStripMenuItem1, Me.LockAxesToolStripMenuItem, Me.OptionsToolStripMenuItem2})
+    Me.ToolsToolStripMenuItem1.Name = "ToolsToolStripMenuItem1"
+    Me.ToolsToolStripMenuItem1.Size = New System.Drawing.Size(44, 27)
+    Me.ToolsToolStripMenuItem1.Text = "&Tools"
+    '
+    'MouseToolToolStripMenuItem1
+    '
+    Me.MouseToolToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CameraOnlyMenu, Me.ActorSelectorMenu, Me.CollisionToolStripMenuItem, Me.CollisionSelectorMenu, Me.DisplayListSelectorToolStripMenuItem})
+    Me.MouseToolToolStripMenuItem1.Name = "MouseToolToolStripMenuItem1"
+    Me.MouseToolToolStripMenuItem1.ShortcutKeyDisplayString = ""
+    Me.MouseToolToolStripMenuItem1.Size = New System.Drawing.Size(163, 22)
+    Me.MouseToolToolStripMenuItem1.Text = "Mouse Tool"
+    '
+    'CameraOnlyMenu
+    '
+    Me.CameraOnlyMenu.Name = "CameraOnlyMenu"
+    Me.CameraOnlyMenu.ShortcutKeyDisplayString = "1"
+    Me.CameraOnlyMenu.Size = New System.Drawing.Size(191, 22)
+    Me.CameraOnlyMenu.Text = "Camera only"
+    '
+    'ActorSelectorMenu
+    '
+    Me.ActorSelectorMenu.Name = "ActorSelectorMenu"
+    Me.ActorSelectorMenu.ShortcutKeyDisplayString = "2"
+    Me.ActorSelectorMenu.Size = New System.Drawing.Size(191, 22)
+    Me.ActorSelectorMenu.Text = "Actor Selector"
+    '
+    'CollisionToolStripMenuItem
+    '
+    Me.CollisionToolStripMenuItem.Name = "CollisionToolStripMenuItem"
+    Me.CollisionToolStripMenuItem.ShortcutKeyDisplayString = "3"
+    Me.CollisionToolStripMenuItem.Size = New System.Drawing.Size(191, 22)
+    Me.CollisionToolStripMenuItem.Text = "Collision Tri Selector"
+    '
+    'CollisionSelectorMenu
+    '
+    Me.CollisionSelectorMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EdgeToolStripMenuItem, Me.TriangleToolStripMenuItem, Me.VertexToolStripMenuItem})
+    Me.CollisionSelectorMenu.Name = "CollisionSelectorMenu"
+    Me.CollisionSelectorMenu.ShortcutKeyDisplayString = ""
+    Me.CollisionSelectorMenu.Size = New System.Drawing.Size(191, 22)
+    Me.CollisionSelectorMenu.Text = "Geometry Editor"
+    Me.CollisionSelectorMenu.Visible = False
+    '
+    'EdgeToolStripMenuItem
+    '
+    Me.EdgeToolStripMenuItem.Name = "EdgeToolStripMenuItem"
+    Me.EdgeToolStripMenuItem.ShortcutKeyDisplayString = "4"
+    Me.EdgeToolStripMenuItem.Size = New System.Drawing.Size(129, 22)
+    Me.EdgeToolStripMenuItem.Text = "Edge"
+    '
+    'TriangleToolStripMenuItem
+    '
+    Me.TriangleToolStripMenuItem.Name = "TriangleToolStripMenuItem"
+    Me.TriangleToolStripMenuItem.ShortcutKeyDisplayString = "5"
+    Me.TriangleToolStripMenuItem.Size = New System.Drawing.Size(129, 22)
+    Me.TriangleToolStripMenuItem.Text = "Triangle"
+    '
+    'VertexToolStripMenuItem
+    '
+    Me.VertexToolStripMenuItem.Name = "VertexToolStripMenuItem"
+    Me.VertexToolStripMenuItem.ShortcutKeyDisplayString = "6"
+    Me.VertexToolStripMenuItem.Size = New System.Drawing.Size(129, 22)
+    Me.VertexToolStripMenuItem.Text = "Vertex"
+    '
+    'DisplayListSelectorToolStripMenuItem
+    '
+    Me.DisplayListSelectorToolStripMenuItem.Name = "DisplayListSelectorToolStripMenuItem"
+    Me.DisplayListSelectorToolStripMenuItem.ShortcutKeyDisplayString = "7"
+    Me.DisplayListSelectorToolStripMenuItem.Size = New System.Drawing.Size(191, 22)
+    Me.DisplayListSelectorToolStripMenuItem.Text = "Display List selector"
+    '
+    'LockAxesToolStripMenuItem
+    '
+    Me.LockAxesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.XToolStripMenuItem, Me.YToolStripMenuItem, Me.DisableToolStripMenuItem})
+    Me.LockAxesToolStripMenuItem.Name = "LockAxesToolStripMenuItem"
+    Me.LockAxesToolStripMenuItem.ShortcutKeyDisplayString = "Space"
+    Me.LockAxesToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
+    Me.LockAxesToolStripMenuItem.Text = "Lock axes"
+    '
+    'XToolStripMenuItem
+    '
+    Me.XToolStripMenuItem.Name = "XToolStripMenuItem"
+    Me.XToolStripMenuItem.ShortcutKeyDisplayString = ""
+    Me.XToolStripMenuItem.Size = New System.Drawing.Size(111, 22)
+    Me.XToolStripMenuItem.Text = "X"
+    '
+    'YToolStripMenuItem
+    '
+    Me.YToolStripMenuItem.Name = "YToolStripMenuItem"
+    Me.YToolStripMenuItem.ShortcutKeyDisplayString = ""
+    Me.YToolStripMenuItem.Size = New System.Drawing.Size(111, 22)
+    Me.YToolStripMenuItem.Text = "Y"
+    '
+    'DisableToolStripMenuItem
+    '
+    Me.DisableToolStripMenuItem.Name = "DisableToolStripMenuItem"
+    Me.DisableToolStripMenuItem.ShortcutKeyDisplayString = ""
+    Me.DisableToolStripMenuItem.Size = New System.Drawing.Size(111, 22)
+    Me.DisableToolStripMenuItem.Text = "Disable"
+    '
+    'OptionsToolStripMenuItem2
+    '
+    Me.OptionsToolStripMenuItem2.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DisableDepthTestToolStripMenuItem})
+    Me.OptionsToolStripMenuItem2.Name = "OptionsToolStripMenuItem2"
+    Me.OptionsToolStripMenuItem2.Size = New System.Drawing.Size(163, 22)
+    Me.OptionsToolStripMenuItem2.Text = "Options"
+    '
+    'DisableDepthTestToolStripMenuItem
+    '
+    Me.DisableDepthTestToolStripMenuItem.CheckOnClick = True
+    Me.DisableDepthTestToolStripMenuItem.Name = "DisableDepthTestToolStripMenuItem"
+    Me.DisableDepthTestToolStripMenuItem.Size = New System.Drawing.Size(224, 22)
+    Me.DisableDepthTestToolStripMenuItem.Text = "Select actors behind graphics"
+    '
+    'ToolsToolStripMenuItem
+    '
+    Me.ToolsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OptionsToolStripMenuItem1, Me.RendererToolStripMenuItem})
+    Me.ToolsToolStripMenuItem.Name = "ToolsToolStripMenuItem"
+    Me.ToolsToolStripMenuItem.Size = New System.Drawing.Size(80, 27)
+    Me.ToolsToolStripMenuItem.Text = "&Preferences"
+    '
+    'OptionsToolStripMenuItem1
+    '
+    Me.OptionsToolStripMenuItem1.Name = "OptionsToolStripMenuItem1"
+    Me.OptionsToolStripMenuItem1.Size = New System.Drawing.Size(122, 22)
+    Me.OptionsToolStripMenuItem1.Text = "&Setup"
+    '
+    'RendererToolStripMenuItem
+    '
+    Me.RendererToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TexturesToolStripMenuItem, Me.ColorCombinerToolStripMenuItem, Me.AnisotropicFilteringToolStripMenuItem, Me.FullSceneAntialiasingToolStripMenuItem})
+    Me.RendererToolStripMenuItem.Name = "RendererToolStripMenuItem"
+    Me.RendererToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
+    Me.RendererToolStripMenuItem.Text = "Renderer"
+    '
+    'TexturesToolStripMenuItem
+    '
+    Me.TexturesToolStripMenuItem.Checked = True
+    Me.TexturesToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+    Me.TexturesToolStripMenuItem.Name = "TexturesToolStripMenuItem"
+    Me.TexturesToolStripMenuItem.Size = New System.Drawing.Size(183, 22)
+    Me.TexturesToolStripMenuItem.Text = "Textures"
+    '
+    'ColorCombinerToolStripMenuItem
+    '
+    Me.ColorCombinerToolStripMenuItem.Checked = True
+    Me.ColorCombinerToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+    Me.ColorCombinerToolStripMenuItem.Name = "ColorCombinerToolStripMenuItem"
+    Me.ColorCombinerToolStripMenuItem.Size = New System.Drawing.Size(183, 22)
+    Me.ColorCombinerToolStripMenuItem.Text = "Color Combiner"
+    '
+    'AnisotropicFilteringToolStripMenuItem
+    '
+    Me.AnisotropicFilteringToolStripMenuItem.Checked = True
+    Me.AnisotropicFilteringToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+    Me.AnisotropicFilteringToolStripMenuItem.Name = "AnisotropicFilteringToolStripMenuItem"
+    Me.AnisotropicFilteringToolStripMenuItem.Size = New System.Drawing.Size(183, 22)
+    Me.AnisotropicFilteringToolStripMenuItem.Text = "Anisotropic Filtering"
+    '
+    'FullSceneAntialiasingToolStripMenuItem
+    '
+    Me.FullSceneAntialiasingToolStripMenuItem.Checked = True
+    Me.FullSceneAntialiasingToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+    Me.FullSceneAntialiasingToolStripMenuItem.Name = "FullSceneAntialiasingToolStripMenuItem"
+    Me.FullSceneAntialiasingToolStripMenuItem.Size = New System.Drawing.Size(183, 22)
+    Me.FullSceneAntialiasingToolStripMenuItem.Text = "Full Scene Antialiasing"
+    '
+    'HelpToolStripMenuItem1
+    '
+    Me.HelpToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ContentsToolStripMenuItem, Me.AboutUoTToolStripMenuItem})
+    Me.HelpToolStripMenuItem1.Name = "HelpToolStripMenuItem1"
+    Me.HelpToolStripMenuItem1.Size = New System.Drawing.Size(41, 27)
+    Me.HelpToolStripMenuItem1.Text = "&Help"
+    '
+    'ContentsToolStripMenuItem
+    '
+    Me.ContentsToolStripMenuItem.Name = "ContentsToolStripMenuItem"
+    Me.ContentsToolStripMenuItem.Size = New System.Drawing.Size(127, 22)
+    Me.ContentsToolStripMenuItem.Text = "&Contents"
+    '
+    'AboutUoTToolStripMenuItem
+    '
+    Me.AboutUoTToolStripMenuItem.Name = "AboutUoTToolStripMenuItem"
+    Me.AboutUoTToolStripMenuItem.Size = New System.Drawing.Size(127, 22)
+    Me.AboutUoTToolStripMenuItem.Text = "&About UoT"
+    '
+    'UoTMainMenu
+    '
+    Me.UoTMainMenu.AllowMerge = False
+    Me.UoTMainMenu.AutoSize = False
+    Me.UoTMainMenu.BackColor = System.Drawing.SystemColors.ControlLight
+    Me.UoTMainMenu.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+    Me.UoTMainMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem1, Me.ToolStripMenuItem3, Me.EditToolStripMenuItem1, Me.ToolsToolStripMenuItem, Me.ToolsToolStripMenuItem1, Me.HelpToolStripMenuItem1})
+    Me.UoTMainMenu.Location = New System.Drawing.Point(0, 0)
+    Me.UoTMainMenu.Name = "UoTMainMenu"
+    Me.UoTMainMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
+    Me.UoTMainMenu.Size = New System.Drawing.Size(1160, 31)
+    Me.UoTMainMenu.Stretch = False
+    Me.UoTMainMenu.TabIndex = 40
+    Me.UoTMainMenu.Text = "MenuStrip1"
+    '
+    'ToolStripMenuItem3
+    '
+    Me.ToolStripMenuItem3.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UndoToolStripMenuItem1, Me.RedoToolStripMenuItem})
+    Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
+    Me.ToolStripMenuItem3.Size = New System.Drawing.Size(40, 27)
+    Me.ToolStripMenuItem3.Text = "Edit"
+    Me.ToolStripMenuItem3.Visible = False
+    '
+    'UndoToolStripMenuItem1
+    '
+    Me.UndoToolStripMenuItem1.Name = "UndoToolStripMenuItem1"
+    Me.UndoToolStripMenuItem1.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Z), System.Windows.Forms.Keys)
+    Me.UndoToolStripMenuItem1.Size = New System.Drawing.Size(140, 22)
+    Me.UndoToolStripMenuItem1.Text = "&Undo"
+    '
+    'RedoToolStripMenuItem
+    '
+    Me.RedoToolStripMenuItem.Name = "RedoToolStripMenuItem"
+    Me.RedoToolStripMenuItem.Size = New System.Drawing.Size(140, 22)
+    Me.RedoToolStripMenuItem.Text = "&Redo"
+    Me.RedoToolStripMenuItem.Visible = False
+    '
+    'VertContextMenu
+    '
+    Me.VertContextMenu.BackColor = System.Drawing.SystemColors.Control
+    Me.VertContextMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem5, Me.ToolStripSeparator15, Me.ToolStripMenuItem6, Me.ToolStripMenuItem16, Me.ToolStripSeparator16, Me.ToolStripMenuItem20, Me.ToolStripMenuItem21, Me.ToolStripMenuItem33})
+    Me.VertContextMenu.Name = "ContextMenuStrip4"
+    Me.VertContextMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
+    Me.VertContextMenu.Size = New System.Drawing.Size(156, 148)
+    '
+    'ToolStripMenuItem5
+    '
+    Me.ToolStripMenuItem5.Name = "ToolStripMenuItem5"
+    Me.ToolStripMenuItem5.Size = New System.Drawing.Size(155, 22)
+    Me.ToolStripMenuItem5.Text = "Deselect"
+    '
+    'ToolStripSeparator15
+    '
+    Me.ToolStripSeparator15.Name = "ToolStripSeparator15"
+    Me.ToolStripSeparator15.Size = New System.Drawing.Size(152, 6)
+    '
+    'ToolStripMenuItem6
+    '
+    Me.ToolStripMenuItem6.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem7, Me.ToolStripMenuItem10, Me.ToolStripMenuItem13})
+    Me.ToolStripMenuItem6.Name = "ToolStripMenuItem6"
+    Me.ToolStripMenuItem6.Size = New System.Drawing.Size(155, 22)
+    Me.ToolStripMenuItem6.Text = "Rotate"
+    '
+    'ToolStripMenuItem7
+    '
+    Me.ToolStripMenuItem7.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem8, Me.ToolStripMenuItem9})
+    Me.ToolStripMenuItem7.Name = "ToolStripMenuItem7"
+    Me.ToolStripMenuItem7.Size = New System.Drawing.Size(81, 22)
+    Me.ToolStripMenuItem7.Text = "X"
+    '
+    'ToolStripMenuItem8
+    '
+    Me.ToolStripMenuItem8.Name = "ToolStripMenuItem8"
+    Me.ToolStripMenuItem8.Size = New System.Drawing.Size(141, 22)
+    Me.ToolStripMenuItem8.Text = "+ 90 degrees"
+    '
+    'ToolStripMenuItem9
+    '
+    Me.ToolStripMenuItem9.Name = "ToolStripMenuItem9"
+    Me.ToolStripMenuItem9.Size = New System.Drawing.Size(141, 22)
+    Me.ToolStripMenuItem9.Text = "- 90 degrees"
+    '
+    'ToolStripMenuItem10
+    '
+    Me.ToolStripMenuItem10.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem11, Me.ToolStripMenuItem12})
+    Me.ToolStripMenuItem10.Name = "ToolStripMenuItem10"
+    Me.ToolStripMenuItem10.Size = New System.Drawing.Size(81, 22)
+    Me.ToolStripMenuItem10.Text = "Y"
+    '
+    'ToolStripMenuItem11
+    '
+    Me.ToolStripMenuItem11.Name = "ToolStripMenuItem11"
+    Me.ToolStripMenuItem11.Size = New System.Drawing.Size(144, 22)
+    Me.ToolStripMenuItem11.Text = " + 90 degrees"
+    '
+    'ToolStripMenuItem12
+    '
+    Me.ToolStripMenuItem12.Name = "ToolStripMenuItem12"
+    Me.ToolStripMenuItem12.Size = New System.Drawing.Size(144, 22)
+    Me.ToolStripMenuItem12.Text = "- 90 degrees"
+    '
+    'ToolStripMenuItem13
+    '
+    Me.ToolStripMenuItem13.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem14, Me.ToolStripMenuItem15})
+    Me.ToolStripMenuItem13.Name = "ToolStripMenuItem13"
+    Me.ToolStripMenuItem13.Size = New System.Drawing.Size(81, 22)
+    Me.ToolStripMenuItem13.Text = "Z"
+    '
+    'ToolStripMenuItem14
+    '
+    Me.ToolStripMenuItem14.Name = "ToolStripMenuItem14"
+    Me.ToolStripMenuItem14.Size = New System.Drawing.Size(141, 22)
+    Me.ToolStripMenuItem14.Text = "+ 90 degrees"
+    '
+    'ToolStripMenuItem15
+    '
+    Me.ToolStripMenuItem15.Name = "ToolStripMenuItem15"
+    Me.ToolStripMenuItem15.Size = New System.Drawing.Size(141, 22)
+    Me.ToolStripMenuItem15.Text = "- 90 degrees"
+    '
+    'ToolStripMenuItem16
+    '
+    Me.ToolStripMenuItem16.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem17, Me.ToolStripMenuItem18, Me.ToolStripMenuItem19})
+    Me.ToolStripMenuItem16.Name = "ToolStripMenuItem16"
+    Me.ToolStripMenuItem16.Size = New System.Drawing.Size(155, 22)
+    Me.ToolStripMenuItem16.Text = "Align"
+    '
+    'ToolStripMenuItem17
+    '
+    Me.ToolStripMenuItem17.Name = "ToolStripMenuItem17"
+    Me.ToolStripMenuItem17.Size = New System.Drawing.Size(81, 22)
+    Me.ToolStripMenuItem17.Text = "X"
+    '
+    'ToolStripMenuItem18
+    '
+    Me.ToolStripMenuItem18.Name = "ToolStripMenuItem18"
+    Me.ToolStripMenuItem18.Size = New System.Drawing.Size(81, 22)
+    Me.ToolStripMenuItem18.Text = "Y"
+    '
+    'ToolStripMenuItem19
+    '
+    Me.ToolStripMenuItem19.Name = "ToolStripMenuItem19"
+    Me.ToolStripMenuItem19.Size = New System.Drawing.Size(81, 22)
+    Me.ToolStripMenuItem19.Text = "Z"
+    '
+    'ToolStripSeparator16
+    '
+    Me.ToolStripSeparator16.Name = "ToolStripSeparator16"
+    Me.ToolStripSeparator16.Size = New System.Drawing.Size(152, 6)
+    '
+    'ToolStripMenuItem20
+    '
+    Me.ToolStripMenuItem20.Name = "ToolStripMenuItem20"
+    Me.ToolStripMenuItem20.Size = New System.Drawing.Size(155, 22)
+    Me.ToolStripMenuItem20.Text = "Copy attributes"
+    '
+    'ToolStripMenuItem21
+    '
+    Me.ToolStripMenuItem21.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem22, Me.ToolStripMenuItem27, Me.ToolStripMenuItem32})
+    Me.ToolStripMenuItem21.Enabled = False
+    Me.ToolStripMenuItem21.Name = "ToolStripMenuItem21"
+    Me.ToolStripMenuItem21.Size = New System.Drawing.Size(155, 22)
+    Me.ToolStripMenuItem21.Text = "Paste attributes"
+    '
+    'ToolStripMenuItem22
+    '
+    Me.ToolStripMenuItem22.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem23, Me.ToolStripMenuItem24, Me.ToolStripMenuItem25, Me.ToolStripMenuItem26})
+    Me.ToolStripMenuItem22.Name = "ToolStripMenuItem22"
+    Me.ToolStripMenuItem22.Size = New System.Drawing.Size(185, 22)
+    Me.ToolStripMenuItem22.Text = "Position"
+    '
+    'ToolStripMenuItem23
+    '
+    Me.ToolStripMenuItem23.Name = "ToolStripMenuItem23"
+    Me.ToolStripMenuItem23.Size = New System.Drawing.Size(88, 22)
+    Me.ToolStripMenuItem23.Text = "X"
+    '
+    'ToolStripMenuItem24
+    '
+    Me.ToolStripMenuItem24.Name = "ToolStripMenuItem24"
+    Me.ToolStripMenuItem24.Size = New System.Drawing.Size(88, 22)
+    Me.ToolStripMenuItem24.Text = "Y"
+    '
+    'ToolStripMenuItem25
+    '
+    Me.ToolStripMenuItem25.Name = "ToolStripMenuItem25"
+    Me.ToolStripMenuItem25.Size = New System.Drawing.Size(88, 22)
+    Me.ToolStripMenuItem25.Text = "Z"
+    '
+    'ToolStripMenuItem26
+    '
+    Me.ToolStripMenuItem26.Name = "ToolStripMenuItem26"
+    Me.ToolStripMenuItem26.Size = New System.Drawing.Size(88, 22)
+    Me.ToolStripMenuItem26.Text = "All"
+    '
+    'ToolStripMenuItem27
+    '
+    Me.ToolStripMenuItem27.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem28, Me.ToolStripMenuItem29, Me.ToolStripMenuItem30, Me.ToolStripMenuItem31})
+    Me.ToolStripMenuItem27.Name = "ToolStripMenuItem27"
+    Me.ToolStripMenuItem27.Size = New System.Drawing.Size(185, 22)
+    Me.ToolStripMenuItem27.Text = "Rotation"
+    '
+    'ToolStripMenuItem28
+    '
+    Me.ToolStripMenuItem28.Name = "ToolStripMenuItem28"
+    Me.ToolStripMenuItem28.Size = New System.Drawing.Size(88, 22)
+    Me.ToolStripMenuItem28.Text = "X"
+    '
+    'ToolStripMenuItem29
+    '
+    Me.ToolStripMenuItem29.Name = "ToolStripMenuItem29"
+    Me.ToolStripMenuItem29.Size = New System.Drawing.Size(88, 22)
+    Me.ToolStripMenuItem29.Text = "Y"
+    '
+    'ToolStripMenuItem30
+    '
+    Me.ToolStripMenuItem30.Name = "ToolStripMenuItem30"
+    Me.ToolStripMenuItem30.Size = New System.Drawing.Size(88, 22)
+    Me.ToolStripMenuItem30.Text = "Z"
+    '
+    'ToolStripMenuItem31
+    '
+    Me.ToolStripMenuItem31.Name = "ToolStripMenuItem31"
+    Me.ToolStripMenuItem31.Size = New System.Drawing.Size(88, 22)
+    Me.ToolStripMenuItem31.Text = "All"
+    '
+    'ToolStripMenuItem32
+    '
+    Me.ToolStripMenuItem32.Name = "ToolStripMenuItem32"
+    Me.ToolStripMenuItem32.Size = New System.Drawing.Size(185, 22)
+    Me.ToolStripMenuItem32.Text = "Number and Variable"
+    '
+    'ToolStripMenuItem33
+    '
+    Me.ToolStripMenuItem33.Enabled = False
+    Me.ToolStripMenuItem33.Name = "ToolStripMenuItem33"
+    Me.ToolStripMenuItem33.Size = New System.Drawing.Size(155, 22)
+    Me.ToolStripMenuItem33.Text = "Clear clipboard"
+    '
+    'RipDL
+    '
+    Me.RipDL.Filter = "RAW F3DEX2 Display List (*.f3dex2)|*.f3dex2"
+    '
+    'SaveROMAs
+    '
+    Me.SaveROMAs.Filter = "N64 ROMs|*.z64;*.n64;*.v64;*.rom"
+    '
+    'VarContextMenu
+    '
+    Me.VarContextMenu.Name = "VarContextMenu"
+    Me.VarContextMenu.Size = New System.Drawing.Size(61, 4)
+    '
+    'NumContextMenu
+    '
+    Me.NumContextMenu.Name = "NumContextMenu"
+    Me.NumContextMenu.Size = New System.Drawing.Size(61, 4)
+    '
+    'GrpContextMenu
+    '
+    Me.GrpContextMenu.Name = "GrpContextMenu"
+    Me.GrpContextMenu.Size = New System.Drawing.Size(61, 4)
+    '
+    'MainWin
+    '
+    Me.AllowDrop = True
+    Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
+    Me.ClientSize = New System.Drawing.Size(1160, 649)
+    Me.Controls.Add(Me.Label29)
+    Me.Controls.Add(Me.TreeFind)
+    Me.Controls.Add(Me.FileTree)
+    Me.Controls.Add(Me.ROMBrowser)
+    Me.Controls.Add(Me.Label12)
+    Me.Controls.Add(Me.Label43)
+    Me.Controls.Add(Me.EditingTabs)
+    Me.Controls.Add(Me.TrackBar1)
+    Me.Controls.Add(Me.TrackBar4)
+    Me.Controls.Add(Me.UoTStatus)
+    Me.Controls.Add(Me.UoTMainMenu)
+    Me.Controls.Add(Me.UoTRender)
+    Me.DoubleBuffered = True
+    Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+    Me.MainMenuStrip = Me.UoTMainMenu
+    Me.Name = "MainWin"
+    Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show
+    Me.Text = "Utility of Time R8"
+    Me.UoTStatus.ResumeLayout(False)
+    Me.UoTStatus.PerformLayout()
+    CType(Me.TrackBar4, System.ComponentModel.ISupportInitialize).EndInit()
+    Me.CollisionTab.ResumeLayout(False)
+    Me.GroupBox1.ResumeLayout(False)
+    Me.GroupBox1.PerformLayout()
+    Me.CollisionGroupBox.ResumeLayout(False)
+    Me.CollisionGroupBox.PerformLayout()
+    Me.MiscTab.ResumeLayout(False)
+    Me.MiscTab.PerformLayout()
+    Me.GroupBox9.ResumeLayout(False)
+    Me.GroupBox9.PerformLayout()
+    Me.GroupBox10.ResumeLayout(False)
+    Me.GroupBox10.PerformLayout()
+    Me.GroupBox8.ResumeLayout(False)
+    Me.GroupBox8.PerformLayout()
+    Me.LevelFlagsTab.ResumeLayout(False)
+    Me.GroupBox6.ResumeLayout(False)
+    Me.GroupBox6.PerformLayout()
+    Me.ActorsTab.ResumeLayout(False)
+    Me.GroupBox4.ResumeLayout(False)
+    Me.GroupBox4.PerformLayout()
+    Me.GroupBox5.ResumeLayout(False)
+    Me.GroupBox5.PerformLayout()
+    Me.EditingTabs.ResumeLayout(False)
+    Me.AnimationsTab.ResumeLayout(False)
+    Me.SplitContainer1.Panel1.ResumeLayout(False)
+    Me.SplitContainer1.Panel2.ResumeLayout(False)
+    CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
+    Me.SplitContainer1.ResumeLayout(False)
+    Me.AnimationSetGroup.ResumeLayout(False)
+    Me.AnimationSetGroup.PerformLayout()
+    Me.DLTab.ResumeLayout(False)
+    Me.DLTab.PerformLayout()
+    Me.GroupBox7.ResumeLayout(False)
+    Me.GroupBox7.PerformLayout()
+    Me.DLEditorContextMenu.ResumeLayout(False)
+    Me.GroupBox3.ResumeLayout(False)
+    Me.GroupBox3.PerformLayout()
+    Me.BackupMenuStrip.ResumeLayout(False)
+    CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).EndInit()
+    Me.ActorContextMenu.ResumeLayout(False)
+    Me.ROMBrowser.ResumeLayout(False)
+    Me.ROMDataTabs.ResumeLayout(False)
+    Me.UoTMainMenu.ResumeLayout(False)
+    Me.UoTMainMenu.PerformLayout()
+    Me.VertContextMenu.ResumeLayout(False)
+    Me.ResumeLayout(False)
+    Me.PerformLayout()
 
-    End Sub
+  End Sub
 
 #End Region
 
@@ -2992,7 +2992,7 @@ Public Class MainWin
 
 #Region "ROM HANDLING RELATED"
 
-    Private ActorTable() As ActorTbl
+  Private ActorTable() As ActorTbl
   Private ObjectTable() As ObjectTbl
   Private RecentROMCount As Integer = 0
   Private RecentIndCount As Integer = 0
@@ -3011,8 +3011,6 @@ Public Class MainWin
   Private SceneCount As Integer = 0
   Private ObjectCount As Integer = 0
   Private ROMFiles As New ZFiles
-  Private ROMFileStream As FileStream
-  Private ROMData() As Byte
   Private Z64Code() As Byte
   Private IndMapFileName As String = ""
   Private IndScFileName As String = ""
@@ -5042,7 +5040,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     Start(False)
   End Sub
 
-  Private Sub GetROMFileTable(ByVal segoff As UInt32, ByVal nameoff As UInt32, ByVal DebugROM As Boolean)
+  Private Shared Function GetROMFileTable(romBytes() As Byte, segoff As UInt32, nameoff As UInt32) As ZFiles
     Dim curfilebyte() As Byte = {}
     Dim nameinc As Integer = 0
     Dim seginc As Integer = 0
@@ -5068,8 +5066,8 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     curnamepos = nameoff
     segbuffpos = segoff
     Do
-      startb = IoUtil.ReadUInt32(ROMData, segbuffpos)
-      endb = IoUtil.ReadUInt32(ROMData, segbuffpos + 4)
+      startb = IoUtil.ReadUInt32(romBytes, segbuffpos)
+      endb = IoUtil.ReadUInt32(romBytes, segbuffpos + 4)
       If startb = 0 And endb = 0 Then
         Exit Do
       End If
@@ -5080,16 +5078,19 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       segbuffpos += 16
       seginc += 1
     Loop
+
+    Dim zFiles As New ZFiles
+
     While nameinc <= seginc - 1
       namebuffpos = 0
-      If ROMData(curnamepos) = 0 Then
-        While ROMData(curnamepos) = 0
+      If romBytes(curnamepos) = 0 Then
+        While romBytes(curnamepos) = 0
           curnamepos += 1
         End While
       End If
-      While ROMData(curnamepos) <> 0
+      While romBytes(curnamepos) <> 0
         ReDim Preserve curfilebyte(namebuffpos)
-        curfilebyte(namebuffpos) = ROMData(curnamepos)
+        curfilebyte(namebuffpos) = romBytes(curnamepos)
         curnamepos += 1
         namebuffpos += 1
       End While
@@ -5112,22 +5113,22 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
 
         file = New ZSc
 
-        ReDim Preserve ROMFiles.Levels(sccount)
-        ROMFiles.Levels(sccount) = file
+        ReDim Preserve zFiles.Levels(sccount)
+        zFiles.Levels(sccount) = file
 
         mapcount = 0
       ElseIf curfilename.Contains("room_") Then
         file = New ZMap
 
-        ReDim Preserve ROMFiles.Levels(sccount).Maps(mapcount)
-        ROMFiles.Levels(sccount).Maps(mapcount) = file
+        ReDim Preserve zFiles.Levels(sccount).Maps(mapcount)
+        zFiles.Levels(sccount).Maps(mapcount) = file
 
         mapcount += 1
       ElseIf Mid(curfilename, 1, 7).ToLower = "object_" Then
         file = New ZObj
 
-        ReDim Preserve ROMFiles.Objects(objcount)
-        ROMFiles.Objects(objcount) = file
+        ReDim Preserve zFiles.Objects(objcount)
+        zFiles.Objects(objcount) = file
 
         objcount += 1
         mapcount = 0
@@ -5135,15 +5136,15 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       ElseIf Mid(curfilename, 1, 4).ToLower = "ovl_" Then
         file = New ZCodeFiles
 
-        ReDim Preserve ROMFiles.ActorCode(codecount)
-        ROMFiles.ActorCode(codecount) = file
+        ReDim Preserve zFiles.ActorCode(codecount)
+        zFiles.ActorCode(codecount) = file
 
         codecount += 1
       Else
         file = New ZOtherData
 
-        ReDim Preserve ROMFiles.Others(othercount)
-        ROMFiles.Others(othercount) = file
+        ReDim Preserve zFiles.Others(othercount)
+        zFiles.Others(othercount) = file
 
         othercount += 1
         mapcount = 0
@@ -5159,40 +5160,41 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
 
       nameinc += 1
     End While
-  End Sub
+
+    Return zFiles
+  End Function
 
   Public Sub PopulateFileTreeView()
     FileTree.Nodes.Clear()
 
     Dim modelsNode As TreeNode = FileTree.Nodes.Add("Actor models")
     For Each model As ZObj In ROMFiles.Objects
-      modelsNode.Nodes.Add(model.betterFilename)
+      modelsNode.Nodes.Add(model.BetterFileName)
     Next
 
     Dim codesNode As TreeNode = FileTree.Nodes.Add("Actor code")
     For Each code As ZCodeFiles In ROMFiles.ActorCode
-      codesNode.Nodes.Add(code.filename)
+      codesNode.Nodes.Add(code.FileName)
     Next
 
     Dim scenesNode As TreeNode = FileTree.Nodes.Add("Scenes")
     For Each scene As ZSc In ROMFiles.Levels
-      Dim sceneNode As TreeNode = scenesNode.Nodes.Add(scene.betterFilename)
+      Dim sceneNode As TreeNode = scenesNode.Nodes.Add(scene.BetterFileName)
 
       For Each map As ZMap In scene.Maps
-        sceneNode.Nodes.Add(map.filename)
+        sceneNode.Nodes.Add(map.FileName)
       Next
     Next
 
     Dim othersNode As TreeNode = FileTree.Nodes.Add("Others")
     For Each other As ZOtherData In ROMFiles.Others
-      othersNode.Nodes.Add(other.filename)
+      othersNode.Nodes.Add(other.FileName)
     Next
   End Sub
 
-  Public Sub PopulateCommonBanks()
+  Public Sub PopulateCommonBanks(romBytes() As Byte)
     Dim Banks As ObjectExchange = RamBanks.CommonBanks
 
-    Dim romFS As FileStream = New FileStream(DefROM, FileMode.Open)
     With Banks
       ReDim .Bank4.Banks(0)
       ReDim .Bank5.Banks(1)
@@ -5207,25 +5209,25 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
 
       For i As Integer = 0 To ROMFiles.Others.Length - 1
         fileSize = ROMFiles.Others(i).EndOffset - ROMFiles.Others(i).StartOffset
-        If ROMFiles.Others(i).filename = "gameplay_keep" Then
+        If ROMFiles.Others(i).FileName = "gameplay_keep" Then
           .Bank4.Banks(0).Data = New SimpleRamBank
-          .Bank4.Banks(0).Data.PopulateFromStream(romFS, ROMFiles.Others(i).StartOffset, fileSize)
+          .Bank4.Banks(0).Data.PopulateFromBytes(romBytes, ROMFiles.Others(i).StartOffset, fileSize)
           .Bank4.Banks(0).StartOffset = ROMFiles.Others(i).StartOffset
           .Bank4.Banks(0).EndOffset = ROMFiles.Others(i).EndOffset
-        ElseIf ROMFiles.Others(i).filename = "gameplay_field_keep" Then
+        ElseIf ROMFiles.Others(i).FileName = "gameplay_field_keep" Then
           .Bank5.Banks(0).Data = New SimpleRamBank
-          .Bank5.Banks(0).Data.PopulateFromStream(romFS, ROMFiles.Others(i).StartOffset, fileSize)
+          .Bank5.Banks(0).Data.PopulateFromBytes(romBytes, ROMFiles.Others(i).StartOffset, fileSize)
           .Bank5.Banks(0).StartOffset = ROMFiles.Others(i).StartOffset
           .Bank5.Banks(0).EndOffset = ROMFiles.Others(i).EndOffset
-        ElseIf ROMFiles.Others(i).filename = "gameplay_dangeon_keep" Then
+        ElseIf ROMFiles.Others(i).FileName = "gameplay_dangeon_keep" Then
           .Bank5.Banks(1).Data = New SimpleRamBank
-          .Bank5.Banks(1).Data.PopulateFromStream(romFS, ROMFiles.Others(i).StartOffset, fileSize)
+          .Bank5.Banks(1).Data.PopulateFromBytes(romBytes, ROMFiles.Others(i).StartOffset, fileSize)
           .Bank5.Banks(1).StartOffset = ROMFiles.Others(i).StartOffset
           .Bank5.Banks(1).EndOffset = ROMFiles.Others(i).EndOffset
-        ElseIf ROMFiles.Others(i).filename = "icon_item_static" Then
-          RamBanks.IconItemStatic.PopulateFromStream(romFS, ROMFiles.Others(i).StartOffset, fileSize)
-        ElseIf ROMFiles.Others(i).filename = "icon_item_24_static" Then
-          RamBanks.IconItem24Static.PopulateFromStream(romFS, ROMFiles.Others(i).StartOffset, fileSize)
+        ElseIf ROMFiles.Others(i).FileName = "icon_item_static" Then
+          RamBanks.IconItemStatic.PopulateFromBytes(romBytes, ROMFiles.Others(i).StartOffset, fileSize)
+        ElseIf ROMFiles.Others(i).FileName = "icon_item_24_static" Then
+          RamBanks.IconItem24Static.PopulateFromBytes(romBytes, ROMFiles.Others(i).StartOffset, fileSize)
         End If
       Next
       Dim animBankCnt As Integer = 0
@@ -5234,11 +5236,11 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
 
       For i As Integer = 0 To ROMFiles.Others.Length - 1
         fileSize = ROMFiles.Others(i).EndOffset - ROMFiles.Others(i).StartOffset
-        If ROMFiles.Others(i).filename = "link_animetion" Then
-          animationbank.Items.Add(ROMFiles.Others(i).filename)
+        If ROMFiles.Others(i).FileName = "link_animetion" Then
+          animationbank.Items.Add(ROMFiles.Others(i).FileName)
           ReDim Preserve .Anims.Banks(animBankCnt)
           .Anims.Banks(animBankCnt).Data = New SimpleRamBank
-          .Anims.Banks(animBankCnt).Data.PopulateFromStream(romFS, ROMFiles.Others(i).StartOffset, fileSize)
+          .Anims.Banks(animBankCnt).Data.PopulateFromBytes(romBytes, ROMFiles.Others(i).StartOffset, fileSize)
           .Anims.Banks(animBankCnt).StartOffset = ROMFiles.Others(i).StartOffset
           .Anims.Banks(animBankCnt).EndOffset = ROMFiles.Others(i).EndOffset
           animBankCnt += 1
@@ -5248,19 +5250,18 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       For i As Integer = 0 To ROMFiles.Objects.Length - 1
         fileSize = ROMFiles.Objects(i).EndOffset - ROMFiles.Objects(i).StartOffset
         If _
-          (ROMFiles.Objects(i).filename.ToLower.Contains("object_") And
-           ROMFiles.Objects(i).filename.ToLower.Contains("_anime")) Then
-          animationbank.Items.Add(ROMFiles.Objects(i).betterFilename)
+          (ROMFiles.Objects(i).FileName.ToLower.Contains("object_") And
+           ROMFiles.Objects(i).FileName.ToLower.Contains("_anime")) Then
+          animationbank.Items.Add(ROMFiles.Objects(i).BetterFileName)
           ReDim Preserve .Anims.Banks(animBankCnt)
           .Anims.Banks(animBankCnt).Data = New SimpleRamBank
-          .Anims.Banks(animBankCnt).Data.PopulateFromStream(romFS, ROMFiles.Objects(i).StartOffset, fileSize)
+          .Anims.Banks(animBankCnt).Data.PopulateFromBytes(romBytes, ROMFiles.Objects(i).StartOffset, fileSize)
           .Anims.Banks(animBankCnt).StartOffset = ROMFiles.Objects(i).StartOffset
           .Anims.Banks(animBankCnt).EndOffset = ROMFiles.Objects(i).EndOffset
           animBankCnt += 1
         End If
       Next
     End With
-    romFS.Dispose()
 
     RamBanks.CommonBanks = Banks
   End Sub
@@ -5271,34 +5272,30 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       DLParser.KillTexCache()
       Working = True
       If Not individual Then
-        ROMFileStream = New FileStream(LoadROM.FileName, FileMode.Open)
-        ReDim ROMData(ROMFileStream.Length - 1)
-        ROMFileStream.Position = 0
-        ROMFileStream.Read(ROMData, 0, ROMFileStream.Length - 1)
-        ROMFileStream.Close()
+        Dim romBytes() As Byte = ZFiles.LoadRomBytes(LoadROM.FileName)
+
         Dim ROMID As String = ""
         Dim ROMIDBytes(5) As Byte
         Dim BuildDate As String = ""
         Dim BuildDateBytes(16) As Byte
         Dim tSegOff As Integer = 0
         Dim tNameOff As Integer = 0
-        Dim DebugROM As Boolean = False
         Dim ROMType As String = ""
-        For i As Integer = 0 To ROMData.Length - 1 Step 16
+        For i As Integer = 0 To romBytes.Length - 1 Step 16
           For i1 As Integer = 0 To 5
-            ROMIDBytes(i1) = ROMData(i + i1)
+            ROMIDBytes(i1) = romBytes(i + i1)
           Next
           ROMID = System.Text.Encoding.ASCII.GetString(ROMIDBytes)
           If ROMID = "zelda@" Then
             i += &HD
-            If ROMData(i) >> 4 <> 3 Then
-              Do Until ROMData(i) >> 4 = 3
+            If romBytes(i) >> 4 <> 3 Then
+              Do Until romBytes(i) >> 4 = 3
                 i += 1
               Loop
             End If
 
             For i1 As Integer = 0 To 16
-              BuildDateBytes(i1) = ROMData(i + i1)
+              BuildDateBytes(i1) = romBytes(i + i1)
             Next
             BuildDate = System.Text.Encoding.ASCII.GetString(BuildDateBytes)
 
@@ -5308,18 +5305,16 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
             ReDim Z64Code(-1)
             Select Case BuildDate
               Case "00-07-31 17:04:16"
-                DebugROM = False
                 tNameOff = -1
                 ROMType = "Majora's Mask (U)"
                 SwitchGame(1)
               Case "03-02-21 00:16:31"
-                DebugROM = True
                 tNameOff = &HBE80
                 ROMType = "Master Quest Debug ROM (E)"
                 CodeOff = &HA94000
                 ReDim Z64Code(&H13AF2F)
                 For ii As Integer = 0 To &H13AF30 - 1
-                  Z64Code(ii) = ROMData(CodeOff + ii)
+                  Z64Code(ii) = romBytes(CodeOff + ii)
                 Next
                 ParseActorTable(&HF9440, &HF5BE0, &H10A6D0, &H10B360)
                 SwitchGame(0)
@@ -5333,13 +5328,12 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
           End If
         Next
 
-        GetROMFileTable(tSegOff, tNameOff, DebugROM)
-        PopulateCommonBanks()
+        ROMFiles = GetROMFileTable(romBytes, tSegOff, tNameOff)
+        PopulateCommonBanks(romBytes)
         Reshape()
         PopulateFileTreeView()
 
         Me.Text = "Utility of Time R8 - " & LoadROM.FileName & " - " & ROMType
-        ReDim ROMData(-1)
         IndMapFileName = ""
         IndScFileName = ""
       Else
@@ -6711,14 +6705,14 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
   Private Sub SaveFiles(ByVal fn As String)
     If IndMapFileName = "" Then 'write files to ROM
       If DefROM <> "" Then
-        ROMFileStream = New FileStream(fn, FileMode.Open)
+        Dim ROMFileStream As New FileStream(fn, FileMode.Open)
         RamBanks.ZFileBuffer.WriteToStream(ROMFileStream, MapSt)
 
         If LoadedDataType = FileTypes.MAP Then
           RamBanks.ZSceneBuffer.WriteToStream(ROMFileStream, SceneSt)
         End If
 
-        ROMFileStream.Close()
+        ROMFileStream.Dispose()
 
         crc.StartInfo.Arguments = "-u " & DefROM
         crc.Start()
@@ -7295,8 +7289,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
 
     ObjectFilename = ""
 
-    ROMFileStream.Close()
-    ROMFileStream = New FileStream(DefROM, FileMode.Open)
+    Dim ROMFileStream As New FileStream(DefROM, FileMode.Open)
 
 
     ' TODO: Switch based on filetype instead.
@@ -7369,7 +7362,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
         Case Else
       End Select
     End If
-    ROMFileStream.Close()
+    ROMFileStream.Dispose()
   End Sub
 
   Private Sub ToolStripMenuItem2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
