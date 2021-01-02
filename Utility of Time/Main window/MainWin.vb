@@ -3010,7 +3010,7 @@ Public Class MainWin
   Private MapCount As Integer = 0
   Private SceneCount As Integer = 0
   Private ObjectCount As Integer = 0
-  Private ROMFiles As New ZFiles
+  Private ROMFiles As ZFiles
   Private Z64Code() As Byte
   Private IndMapFileName As String = ""
   Private IndScFileName As String = ""
@@ -5040,77 +5040,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     Start(False)
   End Sub
 
-  Private Shared Function GetROMFileTable(romBytes() As Byte, segoff As UInt32, nameoff As UInt32) As ZFiles
-    Dim sccount As Integer = -1
-    Dim codecount As Integer = 0
-    Dim othercount As Integer = 0
-    Dim mapcount As Integer = 0
-    Dim objcount As Integer = 0
-
-    Dim segments As IList(Of ZFiles.Segment) = ZFiles.GetSegments(romBytes, segoff, nameoff)
-
-    Dim files As New ZFiles
-
-    For Each segment As ZFiles.Segment In segments
-      Dim fileName = segment.FileName
-      Dim betterFileName = BetterFileNames.Get(fileName)
-
-      Dim file As IZFile
-
-      If fileName.Contains("_scene") Then
-        sccount += 1
-
-        file = New ZSc
-
-        ReDim Preserve files.Levels(sccount)
-        files.Levels(sccount) = file
-
-        mapcount = 0
-      ElseIf fileName.Contains("room_") Then
-        file = New ZMap
-
-        ReDim Preserve files.Levels(sccount).Maps(mapcount)
-        files.Levels(sccount).Maps(mapcount) = file
-
-        mapcount += 1
-      ElseIf Mid(fileName, 1, 7).ToLower = "object_" Then
-        file = New ZObj
-
-        ReDim Preserve files.Objects(objcount)
-        files.Objects(objcount) = file
-
-        objcount += 1
-        mapcount = 0
-        sccount = -1
-      ElseIf Mid(fileName, 1, 4).ToLower = "ovl_" Then
-        file = New ZCodeFiles
-
-        ReDim Preserve files.ActorCode(codecount)
-        files.ActorCode(codecount) = file
-
-        codecount += 1
-      Else
-        file = New ZOtherData
-
-        ReDim Preserve files.Others(othercount)
-        files.Others(othercount) = file
-
-        othercount += 1
-        mapcount = 0
-        sccount = -1
-      End If
-
-      With file
-        .FileName = fileName
-        .BetterFileName = betterFileName
-        .StartOffset = segment.StartOffset
-        .EndOffset = segment.EndOffset
-      End With
-    Next
-
-    Return files
-  End Function
-
   Public Sub PopulateFileTreeView()
     FileTree.Nodes.Clear()
 
@@ -5125,7 +5054,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     Next
 
     Dim scenesNode As TreeNode = FileTree.Nodes.Add("Scenes")
-    For Each scene As ZSc In ROMFiles.Levels
+    For Each scene As ZSc In ROMFiles.Scenes
       Dim sceneNode As TreeNode = scenesNode.Nodes.Add(scene.BetterFileName)
 
       For Each map As ZMap In scene.Maps
@@ -5154,7 +5083,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       commonBankUse.Bank05 = 0
       RamBanks.CommonBankUse = commonBankUse
 
-      For i As Integer = 0 To ROMFiles.Others.Length - 1
+      For i As Integer = 0 To ROMFiles.Others.Count - 1
         fileSize = ROMFiles.Others(i).EndOffset - ROMFiles.Others(i).StartOffset
         If ROMFiles.Others(i).FileName = "gameplay_keep" Then
           .Bank4.Banks(0).Data = New SimpleRamBank
@@ -5181,7 +5110,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       animationbank.Items.Clear()
       animationbank.Items.Add("Inline with model")
 
-      For i As Integer = 0 To ROMFiles.Others.Length - 1
+      For i As Integer = 0 To ROMFiles.Others.Count - 1
         fileSize = ROMFiles.Others(i).EndOffset - ROMFiles.Others(i).StartOffset
         If ROMFiles.Others(i).FileName = "link_animetion" Then
           animationbank.Items.Add(ROMFiles.Others(i).FileName)
@@ -5194,7 +5123,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
         End If
       Next
 
-      For i As Integer = 0 To ROMFiles.Objects.Length - 1
+      For i As Integer = 0 To ROMFiles.Objects.Count - 1
         fileSize = ROMFiles.Objects(i).EndOffset - ROMFiles.Objects(i).StartOffset
         If _
           (ROMFiles.Objects(i).FileName.ToLower.Contains("object_") And
@@ -5275,7 +5204,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
           End If
         Next
 
-        ROMFiles = GetROMFileTable(romBytes, tSegOff, tNameOff)
+        ROMFiles = ZFiles.GetFiles(romBytes, tSegOff, tNameOff)
         PopulateCommonBanks(romBytes)
         Reshape()
         PopulateFileTreeView()
@@ -7241,14 +7170,14 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
 
     ' TODO: Switch based on filetype instead.
     If ParentOfParent = "Scenes" Then
-      SceneSt = ROMFiles.Levels(filetype).StartOffset
-      MapSt = ROMFiles.Levels(filetype).Maps(filename).StartOffset
+      SceneSt = ROMFiles.Scenes(filetype).StartOffset
+      MapSt = ROMFiles.Scenes(filetype).Maps(filename).StartOffset
 
-      MapBuffSize = (ROMFiles.Levels(filetype).Maps(filename).EndOffset - MapSt)
-      ScBuffSize = (ROMFiles.Levels(filetype).EndOffset - SceneSt)
+      MapBuffSize = (ROMFiles.Scenes(filetype).Maps(filename).EndOffset - MapSt)
+      ScBuffSize = (ROMFiles.Scenes(filetype).EndOffset - SceneSt)
 
-      MapFilename = ROMFiles.Levels(filetype).Maps(filename).FileName
-      ScFilename = ROMFiles.Levels(filetype).FileName
+      MapFilename = ROMFiles.Scenes(filetype).Maps(filename).FileName
+      ScFilename = ROMFiles.Scenes(filetype).FileName
 
       RamBanks.ZSceneBuffer.PopulateFromStream(ROMFileStream, SceneSt, ScBuffSize)
       RamBanks.ZFileBuffer.PopulateFromStream(ROMFileStream, MapSt, MapBuffSize)
