@@ -23,38 +23,40 @@
     /// the contents of this method with the code editor.
     /// </summary>
     private void InitializeComponent() {
+      System.Windows.Forms.GroupBox PlaybackGroup;
+      System.Windows.Forms.Label Label27;
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AnimationPlaybackPanel));
-      this.PlaybackGroup = new System.Windows.Forms.GroupBox();
       this.frameRateSelector_ = new System.Windows.Forms.NumericUpDown();
-      this.Label27 = new System.Windows.Forms.Label();
       this.elapsedFrames_ = new System.Windows.Forms.Label();
       this.elapsedSeconds_ = new System.Windows.Forms.Label();
       this.loopCheckBox_ = new System.Windows.Forms.CheckBox();
       this.pauseButton_ = new System.Windows.Forms.Button();
       this.playButton_ = new System.Windows.Forms.Button();
       this.frameTrackBar_ = new UoT.TransparentTrackBar();
-      this.PlaybackGroup.SuspendLayout();
+      PlaybackGroup = new System.Windows.Forms.GroupBox();
+      Label27 = new System.Windows.Forms.Label();
+      PlaybackGroup.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.frameRateSelector_)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.frameTrackBar_)).BeginInit();
       this.SuspendLayout();
       // 
       // PlaybackGroup
       // 
-      this.PlaybackGroup.Controls.Add(this.frameRateSelector_);
-      this.PlaybackGroup.Controls.Add(this.Label27);
-      this.PlaybackGroup.Controls.Add(this.elapsedFrames_);
-      this.PlaybackGroup.Controls.Add(this.elapsedSeconds_);
-      this.PlaybackGroup.Controls.Add(this.loopCheckBox_);
-      this.PlaybackGroup.Controls.Add(this.pauseButton_);
-      this.PlaybackGroup.Controls.Add(this.playButton_);
-      this.PlaybackGroup.Controls.Add(this.frameTrackBar_);
-      this.PlaybackGroup.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.PlaybackGroup.Location = new System.Drawing.Point(0, 0);
-      this.PlaybackGroup.Name = "PlaybackGroup";
-      this.PlaybackGroup.Size = new System.Drawing.Size(212, 117);
-      this.PlaybackGroup.TabIndex = 17;
-      this.PlaybackGroup.TabStop = false;
-      this.PlaybackGroup.Text = "Playback";
+      PlaybackGroup.Controls.Add(this.frameRateSelector_);
+      PlaybackGroup.Controls.Add(Label27);
+      PlaybackGroup.Controls.Add(this.elapsedFrames_);
+      PlaybackGroup.Controls.Add(this.elapsedSeconds_);
+      PlaybackGroup.Controls.Add(this.loopCheckBox_);
+      PlaybackGroup.Controls.Add(this.pauseButton_);
+      PlaybackGroup.Controls.Add(this.playButton_);
+      PlaybackGroup.Controls.Add(this.frameTrackBar_);
+      PlaybackGroup.Dock = System.Windows.Forms.DockStyle.Fill;
+      PlaybackGroup.Location = new System.Drawing.Point(0, 0);
+      PlaybackGroup.Name = "PlaybackGroup";
+      PlaybackGroup.Size = new System.Drawing.Size(212, 117);
+      PlaybackGroup.TabIndex = 17;
+      PlaybackGroup.TabStop = false;
+      PlaybackGroup.Text = "Playback";
       // 
       // frameRateSelector_
       // 
@@ -82,13 +84,13 @@
       // 
       // Label27
       // 
-      this.Label27.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.Label27.AutoSize = true;
-      this.Label27.Location = new System.Drawing.Point(176, 65);
-      this.Label27.Name = "Label27";
-      this.Label27.Size = new System.Drawing.Size(27, 13);
-      this.Label27.TabIndex = 12;
-      this.Label27.Text = "FPS";
+      Label27.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      Label27.AutoSize = true;
+      Label27.Location = new System.Drawing.Point(176, 65);
+      Label27.Name = "Label27";
+      Label27.Size = new System.Drawing.Size(27, 13);
+      Label27.TabIndex = 12;
+      Label27.Text = "FPS";
       // 
       // elapsedFrames_
       // 
@@ -162,11 +164,11 @@
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.Controls.Add(this.PlaybackGroup);
+      this.Controls.Add(PlaybackGroup);
       this.Name = "AnimationPlaybackPanel";
       this.Size = new System.Drawing.Size(212, 117);
-      this.PlaybackGroup.ResumeLayout(false);
-      this.PlaybackGroup.PerformLayout();
+      PlaybackGroup.ResumeLayout(false);
+      PlaybackGroup.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.frameRateSelector_)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.frameTrackBar_)).EndInit();
       this.ResumeLayout(false);
@@ -174,8 +176,6 @@
     }
 
     #endregion
-    internal System.Windows.Forms.GroupBox PlaybackGroup;
-    internal System.Windows.Forms.Label Label27;
     internal System.Windows.Forms.Label elapsedFrames_;
     internal System.Windows.Forms.Label elapsedSeconds_;
     private System.Windows.Forms.NumericUpDown frameRateSelector_;
