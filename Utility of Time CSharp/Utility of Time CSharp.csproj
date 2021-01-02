@@ -65,7 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="actor\link\Tunic.cs" />
-    <Compile Include="animation\Interfaces.cs" />
+    <Compile Include="animation\AnimationInterfaces.cs" />
     <Compile Include="animation\link\LinkAnimetionStructs.cs" />
     <Compile Include="animation\NormalAnimationStructs.cs" />
     <Compile Include="data\Structs.cs" />
@@ -78,6 +78,7 @@
     <Compile Include="hacks\face\ZeldaChildFaceHack.cs" />
     <Compile Include="hacks\face\LinkFaceHack.cs" />
     <Compile Include="memory\files\ZFiles.cs" />
+    <Compile Include="memory\files\ZFileTypes.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -90,7 +91,7 @@
       <DependentUpon>AnimationPlaybackPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="animation\playback\FrameAdvancer.cs" />
-    <Compile Include="animation\playback\Interfaces.cs" />
+    <Compile Include="animation\playback\PlaybackInterfaces.cs" />
     <Compile Include="ui\common\component\TransparentTrackBar.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -3010,7 +3010,7 @@ Public Class MainWin
   Private MapCount As Integer = 0
   Private SceneCount As Integer = 0
   Private ObjectCount As Integer = 0
-  Private ROMFiles As New ZFileTypes
+  Private ROMFiles As New ZFiles
   Private ROMFileStream As FileStream
   Private ROMData() As Byte
   Private Z64Code() As Byte
@@ -5159,8 +5159,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
 
       nameinc += 1
     End While
-    PopulateCommonBanks()
-    Reshape()
   End Sub
 
   Public Sub PopulateFileTreeView()
@@ -5336,6 +5334,8 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
         Next
 
         GetROMFileTable(tSegOff, tNameOff, DebugROM)
+        PopulateCommonBanks()
+        Reshape()
         PopulateFileTreeView()
 
         Me.Text = "Utility of Time R8 - " & LoadROM.FileName & " - " & ROMType

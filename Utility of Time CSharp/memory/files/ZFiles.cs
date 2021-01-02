@@ -1,74 +1,41 @@
-﻿
+﻿using System.Collections.Generic;
+using System.IO;
+
 namespace UoT.memory.files {
-  public enum ZFileType {
-    OBJECT,
-    CODE,
-    SCENE,
-    MAP,
-    OTHER,
-  }
-
-  public interface IZFile {
-    ZFileType Type { get; }
-
-    string FileName { get; set; }
-    string BetterFileName { get; set; }
-
-    int StartOffset { get; set; }
-    int EndOffset { get; set; }
-  }
-
-
-  public class ZFileTypes {
+  public class ZFiles {
     public ZObj[] Objects;
     public ZCodeFiles[] ActorCode;
     public ZSc[] Levels;
     public ZOtherData[] Others;
-  }
 
+    public static ZFiles FromRom(string filename) {
+      var romBytes = ZFiles.GetRomBytes(filename);
 
-  public class ZObj : IZFile {
-    public ZFileType Type => ZFileType.OBJECT;
-    public string FileName { get; set; }
-    public string BetterFileName { get; set; }
-    public int StartOffset { get; set; }
-    public int EndOffset { get; set; }
-  }
+      //var segments = ZFiles.GetSegments_(romBytes);
 
+      return null;
+    }
 
-  public class ZCodeFiles : IZFile {
-    public ZFileType Type => ZFileType.CODE;
-    public string FileName { get; set; }
-    public string BetterFileName { get; set; }
-    public int StartOffset { get; set; }
-    public int EndOffset { get; set; }
-  }
+    // TODO: Make private.
+    public static byte[] GetRomBytes(string filename) 
+      => File.ReadAllBytes(filename);
 
+    public class Header {
+    }
 
-  public class ZSc : IZFile {
-    public ZFileType Type => ZFileType.SCENE;
-    public string FileName { get; set; }
-    public string BetterFileName { get; set; }
-    public int StartOffset { get; set; }
-    public int EndOffset { get; set; }
+    // TODO: Make private.
+    public static Header GetHeader() {
+      return null;
+    }
 
-    public ZMap[] Maps;
-  }
+    public class Segment {
+      public uint StartAddress;
+      public uint EndAddress;
+    }
 
-  public class ZMap : IZFile {
-    public ZFileType Type => ZFileType.MAP;
-    public string FileName { get; set; }
-    public string BetterFileName { get; set; }
-    public int StartOffset { get; set; }
-    public int EndOffset { get; set; }
-  }
-
-
-  public class ZOtherData : IZFile {
-    public ZFileType Type => ZFileType.OTHER;
-    public string FileName { get; set; }
-    public string BetterFileName { get; set; }
-    public int StartOffset { get; set; }
-    public int EndOffset { get; set; }
+    // TODO: Make private.
+    public static Segment[] GetSegments(byte[] romBytes) {
+      return null;
+    }
   }
 }
