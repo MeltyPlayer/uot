@@ -108,7 +108,7 @@
     <Compile Include="gl\GLExtensions.cs" />
     <Compile Include="gl\StaticDlModel.cs" />
     <Compile Include="graphics\Gdp.cs" />
-    <Compile Include="memory\files\BetterFilenames.cs" />
+    <Compile Include="memory\files\BetterFileNames.cs" />
     <Compile Include="gl\ModelViewMatrixTransformer.cs" />
     <Compile Include="memory\IoUtil.cs" />
     <Compile Include="math\trig\Interpolation.cs" />

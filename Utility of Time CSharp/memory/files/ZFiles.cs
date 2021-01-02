@@ -29,12 +29,13 @@ namespace UoT.memory.files {
     }
 
     public class Segment {
-      public uint StartAddress;
-      public uint EndAddress;
+      public string FileName;
+      public uint StartOffset;
+      public uint EndOffset;
     }
 
     // TODO: Make private.
-    public static IList<Segment> GetSegments(byte[] romBytes, uint segmentOffset) {
+    public static IList<Segment> GetSegments(byte[] romBytes, uint segmentOffset, uint nameOffset) {
       var segments = new List<Segment>();
 
       bool bothZero;
@@ -44,9 +45,23 @@ namespace UoT.memory.files {
         
         bothZero = startAddress == 0 && endAddress == 0;
         if (!bothZero) {
+          var fileNameBytes = new List<byte>();
+          while (romBytes[nameOffset] == 0) {
+            nameOffset++;
+          }
+          while(romBytes[nameOffset] != 0) {
+            fileNameBytes.Add(romBytes[nameOffset++]);
+          }
+          var fileName =
+              System.Text.Encoding.UTF8.GetString(
+                  fileNameBytes.ToArray(),
+                  0,
+                  fileNameBytes.Count);
+
           segments.Add(new Segment {
-              StartAddress = startAddress,
-              EndAddress = endAddress
+              FileName = fileName,
+              StartOffset = startAddress,
+              EndOffset = endAddress
           });
 
           segmentOffset += 16;

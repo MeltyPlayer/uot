@@ -2,13 +2,13 @@
 using System.Runtime.CompilerServices;
 
 namespace UoT {
-  public static class BetterFilenames {
+  public static class BetterFileNames {
     private static readonly IDictionary<string, string> impl_ =
         new Dictionary<string, string>();
 
     // TODO: Add ability to sort into categories too?
-    static BetterFilenames() {
-      BetterFilenames.Add(
+    static BetterFileNames() {
+      BetterFileNames.Add(
           ("object_am", "Armos"),
           ("object_Bb", "Bubble"),
           ("object_bdan_objects", "Misc. Inside Jabu-Jabu's Belly"),
@@ -100,7 +100,7 @@ namespace UoT {
           ("object_zo", "Zora")
       );
 
-      BetterFilenames.Add(
+      BetterFileNames.Add(
           ("bdan_scene", "Inside Jabu-Jabu's Belly"),
           ("Bmori1_scene", "Forest Temple"),
           ("bowling_scene", "Bombchu Bowling Alley"),
@@ -139,13 +139,13 @@ namespace UoT {
     }
 
     public static string Get(string filename) {
-      BetterFilenames.impl_.TryGetValue(filename, out var betterFilename);
+      BetterFileNames.impl_.TryGetValue(filename, out var betterFilename);
       return betterFilename ?? filename;
     }
 
     private static void Add(params (string, string)[] pairs) {
       foreach (var pair in pairs) {
-        BetterFilenames.impl_.Add(pair.Item1, pair.Item2);
+        BetterFileNames.impl_.Add(pair.Item1, pair.Item2);
       }
     }
   }
