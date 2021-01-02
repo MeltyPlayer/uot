@@ -163,18 +163,14 @@ Partial Class MainWin
   Friend WithEvents CollisionPresetButton As System.Windows.Forms.Button
   Friend WithEvents ROMBrowser As System.Windows.Forms.TabControl
   Friend WithEvents ROMDataTabs As System.Windows.Forms.TabPage
-  Friend WithEvents Label29 As System.Windows.Forms.Label
-  Friend WithEvents TreeFind As System.Windows.Forms.TextBox
-  Friend WithEvents FileTree As System.Windows.Forms.TreeView
-  Friend WithEvents Label46 As System.Windows.Forms.Label
-  Friend WithEvents MapsCombobox As System.Windows.Forms.ComboBox
-  Friend WithEvents Label45 As System.Windows.Forms.Label
-  Friend WithEvents AnimStart As System.Windows.Forms.TextBox
-  Friend WithEvents Label30 As System.Windows.Forms.Label
-  Friend WithEvents LimbStart As System.Windows.Forms.TextBox
-  Friend WithEvents Button7 As System.Windows.Forms.Button
-  Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
-  Friend WithEvents TriTypeText As System.Windows.Forms.TextBox
+    Friend WithEvents Label46 As System.Windows.Forms.Label
+    Friend WithEvents MapsCombobox As System.Windows.Forms.ComboBox
+    Friend WithEvents Label45 As System.Windows.Forms.Label
+    Friend WithEvents AnimStart As System.Windows.Forms.TextBox
+    Friend WithEvents Label30 As System.Windows.Forms.Label
+    Friend WithEvents LimbStart As System.Windows.Forms.TextBox
+    Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
+    Friend WithEvents TriTypeText As System.Windows.Forms.TextBox
   Friend WithEvents Label48 As System.Windows.Forms.Label
   Friend WithEvents Label47 As System.Windows.Forms.Label
   Friend WithEvents ColTriangleBox As System.Windows.Forms.ComboBox
@@ -305,4 +301,5 @@ Partial Class MainWin
   Friend WithEvents Button6 As System.Windows.Forms.Button
   Friend WithEvents AnimationPlaybackPanel As AnimationPlaybackPanel
   Friend WithEvents SplitContainer1 As SplitContainer
+    Private WithEvents zFileTreeView_ As ui.main.files.ZFileTreeView
 End Class

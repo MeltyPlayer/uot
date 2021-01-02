@@ -115,13 +115,14 @@ namespace UoT.memory.files {
 
           scenes.AddLast(scene);
         } else if (fileName.Contains("_room")) {
-          var map = new ZMap();
+          var scene = scenes.Last.Value;
+
+          var map = new ZMap { Scene = scene };
           file = map;
 
-          var lastSceneNode = scenes.Last;
-          var mapCount = lastSceneNode.Value.Maps?.Length ?? 0; 
-          Array.Resize(ref lastSceneNode.Value.Maps, mapCount + 1);
-          lastSceneNode.Value.Maps[mapCount] = map;
+          var mapCount = scene.Maps?.Length ?? 0; 
+          Array.Resize(ref scene.Maps, mapCount + 1);
+          scene.Maps[mapCount] = map;
         }
         else {
           var other = new ZOtherData();

@@ -187,7 +187,7 @@ Public Class MainWin
     Me.CheckBox2 = New System.Windows.Forms.CheckBox()
     Me.AnimationList = New System.Windows.Forms.ListBox()
     Me.animationbank = New System.Windows.Forms.ComboBox()
-    Me.AnimationPlaybackPanel = New AnimationPlaybackPanel()
+    Me.AnimationPlaybackPanel = New UoT.ui.main.tabs.animation.AnimationPlaybackPanel()
     Me.DLTab = New System.Windows.Forms.TabPage()
     Me.RadioButton2 = New System.Windows.Forms.RadioButton()
     Me.GroupBox7 = New System.Windows.Forms.GroupBox()
@@ -255,11 +255,7 @@ Public Class MainWin
     Me.LoadIndividual = New System.Windows.Forms.OpenFileDialog()
     Me.ROMBrowser = New System.Windows.Forms.TabControl()
     Me.ROMDataTabs = New System.Windows.Forms.TabPage()
-    Me.Button7 = New System.Windows.Forms.Button()
     Me.IndividualFiles = New System.Windows.Forms.TabPage()
-    Me.Label29 = New System.Windows.Forms.Label()
-    Me.TreeFind = New System.Windows.Forms.TextBox()
-    Me.FileTree = New System.Windows.Forms.TreeView()
     Me.FileToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
     Me.ToolStripMenuItem35 = New System.Windows.Forms.ToolStripMenuItem()
     Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
@@ -343,6 +339,7 @@ Public Class MainWin
     Me.VarContextMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
     Me.NumContextMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
     Me.GrpContextMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
+    Me.zFileTreeView_ = New UoT.ui.main.files.ZFileTreeView()
     Me.UoTStatus.SuspendLayout()
     CType(Me.TrackBar4, System.ComponentModel.ISupportInitialize).BeginInit()
     Me.CollisionTab.SuspendLayout()
@@ -2293,7 +2290,7 @@ Public Class MainWin
     '
     'ROMDataTabs
     '
-    Me.ROMDataTabs.Controls.Add(Me.Button7)
+    Me.ROMDataTabs.Controls.Add(Me.zFileTreeView_)
     Me.ROMDataTabs.Location = New System.Drawing.Point(4, 22)
     Me.ROMDataTabs.Name = "ROMDataTabs"
     Me.ROMDataTabs.Padding = New System.Windows.Forms.Padding(3)
@@ -2301,16 +2298,6 @@ Public Class MainWin
     Me.ROMDataTabs.TabIndex = 0
     Me.ROMDataTabs.Text = "ROM Files"
     Me.ROMDataTabs.UseVisualStyleBackColor = True
-    '
-    'Button7
-    '
-    Me.Button7.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-    Me.Button7.Location = New System.Drawing.Point(153, 529)
-    Me.Button7.Name = "Button7"
-    Me.Button7.Size = New System.Drawing.Size(60, 23)
-    Me.Button7.TabIndex = 0
-    Me.Button7.Text = "Search"
-    Me.Button7.UseVisualStyleBackColor = True
     '
     'IndividualFiles
     '
@@ -2320,36 +2307,6 @@ Public Class MainWin
     Me.IndividualFiles.TabIndex = 1
     Me.IndividualFiles.Text = "Individuals"
     Me.IndividualFiles.UseVisualStyleBackColor = True
-    '
-    'Label29
-    '
-    Me.Label29.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-    Me.Label29.AutoSize = True
-    Me.Label29.Location = New System.Drawing.Point(7, 567)
-    Me.Label29.Name = "Label29"
-    Me.Label29.Size = New System.Drawing.Size(27, 13)
-    Me.Label29.TabIndex = 13
-    Me.Label29.Text = "Find"
-    '
-    'TreeFind
-    '
-    Me.TreeFind.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-    Me.TreeFind.Location = New System.Drawing.Point(10, 586)
-    Me.TreeFind.Name = "TreeFind"
-    Me.TreeFind.Size = New System.Drawing.Size(141, 20)
-    Me.TreeFind.TabIndex = 12
-    '
-    'FileTree
-    '
-    Me.FileTree.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-    Me.FileTree.ContextMenuStrip = Me.BackupMenuStrip
-    Me.FileTree.HideSelection = False
-    Me.FileTree.HotTracking = True
-    Me.FileTree.Location = New System.Drawing.Point(7, 62)
-    Me.FileTree.Name = "FileTree"
-    Me.FileTree.Size = New System.Drawing.Size(210, 496)
-    Me.FileTree.TabIndex = 10
     '
     'FileToolStripMenuItem1
     '
@@ -2910,14 +2867,19 @@ Public Class MainWin
     Me.GrpContextMenu.Name = "GrpContextMenu"
     Me.GrpContextMenu.Size = New System.Drawing.Size(61, 4)
     '
+    'zFileTreeView_
+    '
+    Me.zFileTreeView_.Dock = System.Windows.Forms.DockStyle.Fill
+    Me.zFileTreeView_.Location = New System.Drawing.Point(3, 3)
+    Me.zFileTreeView_.Name = "zFileTreeView_"
+    Me.zFileTreeView_.Size = New System.Drawing.Size(213, 555)
+    Me.zFileTreeView_.TabIndex = 0
+    '
     'MainWin
     '
     Me.AllowDrop = True
     Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
     Me.ClientSize = New System.Drawing.Size(1160, 649)
-    Me.Controls.Add(Me.Label29)
-    Me.Controls.Add(Me.TreeFind)
-    Me.Controls.Add(Me.FileTree)
     Me.Controls.Add(Me.ROMBrowser)
     Me.Controls.Add(Me.Label12)
     Me.Controls.Add(Me.Label43)
@@ -3155,8 +3117,6 @@ Public Class MainWin
   Private RipAllDLs As Boolean = False
   Private RawDLFile As FileStream
   Private colTri As Boolean = False
-  Private oldSelectedNode As TreeNode
-  Private newSelectedNode As TreeNode
   Private UoTIniFile As New iniwriter(Application.StartupPath & "/uot.ini")
   Private Working As Boolean = False
   Private AppDirectory As String = Application.StartupPath
@@ -4998,9 +4958,10 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
           Case &H12
             'environment stuff
           Case &H18 And Not ScannedObjSet
+            ' TODO: Support object sets.
             If IndMapFileName = "" Then
-              FileTree.SelectedNode.Nodes.Add("Object Sets")
-              FileTree.SelectedNode.Nodes(0).Nodes.Add("1. 0x0")
+              'FileTree.SelectedNode.Nodes.Add("Object Sets")
+              'FileTree.SelectedNode.Nodes(0).Nodes.Add("1. 0x0")
             End If
             ObjSetStart = IoUtil.ReadUInt24(RamBanks.ZFileBuffer, HDPos + 5)
             ObjSetCnt = RamBanks.ZFileBuffer(HDPos + 15)
@@ -5017,7 +4978,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
               End If
 
               If IndMapFileName = "" And ObjSetOffset > 0 And RamBanks.ZFileBuffer(ObjSetOffset) = &H16 Then
-                FileTree.SelectedNode.Nodes(0).Nodes.Add((ObjSetIncr + 2).ToString & ". 0x" & Hex(ObjSetOffset))
+                'FileTree.SelectedNode.Nodes(0).Nodes.Add((ObjSetIncr + 2).ToString & ". 0x" & Hex(ObjSetOffset))
                 ObjSetIncr += 1
               End If
               CurObjSet += 4
@@ -5038,34 +4999,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     DefROM = LoadROM.FileName
     UoTIniFile.WriteString("Settings", "DefaultROM", DefROM)
     Start(False)
-  End Sub
-
-  Public Sub PopulateFileTreeView()
-    FileTree.Nodes.Clear()
-
-    Dim modelsNode As TreeNode = FileTree.Nodes.Add("Actor models")
-    For Each model As ZObj In ROMFiles.Objects
-      modelsNode.Nodes.Add(model.BetterFileName)
-    Next
-
-    Dim codesNode As TreeNode = FileTree.Nodes.Add("Actor code")
-    For Each code As ZCodeFiles In ROMFiles.ActorCode
-      codesNode.Nodes.Add(code.FileName)
-    Next
-
-    Dim scenesNode As TreeNode = FileTree.Nodes.Add("Scenes")
-    For Each scene As ZSc In ROMFiles.Scenes
-      Dim sceneNode As TreeNode = scenesNode.Nodes.Add(scene.BetterFileName)
-
-      For Each map As ZMap In scene.Maps
-        sceneNode.Nodes.Add(map.FileName)
-      Next
-    Next
-
-    Dim othersNode As TreeNode = FileTree.Nodes.Add("Others")
-    For Each other As ZOtherData In ROMFiles.Others
-      othersNode.Nodes.Add(other.FileName)
-    Next
   End Sub
 
   Public Sub PopulateCommonBanks(romBytes() As Byte)
@@ -5207,7 +5140,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
         ROMFiles = ZFiles.GetFiles(romBytes, tSegOff, tNameOff)
         PopulateCommonBanks(romBytes)
         Reshape()
-        PopulateFileTreeView()
+        zFileTreeView_.Populate(ROMFiles)
 
         Me.Text = "Utility of Time R8 - " & LoadROM.FileName & " - " & ROMType
         IndMapFileName = ""
@@ -7133,111 +7066,86 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     SwitchTool(ToolID.DLIST)
   End Sub
 
-  Private Sub Button7_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button7.Click
-    For i1 As Integer = 0 To FileTree.Nodes.Count - 1
-      For i As Integer = 0 To FileTree.Nodes(i1).Nodes.Count - 1
-        If FileTree.Nodes(i1).Nodes(i).Text.ToLower.Contains(TreeFind.Text.ToLower) Then
-          FileTree.TopNode = FileTree.Nodes(i1).Nodes(i)
-          Exit For
-        End If
-      Next
-    Next
-  End Sub
-
-  Private Sub FileTree_NodeMouseDoubleClick(ByVal sender As System.Object, ByVal e As System.EventArgs) _
-    Handles FileTree.NodeMouseDoubleClick
-
-    If FileTree.SelectedNode Is Nothing Then
-      Exit Sub
-    End If
-
-    Dim CurrentNodeText As String = FileTree.SelectedNode.Text
-
-    Select Case CurrentNodeText
-      Case "Actor models", "Scenes", "Others", "Actor code"
-        Exit Sub
-    End Select
-
-    Dim CurrentNodeParent As String = FileTree.SelectedNode.Parent.Text
-    Dim ParentOfParent As String = FileTree.SelectedNode.Parent?.Parent?.Text
-    Dim filetype As Integer = FileTree.SelectedNode.Parent.Index
-    Dim filename As Integer = FileTree.SelectedNode.Index
+  Private Sub FileTree_NodeMouseDoubleClick(zFile As IZFile) _
+    Handles zFileTreeView_.FileSelected
 
     ObjectFilename = ""
 
     Dim ROMFileStream As New FileStream(DefROM, FileMode.Open)
 
+    Select Case zFile.Type
+      Case ZFileType.OBJECT
+        ObjectFilename = zFile.FileName
+        ObjBuffSize = zFile.EndOffset - zFile.StartOffset
+        RamBanks.ZFileBuffer.PopulateFromStream(ROMFileStream, zFile.StartOffset, ObjBuffSize)
 
-    ' TODO: Switch based on filetype instead.
-    If ParentOfParent = "Scenes" Then
-      SceneSt = ROMFiles.Scenes(filetype).StartOffset
-      MapSt = ROMFiles.Scenes(filetype).Maps(filename).StartOffset
+        SetVariables(SceneFileType.ZOBJ)
 
-      MapBuffSize = (ROMFiles.Scenes(filetype).Maps(filename).EndOffset - MapSt)
-      ScBuffSize = (ROMFiles.Scenes(filetype).EndOffset - SceneSt)
+        ' TODO: Pass the new model in.
+        DlManager.DoSomething()
 
-      MapFilename = ROMFiles.Scenes(filetype).Maps(filename).FileName
-      ScFilename = ROMFiles.Scenes(filetype).FileName
+        IndMapFileName = ""
+        IndScFileName = ""
 
-      RamBanks.ZSceneBuffer.PopulateFromStream(ROMFileStream, SceneSt, ScBuffSize)
-      RamBanks.ZFileBuffer.PopulateFromStream(ROMFileStream, MapSt, MapBuffSize)
+        MapsCombobox.Items.Clear()
+        MapsCombobox.Enabled = False
 
-      SetVariables(SceneFileType.ZSCENE)
+      Case ZFileType.CODE
+        ActorFilename = zFile.FileName
+        ActorBuffSize = zFile.EndOffset - zFile.StartOffset
+        RamBanks.ZFileBuffer.PopulateFromStream(ROMFileStream, zFile.StartOffset, ActorBuffSize)
 
-      IndMapFileName = ""
-      IndScFileName = ""
-      MapsCombobox.Items.Clear()
-      MapsCombobox.Enabled = False
-      ScannedObjSet = False
-      oldSelectedNode = FileTree.SelectedNode
-    Else
-      Select Case CurrentNodeParent
-        Case "Actor models"
-          Dim selectedObject As ZObj = ROMFiles.Objects(filename)
+        'RSPInterpreter.Parse(ZFileBuffer)
 
-          ObjectFilename = selectedObject.FileName
-          ObjBuffSize = (selectedObject.EndOffset - selectedObject.StartOffset)
-          RamBanks.ZFileBuffer.PopulateFromStream(ROMFileStream, selectedObject.StartOffset, ObjBuffSize)
+        IndMapFileName = ""
+        IndScFileName = ""
+        LoadedDataType = FileTypes.ACTORCODE
+        MapsCombobox.Items.Clear()
+        MapsCombobox.Enabled = False
 
-          SetVariables(SceneFileType.ZOBJ)
+      Case ZFileType.SCENE
+        ' (Do nothing.)
 
-          ' TODO: Pass the new model in.
-          DlManager.DoSomething()
+      Case ZFileType.MAP
+        Dim map As ZMap = zFile
+        Dim scene As ZSc = map.Scene
 
-          IndMapFileName = ""
-          IndScFileName = ""
+        SceneSt = scene.StartOffset
+        MapSt = map.StartOffset
 
-          MapsCombobox.Items.Clear()
-          MapsCombobox.Enabled = False
-          oldSelectedNode = FileTree.SelectedNode
-        Case "Object Sets"
-          objectset = Convert.ToUInt32(Mid(CurrentNodeText, 6), 16)
-          ScannedObjSet = True
-          ProcessMapHeader()
-        Case "Actor Code"
-          ActorFilename = ROMFiles.ActorCode(filename).FileName
-          ActorBuffSize = (ROMFiles.ActorCode(filename).EndOffset - ROMFiles.ActorCode(filename).StartOffset)
-          RamBanks.ZFileBuffer.PopulateFromStream(ROMFileStream, ROMFiles.ActorCode(filename).StartOffset, ActorBuffSize)
+        MapBuffSize = map.EndOffset - MapSt
+        ScBuffSize = scene.EndOffset - SceneSt
 
-          'RSPInterpreter.Parse(ZFileBuffer)
+        MapFilename = map.FileName
+        ScFilename = scene.FileName
 
-          IndMapFileName = ""
-          IndScFileName = ""
-          LoadedDataType = FileTypes.ACTORCODE
-          MapsCombobox.Items.Clear()
-          MapsCombobox.Enabled = False
-          oldSelectedNode = FileTree.SelectedNode
-        Case "Scenes"
-        Case "Others"
-          RamBanks.CurrentBank = 1
-          RenderGraphics = True
-          RenderCollision = False
-          If ToolModes.CurrentTool = ToolID.ACTOR Then
-            ToolModes.CurrentTool = ToolID.CAMERA
-          End If
-        Case Else
-      End Select
-    End If
+        RamBanks.ZSceneBuffer.PopulateFromStream(ROMFileStream, SceneSt, ScBuffSize)
+        RamBanks.ZFileBuffer.PopulateFromStream(ROMFileStream, MapSt, MapBuffSize)
+
+        SetVariables(SceneFileType.ZSCENE)
+
+        IndMapFileName = ""
+        IndScFileName = ""
+        MapsCombobox.Items.Clear()
+        MapsCombobox.Enabled = False
+        ScannedObjSet = False
+
+      Case ZFileType.OTHER
+        ' TODO: Should we show anything for these?
+        ' RamBanks.CurrentBank = 1
+        ' RenderGraphics = True
+        ' RenderCollision = False
+        ' If ToolModes.CurrentTool = ToolID.ACTOR Then
+        ' ToolModes.CurrentTool = ToolID.CAMERA
+        ' End If
+
+        ' TODO: Handle object sets?
+        ' Case ZFileType.OBJECT_SET
+        ' objectset = Convert.ToUInt32(Mid(CurrentNodeText, 6), 16)
+        ' ScannedObjSet = True
+        ' ProcessMapHeader()
+    End Select
+
     ROMFileStream.Dispose()
   End Sub
 

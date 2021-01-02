@@ -53,6 +53,8 @@ namespace UoT.memory.files {
     public string BetterFileName { get; set; }
     public int StartOffset { get; set; }
     public int EndOffset { get; set; }
+
+    public ZSc Scene;
   }
 
 

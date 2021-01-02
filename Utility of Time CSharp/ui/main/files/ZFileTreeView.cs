@@ -5,6 +5,8 @@ using UoT.memory.files;
 
 namespace UoT.ui.main.files {
   public partial class ZFileTreeView : UserControl {
+    // TODO: Add tests.
+
     private readonly IDictionary<TreeNode, IZFile> nodeToZFile_ =
         new Dictionary<TreeNode, IZFile>();
 
@@ -63,5 +65,19 @@ namespace UoT.ui.main.files {
                                     out var zFile);
       return zFile;
     }
+
+    // TODO: Handle searching.
+    /*
+     * Private Sub Button7_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    For i1 As Integer = 0 To FileTree.Nodes.Count - 1
+      For i As Integer = 0 To FileTree.Nodes(i1).Nodes.Count - 1
+        If FileTree.Nodes(i1).Nodes(i).Text.ToLower.Contains(TreeFind.Text.ToLower) Then
+          FileTree.TopNode = FileTree.Nodes(i1).Nodes(i)
+          Exit For
+        End If
+      Next
+    Next
+  End Sub
+     */
   }
 }
