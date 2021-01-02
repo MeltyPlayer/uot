@@ -95,11 +95,11 @@
     <Compile Include="ui\common\component\TransparentTrackBar.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ui\main\files\ZFileTree.cs">
+    <Compile Include="ui\main\files\ZFileTreeView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ui\main\files\ZFileTree.Designer.cs">
-      <DependentUpon>ZFileTree.cs</DependentUpon>
+    <Compile Include="ui\main\files\ZFileTreeView.Designer.cs">
+      <DependentUpon>ZFileTreeView.cs</DependentUpon>
     </Compile>
     <Compile Include="util\Debug.cs" />
     <Compile Include="displaylist\DlManager.cs" />
@@ -142,8 +142,8 @@
     <EmbeddedResource Include="ui\main\tabs\animation\AnimationPlaybackPanel.resx">
       <DependentUpon>AnimationPlaybackPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ui\main\files\ZFileTree.resx">
-      <DependentUpon>ZFileTree.cs</DependentUpon>
+    <EmbeddedResource Include="ui\main\files\ZFileTreeView.resx">
+      <DependentUpon>ZFileTreeView.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

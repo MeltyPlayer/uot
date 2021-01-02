@@ -1,5 +1,5 @@
 ﻿namespace UoT.ui.main.files {
-  partial class ZFileTree {
+  partial class ZFileTreeView {
     /// <summary> 
     /// Required designer variable.
     /// </summary>
@@ -23,7 +23,7 @@
     /// the contents of this method with the code editor.
     /// </summary>
     private void InitializeComponent() {
-      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZFileTree));
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZFileTreeView));
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
       this.searchTextBox = new System.Windows.Forms.TextBox();
       this.fileTreeView = new System.Windows.Forms.TreeView();
