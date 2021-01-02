@@ -34,8 +34,26 @@ namespace UoT.memory.files {
     }
 
     // TODO: Make private.
-    public static Segment[] GetSegments(byte[] romBytes) {
-      return null;
+    public static IList<Segment> GetSegments(byte[] romBytes, uint segmentOffset) {
+      var segments = new List<Segment>();
+
+      bool bothZero;
+      do {
+        var startAddress = IoUtil.ReadUInt32(romBytes, segmentOffset);
+        var endAddress = IoUtil.ReadUInt32(romBytes, segmentOffset + 4);
+        
+        bothZero = startAddress == 0 && endAddress == 0;
+        if (!bothZero) {
+          segments.Add(new Segment {
+              StartAddress = startAddress,
+              EndAddress = endAddress
+          });
+
+          segmentOffset += 16;
+        }
+      } while (!bothZero);
+
+      return segments;
     }
   }
 }

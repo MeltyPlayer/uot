@@ -5042,46 +5042,21 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
 
   Private Shared Function GetROMFileTable(romBytes() As Byte, segoff As UInt32, nameoff As UInt32) As ZFiles
     Dim curfilebyte() As Byte = {}
-    Dim nameinc As Integer = 0
-    Dim seginc As Integer = 0
     Dim namebuffpos As Integer = 0
-    Dim segbuffpos As Integer = 0
     Dim curnamepos As Integer = 0
-    Dim cursegpos As Integer = 0
-    Dim curfilename As String = ""
     Dim sccount As Integer = -1
     Dim codecount As Integer = 0
     Dim othercount As Integer = 0
     Dim mapcount As Integer = 0
     Dim objcount As Integer = 0
-    Dim scinc As Integer = 0
-    Dim scfile As Integer = -1
-    Dim done As Boolean = False
-    Dim endb As UInteger = 0
-    Dim startb As UInteger = 0
-    Dim tempstart() As UInt32 = {}
-    Dim tempend() As UInt32 = {}
 
-    namebuffpos = 0
     curnamepos = nameoff
-    segbuffpos = segoff
-    Do
-      startb = IoUtil.ReadUInt32(romBytes, segbuffpos)
-      endb = IoUtil.ReadUInt32(romBytes, segbuffpos + 4)
-      If startb = 0 And endb = 0 Then
-        Exit Do
-      End If
-      ReDim Preserve tempstart(seginc)
-      ReDim Preserve tempend(seginc)
-      tempend(seginc) = endb
-      tempstart(seginc) = startb
-      segbuffpos += 16
-      seginc += 1
-    Loop
 
-    Dim zFiles As New ZFiles
+    Dim segments As IList(Of ZFiles.Segment) = ZFiles.GetSegments(romBytes, segoff)
 
-    While nameinc <= seginc - 1
+    Dim files As New ZFiles
+
+    For Each segment As ZFiles.Segment In segments
       namebuffpos = 0
       If romBytes(curnamepos) = 0 Then
         While romBytes(curnamepos) = 0
@@ -5095,56 +5070,48 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
         namebuffpos += 1
       End While
 
-      curfilename = System.Text.Encoding.UTF8.GetString(curfilebyte, 0, namebuffpos)
-      Dim betterFilename = BetterFilenames.Get(curfilename)
-
-      Select Case curfilename.ToLower
-        Case "gameplay_keep"
-
-        Case "gameplay_field_keep"
-
-        Case "gameplay_dangeon_keep"
-      End Select
+      Dim curFileName As String = System.Text.Encoding.UTF8.GetString(curfilebyte, 0, namebuffpos)
+      Dim betterFilename = BetterFilenames.Get(curFileName)
 
       Dim file As IZFile
 
-      If curfilename.Contains("_scene") Then
+      If curFileName.Contains("_scene") Then
         sccount += 1
 
         file = New ZSc
 
-        ReDim Preserve zFiles.Levels(sccount)
-        zFiles.Levels(sccount) = file
+        ReDim Preserve files.Levels(sccount)
+        files.Levels(sccount) = file
 
         mapcount = 0
-      ElseIf curfilename.Contains("room_") Then
+      ElseIf curFileName.Contains("room_") Then
         file = New ZMap
 
-        ReDim Preserve zFiles.Levels(sccount).Maps(mapcount)
-        zFiles.Levels(sccount).Maps(mapcount) = file
+        ReDim Preserve files.Levels(sccount).Maps(mapcount)
+        files.Levels(sccount).Maps(mapcount) = file
 
         mapcount += 1
-      ElseIf Mid(curfilename, 1, 7).ToLower = "object_" Then
+      ElseIf Mid(curFileName, 1, 7).ToLower = "object_" Then
         file = New ZObj
 
-        ReDim Preserve zFiles.Objects(objcount)
-        zFiles.Objects(objcount) = file
+        ReDim Preserve files.Objects(objcount)
+        files.Objects(objcount) = file
 
         objcount += 1
         mapcount = 0
         sccount = -1
-      ElseIf Mid(curfilename, 1, 4).ToLower = "ovl_" Then
+      ElseIf Mid(curFileName, 1, 4).ToLower = "ovl_" Then
         file = New ZCodeFiles
 
-        ReDim Preserve zFiles.ActorCode(codecount)
-        zFiles.ActorCode(codecount) = file
+        ReDim Preserve files.ActorCode(codecount)
+        files.ActorCode(codecount) = file
 
         codecount += 1
       Else
         file = New ZOtherData
 
-        ReDim Preserve zFiles.Others(othercount)
-        zFiles.Others(othercount) = file
+        ReDim Preserve files.Others(othercount)
+        files.Others(othercount) = file
 
         othercount += 1
         mapcount = 0
@@ -5152,16 +5119,14 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       End If
 
       With file
-        .FileName = curfilename
+        .FileName = curFileName
         .BetterFileName = betterFilename
-        .StartOffset = tempstart(nameinc)
-        .EndOffset = tempend(nameinc)
+        .StartOffset = segment.StartAddress
+        .EndOffset = segment.EndAddress
       End With
+    Next
 
-      nameinc += 1
-    End While
-
-    Return zFiles
+    Return files
   End Function
 
   Public Sub PopulateFileTreeView()
