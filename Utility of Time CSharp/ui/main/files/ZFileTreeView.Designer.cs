@@ -23,75 +23,50 @@
     /// the contents of this method with the code editor.
     /// </summary>
     private void InitializeComponent() {
-      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZFileTreeView));
-      this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-      this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-      this.searchTextBox_ = new System.Windows.Forms.TextBox();
-      this.searchButton_ = new System.Windows.Forms.Button();
+      System.Windows.Forms.SplitContainer splitContainer;
+      this.filterTextBox_ = new UoT.WaterMarkTextBox();
       this.fileTreeView_ = new System.Windows.Forms.TreeView();
-      ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-      this.splitContainer1.Panel1.SuspendLayout();
-      this.splitContainer1.Panel2.SuspendLayout();
-      this.splitContainer1.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
-      this.splitContainer2.Panel1.SuspendLayout();
-      this.splitContainer2.Panel2.SuspendLayout();
-      this.splitContainer2.SuspendLayout();
+      splitContainer = new System.Windows.Forms.SplitContainer();
+      ((System.ComponentModel.ISupportInitialize)(splitContainer)).BeginInit();
+      splitContainer.Panel1.SuspendLayout();
+      splitContainer.Panel2.SuspendLayout();
+      splitContainer.SuspendLayout();
       this.SuspendLayout();
       // 
-      // splitContainer1
+      // splitContainer
       // 
-      this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-      this.splitContainer1.Name = "splitContainer1";
-      this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+      splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+      splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+      splitContainer.IsSplitterFixed = true;
+      splitContainer.Location = new System.Drawing.Point(0, 0);
+      splitContainer.Name = "splitContainer";
+      splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
       // 
-      // splitContainer1.Panel1
+      // splitContainer.Panel1
       // 
-      this.splitContainer1.Panel1.Controls.Add(this.splitContainer2);
+      splitContainer.Panel1.Controls.Add(this.filterTextBox_);
+      splitContainer.Panel1MinSize = 20;
       // 
-      // splitContainer1.Panel2
+      // splitContainer.Panel2
       // 
-      this.splitContainer1.Panel2.Controls.Add(this.fileTreeView_);
-      this.splitContainer1.Size = new System.Drawing.Size(225, 627);
-      this.splitContainer1.SplitterDistance = 25;
-      this.splitContainer1.TabIndex = 0;
+      splitContainer.Panel2.Controls.Add(this.fileTreeView_);
+      splitContainer.Size = new System.Drawing.Size(225, 627);
+      splitContainer.SplitterDistance = 25;
+      splitContainer.TabIndex = 0;
       // 
-      // splitContainer2
+      // filterTextBox_
       // 
-      this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.splitContainer2.IsSplitterFixed = true;
-      this.splitContainer2.Location = new System.Drawing.Point(0, 0);
-      this.splitContainer2.Name = "splitContainer2";
-      // 
-      // splitContainer2.Panel1
-      // 
-      this.splitContainer2.Panel1.Controls.Add(this.searchTextBox_);
-      // 
-      // splitContainer2.Panel2
-      // 
-      this.splitContainer2.Panel2.Controls.Add(this.searchButton_);
-      this.splitContainer2.Size = new System.Drawing.Size(225, 25);
-      this.splitContainer2.SplitterDistance = 195;
-      this.splitContainer2.TabIndex = 0;
-      // 
-      // searchTextBox_
-      // 
-      this.searchTextBox_.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.searchTextBox_.Location = new System.Drawing.Point(0, 0);
-      this.searchTextBox_.Name = "searchTextBox_";
-      this.searchTextBox_.Size = new System.Drawing.Size(195, 20);
-      this.searchTextBox_.TabIndex = 16;
-      // 
-      // searchButton_
-      // 
-      this.searchButton_.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.searchButton_.Image = ((System.Drawing.Image)(resources.GetObject("searchButton_.Image")));
-      this.searchButton_.Location = new System.Drawing.Point(0, 0);
-      this.searchButton_.Name = "searchButton_";
-      this.searchButton_.Size = new System.Drawing.Size(26, 25);
-      this.searchButton_.TabIndex = 14;
-      this.searchButton_.UseVisualStyleBackColor = true;
+      this.filterTextBox_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.filterTextBox_.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.filterTextBox_.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+      this.filterTextBox_.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+      this.filterTextBox_.Location = new System.Drawing.Point(0, 4);
+      this.filterTextBox_.Name = "filterTextBox_";
+      this.filterTextBox_.Size = new System.Drawing.Size(225, 20);
+      this.filterTextBox_.TabIndex = 1;
+      this.filterTextBox_.WaterMarkColor = System.Drawing.Color.Gray;
+      this.filterTextBox_.WaterMarkText = "Filter files...";
       // 
       // fileTreeView_
       // 
@@ -107,28 +82,20 @@
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.Controls.Add(this.splitContainer1);
+      this.Controls.Add(splitContainer);
       this.Name = "ZFileTreeView";
       this.Size = new System.Drawing.Size(225, 627);
-      this.splitContainer1.Panel1.ResumeLayout(false);
-      this.splitContainer1.Panel2.ResumeLayout(false);
-      ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-      this.splitContainer1.ResumeLayout(false);
-      this.splitContainer2.Panel1.ResumeLayout(false);
-      this.splitContainer2.Panel1.PerformLayout();
-      this.splitContainer2.Panel2.ResumeLayout(false);
-      ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
-      this.splitContainer2.ResumeLayout(false);
+      splitContainer.Panel1.ResumeLayout(false);
+      splitContainer.Panel1.PerformLayout();
+      splitContainer.Panel2.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(splitContainer)).EndInit();
+      splitContainer.ResumeLayout(false);
       this.ResumeLayout(false);
 
     }
 
     #endregion
-
-    private System.Windows.Forms.SplitContainer splitContainer1;
-    private System.Windows.Forms.SplitContainer splitContainer2;
-    private System.Windows.Forms.TextBox searchTextBox_;
-    private System.Windows.Forms.Button searchButton_;
     private System.Windows.Forms.TreeView fileTreeView_;
+    private WaterMarkTextBox filterTextBox_;
   }
 }

@@ -117,15 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="searchButton_.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABGdBTUEAALGPC/xhBQAAAPFJREFUOE/N
-        k6ETAUEUhy8IgiCIoigIomBGEAVREARRFARBFARREERB8Cf4AwRBEERRFPl9686cm1v2mDG+mW9u397b
-        t3fv9rxfkJPZ+/AzmvIgr76MRzIlnZlLFh/lTE7lzp/bSqcnbEsWLGSaiRADyT0Kv+Uk2T1aJGAlKVYw
-        kYW8JGlsonjoHTktE1moSpJ6JoqnLsnpmMgCn5qkpYniCfpUNtEL1pLEmomeoS9nuZe2Hj6gTyRf5FCy
-        c1F2JfNswtiJkuS8sCgs52rij7k6wQmuSBrflw3J62TkRiYqZuP/i3FcEv3McVDs6yIRPO8G3Cw4bBF0
-        Sl4AAAAASUVORK5CYII=
-</value>
-  </data>
+  <metadata name="splitContainer.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
 </root>

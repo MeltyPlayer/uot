@@ -410,8 +410,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="frequency_bigramdictionary_en_243_342.txt" />
-    <Content Include="frequency_dictionary_en_82_765.txt" />
     <Content Include="Main window\uoticon64.ico" />
     <Content Include="Tao GL Libs\freeglut.dll" />
     <Content Include="Tao GL Libs\Tao.DevIl.dll" />

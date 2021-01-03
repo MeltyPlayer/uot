@@ -203,6 +203,8 @@
     <Compile Include="animation\AnimationInterfaces.cs" />
     <Compile Include="animation\link\LinkAnimetionStructs.cs" />
     <Compile Include="animation\NormalAnimationStructs.cs" />
+    <Compile Include="common\fuzzy\IFuzzySearchDictionary.cs" />
+    <Compile Include="common\fuzzy\SymSpellFuzzySearchDictionary.cs" />
     <Compile Include="data\Structs.cs" />
     <Compile Include="displaylist\VertexCache.cs" />
     <Compile Include="gl\GlConstants.cs" />
@@ -222,7 +224,7 @@
     <Compile Include="ui\common\component\WaterMarkTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ui\main\files\FuzzySearchDictionary.cs" />
+    <Compile Include="common\fuzzy\BkTreeFuzzySearchDictionary.cs" />
     <Compile Include="ui\main\tabs\animation\AnimationPlaybackPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -304,14 +306,9 @@
     <Compile Include="data\GlobalVars.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="doxy.zip" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="frequency_bigramdictionary_en_243_342.txt" />
-    <Content Include="frequency_dictionary_en_82_765.txt" />
-    <Content Include="License.txt" />
-    <Content Include="ReleaseNotev0.5.txt" />
     <None Include="Resources\Button-Refresh-icon.png" />
     <None Include="Resources\Button-Stop-icon.png" />
   </ItemGroup>
