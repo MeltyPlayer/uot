@@ -114,7 +114,7 @@ namespace UoT {
           ("hakasitarelay_scene", "Dampé's Race"),
           ("HIDAN_scene", "Fire Temple"),
           ("kenjyanoma_scene", "Chamber of Sages"),
-          ("jyasinboss_scene", "Shadow Temple Boss Chamber"),
+          ("jyasinboss_scene", "Spirit Temple Boss Chamber"),
           ("jyasinzou_scene", "Spirit Temple"),
           ("MIZUsin_bs_scene", "Water Temple Boss Chamber"),
           ("MIZUsin_scene", "Water Temple"),
