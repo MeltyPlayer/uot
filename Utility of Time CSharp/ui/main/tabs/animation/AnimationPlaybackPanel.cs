@@ -6,7 +6,8 @@ using UoT.animation.playback;
 namespace UoT.ui.main.tabs.animation {
   public partial class AnimationPlaybackPanel : UserControl, IAnimationPlaybackManager {
     // TODO: Add tests.
-    // TODO: How to right-align label?
+    // TODO: How to right-align frame label?
+    // TODO: Fix bug where scrolling trackbar changes time dramatically?
 
     private readonly IAnimationPlaybackManager impl_ = new FrameAdvancer();
 
