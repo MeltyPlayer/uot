@@ -6350,9 +6350,13 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
         ViewingMeshToolStripMenuItem1.Checked = True
         CollisionMeshToolStripMenuItem.Checked = True
         EditingTabs.TabPages.Remove(ActorsTab)
+        EditingTabs.TabPages.Remove(CollisionTab)
         EditingTabs.TabPages.Remove(LevelFlagsTab)
+        EditingTabs.TabPages.Remove(MiscTab)
         EditingTabs.TabPages.Add(ActorsTab)
+        EditingTabs.TabPages.Add(CollisionTab)
         EditingTabs.TabPages.Add(LevelFlagsTab)
+        EditingTabs.TabPages.Add(MiscTab)
         objectset = 0
         LoadedDataType = FileTypes.MAP
         ProcessMapHeader()
@@ -6365,7 +6369,9 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
         SwitchTool(ToolID.CAMERA)
         LoadedDataType = FileTypes.ACTORMODEL
         EditingTabs.TabPages.Remove(ActorsTab)
+        EditingTabs.TabPages.Remove(CollisionTab)
         EditingTabs.TabPages.Remove(LevelFlagsTab)
+        EditingTabs.TabPages.Remove(MiscTab)
         GetEntryPoints()
     End Select
   End Sub
