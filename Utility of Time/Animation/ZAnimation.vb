@@ -6,7 +6,7 @@ Public Class ZAnimation
   '''   Parses a limb hierarchy according to the following spec:
   '''   https://wiki.cloudmodding.com/oot/Animation_Format#Hierarchy
   ''' </summary>
-  Public Function GetHierarchies(Data As IBank, Bank As Byte, isLink As Boolean, model As StaticDlModel) As Limb()
+  Public Function GetHierarchies(Data As IBank, isLink As Boolean, model As StaticDlModel) As Limb()
     Dim limbIndexAddress As UInteger
     Dim limbIndexBank As UInteger
     Dim limbIndexOffset As UInteger

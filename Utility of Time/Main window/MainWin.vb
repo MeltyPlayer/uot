@@ -4816,7 +4816,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
         Case FileTypes.ACTORMODEL
           animationbank.SelectedIndex = 0
           ' TODO: Determine if model is link to auto-select animations.
-          LimbEntries = AnimParser.GetHierarchies(RamBanks.ZFileBuffer, 6, False, DlModel)
+          LimbEntries = AnimParser.GetHierarchies(RamBanks.ZFileBuffer, False, DlModel)
           If LimbEntries IsNot Nothing Then
             DlManager.HasLimbs = True
 
