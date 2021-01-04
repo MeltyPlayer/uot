@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 
 namespace UoT {
-  public interface IRamBank : IList<byte> {}
+  public interface IBank : IList<byte> {}
 
   public abstract class BList : IList<byte> {
     public abstract int Count { get; }
@@ -51,29 +51,38 @@ namespace UoT {
     }
   }
 
-  public class SimpleRamBank : BList, IRamBank {
+  public class RomBank : BList, IBank {
     private byte[] impl_ = new byte[0];
 
     public void Resize(int size) => Array.Resize(ref this.impl_, size);
 
+    public int StartOffset { get; private set; }
+    public int EndOffset => this.StartOffset + this.Count;
     public override int Count => this.impl_.Length;
+
     public override byte this[int offset] {
       get => this.impl_[offset];
       set => this.impl_[offset] = value;
     }
 
-    public void PopulateFromFile(string filename)
-      => this.impl_ = File.ReadAllBytes(filename);
+    public void PopulateFromFile(string filename) {
+      this.impl_ = File.ReadAllBytes(filename);
+      this.StartOffset = 0;
+    }
 
     public void PopulateFromBytes(byte[] src, int srcOffset, int count) {
       this.Resize(count);
       Buffer.BlockCopy(src, srcOffset, this.impl_, 0, count);
+
+      this.StartOffset = srcOffset;
     }
 
     public void PopulateFromStream(FileStream src, int srcOffset, int count) {
       this.Resize(count);
       src.Position = srcOffset;
       src.Read(this.impl_, 0, count);
+
+      this.StartOffset = srcOffset;
     }
 
     public void WriteToFile(string filename)
@@ -85,12 +94,12 @@ namespace UoT {
     }
   }
 
-  public class RdRamBank : BList, IRamBank {
+  public class RdRamBank : BList, IBank {
     private const int RDRAM_SIZE = 0x7A1200;
-    private readonly SimpleRamBank impl_;
+    private readonly RomBank impl_;
 
     public RdRamBank() {
-      this.impl_ = new SimpleRamBank();
+      this.impl_ = new RomBank();
       this.impl_.Resize(RDRAM_SIZE);
     }
 
@@ -109,26 +118,26 @@ namespace UoT {
       // TODO: Initialize RDRAM.
     }
 
-    public static RdRamBank Rdram { get; } = new RdRamBank();
+    //public static RdRamBank Rdram { get; } = new RdRamBank();
 
-    public static SimpleRamBank ZFileBuffer { get; } = new SimpleRamBank();
+    public static RomBank ZFileBuffer { get; } = new RomBank();
 
     /// <summary>
     ///   Bank 2, Current Scene.
     /// </summary>
-    public static SimpleRamBank ZSceneBuffer { get; } = new SimpleRamBank();
+    public static RomBank ZSceneBuffer { get; } = new RomBank();
 
     // TODO: Figure out why textures are not parsed correctly from 8 and 9.
     /// <summary>
     ///   Bank 8, "icon_item_static". Contains animated textures, such as eyes,
     ///   mouths, etc.
     /// </summary>
-    public static SimpleRamBank IconItemStatic { get; } = new SimpleRamBank();
+    public static RomBank IconItemStatic { get; } = new RomBank();
 
     /// <summary>
     ///   Bank 9, "icon_item_24_static". Contains animated textures.
     /// </summary>
-    public static SimpleRamBank IconItem24Static { get; } = new SimpleRamBank();
+    public static RomBank IconItem24Static { get; } = new RomBank();
 
 
     public static int CurrentBank { get; set; }
@@ -154,7 +163,7 @@ namespace UoT {
       }
     }
 
-    public static IRamBank GetBankByIndex(uint bankIndex) {
+    public static IBank GetBankByIndex(uint bankIndex) {
       if (bankIndex == RamBanks.CurrentBank) {
         return RamBanks.ZFileBuffer;
       }
@@ -165,11 +174,9 @@ namespace UoT {
         case 2:
           return RamBanks.ZSceneBuffer;
         case 4:
-          return RamBanks.CommonBanks.Bank4.Banks[RamBanks.CommonBankUse.Bank04]
-                         .Data;
+          return RamBanks.CommonBanks.Bank4.Banks[RamBanks.CommonBankUse.Bank04];
         case 5:
-          return RamBanks.CommonBanks.Bank5.Banks[RamBanks.CommonBankUse.Bank05]
-                         .Data;
+          return RamBanks.CommonBanks.Bank5.Banks[RamBanks.CommonBankUse.Bank05];
 
         default:
           // TODO: Should throw an error for unsupported banks.

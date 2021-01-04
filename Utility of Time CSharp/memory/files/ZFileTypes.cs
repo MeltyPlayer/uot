@@ -5,6 +5,12 @@ namespace UoT.memory.files {
     CODE,
     SCENE,
     MAP,
+
+    /// <summary>
+    ///   A set of objects in a given map. These seem to be used to switch
+    ///   between different versions of rooms.
+    /// </summary>
+    OBJECT_SET,
     OTHER,
   }
 
@@ -55,6 +61,14 @@ namespace UoT.memory.files {
     public int EndOffset { get; set; }
 
     public ZSc Scene;
+  }
+
+  public class ZObjectSet : IZFile {
+    public ZFileType Type => ZFileType.OBJECT_SET;
+    public string FileName { get; set; }
+    public string BetterFileName { get; set; }
+    public int StartOffset { get; set; }
+    public int EndOffset { get; set; }
   }
 
 

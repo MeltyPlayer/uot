@@ -730,7 +730,7 @@ enddisplaylist:
 
       If texture0 Is Nothing Then
         Dim tileDescriptor0 As TileDescriptor = GetSelectedTileDescriptor(0)
-        Dim targetBuffer0 As IRamBank = RamBanks.GetBankByIndex(tileDescriptor0.ImageBank)
+        Dim targetBuffer0 As IBank = RamBanks.GetBankByIndex(tileDescriptor0.ImageBank)
         If targetBuffer0 IsNot Nothing Then
           LoadTex(targetBuffer0, 0)
 
@@ -757,9 +757,9 @@ enddisplaylist:
             Case 2
               LoadTex(RamBanks.ZSceneBuffer, 1)
             Case 4
-              LoadTex(RamBanks.CommonBanks.Bank4.Banks(RamBanks.CommonBankUse.Bank04).Data, 0)
+              LoadTex(RamBanks.CommonBanks.Bank4.Banks(RamBanks.CommonBankUse.Bank04), 0)
             Case 5
-              LoadTex(RamBanks.CommonBanks.Bank5.Banks(RamBanks.CommonBankUse.Bank05).Data, 0)
+              LoadTex(RamBanks.CommonBanks.Bank5.Banks(RamBanks.CommonBankUse.Bank05), 0)
             Case Else
               ' TODO: Should throw an error for unsupported banks.
           End Select

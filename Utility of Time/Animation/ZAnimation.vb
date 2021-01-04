@@ -6,7 +6,7 @@ Public Class ZAnimation
   '''   Parses a limb hierarchy according to the following spec:
   '''   https://wiki.cloudmodding.com/oot/Animation_Format#Hierarchy
   ''' </summary>
-  Public Function GetHierarchies(Data As IRamBank, Bank As Byte, isLink As Boolean, model As StaticDlModel) As Limb()
+  Public Function GetHierarchies(Data As IBank, Bank As Byte, isLink As Boolean, model As StaticDlModel) As Limb()
     Dim limbIndexAddress As UInteger
     Dim limbIndexBank As UInteger
     Dim limbIndexOffset As UInteger
@@ -23,7 +23,7 @@ Public Class ZAnimation
       Dim limbAddress As UInteger
       Dim limbBank As UInteger
       Dim limbOffset As UInteger
-      Dim limbBankBuffer As IRamBank
+      Dim limbBankBuffer As IBank
 
       ' Link has an extra set of values for each limb that define LOD model
       ' display lists.
@@ -35,7 +35,7 @@ Public Class ZAnimation
       End If
 
       If RamBanks.IsValidBank(limbIndexBank) And limbCount > 0 Then
-        Dim limbIndexBankBuffer As IRamBank = RamBanks.GetBankByIndex(limbIndexBank)
+        Dim limbIndexBankBuffer As IBank = RamBanks.GetBankByIndex(limbIndexBank)
 
         If limbIndexOffset + 4 * limbCount < limbIndexBankBuffer.Count Then
           Dim firstChild As Byte
@@ -108,7 +108,7 @@ badLimbIndexOffset:
                 IoUtil.SplitAddress(displayListAddress, displayListBank, displayListOffset)
 
                 If displayListBank <> 0 Then
-                  Dim displayListBankBuffer As IRamBank = RamBanks.GetBankByIndex(displayListBank)
+                  Dim displayListBankBuffer As IBank = RamBanks.GetBankByIndex(displayListBank)
                   .DisplayList = displayListOffset
                   ReDim Preserve GlobalVarsCs.N64DList(GlobalVarsCs.N64DList.Length)
                   ReadInDL(displayListBankBuffer, GlobalVarsCs.N64DList, .DisplayList, GlobalVarsCs.N64DList.Length - 1)
@@ -149,7 +149,7 @@ badLimbIndexOffset:
   '''   Parses a set of animations according to the spec at:
   '''   https://wiki.cloudmodding.com/oot/Animation_Format#Normal_Animations
   ''' </summary>
-  Public Function GetCommonAnimations(Data As IRamBank, ByVal LimbCount As Integer) _
+  Public Function GetCommonAnimations(Data As IBank, ByVal LimbCount As Integer) _
     As IList(Of IAnimation)
     Dim trackCount As UInteger = LimbCount * 3
 
@@ -184,8 +184,8 @@ badLimbIndexOffset:
 
       Dim validAttemptOffset As Boolean = RamBanks.IsValidBank(rotationValuesBank) And RamBanks.IsValidBank(rotationIndicesBank)
 
-      Dim rotationValuesBuffer As IRamBank
-      Dim rotationIndicesBuffer As IRamBank
+      Dim rotationValuesBuffer As IBank
+      Dim rotationIndicesBuffer As IBank
       Dim validRotationOffsets As Boolean = False
       If validAttemptOffset Then
         ' 6 is "current file", which is whatever was passed into "Data".
@@ -305,7 +305,7 @@ badTTracks:
   '''   Parses a set of animations according to the spec at:
   '''   https://wiki.cloudmodding.com/oot/Animation_Format#C_code
   ''' </summary>
-  Public Function GetLinkAnimations(HeaderData As IRamBank, ByVal LimbCount As Integer, animationData As IRamBank) _
+  Public Function GetLinkAnimations(HeaderData As IBank, ByVal LimbCount As Integer, animationData As IBank) _
     As IList(Of IAnimation)
     Dim animCnt As Integer = -1
     Dim animations(-1) As LinkAnimetion

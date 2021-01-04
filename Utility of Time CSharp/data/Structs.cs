@@ -191,40 +191,15 @@ namespace UoT {
   }
 
   public struct Bank04 {
-    public BankBuffers[] Banks;
+    public RomBank[] Banks;
   }
 
   public struct Bank05 {
-    public BankBuffers[] Banks;
+    public RomBank[] Banks;
   }
 
   public struct AnimBank {
-    public BankBuffers[] Banks;
-  }
-
-  public struct BankBuffers {
-    public string Name;
-    public uint StartOffset;
-    public uint EndOffset;
-    public SimpleRamBank Data;
-  }
-
-  public struct ZSeg {
-    public uint Offset;
-    public byte Bank;
-
-    public object getSegment(byte[] data, uint index) {
-      Bank = data[(int)index];
-      Offset = IoUtil.ReadUInt24(data, (uint)(index + 1L));
-      return default;
-    }
-  }
-
-
-  public struct FileBuffers {
-    public byte[] Level;
-    public byte[] Map;
-    public byte[] ActorModel;
+    public RomBank[] Banks;
   }
 
   public struct ZSegment {

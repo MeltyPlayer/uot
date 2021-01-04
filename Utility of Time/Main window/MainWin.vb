@@ -4785,7 +4785,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     End Try
   End Sub
 
-  Private Function FindAllDLs(Buffer As IRamBank, ByRef DL() As N64DisplayList)
+  Private Function FindAllDLs(Buffer As IBank, ByRef DL() As N64DisplayList)
     Dim DLCnt As Integer = 0
     DListSelection.Items.Clear()
     DListSelection.Items.Add("Render all")
@@ -4836,7 +4836,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     End Try
   End Sub
 
-  Private Function ReadInDL(Data As IRamBank, ByRef DisplayList() As N64DisplayList, ByVal Offset As Integer,
+  Private Function ReadInDL(Data As IBank, ByRef DisplayList() As N64DisplayList, ByVal Offset As Integer,
                             ByVal Index As Integer) As Integer
     Return F3DEX2_Defs.ReadInDL(Data, DisplayList, Offset, Index)
   End Function
@@ -5019,20 +5019,14 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       For i As Integer = 0 To ROMFiles.Others.Count - 1
         fileSize = ROMFiles.Others(i).EndOffset - ROMFiles.Others(i).StartOffset
         If ROMFiles.Others(i).FileName = "gameplay_keep" Then
-          .Bank4.Banks(0).Data = New SimpleRamBank
-          .Bank4.Banks(0).Data.PopulateFromBytes(romBytes, ROMFiles.Others(i).StartOffset, fileSize)
-          .Bank4.Banks(0).StartOffset = ROMFiles.Others(i).StartOffset
-          .Bank4.Banks(0).EndOffset = ROMFiles.Others(i).EndOffset
+          .Bank4.Banks(0) = New RomBank
+          .Bank4.Banks(0).PopulateFromBytes(romBytes, ROMFiles.Others(i).StartOffset, fileSize)
         ElseIf ROMFiles.Others(i).FileName = "gameplay_field_keep" Then
-          .Bank5.Banks(0).Data = New SimpleRamBank
-          .Bank5.Banks(0).Data.PopulateFromBytes(romBytes, ROMFiles.Others(i).StartOffset, fileSize)
-          .Bank5.Banks(0).StartOffset = ROMFiles.Others(i).StartOffset
-          .Bank5.Banks(0).EndOffset = ROMFiles.Others(i).EndOffset
+          .Bank5.Banks(0) = New RomBank
+          .Bank5.Banks(0).PopulateFromBytes(romBytes, ROMFiles.Others(i).StartOffset, fileSize)
         ElseIf ROMFiles.Others(i).FileName = "gameplay_dangeon_keep" Then
-          .Bank5.Banks(1).Data = New SimpleRamBank
-          .Bank5.Banks(1).Data.PopulateFromBytes(romBytes, ROMFiles.Others(i).StartOffset, fileSize)
-          .Bank5.Banks(1).StartOffset = ROMFiles.Others(i).StartOffset
-          .Bank5.Banks(1).EndOffset = ROMFiles.Others(i).EndOffset
+          .Bank5.Banks(1) = New RomBank
+          .Bank5.Banks(1).PopulateFromBytes(romBytes, ROMFiles.Others(i).StartOffset, fileSize)
         ElseIf ROMFiles.Others(i).FileName = "icon_item_static" Then
           RamBanks.IconItemStatic.PopulateFromBytes(romBytes, ROMFiles.Others(i).StartOffset, fileSize)
         ElseIf ROMFiles.Others(i).FileName = "icon_item_24_static" Then
@@ -5048,10 +5042,8 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
         If ROMFiles.Others(i).FileName = "link_animetion" Then
           animationbank.Items.Add(ROMFiles.Others(i).FileName)
           ReDim Preserve .Anims.Banks(animBankCnt)
-          .Anims.Banks(animBankCnt).Data = New SimpleRamBank
-          .Anims.Banks(animBankCnt).Data.PopulateFromBytes(romBytes, ROMFiles.Others(i).StartOffset, fileSize)
-          .Anims.Banks(animBankCnt).StartOffset = ROMFiles.Others(i).StartOffset
-          .Anims.Banks(animBankCnt).EndOffset = ROMFiles.Others(i).EndOffset
+          .Anims.Banks(animBankCnt) = New RomBank
+          .Anims.Banks(animBankCnt).PopulateFromBytes(romBytes, ROMFiles.Others(i).StartOffset, fileSize)
           animBankCnt += 1
         End If
       Next
@@ -5063,10 +5055,8 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
            ROMFiles.Objects(i).FileName.ToLower.Contains("_anime")) Then
           animationbank.Items.Add(ROMFiles.Objects(i).BetterFileName)
           ReDim Preserve .Anims.Banks(animBankCnt)
-          .Anims.Banks(animBankCnt).Data = New SimpleRamBank
-          .Anims.Banks(animBankCnt).Data.PopulateFromBytes(romBytes, ROMFiles.Objects(i).StartOffset, fileSize)
-          .Anims.Banks(animBankCnt).StartOffset = ROMFiles.Objects(i).StartOffset
-          .Anims.Banks(animBankCnt).EndOffset = ROMFiles.Objects(i).EndOffset
+          .Anims.Banks(animBankCnt) = New RomBank
+          .Anims.Banks(animBankCnt).PopulateFromBytes(romBytes, ROMFiles.Objects(i).StartOffset, fileSize)
           animBankCnt += 1
         End If
       Next
@@ -7470,11 +7460,11 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
             AnimationEntries = AnimParser.GetLinkAnimations(
               RamBanks.GetBankByIndex(4),
               LimbEntries.Length,
-              RamBanks.CommonBanks.Anims.Banks(RamBanks.CommonBankUse.AnimBank).Data)
+              RamBanks.CommonBanks.Anims.Banks(RamBanks.CommonBankUse.AnimBank))
           Else
             ' Normal animations.
             AnimationEntries = AnimParser.GetCommonAnimations(
-              RamBanks.CommonBanks.Anims.Banks(RamBanks.CommonBankUse.AnimBank).Data,
+              RamBanks.CommonBanks.Anims.Banks(RamBanks.CommonBankUse.AnimBank),
               LimbEntries.Length)
           End If
         End If

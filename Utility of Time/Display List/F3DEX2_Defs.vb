@@ -1,5 +1,5 @@
 ﻿Module F3DEX2_Defs
-  Public Function ReadInDL(Data As IRamBank, ByRef DisplayList() As N64DisplayList, ByVal Offset As Integer,
+  Public Function ReadInDL(Data As IBank, ByRef DisplayList() As N64DisplayList, ByVal Offset As Integer,
                            ByVal Index As Integer) As Integer
     Try
       If Offset < Data.Count Then
