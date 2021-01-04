@@ -221,6 +221,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ui\common\component\BetterTreeView.cs" />
     <Compile Include="ui\common\component\WaterMarkTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
