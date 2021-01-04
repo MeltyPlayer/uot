@@ -6,7 +6,6 @@ Imports Tao.FreeGlut
 Imports System.Numerics
 Imports MathNet.Numerics.LinearAlgebra.Double
 Imports UoT.memory.files
-Imports UoT.ui.main.tabs.animation
 
 Public Class MainWin
 
@@ -3733,23 +3732,33 @@ Public Class MainWin
       Dim validDl As Boolean = dlIndex > -1
 
       If DlManager.ShowBones Then 'draw bones
+        Dim xI As Double = 0
+        Dim yI As Double = 0
+        Dim zI As Double = 0
+        ModelViewMatrixTransformer.Project(xI, yI, zI)
+
+        Dim xF As Double = .x
+        Dim yF As Double = .y
+        Dim zF As Double = .z
+        ModelViewMatrixTransformer.Project(xF, yF, zF)
+
         Gl.glDepthRange(0, 0)
         Gl.glLineWidth(9)
         Gl.glBegin(Gl.GL_LINES)
         Gl.glColor3f(1, 1, 1)
-        Gl.glVertex3f(0, 0, 0)
-        Gl.glVertex3f(.x, .y, .z)
+        Gl.glVertex3f(xI, yI, zI)
+        Gl.glVertex3f(xF, yF, zF)
         Gl.glEnd()
         Gl.glDepthRange(0, -0.5)
         Gl.glPointSize(11)
         Gl.glBegin(Gl.GL_POINTS)
         Gl.glColor3f(0, 0, 0)
-        Gl.glVertex3f(.x, .y, .z)
+        Gl.glVertex3f(xF, yF, zF)
         Gl.glEnd()
         Gl.glPointSize(8)
         Gl.glBegin(Gl.GL_POINTS)
         Gl.glColor3ub(BoneColorFactor.r, BoneColorFactor.g, BoneColorFactor.b)
-        Gl.glVertex3f(.x, .y, .z)
+        Gl.glVertex3f(xF, yF, zF)
         Gl.glEnd()
         Gl.glPointSize(1)
         Gl.glLineWidth(1)
