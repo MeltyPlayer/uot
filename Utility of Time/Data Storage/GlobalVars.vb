@@ -33,9 +33,6 @@ Module GlobalVars
 
   Public HighlightProg As Integer
   Public envlightoff As Integer = 0
-  Public CamXPos As Double = 0
-  Public CamYPos As Double = 0
-  Public CamZPos As Double = 0
   Public objectset As Integer = 0
   Public OnSceneActor As Boolean = False
   Public ActorType As Integer = 0

@@ -252,6 +252,7 @@
     <Compile Include="ui\main\top\help\HelpDropdown.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ui\main\viewer\Camera.cs" />
     <Compile Include="util\Debug.cs" />
     <Compile Include="displaylist\DlManager.cs" />
     <Compile Include="displaylist\DlShaderManager.cs" />
