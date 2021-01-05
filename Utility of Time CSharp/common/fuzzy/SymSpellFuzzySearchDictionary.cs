@@ -91,7 +91,7 @@ namespace UoT.common.fuzzy {
 
     private IEnumerable<string> Tokenize_(string keyword)
       => keyword.ToLower()
-                .Split(' ', '_')
+                .Split(' ', '_', '-', '/')
                 .Select(rawToken => rawToken.Trim())
                 .Where(token => !string.IsNullOrEmpty(token));
   }
