@@ -138,14 +138,14 @@ Partial Class MainWin
   Friend WithEvents CollisionPresetButton As System.Windows.Forms.Button
   Friend WithEvents ROMBrowser As System.Windows.Forms.TabControl
   Friend WithEvents ROMDataTabs As System.Windows.Forms.TabPage
-    Friend WithEvents Label46 As System.Windows.Forms.Label
-    Friend WithEvents MapsCombobox As System.Windows.Forms.ComboBox
-    Friend WithEvents Label45 As System.Windows.Forms.Label
-    Friend WithEvents AnimStart As System.Windows.Forms.TextBox
-    Friend WithEvents Label30 As System.Windows.Forms.Label
-    Friend WithEvents LimbStart As System.Windows.Forms.TextBox
-    Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
-    Friend WithEvents TriTypeText As System.Windows.Forms.TextBox
+  Friend WithEvents Label46 As System.Windows.Forms.Label
+  Friend WithEvents MapsCombobox As System.Windows.Forms.ComboBox
+  Friend WithEvents Label45 As System.Windows.Forms.Label
+  Friend WithEvents AnimStart As System.Windows.Forms.TextBox
+  Friend WithEvents Label30 As System.Windows.Forms.Label
+  Friend WithEvents LimbStart As System.Windows.Forms.TextBox
+  Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
+  Friend WithEvents TriTypeText As System.Windows.Forms.TextBox
   Friend WithEvents Label48 As System.Windows.Forms.Label
   Friend WithEvents Label47 As System.Windows.Forms.Label
   Friend WithEvents ColTriangleBox As System.Windows.Forms.ComboBox
@@ -180,9 +180,6 @@ Partial Class MainWin
   Friend WithEvents ToolsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents OptionsToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents UoTMainMenu As System.Windows.Forms.MenuStrip
-  Friend WithEvents ToolStripMenuItem3 As System.Windows.Forms.ToolStripMenuItem
-  Friend WithEvents UndoToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
-  Friend WithEvents RedoToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents VertContextMenu As System.Windows.Forms.ContextMenuStrip
   Friend WithEvents ToolStripMenuItem5 As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents ToolStripSeparator15 As System.Windows.Forms.ToolStripSeparator

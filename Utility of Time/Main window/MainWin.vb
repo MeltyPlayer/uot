@@ -270,9 +270,6 @@ Public Class MainWin
     Me.AnisotropicFilteringToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
     Me.FullSceneAntialiasingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
     Me.UoTMainMenu = New System.Windows.Forms.MenuStrip()
-    Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
-    Me.UndoToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
-    Me.RedoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
     Me.VertContextMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
     Me.ToolStripMenuItem5 = New System.Windows.Forms.ToolStripMenuItem()
     Me.ToolStripSeparator15 = New System.Windows.Forms.ToolStripSeparator()
@@ -2397,7 +2394,7 @@ Public Class MainWin
     Me.UoTMainMenu.AutoSize = False
     Me.UoTMainMenu.BackColor = System.Drawing.SystemColors.ControlLight
     Me.UoTMainMenu.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-    Me.UoTMainMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem1, Me.ToolStripMenuItem3, Me.EditToolStripMenuItem1, Me.ToolsToolStripMenuItem, Me.ToolsToolStripMenuItem1, New HelpDropdown()})
+    Me.UoTMainMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem1, Me.EditToolStripMenuItem1, Me.ToolsToolStripMenuItem, Me.ToolsToolStripMenuItem1, New HelpDropdown()})
     Me.UoTMainMenu.Location = New System.Drawing.Point(0, 0)
     Me.UoTMainMenu.Name = "UoTMainMenu"
     Me.UoTMainMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
@@ -2405,28 +2402,6 @@ Public Class MainWin
     Me.UoTMainMenu.Stretch = False
     Me.UoTMainMenu.TabIndex = 40
     Me.UoTMainMenu.Text = "MenuStrip1"
-    '
-    'ToolStripMenuItem3
-    '
-    Me.ToolStripMenuItem3.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UndoToolStripMenuItem1, Me.RedoToolStripMenuItem})
-    Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
-    Me.ToolStripMenuItem3.Size = New System.Drawing.Size(40, 27)
-    Me.ToolStripMenuItem3.Text = "Edit"
-    Me.ToolStripMenuItem3.Visible = False
-    '
-    'UndoToolStripMenuItem1
-    '
-    Me.UndoToolStripMenuItem1.Name = "UndoToolStripMenuItem1"
-    Me.UndoToolStripMenuItem1.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Z), System.Windows.Forms.Keys)
-    Me.UndoToolStripMenuItem1.Size = New System.Drawing.Size(140, 22)
-    Me.UndoToolStripMenuItem1.Text = "&Undo"
-    '
-    'RedoToolStripMenuItem
-    '
-    Me.RedoToolStripMenuItem.Name = "RedoToolStripMenuItem"
-    Me.RedoToolStripMenuItem.Size = New System.Drawing.Size(140, 22)
-    Me.RedoToolStripMenuItem.Text = "&Redo"
-    Me.RedoToolStripMenuItem.Visible = False
     '
     'VertContextMenu
     '
