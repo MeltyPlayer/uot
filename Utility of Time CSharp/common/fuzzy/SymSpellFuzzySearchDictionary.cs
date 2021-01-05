@@ -62,7 +62,7 @@ namespace UoT.common.fuzzy {
                                         SymSpell.Verbosity.Closest,
                                         MAX_EDIT_DISTANCE);
 
-        // 3) Merge each token's results based on the data they map to.
+        // 3) Merge each match based on the data they map to.
         foreach (var match in matches) {
           var matchedKeyword = match.term;
           var matchPercentage = (1 -
