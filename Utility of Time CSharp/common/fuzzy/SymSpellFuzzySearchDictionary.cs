@@ -20,36 +20,79 @@ namespace UoT.common.fuzzy {
                      SymSpellFuzzySearchDictionary<T>.MAX_EDIT_DISTANCE,
                      SymSpellFuzzySearchDictionary<T>.MAX_EDIT_DISTANCE + 1);
 
-    private readonly IDictionary<string, T> associatedData_ =
-        new Dictionary<string, T>();
+    private readonly IDictionary<string, ISet<T>> associatedData_ =
+        new Dictionary<string, ISet<T>>();
 
     public void Add(string keyword, T associatedData) {
+      var tokens = this.Tokenize_(keyword);
+
+      foreach (var token in tokens) {
+        this.AddToken_(token, associatedData);
+      }
+    }
+
+    private void AddToken_(string token, T associatedData) {
       // TODO: Support token frequency?
-      this.impl_.CreateDictionaryEntry(keyword, 1);
-      this.associatedData_.Add(keyword, associatedData);
+      if (!this.associatedData_.TryGetValue(token, out var associatedDatas)) {
+        associatedDatas = new HashSet<T>();
+        this.associatedData_.Add(token, associatedDatas);
+
+        this.impl_.CreateDictionaryEntry(token, 1);
+      }
+
+      associatedDatas.Add(associatedData);
     }
 
     public IEnumerable<IFuzzySearchResult<T>> Search(
         string keyword,
         float minMatchPercentage) {
       // TODO: Use minMatchPercentage.
-      return this
-             .impl_.Lookup(keyword,
-                           SymSpell.Verbosity.All,
-                           SymSpellFuzzySearchDictionary<T>.MAX_EDIT_DISTANCE)
-             .Select(suggestItem => {
-               var matchedKeyword = suggestItem.term;
-               var matchPercentage = (1 -
-                                      (1.0 * suggestItem.distance) /
-                                      Math.Max(matchedKeyword.Length,
-                                               keyword.Length)) *
-                                     100;
 
-               return new SymSpellFuzzySearchResult<T> {
-                   AssociatedData = this.associatedData_[matchedKeyword],
-                   MatchPercentage = (int) Math.Ceiling(matchPercentage)
-               };
-             });
+      // 1) Split up keyword into tokens.
+      var tokens = this.Tokenize_(keyword);
+      var inverseTokenCount = 1f / tokens.Count();
+
+      // TODO: Possible to do some of these lookups in O(1) time?
+      var wipResults = new Dictionary<T, SymSpellFuzzySearchResult<T>>();
+
+      // 2) Look up each token in dictionary to find sets of data w/ that
+      //    token.
+      foreach (var token in tokens) {
+        var matches = this.impl_.Lookup(token,
+                                        SymSpell.Verbosity.Closest,
+                                        MAX_EDIT_DISTANCE);
+
+        // 3) Merge each token's results based on the data they map to.
+        foreach (var match in matches) {
+          var matchedKeyword = match.term;
+          var matchPercentage = (1 -
+                                 (1f * match.distance) /
+                                 Math.Max(matchedKeyword.Length,
+                                          keyword.Length)) *
+                                100;
+
+          var associatedDatas = this.associatedData_[matchedKeyword];
+          foreach (var associatedData in associatedDatas) {
+            if (!wipResults.TryGetValue(associatedData, out var result)) {
+              result = new SymSpellFuzzySearchResult<T> {
+                  AssociatedData = associatedData
+              };
+              wipResults.Add(associatedData, result);
+            }
+
+            // 4) Divide each result's probability based on # of tokens.
+            result.MatchPercentage += inverseTokenCount * matchPercentage;
+          }
+        }
+      }
+
+      return wipResults.Values;
     }
+
+    private IEnumerable<string> Tokenize_(string keyword)
+      => keyword.ToLower()
+                .Split(' ', '_')
+                .Select(rawToken => rawToken.Trim())
+                .Where(token => !string.IsNullOrEmpty(token));
   }
 }
