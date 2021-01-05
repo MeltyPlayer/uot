@@ -5,6 +5,7 @@ namespace UoT.ui.main.top.help {
   public class HelpDropdown : ToolStripMenuItem {
     public HelpDropdown() {
       // TODO: width of 127?
+      // TODO: Add the rest of the items.
 
       // Controls
       /*var controlsMenuItem = new ToolStripMenuItem();
