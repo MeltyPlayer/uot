@@ -13,8 +13,6 @@ Partial Class MainWin
   Friend WithEvents TrackBar4 As System.Windows.Forms.TrackBar
   Friend WithEvents FeaturesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents MouseToolToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-  Friend WithEvents OptionsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-  Friend WithEvents LaunchROMInPJ64ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents RenderModeToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents ViewingMeshToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents CollisionMeshToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
@@ -26,7 +24,6 @@ Partial Class MainWin
   Friend WithEvents ToolStripSeparator6 As System.Windows.Forms.ToolStripSeparator
   Friend WithEvents ToolStripSeparator5 As System.Windows.Forms.ToolStripSeparator
   Friend WithEvents SetupToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-  Friend WithEvents ZeldaResourceExtractorToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents ToolStripSeparator8 As System.Windows.Forms.ToolStripSeparator
   Friend WithEvents CollisionTab As System.Windows.Forms.TabPage
   Friend WithEvents CollisionGroupBox As System.Windows.Forms.GroupBox

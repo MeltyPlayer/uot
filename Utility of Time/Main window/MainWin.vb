@@ -57,9 +57,6 @@ Public Class MainWin
     Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
     Me.Label12 = New System.Windows.Forms.Label()
     Me.TrackBar4 = New System.Windows.Forms.TrackBar()
-    Me.OptionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-    Me.LaunchROMInPJ64ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-    Me.ZeldaResourceExtractorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
     Me.FeaturesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
     Me.RenderModeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
     Me.ViewingMeshToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
@@ -465,28 +462,6 @@ Public Class MainWin
     Me.TrackBar4.Size = New System.Drawing.Size(90, 15)
     Me.TrackBar4.TabIndex = 99
     Me.TrackBar4.Value = 2
-    '
-    'OptionsToolStripMenuItem
-    '
-    Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LaunchROMInPJ64ToolStripMenuItem, Me.ZeldaResourceExtractorToolStripMenuItem})
-    Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
-    Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(59, 17)
-    Me.OptionsToolStripMenuItem.Text = "Options"
-    '
-    'LaunchROMInPJ64ToolStripMenuItem
-    '
-    Me.LaunchROMInPJ64ToolStripMenuItem.Name = "LaunchROMInPJ64ToolStripMenuItem"
-    Me.LaunchROMInPJ64ToolStripMenuItem.ShortcutKeyDisplayString = ""
-    Me.LaunchROMInPJ64ToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.P), System.Windows.Forms.Keys)
-    Me.LaunchROMInPJ64ToolStripMenuItem.Size = New System.Drawing.Size(227, 22)
-    Me.LaunchROMInPJ64ToolStripMenuItem.Text = "&Launch ROM in &PJ64..."
-    '
-    'ZeldaResourceExtractorToolStripMenuItem
-    '
-    Me.ZeldaResourceExtractorToolStripMenuItem.Name = "ZeldaResourceExtractorToolStripMenuItem"
-    Me.ZeldaResourceExtractorToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.R), System.Windows.Forms.Keys)
-    Me.ZeldaResourceExtractorToolStripMenuItem.Size = New System.Drawing.Size(227, 22)
-    Me.ZeldaResourceExtractorToolStripMenuItem.Text = "Extract &ROM..."
     '
     'FeaturesToolStripMenuItem
     '
