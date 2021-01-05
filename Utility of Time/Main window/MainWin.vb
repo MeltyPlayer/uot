@@ -226,9 +226,6 @@ Public Class MainWin
     Me.ClearClipboardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
     Me.RotationTimer = New System.Windows.Forms.Timer(Me.components)
     Me.LoadIndividual = New System.Windows.Forms.OpenFileDialog()
-    Me.ROMBrowser = New System.Windows.Forms.TabControl()
-    Me.ROMDataTabs = New System.Windows.Forms.TabPage()
-    Me.IndividualFiles = New System.Windows.Forms.TabPage()
     Me.FileToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
     Me.ToolStripMenuItem35 = New System.Windows.Forms.ToolStripMenuItem()
     Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
@@ -335,8 +332,6 @@ Public Class MainWin
     Me.BackupMenuStrip.SuspendLayout()
     CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
     Me.ActorContextMenu.SuspendLayout()
-    Me.ROMBrowser.SuspendLayout()
-    Me.ROMDataTabs.SuspendLayout()
     Me.UoTMainMenu.SuspendLayout()
     Me.VertContextMenu.SuspendLayout()
     Me.SuspendLayout()
@@ -534,7 +529,6 @@ Public Class MainWin
     Me.SetupToolStripMenuItem.ShortcutKeyDisplayString = ""
     Me.SetupToolStripMenuItem.Size = New System.Drawing.Size(174, 22)
     Me.SetupToolStripMenuItem.Text = "&Setup..."
-
     '
     'ActorInputTimer
     '
@@ -1490,7 +1484,7 @@ Public Class MainWin
     Me.AnimationList.ItemHeight = 16
     Me.AnimationList.Location = New System.Drawing.Point(6, 42)
     Me.AnimationList.Name = "AnimationList"
-    Me.AnimationList.Size = New System.Drawing.Size(212, 292)
+    Me.AnimationList.Size = New System.Drawing.Size(212, 308)
     Me.AnimationList.TabIndex = 0
     '
     'animationbank
@@ -2053,39 +2047,6 @@ Public Class MainWin
     '
     Me.LoadIndividual.Filter = "Levels (*.scene)|*.zscene|ZOBJ Files (*.zobj)|*.zobj"
     '
-    'ROMBrowser
-    '
-    Me.ROMBrowser.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-    Me.ROMBrowser.Controls.Add(Me.ROMDataTabs)
-    Me.ROMBrowser.Controls.Add(Me.IndividualFiles)
-    Me.ROMBrowser.HotTrack = True
-    Me.ROMBrowser.Location = New System.Drawing.Point(0, 33)
-    Me.ROMBrowser.Name = "ROMBrowser"
-    Me.ROMBrowser.SelectedIndex = 0
-    Me.ROMBrowser.Size = New System.Drawing.Size(227, 587)
-    Me.ROMBrowser.TabIndex = 104
-    '
-    'ROMDataTabs
-    '
-    Me.ROMDataTabs.Controls.Add(Me.zFileTreeView_)
-    Me.ROMDataTabs.Location = New System.Drawing.Point(4, 22)
-    Me.ROMDataTabs.Name = "ROMDataTabs"
-    Me.ROMDataTabs.Padding = New System.Windows.Forms.Padding(3)
-    Me.ROMDataTabs.Size = New System.Drawing.Size(219, 561)
-    Me.ROMDataTabs.TabIndex = 0
-    Me.ROMDataTabs.Text = "ROM Files"
-    Me.ROMDataTabs.UseVisualStyleBackColor = True
-    '
-    'IndividualFiles
-    '
-    Me.IndividualFiles.Location = New System.Drawing.Point(4, 22)
-    Me.IndividualFiles.Name = "IndividualFiles"
-    Me.IndividualFiles.Size = New System.Drawing.Size(219, 561)
-    Me.IndividualFiles.TabIndex = 1
-    Me.IndividualFiles.Text = "Individuals"
-    Me.IndividualFiles.UseVisualStyleBackColor = True
-    '
     'FileToolStripMenuItem1
     '
     Me.FileToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem35, Me.ToolStripMenuItem2, Me.CustomLevel, Me.toolStripSeparator, Me.SaveToolStripMenuItem, Me.ToolStripMenuItem34, Me.toolStripSeparator12, Me.ExitToolStripMenuItem})
@@ -2370,7 +2331,7 @@ Public Class MainWin
     Me.UoTMainMenu.AutoSize = False
     Me.UoTMainMenu.BackColor = System.Drawing.SystemColors.ControlLight
     Me.UoTMainMenu.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-    Me.UoTMainMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem1, Me.EditToolStripMenuItem1, Me.ToolsToolStripMenuItem, Me.ToolsToolStripMenuItem1, New HelpDropdown()})
+    Me.UoTMainMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem1, Me.EditToolStripMenuItem1, Me.ToolsToolStripMenuItem, Me.ToolsToolStripMenuItem1})
     Me.UoTMainMenu.Location = New System.Drawing.Point(0, 0)
     Me.UoTMainMenu.Name = "UoTMainMenu"
     Me.UoTMainMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
@@ -2606,18 +2567,20 @@ Public Class MainWin
     '
     'zFileTreeView_
     '
-    Me.zFileTreeView_.Dock = System.Windows.Forms.DockStyle.Fill
-    Me.zFileTreeView_.Location = New System.Drawing.Point(3, 3)
+    Me.zFileTreeView_.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+    Me.zFileTreeView_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+    Me.zFileTreeView_.Location = New System.Drawing.Point(5, 33)
     Me.zFileTreeView_.Name = "zFileTreeView_"
-    Me.zFileTreeView_.Size = New System.Drawing.Size(213, 555)
-    Me.zFileTreeView_.TabIndex = 0
+    Me.zFileTreeView_.Size = New System.Drawing.Size(218, 583)
+    Me.zFileTreeView_.TabIndex = 104
     '
     'MainWin
     '
     Me.AllowDrop = True
     Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
     Me.ClientSize = New System.Drawing.Size(1160, 649)
-    Me.Controls.Add(Me.ROMBrowser)
+    Me.Controls.Add(Me.zFileTreeView_)
     Me.Controls.Add(Me.Label12)
     Me.Controls.Add(Me.Label43)
     Me.Controls.Add(Me.EditingTabs)
@@ -2674,8 +2637,6 @@ Public Class MainWin
     Me.BackupMenuStrip.ResumeLayout(False)
     CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).EndInit()
     Me.ActorContextMenu.ResumeLayout(False)
-    Me.ROMBrowser.ResumeLayout(False)
-    Me.ROMDataTabs.ResumeLayout(False)
     Me.UoTMainMenu.ResumeLayout(False)
     Me.UoTMainMenu.PerformLayout()
     Me.VertContextMenu.ResumeLayout(False)

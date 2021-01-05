@@ -133,8 +133,6 @@ Partial Class MainWin
   Friend WithEvents BackupMenuStrip As System.Windows.Forms.ContextMenuStrip
   Friend WithEvents RestorToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents CollisionPresetButton As System.Windows.Forms.Button
-  Friend WithEvents ROMBrowser As System.Windows.Forms.TabControl
-  Friend WithEvents ROMDataTabs As System.Windows.Forms.TabPage
   Friend WithEvents Label46 As System.Windows.Forms.Label
   Friend WithEvents MapsCombobox As System.Windows.Forms.ComboBox
   Friend WithEvents Label45 As System.Windows.Forms.Label
@@ -230,7 +228,6 @@ Partial Class MainWin
   Friend WithEvents CamXLabel As System.Windows.Forms.ToolStripStatusLabel
   Friend WithEvents CamYLabel As System.Windows.Forms.ToolStripStatusLabel
   Friend WithEvents CamZLabel As System.Windows.Forms.ToolStripStatusLabel
-  Friend WithEvents IndividualFiles As System.Windows.Forms.TabPage
   Friend WithEvents RadioButton2 As System.Windows.Forms.RadioButton
   Friend WithEvents GroupBox7 As System.Windows.Forms.GroupBox
   Friend WithEvents WholeCommandTxt As System.Windows.Forms.TextBox
@@ -267,5 +264,5 @@ Partial Class MainWin
   Friend WithEvents Button6 As System.Windows.Forms.Button
   Friend WithEvents AnimationPlaybackPanel As AnimationPlaybackPanel
   Friend WithEvents SplitContainer1 As SplitContainer
-    Private WithEvents zFileTreeView_ As ui.main.files.ZFileTreeView
+  Private WithEvents zFileTreeView_ As ui.main.files.ZFileTreeView
 End Class
