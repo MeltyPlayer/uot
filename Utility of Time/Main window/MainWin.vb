@@ -6,6 +6,7 @@ Imports Tao.FreeGlut
 Imports System.Numerics
 Imports MathNet.Numerics.LinearAlgebra.Double
 Imports UoT.memory.files
+Imports UoT.ui.main.top.help
 
 Public Class MainWin
 
@@ -89,11 +90,6 @@ Public Class MainWin
     Me.ToolStripSeparator8 = New System.Windows.Forms.ToolStripSeparator()
     Me.MouseToolToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
     Me.SetupToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-    Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-    Me.ControlsInfoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-    Me.ToolStripSeparator7 = New System.Windows.Forms.ToolStripSeparator()
-    Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-    Me.SearchForUpdatesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
     Me.ActorInputTimer = New System.Windows.Forms.Timer(Me.components)
     Me.CollisionTab = New System.Windows.Forms.TabPage()
     Me.GroupBox1 = New System.Windows.Forms.GroupBox()
@@ -293,9 +289,6 @@ Public Class MainWin
     Me.ColorCombinerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
     Me.AnisotropicFilteringToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
     Me.FullSceneAntialiasingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-    Me.HelpToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
-    Me.ContentsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-    Me.AboutUoTToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
     Me.UoTMainMenu = New System.Windows.Forms.MenuStrip()
     Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
     Me.UndoToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
@@ -721,41 +714,7 @@ Public Class MainWin
     Me.SetupToolStripMenuItem.ShortcutKeyDisplayString = ""
     Me.SetupToolStripMenuItem.Size = New System.Drawing.Size(174, 22)
     Me.SetupToolStripMenuItem.Text = "&Setup..."
-    '
-    'HelpToolStripMenuItem
-    '
-    Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ControlsInfoToolStripMenuItem, Me.ToolStripSeparator7, Me.AboutToolStripMenuItem, Me.SearchForUpdatesToolStripMenuItem})
-    Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
-    Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(41, 17)
-    Me.HelpToolStripMenuItem.Text = "Help"
-    '
-    'ControlsInfoToolStripMenuItem
-    '
-    Me.ControlsInfoToolStripMenuItem.Name = "ControlsInfoToolStripMenuItem"
-    Me.ControlsInfoToolStripMenuItem.ShortcutKeyDisplayString = ""
-    Me.ControlsInfoToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.H), System.Windows.Forms.Keys)
-    Me.ControlsInfoToolStripMenuItem.Size = New System.Drawing.Size(227, 22)
-    Me.ControlsInfoToolStripMenuItem.Text = "&Controls"
-    '
-    'ToolStripSeparator7
-    '
-    Me.ToolStripSeparator7.Name = "ToolStripSeparator7"
-    Me.ToolStripSeparator7.Size = New System.Drawing.Size(224, 6)
-    '
-    'AboutToolStripMenuItem
-    '
-    Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
-    Me.AboutToolStripMenuItem.ShortcutKeyDisplayString = ""
-    Me.AboutToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Q), System.Windows.Forms.Keys)
-    Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(227, 22)
-    Me.AboutToolStripMenuItem.Text = "A&bout Utility of Time"
-    '
-    'SearchForUpdatesToolStripMenuItem
-    '
-    Me.SearchForUpdatesToolStripMenuItem.Name = "SearchForUpdatesToolStripMenuItem"
-    Me.SearchForUpdatesToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.U), System.Windows.Forms.Keys)
-    Me.SearchForUpdatesToolStripMenuItem.Size = New System.Drawing.Size(227, 22)
-    Me.SearchForUpdatesToolStripMenuItem.Text = "Search for updates..."
+
     '
     'ActorInputTimer
     '
@@ -2585,32 +2544,13 @@ Public Class MainWin
     Me.FullSceneAntialiasingToolStripMenuItem.Size = New System.Drawing.Size(183, 22)
     Me.FullSceneAntialiasingToolStripMenuItem.Text = "Full Scene Antialiasing"
     '
-    'HelpToolStripMenuItem1
-    '
-    Me.HelpToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ContentsToolStripMenuItem, Me.AboutUoTToolStripMenuItem})
-    Me.HelpToolStripMenuItem1.Name = "HelpToolStripMenuItem1"
-    Me.HelpToolStripMenuItem1.Size = New System.Drawing.Size(41, 27)
-    Me.HelpToolStripMenuItem1.Text = "&Help"
-    '
-    'ContentsToolStripMenuItem
-    '
-    Me.ContentsToolStripMenuItem.Name = "ContentsToolStripMenuItem"
-    Me.ContentsToolStripMenuItem.Size = New System.Drawing.Size(127, 22)
-    Me.ContentsToolStripMenuItem.Text = "&Contents"
-    '
-    'AboutUoTToolStripMenuItem
-    '
-    Me.AboutUoTToolStripMenuItem.Name = "AboutUoTToolStripMenuItem"
-    Me.AboutUoTToolStripMenuItem.Size = New System.Drawing.Size(127, 22)
-    Me.AboutUoTToolStripMenuItem.Text = "&About UoT"
-    '
     'UoTMainMenu
     '
     Me.UoTMainMenu.AllowMerge = False
     Me.UoTMainMenu.AutoSize = False
     Me.UoTMainMenu.BackColor = System.Drawing.SystemColors.ControlLight
     Me.UoTMainMenu.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-    Me.UoTMainMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem1, Me.ToolStripMenuItem3, Me.EditToolStripMenuItem1, Me.ToolsToolStripMenuItem, Me.ToolsToolStripMenuItem1, Me.HelpToolStripMenuItem1})
+    Me.UoTMainMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem1, Me.ToolStripMenuItem3, Me.EditToolStripMenuItem1, Me.ToolsToolStripMenuItem, Me.ToolsToolStripMenuItem1, New HelpDropdown()})
     Me.UoTMainMenu.Location = New System.Drawing.Point(0, 0)
     Me.UoTMainMenu.Name = "UoTMainMenu"
     Me.UoTMainMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
@@ -4850,11 +4790,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     Return F3DEX2_Defs.ReadInDL(Data, DisplayList, Offset, Index)
   End Function
 
-  Private Sub AboutToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    AboutBoxDialog.Show()
-    AboutBoxDialog.Focus()
-  End Sub
-
   Private Function IdentifyActor(ByVal ActorType As UInteger, ByVal Actor As Integer) As String
     If ActorType = 0 Then
       For I As Integer = 0 To ActorDataBase.Length - 1
@@ -6964,12 +6899,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       LoadROM.FileName = e.ClickedItem.Text
       Start(False)
     End If
-  End Sub
-
-  Private Sub AboutUoTToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
-    Handles AboutUoTToolStripMenuItem.Click
-    AboutBoxDialog.Show()
-    AboutBoxDialog.Focus()
   End Sub
 
   Private Sub XToolStripMenuItem3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _

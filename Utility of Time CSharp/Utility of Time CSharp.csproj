@@ -243,6 +243,15 @@
     <Compile Include="ui\main\files\ZFileTreeView.Designer.cs">
       <DependentUpon>ZFileTreeView.cs</DependentUpon>
     </Compile>
+    <Compile Include="ui\main\top\help\AboutBoxDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ui\main\top\help\AboutBoxDialog.Designer.cs">
+      <DependentUpon>AboutBoxDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\main\top\help\HelpDropdown.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="util\Debug.cs" />
     <Compile Include="displaylist\DlManager.cs" />
     <Compile Include="displaylist\DlShaderManager.cs" />
@@ -287,6 +296,9 @@
     <EmbeddedResource Include="ui\main\files\ZFileTreeView.resx">
       <DependentUpon>ZFileTreeView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ui\main\top\help\AboutBoxDialog.resx">
+      <DependentUpon>AboutBoxDialog.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="displaylist\F3DEX_Defs.cs" />
@@ -309,8 +321,9 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Resources\" />
+    <Content Include="Resources\uoticon64.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

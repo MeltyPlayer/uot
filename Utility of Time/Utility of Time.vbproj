@@ -14,7 +14,8 @@
     <RootNamespace>UoT</RootNamespace>
     <AssemblyName>Utility of Time</AssemblyName>
     <MyType>WindowsForms</MyType>
-    <ApplicationIcon>Main window\uoticon64.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
     <OptionStrict>Off</OptionStrict>
     <OptionExplicit>On</OptionExplicit>
     <TargetZone>LocalIntranet</TargetZone>
@@ -331,12 +332,6 @@
     <Compile Include="Display List\F3DEX2_Defs.vb" />
     <Compile Include="Display List\F3DEX2_Parser.vb" />
     <Compile Include="Helpers\Functions.vb" />
-    <Compile Include="Main window\AboutBoxDialog.Designer.vb">
-      <DependentUpon>AboutBoxDialog.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Main window\AboutBoxDialog.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Main window\ApplicationEvents.vb" />
     <Compile Include="Preset Dialogs\ActorPresets.Designer.vb">
       <DependentUpon>ActorPresets.vb</DependentUpon>
@@ -379,10 +374,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Main window\AboutBoxDialog.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>AboutBoxDialog.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Main window\SetupDialog.resx">
       <SubType>Designer</SubType>
       <DependentUpon>SetupDialog.vb</DependentUpon>

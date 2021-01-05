@@ -18,9 +18,6 @@ Partial Class MainWin
   Friend WithEvents MouseToolToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents OptionsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents LaunchROMInPJ64ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-  Friend WithEvents HelpToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-  Friend WithEvents AboutToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-  Friend WithEvents ControlsInfoToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents SaveChangesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents RenderModeToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents ViewingMeshToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
@@ -37,7 +34,6 @@ Partial Class MainWin
   Friend WithEvents ZeldaResourceExtractorToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents ToolStripSeparator10 As System.Windows.Forms.ToolStripSeparator
   Friend WithEvents ToolStripSeparator8 As System.Windows.Forms.ToolStripSeparator
-  Friend WithEvents ToolStripSeparator7 As System.Windows.Forms.ToolStripSeparator
   Friend WithEvents ImportCSVToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents ResetSelectedVerticesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents ResetAllGraphicsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
@@ -116,7 +112,6 @@ Partial Class MainWin
   Friend WithEvents TrackBar1 As System.Windows.Forms.TrackBar
   Friend WithEvents ReloadCurrentFileToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents CheckBox5 As System.Windows.Forms.CheckBox
-  Friend WithEvents SearchForUpdatesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents UoTRender As Tao.Platform.Windows.SimpleOpenGlControl
   Friend WithEvents SelectAllGraphicsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents SelectAllCollisionToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
@@ -204,8 +199,6 @@ Partial Class MainWin
   Friend WithEvents DisableDepthTestToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents ToolsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents OptionsToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
-  Friend WithEvents HelpToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
-  Friend WithEvents AboutUoTToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents UoTMainMenu As System.Windows.Forms.MenuStrip
   Friend WithEvents ToolStripMenuItem3 As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents UndoToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
@@ -244,7 +237,6 @@ Partial Class MainWin
   Friend WithEvents ToolStripMenuItem33 As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents ToolStripMenuItem34 As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents ToolStripMenuItem35 As System.Windows.Forms.ToolStripMenuItem
-  Friend WithEvents ContentsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents CustomLevel As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents GroupBox9 As System.Windows.Forms.GroupBox
   Friend WithEvents ProgressBar1 As System.Windows.Forms.ProgressBar
