@@ -26,16 +26,8 @@ Partial Class MainWin
   Friend WithEvents ToolStripSeparator6 As System.Windows.Forms.ToolStripSeparator
   Friend WithEvents ToolStripSeparator5 As System.Windows.Forms.ToolStripSeparator
   Friend WithEvents SetupToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-  Friend WithEvents EditToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents ZeldaResourceExtractorToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents ToolStripSeparator8 As System.Windows.Forms.ToolStripSeparator
-  Friend WithEvents ResetSelectedVerticesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-  Friend WithEvents ResetAllGraphicsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-  Friend WithEvents ResetAllCollisionToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-  Friend WithEvents ToolStripSeparator11 As System.Windows.Forms.ToolStripSeparator
-  Friend WithEvents ResetSelectedActorToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-  Friend WithEvents ResetAllActorsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-  Friend WithEvents ResetAllSceneActorsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents CollisionTab As System.Windows.Forms.TabPage
   Friend WithEvents CollisionGroupBox As System.Windows.Forms.GroupBox
   Friend WithEvents Label36 As System.Windows.Forms.Label
@@ -99,15 +91,10 @@ Partial Class MainWin
   Friend WithEvents RoomActorCombobox As System.Windows.Forms.ComboBox
   Friend WithEvents Label24 As System.Windows.Forms.Label
   Friend WithEvents EditingTabs As System.Windows.Forms.TabControl
-  Friend WithEvents ToolStripSeparator9 As System.Windows.Forms.ToolStripSeparator
-  Friend WithEvents SelectAllRoomActorsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-  Friend WithEvents SelectAllSceneActorsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents Label43 As System.Windows.Forms.Label
   Friend WithEvents TrackBar1 As System.Windows.Forms.TrackBar
   Friend WithEvents CheckBox5 As System.Windows.Forms.CheckBox
   Friend WithEvents UoTRender As Tao.Platform.Windows.SimpleOpenGlControl
-  Friend WithEvents SelectAllGraphicsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-  Friend WithEvents SelectAllCollisionToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents ToolStripStatusLabel5 As System.Windows.Forms.ToolStripStatusLabel
   Friend WithEvents ToolStatusLabel As System.Windows.Forms.ToolStripStatusLabel
   Friend WithEvents ActorContextMenu As System.Windows.Forms.ContextMenuStrip

@@ -57,19 +57,6 @@ Public Class MainWin
     Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
     Me.Label12 = New System.Windows.Forms.Label()
     Me.TrackBar4 = New System.Windows.Forms.TrackBar()
-    Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-    Me.ResetSelectedVerticesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-    Me.ResetAllGraphicsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-    Me.ResetAllCollisionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-    Me.ToolStripSeparator11 = New System.Windows.Forms.ToolStripSeparator()
-    Me.ResetSelectedActorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-    Me.ResetAllActorsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-    Me.ResetAllSceneActorsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-    Me.ToolStripSeparator9 = New System.Windows.Forms.ToolStripSeparator()
-    Me.SelectAllRoomActorsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-    Me.SelectAllSceneActorsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-    Me.SelectAllGraphicsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-    Me.SelectAllCollisionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
     Me.OptionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
     Me.LaunchROMInPJ64ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
     Me.ZeldaResourceExtractorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -481,93 +468,6 @@ Public Class MainWin
     Me.TrackBar4.Size = New System.Drawing.Size(90, 15)
     Me.TrackBar4.TabIndex = 99
     Me.TrackBar4.Value = 2
-    '
-    'EditToolStripMenuItem
-    '
-    Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ResetSelectedVerticesToolStripMenuItem, Me.ResetAllGraphicsToolStripMenuItem, Me.ResetAllCollisionToolStripMenuItem, Me.ToolStripSeparator11, Me.ResetSelectedActorToolStripMenuItem, Me.ResetAllActorsToolStripMenuItem, Me.ResetAllSceneActorsToolStripMenuItem, Me.ToolStripSeparator9, Me.SelectAllRoomActorsToolStripMenuItem, Me.SelectAllSceneActorsToolStripMenuItem, Me.SelectAllGraphicsToolStripMenuItem, Me.SelectAllCollisionToolStripMenuItem})
-    Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
-    Me.EditToolStripMenuItem.Size = New System.Drawing.Size(40, 17)
-    Me.EditToolStripMenuItem.Text = "Edit"
-    '
-    'ResetSelectedVerticesToolStripMenuItem
-    '
-    Me.ResetSelectedVerticesToolStripMenuItem.Name = "ResetSelectedVerticesToolStripMenuItem"
-    Me.ResetSelectedVerticesToolStripMenuItem.ShortcutKeyDisplayString = "V"
-    Me.ResetSelectedVerticesToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
-    Me.ResetSelectedVerticesToolStripMenuItem.Text = "Reset selected vertices"
-    '
-    'ResetAllGraphicsToolStripMenuItem
-    '
-    Me.ResetAllGraphicsToolStripMenuItem.Name = "ResetAllGraphicsToolStripMenuItem"
-    Me.ResetAllGraphicsToolStripMenuItem.ShortcutKeyDisplayString = ""
-    Me.ResetAllGraphicsToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.V), System.Windows.Forms.Keys)
-    Me.ResetAllGraphicsToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
-    Me.ResetAllGraphicsToolStripMenuItem.Text = "Reset all graphics"
-    '
-    'ResetAllCollisionToolStripMenuItem
-    '
-    Me.ResetAllCollisionToolStripMenuItem.Name = "ResetAllCollisionToolStripMenuItem"
-    Me.ResetAllCollisionToolStripMenuItem.ShortcutKeyDisplayString = ""
-    Me.ResetAllCollisionToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.C), System.Windows.Forms.Keys)
-    Me.ResetAllCollisionToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
-    Me.ResetAllCollisionToolStripMenuItem.Text = "Reset all collision"
-    '
-    'ToolStripSeparator11
-    '
-    Me.ToolStripSeparator11.Name = "ToolStripSeparator11"
-    Me.ToolStripSeparator11.Size = New System.Drawing.Size(225, 6)
-    '
-    'ResetSelectedActorToolStripMenuItem
-    '
-    Me.ResetSelectedActorToolStripMenuItem.Name = "ResetSelectedActorToolStripMenuItem"
-    Me.ResetSelectedActorToolStripMenuItem.ShortcutKeyDisplayString = "B"
-    Me.ResetSelectedActorToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
-    Me.ResetSelectedActorToolStripMenuItem.Text = "Reset selected actors"
-    '
-    'ResetAllActorsToolStripMenuItem
-    '
-    Me.ResetAllActorsToolStripMenuItem.Name = "ResetAllActorsToolStripMenuItem"
-    Me.ResetAllActorsToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.B), System.Windows.Forms.Keys)
-    Me.ResetAllActorsToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
-    Me.ResetAllActorsToolStripMenuItem.Text = "Reset all room actors"
-    '
-    'ResetAllSceneActorsToolStripMenuItem
-    '
-    Me.ResetAllSceneActorsToolStripMenuItem.Name = "ResetAllSceneActorsToolStripMenuItem"
-    Me.ResetAllSceneActorsToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.N), System.Windows.Forms.Keys)
-    Me.ResetAllSceneActorsToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
-    Me.ResetAllSceneActorsToolStripMenuItem.Text = "Reset all scene actors"
-    '
-    'ToolStripSeparator9
-    '
-    Me.ToolStripSeparator9.Name = "ToolStripSeparator9"
-    Me.ToolStripSeparator9.Size = New System.Drawing.Size(225, 6)
-    '
-    'SelectAllRoomActorsToolStripMenuItem
-    '
-    Me.SelectAllRoomActorsToolStripMenuItem.Name = "SelectAllRoomActorsToolStripMenuItem"
-    Me.SelectAllRoomActorsToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F11
-    Me.SelectAllRoomActorsToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
-    Me.SelectAllRoomActorsToolStripMenuItem.Text = "Select all room actors"
-    '
-    'SelectAllSceneActorsToolStripMenuItem
-    '
-    Me.SelectAllSceneActorsToolStripMenuItem.Name = "SelectAllSceneActorsToolStripMenuItem"
-    Me.SelectAllSceneActorsToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F12
-    Me.SelectAllSceneActorsToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
-    Me.SelectAllSceneActorsToolStripMenuItem.Text = "Select all scene actors"
-    '
-    'SelectAllGraphicsToolStripMenuItem
-    '
-    Me.SelectAllGraphicsToolStripMenuItem.Name = "SelectAllGraphicsToolStripMenuItem"
-    Me.SelectAllGraphicsToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
-    Me.SelectAllGraphicsToolStripMenuItem.Text = "Select all graphics"
-    '
-    'SelectAllCollisionToolStripMenuItem
-    '
-    Me.SelectAllCollisionToolStripMenuItem.Name = "SelectAllCollisionToolStripMenuItem"
-    Me.SelectAllCollisionToolStripMenuItem.Size = New System.Drawing.Size(228, 22)
-    Me.SelectAllCollisionToolStripMenuItem.Text = "Select all collision"
     '
     'OptionsToolStripMenuItem
     '
@@ -6052,35 +5952,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     ActorInputTimer.Stop()
   End Sub
 
-  Private Sub ResetAllActorsToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
-    Handles ResetAllActorsToolStripMenuItem.Click
-    For i As Integer = 0 To RoomActors.Length - 1
-      RoomActors(i).x = RoomActors(i).x
-      RoomActors(i).y = RoomActors(i).y
-      RoomActors(i).z = RoomActors(i).z
-      RoomActors(i).xr = RoomActors(i).xr
-      RoomActors(i).yr = RoomActors(i).yr
-      RoomActors(i).zr = RoomActors(i).zr
-    Next
-  End Sub
-
-  Private Sub ResetAllSceneActorsToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
-    Handles ResetAllSceneActorsToolStripMenuItem.Click
-    For i As Integer = 0 To SceneActors.Length - 1
-      SceneActors(i).x = SceneActors(i).x
-      SceneActors(i).y = SceneActors(i).y
-      SceneActors(i).z = SceneActors(i).z
-    Next
-    'For i As Integer = 0 To linkx.Count - 1
-    '    linkx(i) = olinkx(i)
-    '    linky(i) = olinky(i)
-    '    linkz(i) = olinkz(i)
-    '    linkxr(i) = olinkxr(i)
-    '    linkyr(i) = olinkyr(i)
-    '    linkzr(i) = olinkzr(i)
-    'Next
-  End Sub
-
   Private Sub ResetActors(ByVal all As Boolean)
     If Not OnSceneActor Then
       For i As Integer = 0 To SelectedRoomActors.Count - 1
@@ -6130,32 +6001,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       HideActors(2) = False
     Else
       HideActors(2) = True
-    End If
-  End Sub
-
-  Private Sub SelectAllRoomActorsToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
-    Handles SelectAllRoomActorsToolStripMenuItem.Click
-    If RoomActors.Length > 0 Then
-      MPick = True
-      SelectedRoomActors.Clear()
-      SelectedSceneActors.Clear()
-      For i As Integer = 0 To rmActorCount - 1
-        SelectedRoomActors.Add(i)
-      Next
-      RoomActorCombobox.SelectedIndex = 0
-    End If
-  End Sub
-
-  Private Sub SelectAllSceneActorsToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
-    Handles SelectAllSceneActorsToolStripMenuItem.Click
-    If SceneActors.Length > 0 Then
-      MPick = True
-      SelectedRoomActors.Clear()
-      SelectedSceneActors.Clear()
-      For i As Integer = 0 To SceneActors.Length - 1
-        SelectedSceneActors.Add(i)
-      Next
-      SceneActorCombobox.SelectedIndex = 0
     End If
   End Sub
 
