@@ -2690,10 +2690,7 @@ Public Class MainWin
 
 #Region "ROM HANDLING RELATED"
 
-  Private ActorTable() As ActorTbl
   Private ObjectTable() As ObjectTbl
-  Private RecentROMCount As Integer = 0
-  Private RecentIndCount As Integer = 0
   Private MapSt As Integer = 0
   Private SceneSt As Integer = 0
   Private ScBuffSize As Integer = 0
@@ -2701,20 +2698,10 @@ Public Class MainWin
   Private ObjBuffSize As Integer = 0
   Private ObjectFilename As String = ""
   Private ActorBuffSize As Integer = 0
-  Private ScFilename As String = ""
-  Private MapFilename As String = ""
-  Private ObjectFilemame As String = ""
-  Private ActorFilename As String = ""
-  Private MapCount As Integer = 0
-  Private SceneCount As Integer = 0
-  Private ObjectCount As Integer = 0
   Private ROMFiles As ZFiles
   Private Z64Code() As Byte
   Private IndMapFileName As String = ""
   Private IndScFileName As String = ""
-  Private ActorN64DLists() As N64DisplayList
-  Private ActorOGLDLists() As OGLDisplayList
-  Private CurrSelNode(1) As Integer
 
 #End Region
 
@@ -2735,13 +2722,11 @@ Public Class MainWin
   Private ActorScaleW As Single = 2.05F
   Private HideActors(3) As Boolean
   Private RotCoef As Integer = &H4000
-  Private DefRotCoef As Integer = &H4000
   Private ActorDBGroups As New ArrayList
   Private ActorDBNumber As New ArrayList
   Private ActorDBVars As New ArrayList
   Private ActorDBDesc As New ArrayList
   Private UsedGroupIndex() As Integer
-  Private UsedSceneGroupIndex() As Integer
 
 #End Region
 
@@ -2751,9 +2736,6 @@ Public Class MainWin
   Private LimbEntries(-1) As Limb
   Private CurrLimb As Integer = 0
   Private BoneColorFactor As New Color3UByte
-  Private CurrParent As Integer = 0
-  Private AnimTick As UInteger = 0
-  Private CurrFrame As Double = 0
   Private CurrAnimation As Integer = 0
   Private DlManager As New DlManager
 
@@ -2763,7 +2745,6 @@ Public Class MainWin
 
   Private LAmbient() As Single = {1.0F, 1.0F, 1.0F, 1.0F}
   Private LDiffuse() As Single = {1.0F, 1.0F, 1.0F, 1.0F}
-  Private LSpecular() As Single = {1.0F, 1.0F, 1.0F, 1.0F}
   Private LPosition() As Single = {1.0F, 1.0F, 1.0F, 1.0F}
 
 #End Region
@@ -2773,14 +2754,10 @@ Public Class MainWin
   Private CollisionTriColor() As CollisionTriColorSelect
   Private ColA, ColB, ColC As UInt32
   Private CollisionVerts As CollisionVertex
-  Private CollisionVertsCopy As CollisionVertex
   Private CollisionPolies() As PolygonCollision
   Private SelectedCollisionVert As New ArrayList
   Private ColTypes() As CollisionTypes
   Private ColPresets() As CollisionTypePresets
-  Private CamData() As ZCamera
-  Private TriSel As Boolean = False
-  Private Highlight As Boolean = False
 
 #End Region
 
@@ -2814,12 +2791,6 @@ Public Class MainWin
 
     'selected item identifiers
   End Enum
-
-  Structure CmdCopy
-    Dim Cmd As Byte
-    Dim CmdLow As UInteger
-    Dim CmdHigh As UInteger
-  End Structure
 
   Private CursorPosOld As Point
   Private HoldCursor As Boolean = False
@@ -2865,10 +2836,6 @@ Public Class MainWin
           key_e,
           key_u,
           key_o,
-          key_up,
-          key_lf,
-          key_dn,
-          key_rt,
           key_ctrl,
           key_alt As Boolean
 
@@ -2899,7 +2866,6 @@ Public Class MainWin
   Private wireframe As Boolean = False
   Private LoadedDataType As Integer = 0
   Private viewport(3) As Integer
-  Private identity As String
   Private AppExit As Boolean = False
   Private PIRad As Double = PI / 180
 
@@ -3516,8 +3482,6 @@ Public Class MainWin
       If validDl Then
         DrawDL(visibleLimbIndex, dlIndex, False)
         visibleLimbIndex += 1
-      Else
-        Dim doSomething = 1
       End If
 
       If .firstChild > -1 Then
@@ -3579,27 +3543,6 @@ Public Class MainWin
     Dim qy As Single = q.Y
     Dim qz As Single = q.Z
     Dim qw As Single = q.W
-
-    'Dim m(15) As Double
-    'm(0) = 1.0F - 2.0F * qy * qy - 2.0F * qz * qz
-    'm(4) = 2.0F * qx * qy - 2.0F * qz * qw
-    'm(8) = 2.0F * qx * qz + 2.0F * qy * qw
-    'm(12) = 0.0F
-
-    'm(1) = 2.0F * qx * qy + 2.0F * qz * qw
-    'm(5) = 1.0F - 2.0F * qx * qx - 2.0F * qz * qz
-    'm(9) = 2.0F * qy * qz - 2.0F * qx * qw
-    'm(13) = 0.0F
-
-    'm(2) = 2.0F * qx * qz - 2.0F * qy * qw
-    'm(6) = 2.0F * qy * qz + 2.0F * qx * qw
-    'm(10) = 1.0F - 2.0F * qx * qx - 2.0F * qy * qy
-    'm(14) = 0.0F
-
-    'm(3) = 0
-    'm(7) = 0
-    'm(11) = 0
-    'm(15) = 1
 
     Dim m As New DenseMatrix(4, 4)
     m(0, 0) = 1.0F - 2.0F * qy * qy - 2.0F * qz * qz
@@ -3777,13 +3720,6 @@ Public Class MainWin
       End Select
     End If
     SetOGLDefaultParams()
-  End Sub
-
-  Sub FixCollision()
-    cfix.Start()
-    cfix.WaitForExit()
-    File.Delete(Application.StartupPath & "\collision_fixer.ini")
-    File.Delete(Application.StartupPath & "\romname.ini")
   End Sub
 
   Private Sub SimpleOpenGlControl1_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) _
@@ -4174,9 +4110,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     End If
   End Function
 
-  Private Sub PopulateNumContext(ByVal DB() As ActorDB)
-  End Sub
-
   Private Sub PopulateVarContext(ByVal DB() As ActorDB, ByVal Actor As Integer)
     For I As Integer = 0 To DB(Actor).var.Length - 1
       VarContextMenu.Items.Add(DB(Actor).var(I).desc)
@@ -4342,7 +4275,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
               scActorPos = IoUtil.ReadUInt24(RamBanks.ZSceneBuffer, mscenePos + 5)
               i1 = scActorPos
               ReDim SceneActors(scActorCount - 1)
-              ReDim UsedSceneGroupIndex(scActorCount - 1)
               For i As Integer = 0 To scActorCount - 1
                 With SceneActors(i)
                   .pickR = Rand.Next(0, 255)
@@ -4464,9 +4396,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
               End While
 
               ReDim CollisionTriColor(triCount)
-              Dim cx As Short = 0
-              Dim cy As Short = 0
-              Dim cz As Short = 0
               Dim edgecnt As Integer = -1
 
               While VertexOffset < colPtr
@@ -4944,10 +4873,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     KeyCheckUp(sender, e)
   End Sub
 
-  Private Sub SetupToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    SetupDialog.ShowDialog()
-  End Sub
-
   Private Sub PickItem(ByVal CurrentTool As Integer, ByVal Button As Windows.Forms.MouseButtons)
     ModelViewMatrixTransformer.Push(False)
 
@@ -5220,16 +5145,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     ChangePosition(4) = False
   End Sub
 
-  Private Sub ToolStripButton12_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    ToggleWire()
-    UoTRender.Focus()
-  End Sub
-
-  Private Sub ToolStripButton1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    SetupDialog.ShowDialog()
-    SetupDialog.Focus()
-  End Sub
-
   Private Sub RoomActorCombobox_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
     Handles RoomActorCombobox.SelectedIndexChanged, RoomActorCombobox.SelectedIndexChanged
     Try
@@ -5475,24 +5390,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     Working = False
   End Sub
 
-  Private Sub Button16_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    MatchCollision(1)
-  End Sub
-
-  Private Sub Button15_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    MatchCollision(0)
-  End Sub
-
-  Private Sub CollisionMeshToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    RenderCollision = True
-    RenderGraphics = False
-  End Sub
-
-  Private Sub BothToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    RenderGraphics = True
-    RenderCollision = True
-  End Sub
-
   Private Sub FilledToolStripMenuItem_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) _
     Handles FilledToolStripMenuItem.Click
     wireframe = False
@@ -5523,15 +5420,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       UndoToolStripMenuItem.Checked = True
       Reshape()
     End If
-  End Sub
-
-  Private Sub Button18_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
-    ButtonPress = 0
-    ActorInputTimer.Start()
-  End Sub
-
-  Private Sub Button18_MouseUp(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
-    ActorInputTimer.Stop()
   End Sub
 
   Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) _
@@ -5646,66 +5534,9 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     End Select
   End Sub
 
-  Private Sub Button8_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
-    ButtonPress = 1
-    ActorInputTimer.Start()
-  End Sub
-
-  Private Sub Button8_MouseUp(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
-    ActorInputTimer.Stop()
-  End Sub
-
-  Private Sub Button20_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
-    ButtonPress = 2
-    ActorInputTimer.Start()
-  End Sub
-
-  Private Sub Button20_MouseUp(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
-    ActorInputTimer.Stop()
-  End Sub
-
-  Private Sub Button4_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
-    ButtonPress = 3
-    ActorInputTimer.Start()
-  End Sub
-
-  Private Sub Button4_MouseUp(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
-    ActorInputTimer.Stop()
-  End Sub
-
-  Private Sub Button19_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
-    ButtonPress = 5
-    ActorInputTimer.Start()
-  End Sub
-
-  Private Sub Button19_MouseUp(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
-    ActorInputTimer.Stop()
-  End Sub
-
-  Private Sub Button17_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
-    ButtonPress = 4
-    ActorInputTimer.Start()
-  End Sub
-
-  Private Sub Button17_MouseUp(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
-    ActorInputTimer.Stop()
-  End Sub
-
   Private Sub SetupToolStripMenuItem_Click_2(ByVal sender As System.Object, ByVal e As System.EventArgs) _
     Handles SetupToolStripMenuItem.Click
     SetupDialog.ShowDialog()
-  End Sub
-
-  Private Sub TextBox1_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    ChangePosition(0) = True
-  End Sub
-
-  Private Sub TextBox2_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    ChangePosition(1) = True
-  End Sub
-
-  Private Sub TextBox3_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    ChangePosition(2) = True
   End Sub
 
   Private Sub CollisionMeshToolStripMenuItem_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) _
@@ -5717,14 +5548,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       RenderCollision = False
       CollisionMeshToolStripMenuItem.Checked = False
     End If
-  End Sub
-
-  Private Sub Button21_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    MatchCollision(2)
-  End Sub
-
-  Private Sub ToolStripMenuItem3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    ToolModes.CurrentTool = ToolID.COLTRI
   End Sub
 
   Private Sub MainWin_ResizeEnd(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Resize
@@ -5821,87 +5644,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     End If
   End Sub
 
-  Private Sub Button16_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    MatchCollision(0)
-  End Sub
-
-  Private Sub Button15_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    MatchCollision(1)
-  End Sub
-
-  Private Sub CheckBox13_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    If HideActors(0) Then
-      HideActors(0) = False
-    Else
-      HideActors(0) = True
-    End If
-  End Sub
-
-  Private Sub CheckBox14_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    If HideActors(1) Then
-      HideActors(1) = False
-    Else
-      HideActors(1) = True
-    End If
-  End Sub
-
-  Private Sub CheckBox15_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    If HideActors(2) Then
-      HideActors(2) = False
-    Else
-      HideActors(2) = True
-    End If
-  End Sub
-
-  Private Sub Button23_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    ActorPresets.Show()
-    ActorPresets.Focus()
-  End Sub
-
-  Private Sub TextBox22_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    ChangePosition(3) = True
-  End Sub
-
-  Private Sub TextBox21_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    ChangePosition(4) = True
-  End Sub
-
-  Private Sub Button26_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
-    ButtonPress = 6
-    ActorInputTimer.Start()
-  End Sub
-
-  Private Sub Button26_MouseUp(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
-    ActorInputTimer.Stop()
-  End Sub
-
-  Private Sub Button24_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
-    ButtonPress = 7
-    ActorInputTimer.Start()
-  End Sub
-
-  Private Sub Button24_MouseUp(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
-    ActorInputTimer.Stop()
-  End Sub
-
-  Private Sub Button27_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
-    ButtonPress = 8
-    ActorInputTimer.Start()
-  End Sub
-
-  Private Sub Button27_MouseUp(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
-    ActorInputTimer.Stop()
-  End Sub
-
-  Private Sub Button25_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
-    ButtonPress = 9
-    ActorInputTimer.Start()
-  End Sub
-
-  Private Sub Button25_MouseUp(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
-    ActorInputTimer.Stop()
-  End Sub
-
   Private Sub ResetActors(ByVal all As Boolean)
     If Not OnSceneActor Then
       For i As Integer = 0 To SelectedRoomActors.Count - 1
@@ -5921,10 +5663,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
         SceneActors(i1).z = SceneActors(i1).z
       Next
     End If
-  End Sub
-
-  Private Sub EditDatabaseToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    Process.Start(Application.StartupPath & ExtraDataPrefix & "\actor_db.txt")
   End Sub
 
   Private Sub CheckBox13_CheckedChanged_1(ByVal sender As System.Object, ByVal e As System.EventArgs) _
@@ -6060,10 +5798,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
   Private Sub ActorGroupText_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
     Handles ActorGroupText.TextChanged
     If ActorGroupText.Text = "" Then ActorGroupText.Text = "0001"
-  End Sub
-
-  Private Sub HighlightToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    If Not Highlight Then Highlight = True Else Highlight = False
   End Sub
 
   Private Sub SaveToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
@@ -6440,14 +6174,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     End If
   End Sub
 
-  Private Sub ResetSelectedToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    ResetActors(False)
-  End Sub
-
-  Private Sub ResetAllToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    ResetActors(True)
-  End Sub
-
   Private Sub GraphicsToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
     Handles GraphicsToolStripMenuItem.Click
     If RenderGraphics Then RenderGraphics = False Else RenderGraphics = True
@@ -6471,13 +6197,11 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       MapsCombobox.Items.Clear()
       MapsCombobox.Enabled = True
       Dim tScPos As Integer = 0
-      Dim MapCount As Integer = 0
-      Dim MapPos As Integer = 0
       While RamBanks.ZSceneBuffer(tScPos) <> &H14
         Select Case RamBanks.ZSceneBuffer(tScPos)
           Case &H4
-            MapCount = RamBanks.ZSceneBuffer(tScPos + 1)
-            MapPos = RamBanks.ZSceneBuffer(tScPos + 5) * &H10000 + RamBanks.ZSceneBuffer(tScPos + 6) * &H100 + RamBanks.ZSceneBuffer(tScPos + 7)
+            Dim MapCount As Integer = RamBanks.ZSceneBuffer(tScPos + 1)
+            Dim MapPos As Integer = RamBanks.ZSceneBuffer(tScPos + 5) * &H10000 + RamBanks.ZSceneBuffer(tScPos + 6) * &H100 + RamBanks.ZSceneBuffer(tScPos + 7)
             For i As Integer = 0 To MapCount - 1
               MapsCombobox.Items.Add(RamBanks.ZSceneBuffer(MapPos).ToString("X2") & RamBanks.ZSceneBuffer(MapPos + 1).ToString("X2") &
                                      RamBanks.ZSceneBuffer(MapPos + 2).ToString("X2") & RamBanks.ZSceneBuffer(MapPos + 3).ToString("X2"))
@@ -6625,14 +6349,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     ClearClipboardToolStripMenuItem.Enabled = False
   End Sub
 
-  Private Sub RecentROMsItem_DropDownItemClicked(ByVal sender As System.Object,
-                                                 ByVal e As System.Windows.Forms.ToolStripItemClickedEventArgs)
-    If File.Exists(e.ClickedItem.Text) Then
-      LoadROM.FileName = e.ClickedItem.Text
-      Start(False)
-    End If
-  End Sub
-
   Private Sub XToolStripMenuItem3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
     Handles XToolStripMenuItem3.Click
     For i As Integer = 0 To SelectedRoomActors.Count - 1
@@ -6652,9 +6368,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     For i As Integer = 0 To SelectedRoomActors.Count - 1
       RoomActors(SelectedRoomActors(i)).z = RoomActors(SelectedRoomActors(0)).z
     Next
-  End Sub
-
-  Private Sub SelectAllActorsToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
   End Sub
 
   Private Sub SpawnActor(ByVal x As Short, ByVal y As Short, ByVal z As Short, ByVal CamXRot As Short,
@@ -6706,22 +6419,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     If ToolModes.NoDepthTest Then ToolModes.NoDepthTest = False Else ToolModes.NoDepthTest = True
   End Sub
 
-  Private Sub RoomToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    SelectedRoomActors.Clear()
-    SelectedSceneActors.Clear()
-    For i As Integer = 0 To RoomActors.Length - 1
-      SelectedRoomActors.Add(i)
-    Next
-  End Sub
-
-  Private Sub SceneToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    SelectedSceneActors.Clear()
-    SelectedRoomActors.Clear()
-    For i As Integer = 0 To SceneActors.Length - 1
-      SelectedSceneActors.Add(i)
-    Next
-  End Sub
-
   Private Sub CollisionToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
     Handles CollisionToolStripMenuItem.Click
     SwitchTool(ToolID.COLTRI)
@@ -6757,7 +6454,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
         MapsCombobox.Enabled = False
 
       Case ZFileType.CODE
-        ActorFilename = zFile.FileName
         ActorBuffSize = zFile.EndOffset - zFile.StartOffset
         RamBanks.ZFileBuffer.PopulateFromStream(ROMFileStream, zFile.StartOffset, ActorBuffSize)
 
@@ -6781,9 +6477,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
 
         MapBuffSize = map.EndOffset - MapSt
         ScBuffSize = scene.EndOffset - SceneSt
-
-        MapFilename = map.FileName
-        ScFilename = scene.FileName
 
         RamBanks.ZSceneBuffer.PopulateFromStream(ROMFileStream, SceneSt, ScBuffSize)
         RamBanks.ZFileBuffer.PopulateFromStream(ROMFileStream, MapSt, MapBuffSize)
@@ -6835,9 +6528,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       CollisionPolies(colTriangle).Param = TriTypeText.Text
       ColTypeBox.SelectedIndex = CollisionPolies(colTriangle).Param + 1
     End If
-  End Sub
-
-  Private Sub PasteVertex(ByVal x As Short, ByVal y As Short, ByVal z As Short, ByVal mode As Integer)
   End Sub
 
   Private Sub ToolStripMenuItem20_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
@@ -7063,12 +6753,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     RawDLFile.Dispose()
   End Sub
 
-  Private Sub Button13_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    GlobalVarsCs.N64DList(DListSelection.SelectedIndex - 1).Commands(CommandsListbox.SelectedIndex) =
-      GlobalVarsCs.N64DList(DListSelection.SelectedIndex - 1).CommandsCopy(CommandsListbox.SelectedIndex)
-  End Sub
-
-
   Private Sub ToolStripMenuItem34_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
     Handles ToolStripMenuItem34.Click
     SaveROMAs.ShowDialog()
@@ -7154,18 +6838,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
   Private Sub TrackBar4_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
     Handles TrackBar4.ValueChanged
     ToolSensitivity = TrackBar4.Value
-  End Sub
-
-  Private Sub VarPresetButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    VarContextMenu.Show(MousePosition.X, MousePosition.Y)
-  End Sub
-
-  Private Sub NumButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    NumContextMenu.Show(MousePosition.X, MousePosition.Y)
-  End Sub
-
-  Private Sub GrpPresetButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    GrpContextMenu.Show(MousePosition.X, MousePosition.Y)
   End Sub
 
 #End Region
