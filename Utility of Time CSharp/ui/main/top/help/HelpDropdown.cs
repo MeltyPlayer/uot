@@ -7,7 +7,7 @@ namespace UoT.ui.main.top.help {
       // TODO: width of 127?
 
       // Controls
-      var controlsMenuItem = new ToolStripMenuItem();
+      /*var controlsMenuItem = new ToolStripMenuItem();
       controlsMenuItem.ShortcutKeyDisplayString = "";
       //ControlsInfoToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.H), System.Windows.Forms.Keys);
       controlsMenuItem.Size = new Size(227, 22);
@@ -15,7 +15,7 @@ namespace UoT.ui.main.top.help {
 
       // Separator
       var separator = new ToolStripSeparator();
-      separator.Size = new System.Drawing.Size(224, 6);
+      separator.Size = new System.Drawing.Size(224, 6);*/
 
       // About UoT
       var aboutMenuItem = new ToolStripMenuItem();
@@ -30,13 +30,14 @@ namespace UoT.ui.main.top.help {
       };
 
       // Search For Updates
-      var searchForUpdatesMenuItem = new ToolStripMenuItem();
+      /*var searchForUpdatesMenuItem = new ToolStripMenuItem();
       //Me.SearchForUpdatesToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.U), System.Windows.Forms.Keys)
       searchForUpdatesMenuItem.Size = new Size(227, 22);
-      searchForUpdatesMenuItem.Text = "Search for updates...";
-      
+      searchForUpdatesMenuItem.Text = "Search for updates...";*/
+
       // Help
-      this.DropDownItems.AddRange(new ToolStripItem[] { controlsMenuItem, separator, aboutMenuItem, searchForUpdatesMenuItem});
+      //this.DropDownItems.AddRange(new ToolStripItem[] { controlsMenuItem, separator, aboutMenuItem, searchForUpdatesMenuItem});
+      this.DropDownItems.AddRange(new ToolStripItem[] { aboutMenuItem });
       this.Size = new Size(41, 17);
       this.Text = "&Help";
     }
