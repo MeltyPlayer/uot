@@ -11,14 +11,10 @@ Partial Class MainWin
   Friend WithEvents ToolStripSeparator3 As System.Windows.Forms.ToolStripSeparator
   Friend WithEvents Label12 As System.Windows.Forms.Label
   Friend WithEvents TrackBar4 As System.Windows.Forms.TrackBar
-  Friend WithEvents FileToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-  Friend WithEvents OpenModelToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-  Friend WithEvents QuitToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents FeaturesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents MouseToolToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents OptionsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents LaunchROMInPJ64ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-  Friend WithEvents SaveChangesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents RenderModeToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents ViewingMeshToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents CollisionMeshToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
@@ -32,9 +28,7 @@ Partial Class MainWin
   Friend WithEvents SetupToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents EditToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents ZeldaResourceExtractorToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-  Friend WithEvents ToolStripSeparator10 As System.Windows.Forms.ToolStripSeparator
   Friend WithEvents ToolStripSeparator8 As System.Windows.Forms.ToolStripSeparator
-  Friend WithEvents ImportCSVToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents ResetSelectedVerticesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents ResetAllGraphicsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents ResetAllCollisionToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
@@ -110,7 +104,6 @@ Partial Class MainWin
   Friend WithEvents SelectAllSceneActorsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents Label43 As System.Windows.Forms.Label
   Friend WithEvents TrackBar1 As System.Windows.Forms.TrackBar
-  Friend WithEvents ReloadCurrentFileToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
   Friend WithEvents CheckBox5 As System.Windows.Forms.CheckBox
   Friend WithEvents UoTRender As Tao.Platform.Windows.SimpleOpenGlControl
   Friend WithEvents SelectAllGraphicsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem

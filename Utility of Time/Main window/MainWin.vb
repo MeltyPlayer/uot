@@ -57,13 +57,6 @@ Public Class MainWin
     Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
     Me.Label12 = New System.Windows.Forms.Label()
     Me.TrackBar4 = New System.Windows.Forms.TrackBar()
-    Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-    Me.OpenModelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-    Me.SaveChangesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-    Me.ReloadCurrentFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-    Me.ImportCSVToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-    Me.ToolStripSeparator10 = New System.Windows.Forms.ToolStripSeparator()
-    Me.QuitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
     Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
     Me.ResetSelectedVerticesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
     Me.ResetAllGraphicsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -488,52 +481,6 @@ Public Class MainWin
     Me.TrackBar4.Size = New System.Drawing.Size(90, 15)
     Me.TrackBar4.TabIndex = 99
     Me.TrackBar4.Value = 2
-    '
-    'FileToolStripMenuItem
-    '
-    Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenModelToolStripMenuItem, Me.SaveChangesToolStripMenuItem, Me.ReloadCurrentFileToolStripMenuItem, Me.ImportCSVToolStripMenuItem, Me.ToolStripSeparator10, Me.QuitToolStripMenuItem})
-    Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
-    Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 17)
-    Me.FileToolStripMenuItem.Text = "File"
-    '
-    'OpenModelToolStripMenuItem
-    '
-    Me.OpenModelToolStripMenuItem.Name = "OpenModelToolStripMenuItem"
-    Me.OpenModelToolStripMenuItem.ShortcutKeyDisplayString = "Alt+O"
-    Me.OpenModelToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.O), System.Windows.Forms.Keys)
-    Me.OpenModelToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
-    Me.OpenModelToolStripMenuItem.Text = "&Open ROM..."
-    '
-    'SaveChangesToolStripMenuItem
-    '
-    Me.SaveChangesToolStripMenuItem.Name = "SaveChangesToolStripMenuItem"
-    Me.SaveChangesToolStripMenuItem.ShortcutKeyDisplayString = "Alt+S"
-    Me.SaveChangesToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
-    Me.SaveChangesToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
-    Me.SaveChangesToolStripMenuItem.Text = "&Save"
-    '
-    'ReloadCurrentFileToolStripMenuItem
-    '
-    Me.ReloadCurrentFileToolStripMenuItem.Name = "ReloadCurrentFileToolStripMenuItem"
-    Me.ReloadCurrentFileToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
-    Me.ReloadCurrentFileToolStripMenuItem.Text = "&Reload current file"
-    '
-    'ImportCSVToolStripMenuItem
-    '
-    Me.ImportCSVToolStripMenuItem.Name = "ImportCSVToolStripMenuItem"
-    Me.ImportCSVToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
-    Me.ImportCSVToolStripMenuItem.Text = "Convert Wavefront OBJ..."
-    '
-    'ToolStripSeparator10
-    '
-    Me.ToolStripSeparator10.Name = "ToolStripSeparator10"
-    Me.ToolStripSeparator10.Size = New System.Drawing.Size(203, 6)
-    '
-    'QuitToolStripMenuItem
-    '
-    Me.QuitToolStripMenuItem.Name = "QuitToolStripMenuItem"
-    Me.QuitToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
-    Me.QuitToolStripMenuItem.Text = "E&xit"
     '
     'EditToolStripMenuItem
     '
@@ -4168,16 +4115,6 @@ Public Class MainWin
     Gl.glVertex3f(1.0F, -1.0F, -1.0F)
     Gl.glEnd()
     Gl.glEndList()
-  End Sub
-
-  Private Sub QuitToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
-    Handles QuitToolStripMenuItem.Click
-    Me.Close()
-  End Sub
-
-  Private Sub LoadZOBJToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
-    Handles OpenModelToolStripMenuItem.Click
-    LoadROM.ShowDialog()
   End Sub
 
   ' TODO: Here is where the form is initialized!
