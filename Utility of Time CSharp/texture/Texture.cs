@@ -31,7 +31,7 @@ namespace UoT {
     }
 
     // OpenGL-specific logic.
-    private int GlId => this.TileDescriptor.ID;
+    public int GlId => this.TileDescriptor.ID;
 
     public void Bind() => Gl.glBindTexture(Gl.GL_TEXTURE_2D, this.GlId);
 

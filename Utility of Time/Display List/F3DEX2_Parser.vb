@@ -704,27 +704,13 @@ enddisplaylist:
   ''' </summary>
   Private Sub PrepareDrawTriangle_()
     If ParseMode = Parse.EVERYTHING Then
-      ' TODO: Move into shaderManager.
-      If ShaderManager.EnableCombiner Then
-        Gl.glEnable(Gl.GL_FRAGMENT_PROGRAM_ARB)
-        Gl.glProgramEnvParameter4fvARB(Gl.GL_FRAGMENT_PROGRAM_ARB, 0, ShaderManager.EnvironmentColor)
-        Gl.glProgramEnvParameter4fvARB(Gl.GL_FRAGMENT_PROGRAM_ARB, 1, ShaderManager.PrimColor)
-        Gl.glProgramEnvParameter4fvARB(Gl.GL_FRAGMENT_PROGRAM_ARB, 3, ShaderManager.BlendColor)
-        Gl.glProgramEnvParameter4fARB(Gl.GL_FRAGMENT_PROGRAM_ARB, 2, ShaderManager.PrimColorLOD,
-                                      ShaderManager.PrimColorLOD, ShaderManager.PrimColorLOD,
-                                      ShaderManager.PrimColorLOD)
-      Else
-        Gl.glDisable(Gl.GL_FRAGMENT_PROGRAM_ARB)
-        Gl.glEnable(Gl.GL_LIGHTING)
-        Gl.glEnable(Gl.GL_NORMALIZE)
-        ShaderManager.MultiTexture = False
-        ShaderManager.EnableLighting = True
-
+      ShaderManager.PassValuesToShader()
+      If Not ShaderManager.EnableCombiner Then
         DlModel.UpdateTexture(1, Nothing)
       End If
 
       Gl.glEnable(Gl.GL_TEXTURE_2D)
-      Gl.glActiveTextureARB(Gl.GL_TEXTURE0_ARB)
+      Gl.glActiveTexture(Gl.GL_TEXTURE0)
 
       Dim texture0 As Texture = GetTexture(0)
 
@@ -746,7 +732,7 @@ enddisplaylist:
       End If
 
       If ShaderManager.MultiTexture Then
-        Gl.glActiveTextureARB(Gl.GL_TEXTURE1_ARB)
+        Gl.glActiveTexture(Gl.GL_TEXTURE1)
         Dim texture1 As Texture = GetTexture(1)
 
         If texture1 Is Nothing Then
@@ -775,7 +761,7 @@ enddisplaylist:
         End If
 
         Gl.glDisable(Gl.GL_TEXTURE_2D)
-        Gl.glActiveTextureARB(Gl.GL_TEXTURE0_ARB)
+        Gl.glActiveTexture(Gl.GL_TEXTURE0)
       End If
     End If
   End Sub
@@ -829,8 +815,8 @@ enddisplaylist:
     Dim u As Double = vertex.U
     Dim v As Double = vertex.V
 
-    Dim u0 As Double = u
-    Dim v0 As Double = v
+    Dim u0 As Single = u
+    Dim v0 As Single = v
     GetUv(tileDescriptor0, u0, v0)
 
     If MultiTexCoord Then
@@ -840,14 +826,14 @@ enddisplaylist:
         tileDescriptor1 = texture1.TileDescriptor
       End If
 
-      Dim u1 As Double = u
-      Dim v1 As Double = v
+      Dim u1 As Single = u
+      Dim v1 As Single = v
       GetUv(tileDescriptor1, u1, v1)
 
-      Gl.glMultiTexCoord2f(Gl.GL_TEXTURE0_ARB, u0, v0)
-      Gl.glMultiTexCoord2f(Gl.GL_TEXTURE1_ARB, u1, v1)
+      Gl.glVertexAttrib2f(ShaderManager.Uv0Location, u0, v0)
+      Gl.glVertexAttrib2f(ShaderManager.Uv1Location, u1, v1)
     Else
-      Gl.glTexCoord2f(u0, v0)
+      Gl.glVertexAttrib2f(ShaderManager.Uv0Location, u0, v0)
     End If
   End Sub
 
@@ -884,9 +870,12 @@ enddisplaylist:
 
           If ShaderManager.EnableLighting Then
             If (Not ShaderManager.EnableCombiner) Then Gl.glColor4fv(ShaderManager.PrimColor) Else Gl.glColor3f(1, 1, 1)
+            Gl.glVertexAttrib4f(ShaderManager.ColorLocation, 1, 1, 1, 1)
             Gl.glNormal3b(vertex.R, vertex.G, vertex.B)
+            Gl.glVertexAttrib3f(ShaderManager.NormalLocation, vertex.R / 255.0F, vertex.G / 255.0F, vertex.B / 255.0F)
           Else
             Gl.glColor4ub(vertex.R, vertex.G, vertex.B, vertex.A)
+            Gl.glVertexAttrib4f(ShaderManager.ColorLocation, vertex.R / 255.0F, vertex.G / 255.0F, vertex.B / 255.0F, vertex.A / 255.0F)
           End If
           Gl.glVertex3d(vertex.X, vertex.Y, vertex.Z)
         Next
@@ -935,9 +924,12 @@ enddisplaylist:
 
           If ShaderManager.EnableLighting Then
             If (Not ShaderManager.EnableCombiner) Then Gl.glColor4fv(ShaderManager.PrimColor) Else Gl.glColor3f(1, 1, 1)
+            Gl.glVertexAttrib4f(ShaderManager.ColorLocation, 1, 1, 1, 1)
             Gl.glNormal3b(vertex.R, vertex.G, vertex.B)
+            Gl.glVertexAttrib3f(ShaderManager.NormalLocation, vertex.R / 255.0F, vertex.G / 255.0F, vertex.B / 255.0F)
           Else
             Gl.glColor4ub(vertex.R, vertex.G, vertex.B, vertex.A)
+            Gl.glVertexAttrib4f(ShaderManager.ColorLocation, vertex.R / 255.0F, vertex.G / 255.0F, vertex.B / 255.0F, vertex.A / 255.0F)
           End If
           Gl.glVertex3d(vertex.X, vertex.Y, vertex.Z)
         Next

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 using Tao.OpenGl;
 
@@ -25,6 +26,22 @@ namespace UoT {
     private void ResetColor_(float[] color)
       => this.SetColor_(color, 1, 1, 1, .5f);
 
+    private int activeProgram_ = -1;
+    private int timeLocation_ = -1;
+    private int envColorLocation_ = -1;
+    private int primColorLocation_ = -1;
+    private int shadeLocation_ = -1;
+    private int primColorLodLocation_ = -1;
+    private int texture0Location_ = -1;
+    private int texture1Location_ = -1;
+
+    private int lightingEnabledLocation_ = -1;
+
+    public int Uv0Location { get; private set; } = -1;
+    public int Uv1Location { get; private set; } = -1;
+    public int NormalLocation { get; private set; } = -1;
+    public int ColorLocation { get; private set; } = -1;
+
     public void SetCombine(uint w0, uint w1) {
       if (GLExtensions.GLFragProg) {
         var ShaderCachePos = -1;
@@ -32,8 +49,36 @@ namespace UoT {
 
         foreach (var cachedFragShader in this.FragShaderCache) {
           if (w0 == cachedFragShader.MUXS0 && w1 == cachedFragShader.MUXS1) {
-            Gl.glBindProgramARB(Gl.GL_FRAGMENT_PROGRAM_ARB,
-                                cachedFragShader.FragShader);
+            this.activeProgram_ = (int) cachedFragShader.FragShader;
+
+            Gl.glUseProgram(this.activeProgram_);
+
+            this.timeLocation_ =
+                Gl.glGetUniformLocation(this.activeProgram_, "time");
+            this.envColorLocation_ =
+                Gl.glGetUniformLocation(this.activeProgram_, "EnvColor");
+            this.primColorLocation_ =
+                Gl.glGetUniformLocation(this.activeProgram_, "PrimColor");
+            this.shadeLocation_ =
+                Gl.glGetUniformLocation(this.activeProgram_, "Shade");
+            this.primColorLodLocation_ =
+                Gl.glGetUniformLocation(this.activeProgram_, "PrimColorL");
+            this.texture0Location_ =
+                Gl.glGetUniformLocation(this.activeProgram_, "texture0");
+            this.texture1Location_ =
+                Gl.glGetUniformLocation(this.activeProgram_, "texture1");
+            this.lightingEnabledLocation_ =
+                Gl.glGetUniformLocation(this.activeProgram_, "lightingEnabled");
+
+            this.Uv0Location =
+                Gl.glGetAttribLocation(this.activeProgram_, "in_uv0");
+            this.Uv1Location =
+                Gl.glGetAttribLocation(this.activeProgram_, "in_uv1");
+            this.NormalLocation =
+                Gl.glGetAttribLocation(this.activeProgram_, "in_normal");
+            this.ColorLocation =
+                Gl.glGetAttribLocation(this.activeProgram_, "in_color");
+
             return;
           }
         }
@@ -43,6 +88,7 @@ namespace UoT {
                         ref this.FragShaderCache,
                         this.FragShaderCache.Length);
       } else {
+        Gl.glUseProgram(0);
         this.EnableCombiner = false;
       }
     }
@@ -112,6 +158,46 @@ namespace UoT {
       }
     }
 
+    public void PassValuesToShader() {
+      if (this.EnableCombiner) {
+        // TODO: Fix this.
+        /*Gl.glProgramEnvParameter4fvARB(Gl.GL_FRAGMENT_PROGRAM_ARB,
+                                       0,
+                                       this.EnvironmentColor);
+        Gl.glProgramEnvParameter4fvARB(Gl.GL_FRAGMENT_PROGRAM_ARB,
+                                       1,
+                                       this.PrimColor);
+        Gl.glProgramEnvParameter4fvARB(Gl.GL_FRAGMENT_PROGRAM_ARB,
+                                       3,
+                                       this.BlendColor);
+        Gl.glProgramEnvParameter4fARB(Gl.GL_FRAGMENT_PROGRAM_ARB,
+                                      2,
+                                      this.PrimColorLOD,
+                                      this.PrimColorLOD,
+                                      this.PrimColorLOD,
+                                      this.PrimColorLOD);*/
+
+        Gl.glUniform1f(this.timeLocation_, (float) Time.Current);
+
+        Gl.glUniform4fv(this.envColorLocation_, 1, this.EnvironmentColor);
+        Gl.glUniform4fv(this.primColorLocation_, 1, this.PrimColor);
+        Gl.glUniform4fv(this.shadeLocation_, 1, this.BlendColor);
+        Gl.glUniform1f(this.primColorLodLocation_, this.PrimColorLOD);
+
+        Gl.glUniform1i(this.texture0Location_, 0);
+        Gl.glUniform1i(this.texture1Location_, 1);
+
+        Gl.glUniform1f(this.lightingEnabledLocation_,
+                       this.EnableLighting ? 1 : 0);
+      } else {
+        Gl.glDisable(Gl.GL_FRAGMENT_PROGRAM_ARB);
+        Gl.glEnable(Gl.GL_LIGHTING);
+        Gl.glEnable(Gl.GL_NORMALIZE);
+        this.MultiTexture = false;
+        this.EnableLighting = true;
+      }
+    }
+
     public void PrecompileMUXS_(uint[] MUXLIST1, uint[] MUXLIST2) {
       if (MUXLIST1.Length == MUXLIST2.Length) {
         for (int i = 0, loopTo = MUXLIST1.Length - 1; i <= loopTo; i++) {
@@ -169,129 +255,256 @@ namespace UoT {
       return default;
     }
 
-    private void CreateShaderGLSL_(
-        int Cycles,
-        ShaderCache[] Cache,
-        int CacheEntry) {
-      var ShaderCode = new string[] {
-          "uniform vec4 Color;", "uniform vec4 Alpha;",
-          "void main(in float4 Color, in float4 Alpha)", "{",
-          "gl_fragColor.rgb = ((Color.x + Color.y) * Color.z - Color.w)",
-          "gl_fragColor.a = ((alpha.x + alpha.y) * alpha.z - alpha.w)", "}"
-      };
-      Cache[CacheEntry].FragShader =
-          (uint) Gl.glCreateShaderObjectARB(Gl.GL_FRAGMENT_SHADER);
-      int arglength = ShaderCode.Length;
-      Gl.glShaderSourceARB(Cache[CacheEntry].FragShader,
-                           ShaderCode.Length,
-                           ShaderCode,
-                           ref arglength);
-
-      Array.Resize(ref ShaderCode, arglength);
-    }
-
     private void CreateShader_(
         int Cycles,
         ref ShaderCache[] Cache,
         int CacheEntry) {
-      var ShaderLines =
-          @"!!ARBfp1.0
-            TEMP Texel0;
-            TEMP Texel1;
-            TEMP CCRegister_0;
-            TEMP CCRegister_1;
-            TEMP ACRegister_0;
-            TEMP ACRegister_1;
-            TEMP CCReg;
-            TEMP ACReg;
-            PARAM EnvColor = program.env[0];
-            PARAM PrimColor = program.env[1];
-            PARAM PrimColorL = program.env[2];
-            ATTRIB Shade = fragment.color.primary;
-            OUTPUT FinalColor = result.color;
-            TEX Texel0, fragment.texcoord[0], texture[0], 2D;
-            TEX Texel1, fragment.texcoord[1], texture[1], 2D;";
+      var newLine = '\n';
+
+      var vertexShaderLines =
+          @"#version 130
+
+            in vec3 in_position;
+            in vec2 in_uv0;
+            in vec2 in_uv1;
+            in vec3 in_normal;
+            in vec4 in_color;
+
+            out vec3 position;
+            out vec2 uv0;
+            out vec2 uv1;
+            out vec3 normal;
+            out vec4 color;
+
+            void main() {
+              gl_Position = gl_ModelViewProjectionMatrix * vec4(in_position, 1f);
+
+              position = in_position;
+              uv0 = in_uv0;
+              uv1 = in_uv1;
+              normal = in_normal;
+              color = in_color;
+            }";
+
+      var vertexShader =
+          ShaderCompiler.Compile(Gl.GL_VERTEX_SHADER, vertexShaderLines);
+
+
+      // TODO: Shade might need to be an "in" instead?
+      var fragmentHeaderLines =
+          @"#version 400
+
+            uniform float time;
+            uniform vec4 EnvColor;
+            uniform vec4 PrimColor;
+            uniform vec4 Shade;
+            uniform float PrimColorL;
+
+            uniform float lightingEnabled;
+
+            uniform sampler2D texture0;
+            uniform sampler2D texture1;
+
+            in vec3 position;
+            in vec2 uv0;
+            in vec2 uv1;
+            in vec3 normal;
+            in vec4 color;
+
+            out vec4 outColor;" +
+          newLine;
+
+      // TODO: Allow changing light position.
+      var fragmentMainLines =
+          @"vec4 applyColor(vec4 v_Color) {
+              return v_Color * color;
+            }
+
+            vec4 applyLighting(vec4 v_Color) {
+              vec3 u_Light_position = vec3(1);
+              vec3 u_Ambient_color = vec3(1);
+              vec3 u_Light_color = vec3(1);
+              float u_Shininess = 0;
+
+              vec3 v_Vertex = position;
+
+              // Calculate the ambient color as a percentage of the surface color
+              vec3 ambient_color = u_Ambient_color * vec3(v_Color);
+
+              // Calculate a vector from the fragment location to the light source
+              vec3 to_light = u_Light_position - v_Vertex;
+              to_light = normalize( to_light );
+
+              // The vertex's normal vector is being interpolated across the primitive
+              // which can make it un-normalized. So normalize the vertex's normal vector.
+              vec3 vertex_normal = normalize( normal );
+
+              // Calculate the cosine of the angle between the vertex's normal vector
+              // and the vector going to the light.
+              float cos_angle = dot(vertex_normal, to_light);
+              cos_angle = clamp(cos_angle, 0.0, 1.0);
+
+              // Scale the color of this fragment based on its angle to the light.
+              vec3 diffuse_color = vec3(v_Color) * cos_angle;
+
+              // Calculate the reflection vector
+              vec3 reflection = 2.0 * dot(vertex_normal,to_light) * vertex_normal - to_light;
+
+              // Calculate a vector from the fragment location to the camera.
+              // The camera is at the origin, so negating the vertex location gives the vector
+              vec3 to_camera = -1.0 * v_Vertex;
+
+              // Calculate the cosine of the angle between the reflection vector
+              // and the vector going to the camera.
+              reflection = normalize( reflection );
+              to_camera = normalize( to_camera );
+              cos_angle = dot(reflection, to_camera);
+              cos_angle = clamp(cos_angle, 0.0, 1.0);
+              cos_angle = pow(cos_angle, u_Shininess);
+
+              // The specular color is from the light source, not the object
+              vec3 specular_color;
+              if (cos_angle > 0.0) {
+                specular_color = u_Light_color * cos_angle;
+                diffuse_color = diffuse_color * (1.0 - cos_angle);
+              } else {
+                specular_color = vec3(0.0, 0.0, 0.0);
+              }
+
+              vec3 color = ambient_color + diffuse_color + specular_color;
+
+              //return vec4(color, v_Color.a);
+
+              return v_Color;
+            }
+
+            void main(void) {
+              vec4 CCRegister_0;
+              vec4 CCRegister_1;
+              vec4 ACRegister_0;
+              vec4 ACRegister_1;
+              vec4 CCReg;
+              float ACReg;
+
+              vec4 Texel0 = texture(texture0, uv0);
+              vec4 Texel1 = texture(texture1, uv1);" +
+          newLine;
 
       for (var i = 0; i < Cycles; ++i) {
         // Final color = (ColorA [base] - ColorB) * ColorC + ColorD
-        ShaderLines +=
-            DlShaderManager.MovC_('a', "CCRegister_0.rgb", this.CombArg.cA[i]);
-        ShaderLines +=
-            DlShaderManager.MovC_('b', "CCRegister_1.rgb", this.CombArg.cB[i]);
-        ShaderLines += "SUB CCRegister_0, CCRegister_0, CCRegister_1;" +
-                       Environment.NewLine;
+        fragmentMainLines +=
+            DlShaderManager.MovC_('a',
+                                  "CCRegister_0.rgb",
+                                  this.CombArg.cA[i]);
+        fragmentMainLines +=
+            DlShaderManager.MovC_('b',
+                                  "CCRegister_1.rgb",
+                                  this.CombArg.cB[i]);
+        fragmentMainLines += "CCRegister_0 = CCRegister_0 - CCRegister_1;" +
+                             newLine +
+                             newLine;
 
-        ShaderLines +=
-            DlShaderManager.MovC_('c', "CCRegister_1.rgb", this.CombArg.cC[i]);
-        ShaderLines += "MUL CCRegister_0, CCRegister_0, CCRegister_1;" +
-                       Environment.NewLine;
+        fragmentMainLines +=
+            DlShaderManager.MovC_('c',
+                                  "CCRegister_1.rgb",
+                                  this.CombArg.cC[i]);
+        fragmentMainLines += "CCRegister_0 = CCRegister_0 * CCRegister_1;" +
+                             newLine;
 
-        ShaderLines +=
-            DlShaderManager.MovC_('d', "CCRegister_1.rgb", this.CombArg.cD[i]);
-        ShaderLines += "ADD CCRegister_0, CCRegister_0, CCRegister_1;" +
-                       Environment.NewLine +
-                       Environment.NewLine;
+        fragmentMainLines +=
+            DlShaderManager.MovC_('d',
+                                  "CCRegister_1.rgb",
+                                  this.CombArg.cD[i]);
+        fragmentMainLines += "CCRegister_0 = CCRegister_0 + CCRegister_1;" +
+                             newLine +
+                             newLine;
 
 
-        ShaderLines +=
-            DlShaderManager.MovA_('a', "ACRegister_0.a", this.CombArg.aA[i]);
-        ShaderLines +=
-            DlShaderManager.MovA_('b', "ACRegister_1.a", this.CombArg.aB[i]);
-        ShaderLines += "SUB ACRegister_0.a, ACRegister_0.a, ACRegister_1.a;" +
-                       Environment.NewLine;
+        fragmentMainLines +=
+            DlShaderManager.MovA_('a', "ACRegister_0.a", this.CombArg.aA[i]) +
+            newLine;
+        fragmentMainLines +=
+            DlShaderManager.MovA_('b', "ACRegister_1.a", this.CombArg.aB[i]) +
+            newLine;
+        fragmentMainLines +=
+            "ACRegister_0.a = ACRegister_0.a - ACRegister_1.a;" +
+            newLine;
 
-        ShaderLines +=
-            DlShaderManager.MovA_('c', "ACRegister_1.a", this.CombArg.aC[i]);
-        ShaderLines += "MUL ACRegister_0.a, ACRegister_0.a, ACRegister_1.a;" +
-                       Environment.NewLine;
+        fragmentMainLines +=
+            DlShaderManager.MovA_('c', "ACRegister_1.a", this.CombArg.aC[i]) +
+            newLine;
+        fragmentMainLines +=
+            "ACRegister_0.a = ACRegister_0.a * ACRegister_1.a;" +
+            newLine;
 
-        ShaderLines +=
-            DlShaderManager.MovA_('d', "ACRegister_1.a", this.CombArg.aD[i]);
-        ShaderLines += "ADD ACRegister_0, ACRegister_0, ACRegister_1;" +
-                       Environment.NewLine +
-                       Environment.NewLine;
+        fragmentMainLines +=
+            DlShaderManager.MovA_('d', "ACRegister_1.a", this.CombArg.aD[i]) +
+            newLine;
+        fragmentMainLines += "ACRegister_0 = ACRegister_0 + ACRegister_1;" +
+                             newLine +
+                             newLine;
 
-        ShaderLines += "MOV CCReg.rgb, CCRegister_0;" + Environment.NewLine;
-        ShaderLines += "MOV ACReg.a, ACRegister_0;" + Environment.NewLine;
+        fragmentMainLines += @"CCReg.rgb = CCRegister_0.rgb;
+                               ACReg = ACRegister_0.a;" +
+                             newLine;
       }
 
-      ShaderLines += "MOV CCReg.a, ACReg.a;";
-      ShaderLines += "MOV FinalColor, CCReg;" + Environment.NewLine;
-      ShaderLines += "END" + Environment.NewLine;
+      // TODO: Is this the right shadow calculation?
+      fragmentMainLines +=
+          @"CCReg.a = ACReg;
+            outColor = mix(applyColor(CCReg), applyLighting(CCReg), lightingEnabled);
+          }";
 
-      Gl.glGenProgramsARB(1, out Cache[CacheEntry].FragShader);
-      Gl.glBindProgramARB(Gl.GL_FRAGMENT_PROGRAM_ARB,
-                          Cache[CacheEntry].FragShader);
-      Gl.glProgramStringARB(Gl.GL_FRAGMENT_PROGRAM_ARB,
-                            Gl.GL_PROGRAM_FORMAT_ASCII_ARB,
-                            ShaderLines.Length,
-                            System.Text.Encoding.ASCII.GetBytes(ShaderLines));
+      var fragmentShaderLines = fragmentHeaderLines + fragmentMainLines;
+
+      var fragmentShader =
+          ShaderCompiler.Compile(Gl.GL_FRAGMENT_SHADER, fragmentShaderLines);
+
+      var program = Gl.glCreateProgram();
+      Gl.glAttachShader(program, vertexShader);
+      Gl.glAttachShader(program, fragmentShader);
+      Gl.glLinkProgram(program);
+
+      Gl.glGetProgramiv(program, Gl.GL_LINK_STATUS, out var linked);
+      if (linked == Gl.GL_FALSE) {
+        Gl.glGetProgramiv(program, Gl.GL_INFO_LOG_LENGTH, out var logSize);
+
+        var logBuilder = new StringBuilder(logSize);
+        Gl.glGetProgramInfoLog(program, logSize, out _, logBuilder);
+
+        throw new Exception(Environment.NewLine + logBuilder);
+      }
+
+      Cache[CacheEntry].FragShader = (uint) program;
     }
 
-    private static string MovC_(char letter, string target, uint value) {
-      return $"MOV {target}, {DlShaderManager.CToValue_(letter, value)};" +
+    private static string MovC_(
+        char letter,
+        string target,
+        uint value) {
+      return $"{target} = {DlShaderManager.CToValue_(letter, value)};" +
              Environment.NewLine;
     }
 
     private static string CToValue_(char letter, uint value) {
       switch (value) {
         case (uint) RDP.G_CCMUX_COMBINED:
-          return "CCReg";
+          return "CCReg.rgb";
 
         case (uint) RDP.G_CCMUX_TEXEL0:
-          return "Texel0";
+          return "Texel0.rgb";
 
         case (uint) RDP.G_CCMUX_TEXEL1:
-          return "Texel1";
+          return "Texel1.rgb";
 
         case (uint) RDP.G_CCMUX_PRIMITIVE:
-          return "PrimColor";
+          return "PrimColor.rgb";
 
         case (uint) RDP.G_CCMUX_SHADE:
-          return "Shade";
+          return "Shade.rgb";
 
         case (uint) RDP.G_CCMUX_ENVIRONMENT:
-          return "EnvColor";
+          return "EnvColor.rgb";
       }
 
       switch (letter) {
@@ -300,7 +513,7 @@ namespace UoT {
           switch (value) {
             case (uint) RDP.G_CCMUX_1:
             case (uint) RDP.G_CCMUX_NOISE:
-              return "{1.0,1.0,1.0,1.0}";
+              return "vec3(1)";
           }
           break;
 
@@ -308,52 +521,52 @@ namespace UoT {
           switch (value) {
             case (uint) RDP.G_CCMUX_CENTER:
             case (uint) RDP.G_CCMUX_K4:
-              return "{1.0,1.0,1.0,1.0}";
+              return "vec3(1)";
           }
           break;
 
         case 'c':
           switch (value) {
             case (uint) RDP.G_CCMUX_COMBINED_ALPHA:
-              return "CCReg.a";
+              return "vec3(CCReg.a)";
 
             case (uint) RDP.G_CCMUX_TEXEL0_ALPHA:
-              return "Texel0.a";
+              return "vec3(Texel0.a)";
 
             case (uint) RDP.G_CCMUX_TEXEL1_ALPHA:
-              return "Texel1.a";
+              return "vec3(Texel1.a)";
 
             case (uint) RDP.G_CCMUX_PRIMITIVE_ALPHA:
-              return "PrimColor.a";
+              return "vec3(PrimColor.a)";
 
             case (uint) RDP.G_CCMUX_SHADE_ALPHA:
-              return "Shade.a";
+              return "vec3(Shade.a)";
 
             case (uint) RDP.G_CCMUX_ENV_ALPHA:
-              return "EnvColor.a";
+              return "vec3(EnvColor.a)";
 
             case (uint) RDP.G_CCMUX_PRIM_LOD_FRAC:
-              return "PrimColorL";
+              return "vec3(PrimColorL)";
 
             case (uint) RDP.G_CCMUX_SCALE:
             case (uint) RDP.G_CCMUX_K5:
-              return "{1.0,1.0,1.0,1.0}";
+              return "vec3(1)";
           }
           break;
 
         case 'd':
           switch (value) {
             case (uint) RDP.G_CCMUX_1:
-              return "{1.0,1.0,1.0,1.0}";
+              return "vec3(1)";
           }
           break;
       }
 
-      return "{0.0,0.0,0.0,0.0}";
+      return "vec3(0)";
     }
 
     private static string MovA_(char letter, string target, uint value) {
-      return $"MOV {target}, {DlShaderManager.AToValue_(letter, value)};" +
+      return $"{target} = {DlShaderManager.AToValue_(letter, value)};" +
              Environment.NewLine;
     }
 
@@ -381,19 +594,19 @@ namespace UoT {
             return "ACReg";
 
           case (uint) RDP.G_ACMUX_1:
-            return "{1.0,1.0,1.0,1.0}";
+            return "1";
         }
       } else {
         switch (value) {
-          case (uint)RDP.G_ACMUX_PRIM_LOD_FRAC:
-            return "PrimColorL.a";
+          case (uint) RDP.G_ACMUX_PRIM_LOD_FRAC:
+            return "PrimColorL";
 
-          case (uint)RDP.G_ACMUX_LOD_FRACTION:
-            return "{1.0,1.0,1.0,1.0}";
+          case (uint) RDP.G_ACMUX_LOD_FRACTION:
+            return "1";
         }
       }
 
-      return "{0.0,0.0,0.0,0.0}";
+      return "0";
     }
   }
 }

@@ -208,6 +208,7 @@
     <Compile Include="data\Structs.cs" />
     <Compile Include="displaylist\VertexCache.cs" />
     <Compile Include="gl\GlConstants.cs" />
+    <Compile Include="gl\ShaderCompiler.cs" />
     <Compile Include="hacks\AnimatedTextureHacks.cs" />
     <Compile Include="hacks\EnvironmentColorHacks.cs" />
     <Compile Include="hacks\face\FaceHacks.cs" />
