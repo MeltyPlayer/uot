@@ -9,6 +9,12 @@ namespace UoT {
   ///   OpenGL.
   /// </summary>
   public class DlShaderManager {
+    // TODO: Clean all this up.
+    // TODO: Fix rendering collision boundaries.
+    // TODO: Fix lighting.
+    // TODO: Support uv bounds mapping in the shader (for repeating+clamped textures).
+    // TODO: Add support for reflective surfaces.
+
     private ShaderCache[] FragShaderCache = new ShaderCache[0];
     public float[] PrimColor = new float[4];
     public float PrimColorLOD = 0f;
