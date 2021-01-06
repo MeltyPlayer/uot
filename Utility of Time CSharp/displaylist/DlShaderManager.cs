@@ -194,254 +194,63 @@ namespace UoT {
         int Cycles,
         ref ShaderCache[] Cache,
         int CacheEntry) {
-      string ShaderLines = "!!ARBfp1.0" +
-                           "TEMP Texel0;" +
-                           "TEMP Texel1;" +
-                           "TEMP CCRegister_0;" +
-                           "TEMP CCRegister_1;" +
-                           "TEMP ACRegister_0;" +
-                           "TEMP ACRegister_1;" +
-                           "TEMP CCReg;" +
-                           "TEMP ACReg;" +
-                           "PARAM EnvColor = program.env[0];" +
-                           "PARAM PrimColor = program.env[1];" +
-                           "PARAM PrimColorL = program.env[2];" +
-                           "ATTRIB Shade = fragment.color.primary;" +
-                           "OUTPUT FinalColor = result.color;" +
-                           "TEX Texel0, fragment.texcoord[0], texture[0], 2D;" +
-                           "TEX Texel1, fragment.texcoord[1], texture[1], 2D;";
+      var ShaderLines =
+          @"!!ARBfp1.0
+            TEMP Texel0;
+            TEMP Texel1;
+            TEMP CCRegister_0;
+            TEMP CCRegister_1;
+            TEMP ACRegister_0;
+            TEMP ACRegister_1;
+            TEMP CCReg;
+            TEMP ACReg;
+            PARAM EnvColor = program.env[0];
+            PARAM PrimColor = program.env[1];
+            PARAM PrimColorL = program.env[2];
+            ATTRIB Shade = fragment.color.primary;
+            OUTPUT FinalColor = result.color;
+            TEX Texel0, fragment.texcoord[0], texture[0], 2D;
+            TEX Texel1, fragment.texcoord[1], texture[1], 2D;";
+
       for (var i = 0; i < Cycles; ++i) {
         // Final color = (ColorA [base] - ColorB) * ColorC + ColorD
-        {
-          var withBlock = this.CombArg;
+        ShaderLines +=
+            DlShaderManager.MovC_('a', "CCRegister_0.rgb", this.CombArg.cA[i]);
+        ShaderLines +=
+            DlShaderManager.MovC_('b', "CCRegister_1.rgb", this.CombArg.cB[i]);
+        ShaderLines += "SUB CCRegister_0, CCRegister_0, CCRegister_1;" +
+                       Environment.NewLine;
 
-          ShaderLines +=
-              DlShaderManager.Mov_('a', "CCRegister_0.rgb", withBlock.cA[i]);
-          ShaderLines +=
-              DlShaderManager.Mov_('b', "CCRegister_1.rgb", withBlock.cB[i]);
-          ShaderLines += "SUB CCRegister_0, CCRegister_0, CCRegister_1;" +
-                         Environment.NewLine;
+        ShaderLines +=
+            DlShaderManager.MovC_('c', "CCRegister_1.rgb", this.CombArg.cC[i]);
+        ShaderLines += "MUL CCRegister_0, CCRegister_0, CCRegister_1;" +
+                       Environment.NewLine;
 
-          ShaderLines +=
-              DlShaderManager.Mov_('c', "CCRegister_1.rgb", withBlock.cC[i]);
-          ShaderLines += "MUL CCRegister_0, CCRegister_0, CCRegister_1;" +
-                         Environment.NewLine;
-
-          ShaderLines +=
-              DlShaderManager.Mov_('d', "CCRegister_1.rgb", withBlock.cD[i]);
-          ShaderLines += "ADD CCRegister_0, CCRegister_0, CCRegister_1;" +
-                         Environment.NewLine +
-                         Environment.NewLine;
+        ShaderLines +=
+            DlShaderManager.MovC_('d', "CCRegister_1.rgb", this.CombArg.cD[i]);
+        ShaderLines += "ADD CCRegister_0, CCRegister_0, CCRegister_1;" +
+                       Environment.NewLine +
+                       Environment.NewLine;
 
 
-          switch (withBlock.aA[i]) {
-            case (uint) RDP.G_ACMUX_COMBINED: {
-              ShaderLines += "MOV ACRegister_0.a, ACReg;" + Environment.NewLine;
-              break;
-            }
+        ShaderLines +=
+            DlShaderManager.MovA_('a', "ACRegister_0.a", this.CombArg.aA[i]);
+        ShaderLines +=
+            DlShaderManager.MovA_('b', "ACRegister_1.a", this.CombArg.aB[i]);
+        ShaderLines += "SUB ACRegister_0.a, ACRegister_0.a, ACRegister_1.a;" +
+                       Environment.NewLine;
 
-            case (uint) RDP.G_ACMUX_TEXEL0: {
-              ShaderLines +=
-                  "MOV ACRegister_0.a, Texel0.a;" + Environment.NewLine;
-              break;
-            }
+        ShaderLines +=
+            DlShaderManager.MovA_('c', "ACRegister_1.a", this.CombArg.aC[i]);
+        ShaderLines += "MUL ACRegister_0.a, ACRegister_0.a, ACRegister_1.a;" +
+                       Environment.NewLine;
 
-            case (uint) RDP.G_ACMUX_TEXEL1: {
-              ShaderLines +=
-                  "MOV ACRegister_0.a, Texel1.a;" + Environment.NewLine;
-              break;
-            }
-
-            case (uint) RDP.G_ACMUX_PRIMITIVE: {
-              ShaderLines += "MOV ACRegister_0.a, PrimColor.a;" +
-                             Environment.NewLine;
-              break;
-            }
-
-            case (uint) RDP.G_ACMUX_SHADE: {
-              ShaderLines +=
-                  "MOV ACRegister_0.a, Shade.a;" + Environment.NewLine;
-              break;
-            }
-
-            case (uint) RDP.G_ACMUX_ENVIRONMENT: {
-              ShaderLines += "MOV ACRegister_0.a, EnvColor.a;" +
-                             Environment.NewLine;
-              break;
-            }
-
-            case (uint) RDP.G_ACMUX_1: {
-              ShaderLines += "MOV ACRegister_0.a, {1.0,1.0,1.0,1.0};" +
-                             Environment.NewLine;
-              break;
-            }
-
-            default: {
-              ShaderLines += "MOV ACRegister_0.a, {0.0,0.0,0.0,0.0};" +
-                             Environment.NewLine;
-              break;
-            }
-          }
-
-          switch (withBlock.aB[i]) {
-            case (uint) RDP.G_ACMUX_COMBINED: {
-              ShaderLines += "MOV ACRegister_1.a, ACReg;" + Environment.NewLine;
-              break;
-            }
-
-            case (uint) RDP.G_ACMUX_TEXEL0: {
-              ShaderLines +=
-                  "MOV ACRegister_1.a, Texel0.a;" + Environment.NewLine;
-              break;
-            }
-
-            case (uint) RDP.G_ACMUX_TEXEL1: {
-              ShaderLines +=
-                  "MOV ACRegister_1.a, Texel1.a;" + Environment.NewLine;
-              break;
-            }
-
-            case (uint) RDP.G_ACMUX_PRIMITIVE: {
-              ShaderLines += "MOV ACRegister_1.a, PrimColor.a;" +
-                             Environment.NewLine;
-              break;
-            }
-
-            case (uint) RDP.G_ACMUX_SHADE: {
-              ShaderLines +=
-                  "MOV ACRegister_1.a, Shade.a;" + Environment.NewLine;
-              break;
-            }
-
-            case (uint) RDP.G_ACMUX_ENVIRONMENT: {
-              ShaderLines += "MOV ACRegister_1.a, EnvColor.a;" +
-                             Environment.NewLine;
-              break;
-            }
-
-            case (uint) RDP.G_ACMUX_1: {
-              ShaderLines += "MOV ACRegister_1.a, {1.0,1.0,1.0,1.0};" +
-                             Environment.NewLine;
-              break;
-            }
-
-            default: {
-              ShaderLines += "MOV ACRegister_1.a, {0.0,0.0,0.0,0.0};" +
-                             Environment.NewLine;
-              break;
-            }
-          }
-
-          ShaderLines += "SUB ACRegister_0.a, ACRegister_0.a, ACRegister_1.a;" +
-                         Environment.NewLine;
-          switch (withBlock.aC[i]) {
-            case (uint) RDP.G_ACMUX_LOD_FRACTION: {
-              ShaderLines += "MOV ACRegister_1.a, {1.0,1.0,1.0,1.0};" +
-                             Environment.NewLine;
-              break;
-            }
-
-            case (uint) RDP.G_ACMUX_TEXEL0: {
-              ShaderLines +=
-                  "MOV ACRegister_1.a, Texel0.a;" + Environment.NewLine;
-              break;
-            }
-
-            case (uint) RDP.G_ACMUX_TEXEL1: {
-              ShaderLines +=
-                  "MOV ACRegister_1.a, Texel1.a;" + Environment.NewLine;
-              break;
-            }
-
-            case (uint) RDP.G_ACMUX_PRIMITIVE: {
-              ShaderLines += "MOV ACRegister_1.a, PrimColor.a;" +
-                             Environment.NewLine;
-              break;
-            }
-
-            case (uint) RDP.G_ACMUX_SHADE: {
-              ShaderLines +=
-                  "MOV ACRegister_1.a, Shade.a;" + Environment.NewLine;
-              break;
-            }
-
-            case (uint) RDP.G_ACMUX_ENVIRONMENT: {
-              ShaderLines += "MOV ACRegister_1.a, EnvColor.a;" +
-                             Environment.NewLine;
-              break;
-            }
-
-            case (uint) RDP.G_ACMUX_PRIM_LOD_FRAC: {
-              ShaderLines += "MOV ACRegister_1.a, PrimColorL.a;" +
-                             Environment.NewLine;
-              break;
-            }
-
-            default: {
-              ShaderLines += "MOV ACRegister_1.a, {0.0,0.0,0.0,0.0};" +
-                             Environment.NewLine;
-              break;
-            }
-          }
-
-          ShaderLines += "MUL ACRegister_0.a, ACRegister_0.a, ACRegister_1.a;" +
-                         Environment.NewLine;
-          switch (withBlock.aD[i]) {
-            case (uint) RDP.G_ACMUX_COMBINED: {
-              ShaderLines +=
-                  "MOV ACRegister_1.a, ACReg.a;" + Environment.NewLine;
-              break;
-            }
-
-            case (uint) RDP.G_ACMUX_TEXEL0: {
-              ShaderLines +=
-                  "MOV ACRegister_1.a, Texel0.a;" + Environment.NewLine;
-              break;
-            }
-
-            case (uint) RDP.G_ACMUX_TEXEL1: {
-              ShaderLines +=
-                  "MOV ACRegister_1.a, Texel1.a;" + Environment.NewLine;
-              break;
-            }
-
-            case (uint) RDP.G_ACMUX_PRIMITIVE: {
-              ShaderLines += "MOV ACRegister_1.a, PrimColor.a;" +
-                             Environment.NewLine;
-              break;
-            }
-
-            case (uint) RDP.G_ACMUX_SHADE: {
-              ShaderLines +=
-                  "MOV ACRegister_1.a, Shade.a;" + Environment.NewLine;
-              break;
-            }
-
-            case (uint) RDP.G_ACMUX_ENVIRONMENT: {
-              ShaderLines += "MOV ACRegister_1.a, EnvColor.a;" +
-                             Environment.NewLine;
-              break;
-            }
-
-            case (uint) RDP.G_ACMUX_1: {
-              ShaderLines += "MOV ACRegister_1.a, {1.0,1.0,1.0,1.0};" +
-                             Environment.NewLine;
-              break;
-            }
-
-            default: {
-              ShaderLines += "MOV ACRegister_1.a, {0.0,0.0,0.0,0.0};" +
-                             Environment.NewLine;
-              break;
-            }
-          }
-
-          this.CombArg = withBlock;
-        }
-
+        ShaderLines +=
+            DlShaderManager.MovA_('d', "ACRegister_1.a", this.CombArg.aD[i]);
         ShaderLines += "ADD ACRegister_0, ACRegister_0, ACRegister_1;" +
                        Environment.NewLine +
                        Environment.NewLine;
+
         ShaderLines += "MOV CCReg.rgb, CCRegister_0;" + Environment.NewLine;
         ShaderLines += "MOV ACReg.a, ACRegister_0;" + Environment.NewLine;
       }
@@ -449,6 +258,7 @@ namespace UoT {
       ShaderLines += "MOV CCReg.a, ACReg.a;";
       ShaderLines += "MOV FinalColor, CCReg;" + Environment.NewLine;
       ShaderLines += "END" + Environment.NewLine;
+
       Gl.glGenProgramsARB(1, out Cache[CacheEntry].FragShader);
       Gl.glBindProgramARB(Gl.GL_FRAGMENT_PROGRAM_ARB,
                           Cache[CacheEntry].FragShader);
@@ -458,7 +268,7 @@ namespace UoT {
                             System.Text.Encoding.ASCII.GetBytes(ShaderLines));
     }
 
-    private static string Mov_(char letter, string target, uint value) {
+    private static string MovC_(char letter, string target, uint value) {
       return $"MOV {target}, {DlShaderManager.CToValue_(letter, value)};" +
              Environment.NewLine;
     }
@@ -496,47 +306,91 @@ namespace UoT {
 
         case 'b':
           switch (value) {
-            case (uint)RDP.G_CCMUX_CENTER:
-            case (uint)RDP.G_CCMUX_K4:
+            case (uint) RDP.G_CCMUX_CENTER:
+            case (uint) RDP.G_CCMUX_K4:
               return "{1.0,1.0,1.0,1.0}";
           }
           break;
 
         case 'c':
           switch (value) {
-            case (uint)RDP.G_CCMUX_COMBINED_ALPHA:
+            case (uint) RDP.G_CCMUX_COMBINED_ALPHA:
               return "CCReg.a";
 
-            case (uint)RDP.G_CCMUX_TEXEL0_ALPHA:
+            case (uint) RDP.G_CCMUX_TEXEL0_ALPHA:
               return "Texel0.a";
 
-            case (uint)RDP.G_CCMUX_TEXEL1_ALPHA:
+            case (uint) RDP.G_CCMUX_TEXEL1_ALPHA:
               return "Texel1.a";
 
-            case (uint)RDP.G_CCMUX_PRIMITIVE_ALPHA:
+            case (uint) RDP.G_CCMUX_PRIMITIVE_ALPHA:
               return "PrimColor.a";
 
-            case (uint)RDP.G_CCMUX_SHADE_ALPHA:
+            case (uint) RDP.G_CCMUX_SHADE_ALPHA:
               return "Shade.a";
 
-            case (uint)RDP.G_CCMUX_ENV_ALPHA:
+            case (uint) RDP.G_CCMUX_ENV_ALPHA:
               return "EnvColor.a";
 
-            case (uint)RDP.G_CCMUX_PRIM_LOD_FRAC:
+            case (uint) RDP.G_CCMUX_PRIM_LOD_FRAC:
               return "PrimColorL";
 
-            case (uint)RDP.G_CCMUX_SCALE:
-            case (uint)RDP.G_CCMUX_K5:
+            case (uint) RDP.G_CCMUX_SCALE:
+            case (uint) RDP.G_CCMUX_K5:
               return "{1.0,1.0,1.0,1.0}";
           }
           break;
 
         case 'd':
           switch (value) {
-            case (uint)RDP.G_CCMUX_1:
+            case (uint) RDP.G_CCMUX_1:
               return "{1.0,1.0,1.0,1.0}";
           }
           break;
+      }
+
+      return "{0.0,0.0,0.0,0.0}";
+    }
+
+    private static string MovA_(char letter, string target, uint value) {
+      return $"MOV {target}, {DlShaderManager.AToValue_(letter, value)};" +
+             Environment.NewLine;
+    }
+
+    private static string AToValue_(char letter, uint value) {
+      switch (value) {
+        case (uint) RDP.G_ACMUX_TEXEL0:
+          return "Texel0.a";
+
+        case (uint) RDP.G_ACMUX_TEXEL1:
+          return "Texel1.a";
+
+        case (uint) RDP.G_ACMUX_PRIMITIVE:
+          return "PrimColor.a";
+
+        case (uint) RDP.G_ACMUX_SHADE:
+          return "Shade.a";
+
+        case (uint) RDP.G_ACMUX_ENVIRONMENT:
+          return "EnvColor.a";
+      }
+
+      if (letter == 'a' || letter == 'b' || letter == 'd') {
+        switch (value) {
+          case (uint) RDP.G_ACMUX_COMBINED:
+            return "ACReg";
+
+          case (uint) RDP.G_ACMUX_1:
+            return "{1.0,1.0,1.0,1.0}";
+        }
+      } else {
+        switch (value) {
+          case (uint)RDP.G_ACMUX_PRIM_LOD_FRAC:
+            return "PrimColorL.a";
+
+          case (uint)RDP.G_ACMUX_LOD_FRACTION:
+            return "{1.0,1.0,1.0,1.0}";
+        }
       }
 
       return "{0.0,0.0,0.0,0.0}";
