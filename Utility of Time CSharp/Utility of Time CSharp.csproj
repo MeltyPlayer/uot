@@ -206,6 +206,7 @@
     <Compile Include="common\fuzzy\IFuzzySearchDictionary.cs" />
     <Compile Include="common\fuzzy\SymSpellFuzzySearchDictionary.cs" />
     <Compile Include="data\Structs.cs" />
+    <Compile Include="displaylist\DlShaderGenerator.cs" />
     <Compile Include="displaylist\VertexCache.cs" />
     <Compile Include="gl\GlConstants.cs" />
     <Compile Include="gl\ShaderCompiler.cs" />
