@@ -3,6 +3,13 @@
 namespace UoT.ui.main.viewer {
   public class Camera {
     // TODO: Add x/y/z locking.
+    
+    // TODO: Remove static instance.
+    public static Camera Instance { get; private set; }
+
+    public Camera() {
+      Camera.Instance = this;
+    }
 
     public double X { get; set; }
     public double Y { get; set; }

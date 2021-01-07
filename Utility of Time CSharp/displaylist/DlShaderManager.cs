@@ -3,6 +3,8 @@ using System.Text;
 
 using Tao.OpenGl;
 
+using UoT.ui.main.viewer;
+
 namespace UoT {
   /// <summary>
   ///   Helper class for managing shader-specific fields and passing them into
@@ -14,6 +16,9 @@ namespace UoT {
     // TODO: Fix lighting.
     // TODO: Support uv bounds mapping in the shader (for repeating+clamped textures).
     // TODO: Add support for reflective surfaces.
+    // TODO: Looks like blend/fog colors are totally ignored right now.
+    // TODO: Emulate cycle-dependent blender.
+    // TODO: Support mirroring & clamping textures.
 
     private readonly DlShaderGenerator generator_ = new DlShaderGenerator();
     private ShaderCache[] FragShaderCache = new ShaderCache[0];
@@ -30,6 +35,7 @@ namespace UoT {
      *   textures like Link's tunic.
      */
     public float[] PrimColor = new float[4];
+
     public float PrimColorLOD = 0f;
     public float PrimColorM = 0f;
     public float[] EnvironmentColor = new float[4];
@@ -46,14 +52,16 @@ namespace UoT {
       => this.SetColor_(color, 1, 1, 1, .5f);
 
     private int activeProgram_ = -1;
+    
     private int timeLocation_ = -1;
+    private int cameraPositionLocation_ = -1;
+
     private int envColorLocation_ = -1;
     private int primColorLocation_ = -1;
-    private int shadeLocation_ = -1;
+    private int blendLocation_ = -1;
     private int primColorLodLocation_ = -1;
     private int texture0Location_ = -1;
     private int texture1Location_ = -1;
-
     private int lightingEnabledLocation_ = -1;
 
     public int Uv0Location { get; private set; } = -1;
@@ -74,12 +82,15 @@ namespace UoT {
 
             this.timeLocation_ =
                 Gl.glGetUniformLocation(this.activeProgram_, "time");
+            this.cameraPositionLocation_ =
+                Gl.glGetUniformLocation(this.activeProgram_, "cameraPosition");
+
             this.envColorLocation_ =
                 Gl.glGetUniformLocation(this.activeProgram_, "EnvColor");
             this.primColorLocation_ =
                 Gl.glGetUniformLocation(this.activeProgram_, "PrimColor");
-            this.shadeLocation_ =
-                Gl.glGetUniformLocation(this.activeProgram_, "Shade");
+            this.blendLocation_ =
+                Gl.glGetUniformLocation(this.activeProgram_, "Blend");
             this.primColorLodLocation_ =
                 Gl.glGetUniformLocation(this.activeProgram_, "PrimColorL");
             this.texture0Location_ =
@@ -181,9 +192,12 @@ namespace UoT {
       if (this.EnableCombiner) {
         Gl.glUniform1f(this.timeLocation_, (float) Time.Current);
 
+        var camera = Camera.Instance;
+        Gl.glUniform3f(this.cameraPositionLocation_, (float) camera.X, (float)camera.Y, (float)camera.Z);
+
         Gl.glUniform4fv(this.envColorLocation_, 1, this.EnvironmentColor);
         Gl.glUniform4fv(this.primColorLocation_, 1, this.PrimColor);
-        Gl.glUniform4fv(this.shadeLocation_, 1, this.BlendColor);
+        Gl.glUniform4fv(this.blendLocation_, 1, this.BlendColor);
         Gl.glUniform1f(this.primColorLodLocation_, this.PrimColorLOD);
 
         Gl.glUniform1i(this.texture0Location_, 0);

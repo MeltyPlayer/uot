@@ -3370,12 +3370,12 @@ Public Class MainWin
         Dim xI As Double = 0
         Dim yI As Double = 0
         Dim zI As Double = 0
-        ModelViewMatrixTransformer.Project(xI, yI, zI)
+        ModelViewMatrixTransformer.ProjectVertex(xI, yI, zI)
 
         Dim xF As Double = .x
         Dim yF As Double = .y
         Dim zF As Double = .z
-        ModelViewMatrixTransformer.Project(xF, yF, zF)
+        ModelViewMatrixTransformer.ProjectVertex(xF, yF, zF)
 
         Gl.glDepthRange(0, 0)
         Gl.glLineWidth(9)

@@ -431,7 +431,7 @@ enddisplaylist:
       For j As Integer = 0 To 3
         MatValue(0) = IoUtil.ReadUInt16(TempRSPMatrix.N64Mat, MtxPos + 0)
         MatValue(1) = IoUtil.ReadUInt16(TempRSPMatrix.N64Mat, MtxPos + 32)
-        TempRSPMatrix.OGLMat(i, j) = ((MatValue(0) << 16) Or MatValue(1))*1.0F/65536.0F
+        TempRSPMatrix.OGLMat(i, j) = ((MatValue(0) << 16) Or MatValue(1)) * 1.0F / 65536.0F
         MtxPos += 2
       Next
     Next
@@ -473,6 +473,16 @@ enddisplaylist:
         vertex.G = CMDParams(5)
         vertex.B = CMDParams(6)
         vertex.A = CMDParams(7)
+
+        Dim normalX As Single = ConvertByteToFloat_(vertex.R)
+        Dim normalY As Single = ConvertByteToFloat_(vertex.G)
+        Dim normalZ As Single = ConvertByteToFloat_(vertex.B)
+        ModelViewMatrixTransformer.ProjectNormal(normalX, normalY, normalZ)
+
+        vertex.NormalX = normalX
+        vertex.NormalY = normalY
+        vertex.NormalZ = normalZ
+
       Case &H14
         vertex.U = CShort(IoUtil.ReadUInt16(CMDParams, 4))
         vertex.V = CShort(IoUtil.ReadUInt16(CMDParams, 6))
@@ -480,6 +490,19 @@ enddisplaylist:
 
     vertexCache(i) = vertex
   End Sub
+
+  Private Function ConvertByteToFloat_(value As Byte) As Single
+    Dim total As Byte = 255
+    Dim upper As Byte = 128
+    Dim lower As Byte = total - upper
+
+    If value > lower Then
+      Return (value - lower) / upper
+    Else
+      Return -value / lower
+    End If
+  End Function
+
 
   Private Function GEOMETRYMODE(ByVal w0 As UInt32, ByVal w1 As UInt32)
     Dim MCLEAR As UInt32 = w0
@@ -542,7 +565,7 @@ enddisplaylist:
       Case 3 'rendermode
         If ZMODE_DEC Then
           Gl.glEnable(Gl.GL_POLYGON_OFFSET_FILL)
-          Gl.glPolygonOffset(- 7, - 7)
+          Gl.glPolygonOffset(-7, -7)
         Else
           Gl.glDisable(Gl.GL_POLYGON_OFFSET_FILL)
         End If
@@ -645,7 +668,7 @@ enddisplaylist:
           y = IoUtil.ReadInt16(Data, Offset + 2)
           z = IoUtil.ReadInt16(Data, Offset + 4)
 
-          ModelViewMatrixTransformer.Project(x, y, z)
+          ModelViewMatrixTransformer.ProjectVertex(x, y, z)
 
           u = CShort(IoUtil.ReadUInt16(Data, Offset + 8))
           v = CShort(IoUtil.ReadUInt16(Data, Offset + 10))
@@ -653,6 +676,11 @@ enddisplaylist:
           g = Data(Offset + 13)
           b = Data(Offset + 14)
           a = Data(Offset + 15)
+
+          Dim normalX As Single = ConvertByteToFloat_(r)
+          Dim normalY As Single = ConvertByteToFloat_(g)
+          Dim normalZ As Single = ConvertByteToFloat_(b)
+          ModelViewMatrixTransformer.ProjectNormal(normalX, normalY, normalZ)
 
           Dim newVertex As Vertex
 
@@ -672,6 +700,10 @@ enddisplaylist:
           newVertex.G = g
           newVertex.B = b
           newVertex.A = a
+
+          newVertex.NormalX = normalX
+          newVertex.NormalY = normalY
+          newVertex.NormalZ = normalZ
 
           vertexCache(i2) = newVertex
 
@@ -871,8 +903,8 @@ enddisplaylist:
           If ShaderManager.EnableLighting Then
             If (Not ShaderManager.EnableCombiner) Then Gl.glColor4fv(ShaderManager.PrimColor) Else Gl.glColor3f(1, 1, 1)
             Gl.glVertexAttrib4f(ShaderManager.ColorLocation, 1, 1, 1, 1)
-            Gl.glNormal3b(vertex.R, vertex.G, vertex.B)
-            Gl.glVertexAttrib3f(ShaderManager.NormalLocation, vertex.R / 255.0F, vertex.G / 255.0F, vertex.B / 255.0F)
+            Gl.glNormal3f(vertex.NormalX, vertex.NormalY, vertex.NormalZ)
+            Gl.glVertexAttrib3f(ShaderManager.NormalLocation, vertex.NormalX, vertex.NormalY, vertex.NormalZ)
           Else
             Gl.glColor4ub(vertex.R, vertex.G, vertex.B, vertex.A)
             Gl.glVertexAttrib4f(ShaderManager.ColorLocation, vertex.R / 255.0F, vertex.G / 255.0F, vertex.B / 255.0F, vertex.A / 255.0F)
@@ -925,8 +957,8 @@ enddisplaylist:
           If ShaderManager.EnableLighting Then
             If (Not ShaderManager.EnableCombiner) Then Gl.glColor4fv(ShaderManager.PrimColor) Else Gl.glColor3f(1, 1, 1)
             Gl.glVertexAttrib4f(ShaderManager.ColorLocation, 1, 1, 1, 1)
-            Gl.glNormal3b(vertex.R, vertex.G, vertex.B)
-            Gl.glVertexAttrib3f(ShaderManager.NormalLocation, vertex.R / 255.0F, vertex.G / 255.0F, vertex.B / 255.0F)
+            Gl.glNormal3f(vertex.NormalX, vertex.NormalY, vertex.NormalZ)
+            Gl.glVertexAttrib3f(ShaderManager.NormalLocation, vertex.NormalX, vertex.NormalY, vertex.NormalZ)
           Else
             Gl.glColor4ub(vertex.R, vertex.G, vertex.B, vertex.A)
             Gl.glVertexAttrib4f(ShaderManager.ColorLocation, vertex.R / 255.0F, vertex.G / 255.0F, vertex.B / 255.0F, vertex.A / 255.0F)

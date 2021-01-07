@@ -7,7 +7,12 @@ using Tao.OpenGl;
 
 namespace UoT {
   public interface IModelViewMatrixTransformer {
-    void Project(ref double x, ref double y, ref double z);
+    void ProjectVertex(ref double x, ref double y, ref double z);
+
+    void ProjectNormal(
+        ref double normalX,
+        ref double normalY,
+        ref double normalZ);
 
     IModelViewMatrixTransformer Push(bool isVisible);
     IModelViewMatrixTransformer Pop();
@@ -35,8 +40,17 @@ namespace UoT {
     private static IModelViewMatrixTransformer INSTANCE =
         new SoftwareModelViewMatrixTransformer();
 
-    public static void Project(ref double x, ref double y, ref double z)
-      => ModelViewMatrixTransformer.INSTANCE.Project(ref x, ref y, ref z);
+    public static void ProjectVertex(ref double x, ref double y, ref double z)
+      => ModelViewMatrixTransformer.INSTANCE.ProjectVertex(ref x, ref y, ref z);
+
+    public static void ProjectNormal(
+        ref double normalX,
+        ref double normalY,
+        ref double normalZ)
+      => ModelViewMatrixTransformer.INSTANCE.ProjectNormal(
+          ref normalX,
+          ref normalY,
+          ref normalZ);
 
     public static IModelViewMatrixTransformer Push(bool isVisible)
       => ModelViewMatrixTransformer.INSTANCE.Push(isVisible);
@@ -73,11 +87,24 @@ namespace UoT {
 
 
   public class GlModelViewMatrixTransformer : IModelViewMatrixTransformer {
-    private readonly Matrix<double> buffer_ = Matrix<double>.Build.DenseIdentity(4, 4);
+    private readonly Matrix<double> buffer_ =
+        Matrix<double>.Build.DenseIdentity(4, 4);
 
-    public void Project(ref double x, ref double y, ref double z) {
+    public void ProjectVertex(ref double x, ref double y, ref double z) {
       GlMatrixUtil.Get(this.buffer_);
-      GlMatrixUtil.Project(this.buffer_, ref x, ref y, ref z);
+      GlMatrixUtil.Project(this.buffer_, ref x, ref y, ref z, 1);
+    }
+
+    public void ProjectNormal(
+        ref double normalX,
+        ref double normalY,
+        ref double normalZ) {
+      GlMatrixUtil.Get(this.buffer_);
+      GlMatrixUtil.Project(this.buffer_,
+                           ref normalX,
+                           ref normalY,
+                           ref normalZ,
+                           0);
     }
 
     public IModelViewMatrixTransformer Push(bool isVisible) {
@@ -131,14 +158,20 @@ namespace UoT {
     private LinkedList<MatrixNode> stack_ = new LinkedList<MatrixNode>();
 
     private class MatrixNode {
-      public bool IsVisible {get; set; }
+      public bool IsVisible { get; set; }
       public Matrix<double> Matrix { get; set; }
     }
 
     public SoftwareModelViewMatrixTransformer() => this.Push(false);
 
-    public void Project(ref double x, ref double y, ref double z)
-      => GlMatrixUtil.Project(this.current_, ref x, ref y, ref z);
+    public void ProjectVertex(ref double x, ref double y, ref double z)
+      => GlMatrixUtil.Project(this.current_, ref x, ref y, ref z, 1);
+
+    public void ProjectNormal(
+        ref double normalX,
+        ref double normalY,
+        ref double normalZ)
+      => GlMatrixUtil.Project(this.current_, ref normalX, ref normalY, ref normalZ, 0);
 
     public IModelViewMatrixTransformer Push(bool isVisible) {
       Matrix<double> newMatrix;
@@ -311,19 +344,31 @@ namespace UoT {
         Matrix<double> m,
         ref double x,
         ref double y,
-        ref double z) {
+        ref double z,
+        int inW) {
       var vector = Vector<double>.Build.Dense(4);
       vector[0] = x;
       vector[1] = y;
       vector[2] = z;
-      vector[3] = 1;
+      vector[3] = inW;
 
       var result = m.Multiply(vector);
 
-      var w = result[3];
-      x = result[0] / w;
-      y = result[1] / w;
-      z = result[2] / w;
+      if (inW == 0) {
+        x = result[0];
+        y = result[1];
+        z = result[2];
+
+        var len = Math.Sqrt(x * x + y * y + z * z);
+        x /= len;
+        y /= len;
+        z /= len;
+      } else {
+        var w = result[3];
+        x = result[0] / w;
+        y = result[1] / w;
+        z = result[2] / w;
+      }
     }
   }
 }

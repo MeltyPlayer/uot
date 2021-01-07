@@ -17,6 +17,10 @@ namespace UoT {
     public byte G;
     public byte B;
     public byte A;
+
+    public float NormalX;
+    public float NormalY;
+    public float NormalZ;
   } 
 
   public class VertexCache {
