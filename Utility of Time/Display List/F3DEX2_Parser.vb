@@ -744,7 +744,7 @@ enddisplaylist:
   '''   pending textures. This was previously called in VTX(), but it turns out
   '''   it MUST be called before the TRI() methods to fix textures!
   '''
-  '''   (This idea was shamefully taken from GLideN64.)
+  '''   (This idea was shamelessy taken from GLideN64.)
   ''' </summary>
   Private Sub PrepareDrawTriangle_()
     If ParseMode = Parse.EVERYTHING Then
