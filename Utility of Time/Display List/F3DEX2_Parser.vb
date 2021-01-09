@@ -104,10 +104,10 @@ Public Class F3DEX2_Parser
 
   Public Sub ParseDL(isFirstVisibleLimb As Boolean, ByVal DL As N64DisplayList)
     If HackEnvColor IsNot Nothing Then
-      ShaderManager.SetEnvironmentColor(HackEnvColor(0) / 255.0F,
-                                        HackEnvColor(1) / 255.0F,
-                                        HackEnvColor(2) / 255.0F,
-                                        HackEnvColor(3) / 255.0F)
+      ShaderManager.SetEnvironmentColor(HackEnvColor(0)/255.0F,
+                                        HackEnvColor(1)/255.0F,
+                                        HackEnvColor(2)/255.0F,
+                                        HackEnvColor(3)/255.0F)
     End If
 
     ' TODO: Ingo and Talon don't follow the "first visible limb" rule, it seems
@@ -150,19 +150,19 @@ Public Class F3DEX2_Parser
         If ParseMode = Parse.EVERYTHING Then
           Select Case .CMDParams(0)
             Case F3DZEX.POPMTX
-popmatrix:
+              popmatrix:
               Debug.NotImplemented()
 
             Case RDP.G_SETENVCOLOR
-setenvironmentcolor:
+              setenvironmentcolor:
               ENVCOLOR(.CMDParams)
 
             Case RDP.G_SETPRIMCOLOR
-setprimitivecolor:
+              setprimitivecolor:
               SETPRIMCOLOR(.CMDParams)
 
             Case RDP.G_SETTIMG
-settextureimg:
+              settextureimg:
               Dim paletteMode As Boolean = (DL.Commands(i + 1).CMDParams(0) = RDP.G_RDPTILESYNC)
 
               If DL.Commands(i - 1).CMDParams(0) = RDP.G_SETTILESIZE Then
@@ -183,46 +183,46 @@ settextureimg:
               SETTIMG(.CMDLow, .CMDHigh, paletteMode)
 
             Case RDP.G_LOADTLUT
-loadtexturelut:
+              loadtexturelut:
               LOADTLUT(.CMDHigh)
 
             Case RDP.G_LOADBLOCK
-loadtexblock:
+              loadtexblock:
               LOADBLOCK(.CMDLow, .CMDHigh)
 
             Case RDP.G_LOADTILE
               LOADTILE(.CMDLow, .CMDHigh)
 
             Case RDP.G_SETTILESIZE
-settilesize:
+              settilesize:
               SETTILESIZE(.CMDLow, .CMDHigh)
 
             Case RDP.G_SETTILE
-settile:
+              settile:
               If .CMDParams(1) > 0 Then SETTILE(.CMDLow, .CMDHigh)
 
             Case RDP.G_SETCOMBINE
-setcombiner:
+              setcombiner:
               SETCOMBINE(.CMDLow, .CMDHigh)
 
             Case F3DZEX.TEXTURE
-texture:
+              texture:
               TEXTURE(.CMDLow, .CMDHigh)
 
             Case F3DZEX.GEOMETRYMODE
-geometrymode:
+              geometrymode:
               GEOMETRYMODE(.CMDLow, .CMDHigh)
 
             Case F3DZEX.SETOTHERMODE_H
-setothermodehigh:
+              setothermodehigh:
               SETOTHERMODE_H(.CMDLow, .CMDHigh)
 
             Case F3DZEX.SETOTHERMODE_L
-seothtermodelow:
+              seothtermodelow:
               SETOTHERMODE_L(.CMDLow, .CMDHigh)
 
             Case F3DZEX.MTX
-matrix:
+              matrix:
               ' MTX(.CMDLow, .CMDHigh)
               Dim targetAddress As UInteger = .CMDHigh
               If Not isSubLimb Then
@@ -256,7 +256,7 @@ matrix:
               End If
 
             Case F3DZEX.VTX
-vertex:
+              vertex:
               Dim nextIsNotCulling As Boolean = DL.Commands(i + 1).CMDParams(0) <> F3DZEX.CULLDL
 
               ' TODO: Is this robust?
@@ -278,33 +278,33 @@ vertex:
               End If
 
             Case F3DZEX.MODIFYVTX
-modifyvertex:
+              modifyvertex:
               MODIFYVTX(.CMDParams)
 
             Case F3DZEX.TRI1
-onetriangle:
+              onetriangle:
               TRI1(.CMDParams)
 
             Case F3DZEX.TRI2
-twotriangles:
+              twotriangles:
               TRI2(.CMDParams)
 
             Case F3DZEX.QUAD
-quad:
+              quad:
               Debug.NotImplemented()
 
             Case F3DZEX.DL
-dl:
+              dl:
               ' TODO: Support jumping to another DL.
               ' TODO: Decide to continue or quit depending on pp from w0. 
               Debug.NotImplemented("Tried to jump to display list with address: " & .CMDHigh.ToString("X8"))
 
             Case F3DZEX.BRANCH_Z
-branchz:
+              branchz:
               Debug.NotImplemented()
 
             Case F3DZEX.ENDDL
-enddisplaylist:
+              enddisplaylist:
               Reset()
               Exit Sub
           End Select
@@ -431,7 +431,7 @@ enddisplaylist:
       For j As Integer = 0 To 3
         MatValue(0) = IoUtil.ReadUInt16(TempRSPMatrix.N64Mat, MtxPos + 0)
         MatValue(1) = IoUtil.ReadUInt16(TempRSPMatrix.N64Mat, MtxPos + 32)
-        TempRSPMatrix.OGLMat(i, j) = ((MatValue(0) << 16) Or MatValue(1)) * 1.0F / 65536.0F
+        TempRSPMatrix.OGLMat(i, j) = ((MatValue(0) << 16) Or MatValue(1))*1.0F/65536.0F
         MtxPos += 2
       Next
     Next
@@ -462,7 +462,7 @@ enddisplaylist:
   End Sub
 
   Private Sub MODIFYVTX(ByVal CMDParams() As Byte)
-    Dim i As Integer = (IoUtil.ReadUInt16(CMDParams, 2) And &HFFF) / 2
+    Dim i As Integer = (IoUtil.ReadUInt16(CMDParams, 2) And &HFFF)/2
     Dim Target As Integer = CMDParams(1)
 
     Dim vertex As Vertex = vertexCache(i)
@@ -497,9 +497,9 @@ enddisplaylist:
     Dim lower As Byte = total - upper
 
     If value > lower Then
-      Return (value - lower) / upper
+      Return (value - lower)/upper
     Else
-      Return -value / lower
+      Return - value/lower
     End If
   End Function
 
@@ -511,6 +511,18 @@ enddisplaylist:
     N64GeometryMode = N64GeometryMode And MCLEAR
     N64GeometryMode = N64GeometryMode Or MSET
 
+    If (N64GeometryMode And RDP.G_TEXTURE_GEN) Then
+      ShaderManager.EnableSphericalUv = True
+    Else
+      ShaderManager.EnableSphericalUv = False
+    End If
+
+    If (N64GeometryMode And RDP.G_TEXTURE_GEN_LINEAR) Then
+      ShaderManager.EnableLinearUv = True
+    Else
+      ShaderManager.EnableLinearUv = False
+    End If
+
     If N64GeometryMode And RDP.G_CULL_BOTH Then
       Gl.glEnable(Gl.GL_CULL_FACE)
       If N64GeometryMode And RDP.G_CULL_BACK Then
@@ -521,6 +533,7 @@ enddisplaylist:
     Else
       Gl.glDisable(Gl.GL_CULL_FACE)
     End If
+
     If ParseMode = Parse.EVERYTHING Then
       If N64GeometryMode And RDP.G_LIGHTING Then
         ShaderManager.EnableLighting = True
@@ -565,7 +578,7 @@ enddisplaylist:
       Case 3 'rendermode
         If ZMODE_DEC Then
           Gl.glEnable(Gl.GL_POLYGON_OFFSET_FILL)
-          Gl.glPolygonOffset(-7, -7)
+          Gl.glPolygonOffset(- 7, - 7)
         Else
           Gl.glDisable(Gl.GL_POLYGON_OFFSET_FILL)
         End If
@@ -653,9 +666,9 @@ enddisplaylist:
                                    ByVal Offset As Integer, ByVal n0 As Integer, ByVal v0 As Integer)
     Select Case DataSource
       Case RamBanks.CurrentBank
-        Dim x As Short
-        Dim y As Short
-        Dim z As Short
+        Dim x As Double
+        Dim y As Double
+        Dim z As Double
 
         Dim u As Short
         Dim v As Short
@@ -708,18 +721,18 @@ enddisplaylist:
           vertexCache(i2) = newVertex
 
           DlModel.UpdateVertex(i2, Function(vertex) As VertexParams
-                                     vertex.X = x
-                                     vertex.Y = y
-                                     vertex.Z = z
+            vertex.X = x
+            vertex.Y = y
+            vertex.Z = z
 
-                                     vertex.U = u
-                                     vertex.V = v
+            vertex.U = u
+            vertex.V = v
 
-                                     vertex.R = r
-                                     vertex.G = g
-                                     vertex.B = b
-                                     vertex.A = a
-                                   End Function)
+            vertex.R = r
+            vertex.G = g
+            vertex.B = b
+            vertex.A = a
+          End Function)
           Offset += 16
         Next
       Case Else
@@ -745,9 +758,9 @@ enddisplaylist:
       Gl.glActiveTexture(Gl.GL_TEXTURE0)
 
       Dim texture0 As Texture = GetTexture(0)
+      Dim tileDescriptor0 As TileDescriptor = GetSelectedTileDescriptor(0)
 
       If texture0 Is Nothing Then
-        Dim tileDescriptor0 As TileDescriptor = GetSelectedTileDescriptor(0)
         Dim targetBuffer0 As IBank = RamBanks.GetBankByIndex(tileDescriptor0.ImageBank)
         If targetBuffer0 IsNot Nothing Then
           LoadTex(targetBuffer0, 0)
@@ -759,6 +772,17 @@ enddisplaylist:
 
       If texture0 IsNot Nothing Then
         texture0.Bind()
+
+        ShaderManager.TextureParams0.ClampedU = texture0.GlClampedS
+        ShaderManager.TextureParams0.ClampedV = texture0.GlClampedT
+
+        ShaderManager.TextureParams0.MirroredU = texture0.GlMirroredS
+        ShaderManager.TextureParams0.MirroredV = texture0.GlMirroredT
+
+        ShaderManager.TextureParams0.MaxU = (tileDescriptor0.LRS - tileDescriptor0.ULS + 1) / texture0.TileDescriptor.LoadWidth
+        ShaderManager.TextureParams0.MaxV = (tileDescriptor0.LRT - tileDescriptor0.ULT + 1) / texture0.TileDescriptor.LoadHeight
+
+        ShaderManager.TextureParams0.Bind()
       Else
         Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2)
       End If
@@ -766,9 +790,9 @@ enddisplaylist:
       If ShaderManager.MultiTexture Then
         Gl.glActiveTexture(Gl.GL_TEXTURE1)
         Dim texture1 As Texture = GetTexture(1)
+        Dim tileDescriptor1 As TileDescriptor = GetSelectedTileDescriptor(1)
 
         If texture1 Is Nothing Then
-          Dim tileDescriptor1 As TileDescriptor = GetSelectedTileDescriptor(1)
           Select Case tileDescriptor1.ImageBank
             Case RamBanks.CurrentBank
               LoadTex(RamBanks.ZFileBuffer, 1)
@@ -788,6 +812,17 @@ enddisplaylist:
 
         If texture1 IsNot Nothing Then
           texture1.Bind()
+
+          ShaderManager.TextureParams1.ClampedU = texture1.GlClampedS
+          ShaderManager.TextureParams1.ClampedV = texture1.GlClampedT
+
+          ShaderManager.TextureParams1.MirroredU = texture1.GlMirroredS
+          ShaderManager.TextureParams1.MirroredV = texture1.GlMirroredT
+
+          ShaderManager.TextureParams1.MaxU = (tileDescriptor1.LRS - tileDescriptor1.ULS + 1) / texture1.TileDescriptor.LoadWidth
+          ShaderManager.TextureParams1.MaxV = (tileDescriptor1.LRT - tileDescriptor1.ULT + 1) / texture1.TileDescriptor.LoadHeight
+
+          ShaderManager.TextureParams1.Bind()
         Else
           Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2)
         End If
@@ -870,8 +905,12 @@ enddisplaylist:
   End Sub
 
   Private Sub GetUv(tileDescriptor As TileDescriptor, ByRef u As Double, ByRef v As Double)
-    u = u*tileDescriptor.TextureWRatio*tileDescriptor.UScaling
-    v = v*tileDescriptor.TextureHRatio*tileDescriptor.VScaling +
+    'u = u*tileDescriptor.TextureWRatio*tileDescriptor.UScaling
+    'v = v*tileDescriptor.TextureHRatio*tileDescriptor.VScaling +
+    '    AnimatedTextureHacks.GetVOffsetForTexture(tileDescriptor)
+
+    u = u * tileDescriptor.TextureWRatio
+    v = v * tileDescriptor.TextureHRatio +
         AnimatedTextureHacks.GetVOffsetForTexture(tileDescriptor)
   End Sub
 
@@ -907,7 +946,11 @@ enddisplaylist:
             Gl.glVertexAttrib3f(ShaderManager.NormalLocation, vertex.NormalX, vertex.NormalY, vertex.NormalZ)
           Else
             Gl.glColor4ub(vertex.R, vertex.G, vertex.B, vertex.A)
-            Gl.glVertexAttrib4f(ShaderManager.ColorLocation, vertex.R / 255.0F, vertex.G / 255.0F, vertex.B / 255.0F, vertex.A / 255.0F)
+            Gl.glVertexAttrib4f(ShaderManager.ColorLocation, vertex.R / 255.0F, vertex.G / 255.0F, vertex.B / 255.0F,
+                                vertex.A / 255.0F)
+            ' Normal is invalid, but we have to pass a value in to prevent NaNs
+            ' when normalizing in the shader.
+            Gl.glVertexAttrib3f(ShaderManager.NormalLocation, 1, 1, 1)
           End If
           Gl.glVertex3d(vertex.X, vertex.Y, vertex.Z)
         Next
@@ -961,7 +1004,11 @@ enddisplaylist:
             Gl.glVertexAttrib3f(ShaderManager.NormalLocation, vertex.NormalX, vertex.NormalY, vertex.NormalZ)
           Else
             Gl.glColor4ub(vertex.R, vertex.G, vertex.B, vertex.A)
-            Gl.glVertexAttrib4f(ShaderManager.ColorLocation, vertex.R / 255.0F, vertex.G / 255.0F, vertex.B / 255.0F, vertex.A / 255.0F)
+            Gl.glVertexAttrib4f(ShaderManager.ColorLocation, vertex.R / 255.0F, vertex.G / 255.0F, vertex.B / 255.0F,
+                                vertex.A / 255.0F)
+            ' Normal is invalid, but we have to pass a value in to prevent NaNs
+            ' when normalizing in the shader.
+            Gl.glVertexAttrib3f(ShaderManager.NormalLocation, 1, 1, 1)
           End If
           Gl.glVertex3d(vertex.X, vertex.Y, vertex.Z)
         Next

@@ -1,14 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace UoT {
+﻿namespace UoT {
   public struct Vertex {
     public bool Populated;
 
-    public short X;
-    public short Y;
-    public short Z;
+    public double X;
+    public double Y;
+    public double Z;
 
     public short U;
     public short V;

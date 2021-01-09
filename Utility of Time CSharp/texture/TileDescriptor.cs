@@ -51,11 +51,6 @@
     public uint OGLTexObj;
     public Color4UByte[] Palette32;
 
-    // UV Scaling, used to scale the UVs set by the model. One example of when
-    // these are used is when a texture is both repeated AND clamped.
-    public double UScaling;
-    public double VScaling;
-
     public long Uuid => this.Address;
   }
 }

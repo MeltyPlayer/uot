@@ -30,6 +30,17 @@ namespace UoT {
       }
     }
 
+    public bool TileMirroredS
+      => (this.TileDescriptor.CMS & (int) RDP.G_TX_MIRROR) != 0;
+    public bool TileMirroredT
+      => (this.TileDescriptor.CMT & (int) RDP.G_TX_MIRROR) != 0;
+
+    public bool GlMirroredS { get; set; }
+    public bool GlMirroredT { get; set; }
+
+    public bool GlClampedS { get; set; }
+    public bool GlClampedT { get; set; }
+
     // OpenGL-specific logic.
     public int GlId => this.TileDescriptor.ID;
 

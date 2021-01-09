@@ -47,27 +47,76 @@ namespace UoT {
     public bool MultiTexture = false;
     public bool EnableCombiner = false;
     public bool EnableLighting = false;
+    public bool EnableSphericalUv = false;
+    public bool EnableLinearUv = false;
 
     private void ResetColor_(float[] color)
       => this.SetColor_(color, 1, 1, 1, .5f);
 
     private int activeProgram_ = -1;
-    
+
     private int timeLocation_ = -1;
     private int cameraPositionLocation_ = -1;
+
+    private int lightingEnabledLocation_ = -1;
+    private int sphericalUvEnabledLocation_ = -1;
+    private int linearUvEnabledLocation_ = -1;
+
+    private int texture0Location_ = -1;
+    private int texture1Location_ = -1;
+
+    public TextureParams TextureParams0 { get; } = new TextureParams();
+    public TextureParams TextureParams1 { get; } = new TextureParams();
 
     private int envColorLocation_ = -1;
     private int primColorLocation_ = -1;
     private int blendLocation_ = -1;
     private int primColorLodLocation_ = -1;
-    private int texture0Location_ = -1;
-    private int texture1Location_ = -1;
-    private int lightingEnabledLocation_ = -1;
 
     public int Uv0Location { get; private set; } = -1;
     public int Uv1Location { get; private set; } = -1;
     public int NormalLocation { get; private set; } = -1;
     public int ColorLocation { get; private set; } = -1;
+
+    public class TextureParams {
+      public bool ClampedU { get; set; }
+      public bool ClampedV { get; set; }
+
+      public bool MirroredU { get; set; }
+      public bool MirroredV { get; set; }
+
+      public float MinU { get; set; }
+      public float MinV { get; set; }
+      public float MaxU { get; set; }
+      public float MaxV { get; set; }
+
+      public int ClampedLocation { get; set; } = -1;
+      public int MirroredLocation { get; set; } = -1;
+      public int MinUvLocation { get; set; } = -1;
+      public int MaxUvLocation { get; set; } = -1;
+
+      public void GetLocations(int program, string name) {
+        this.ClampedLocation =
+            Gl.glGetUniformLocation(program, name + ".clamped");
+        this.MirroredLocation =
+            Gl.glGetUniformLocation(program, name + ".mirrored");
+        this.MinUvLocation =
+            Gl.glGetUniformLocation(program, name + ".minUv");
+        this.MaxUvLocation =
+            Gl.glGetUniformLocation(program, name + ".maxUv");
+      }
+
+      public void Bind() {
+        Gl.glUniform2f(this.ClampedLocation,
+                       this.ClampedU ? 1 : 0,
+                       this.ClampedV ? 1 : 0);
+        Gl.glUniform2f(this.MirroredLocation,
+                       this.MirroredU ? 1 : 0,
+                       this.MirroredV ? 1 : 0);
+        Gl.glUniform2f(this.MinUvLocation, this.MinU, this.MinV);
+        Gl.glUniform2f(this.MaxUvLocation, this.MaxU, this.MaxV);
+      }
+    }
 
     public void SetCombine(uint w0, uint w1) {
       if (GLExtensions.GLFragProg) {
@@ -85,6 +134,27 @@ namespace UoT {
             this.cameraPositionLocation_ =
                 Gl.glGetUniformLocation(this.activeProgram_, "cameraPosition");
 
+            this.lightingEnabledLocation_ =
+                Gl.glGetUniformLocation(this.activeProgram_,
+                                        "u_lightingEnabled");
+            this.sphericalUvEnabledLocation_ =
+                Gl.glGetUniformLocation(this.activeProgram_,
+                                        "u_sphericalUvEnabled");
+            this.linearUvEnabledLocation_ =
+                Gl.glGetUniformLocation(this.activeProgram_,
+                                        "u_linearUvEnabled");
+
+
+            this.texture0Location_ =
+                Gl.glGetUniformLocation(this.activeProgram_, "texture0");
+            this.texture1Location_ =
+                Gl.glGetUniformLocation(this.activeProgram_, "texture1");
+
+            this.TextureParams0.GetLocations(this.activeProgram_,
+                                             "textureParams0");
+            this.TextureParams1.GetLocations(this.activeProgram_,
+                                             "textureParams1");
+
             this.envColorLocation_ =
                 Gl.glGetUniformLocation(this.activeProgram_, "EnvColor");
             this.primColorLocation_ =
@@ -93,12 +163,7 @@ namespace UoT {
                 Gl.glGetUniformLocation(this.activeProgram_, "Blend");
             this.primColorLodLocation_ =
                 Gl.glGetUniformLocation(this.activeProgram_, "PrimColorL");
-            this.texture0Location_ =
-                Gl.glGetUniformLocation(this.activeProgram_, "texture0");
-            this.texture1Location_ =
-                Gl.glGetUniformLocation(this.activeProgram_, "texture1");
-            this.lightingEnabledLocation_ =
-                Gl.glGetUniformLocation(this.activeProgram_, "lightingEnabled");
+
 
             this.Uv0Location =
                 Gl.glGetAttribLocation(this.activeProgram_, "in_uv0");
@@ -191,9 +256,18 @@ namespace UoT {
     public void PassValuesToShader() {
       if (this.EnableCombiner) {
         Gl.glUniform1f(this.timeLocation_, (float) Time.Current);
-
         var camera = Camera.Instance;
-        Gl.glUniform3f(this.cameraPositionLocation_, (float) camera.X, (float)camera.Y, (float)camera.Z);
+        Gl.glUniform3f(this.cameraPositionLocation_,
+                       (float) camera.X,
+                       (float) camera.Y,
+                       (float) camera.Z);
+
+        Gl.glUniform1f(this.lightingEnabledLocation_,
+                       this.EnableLighting ? 1 : 0);
+        Gl.glUniform1f(this.sphericalUvEnabledLocation_,
+                       this.EnableSphericalUv ? 1 : 0);
+        Gl.glUniform1f(this.linearUvEnabledLocation_,
+                       this.EnableLinearUv ? 1 : 0);
 
         Gl.glUniform4fv(this.envColorLocation_, 1, this.EnvironmentColor);
         Gl.glUniform4fv(this.primColorLocation_, 1, this.PrimColor);
@@ -202,9 +276,8 @@ namespace UoT {
 
         Gl.glUniform1i(this.texture0Location_, 0);
         Gl.glUniform1i(this.texture1Location_, 1);
-
-        Gl.glUniform1f(this.lightingEnabledLocation_,
-                       this.EnableLighting ? 1 : 0);
+        this.TextureParams0.Bind();
+        this.TextureParams1.Bind();
       } else {
         Gl.glDisable(Gl.GL_FRAGMENT_PROGRAM_ARB);
         Gl.glEnable(Gl.GL_LIGHTING);

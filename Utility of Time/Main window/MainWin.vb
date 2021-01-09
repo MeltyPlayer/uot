@@ -3301,6 +3301,9 @@ Public Class MainWin
     Else
       DLParser.ParseMode = DLParser.Parse.EVERYTHING
     End If
+
+    ModelViewMatrixTransformer.Push(True)
+
     If Not DlManager.HasLimbs Then
       For i As Integer = 0 To DLists.Length - 1
         DrawDL(i, i, SelectionMode)
@@ -3308,7 +3311,6 @@ Public Class MainWin
     Else
       CurrLimb = 0
 
-      ModelViewMatrixTransformer.Push(True)
       If AnimationEntries IsNot Nothing Then
         With AnimationEntries(CurrAnimation)
           Dim frameIndex As Integer = Math.Floor(AnimationPlaybackPanel.Frame)
@@ -3342,8 +3344,8 @@ Public Class MainWin
       Dim visibleLimbIndex As UInteger = 0
       DrawJoint(visibleLimbIndex, 0)
 
-      ModelViewMatrixTransformer.Pop()
     End If
+    ModelViewMatrixTransformer.Pop()
 
     DlModel.IsComplete = True
   End Sub
