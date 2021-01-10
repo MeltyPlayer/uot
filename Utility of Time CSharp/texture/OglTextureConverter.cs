@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using Tao.OpenGl;
 
@@ -17,12 +18,22 @@ namespace UoT {
       var width = tileDescriptor.LoadWidth;
       var height = tileDescriptor.LoadHeight;
 
+      // Clamp defines whether to clamp each uv component. Unlike standard
+      // OpenGL, this can be combined with wrapping/mirroring so the texture
+      // wraps a few times before actually clamping.
       var clampS = (tileDescriptor.CMS & (int) RDP.G_TX_CLAMP) != 0;
-      var mirrorS = (tileDescriptor.CMS & (int) RDP.G_TX_MIRROR) != 0;
-
       var clampT = (tileDescriptor.CMT & (int) RDP.G_TX_CLAMP) != 0;
+
+      // Mirror defines whether to mirror each uv component when wrapping. That
+      // is, values will range between [0, 1], then values beyond will go from
+      // [1, 0], then back to [0, 1], and so on. If this is false, values will
+      // always wrap between [0, 1].
+      var mirrorS = (tileDescriptor.CMS & (int) RDP.G_TX_MIRROR) != 0;
       var mirrorT = (tileDescriptor.CMT & (int) RDP.G_TX_MIRROR) != 0;
 
+      // These following values represent the true bounds of accessible uv
+      // space for clamping. In standard OpenGL, uvs will always be clamped
+      // between [0, 1], but in the N64 hardware these bounds can be altered.
       var sSize =
           clampS ? (tileDescriptor.LRS - tileDescriptor.ULS + 1) : width;
       var tSize =

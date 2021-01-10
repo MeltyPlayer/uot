@@ -3,10 +3,10 @@
     public static double GetVOffsetForTexture(TileDescriptor tileDescriptor) {
       // TODO: Rewrite this to switch between different composed classes for
       // different handlers.
-      var uuid = tileDescriptor.Uuid;
+      var address = tileDescriptor.Address;
 
       // Water in the river to Zora's Domain.
-      if (uuid == 0x02008D58) {
+      if (address == 0x02008D58) {
         return -Time.CurrentFrac;
       }
 
