@@ -1,5 +1,5 @@
 ﻿namespace UoT {
-  public class LinkFaceHack : IFaceHack {
+  public class LinkIndirectTextureHack : IIndirectTextureHack {
     // TODO: Support different eyes/mouths depending on animation frame.
 
     public uint MapTextureAddress(uint originalAddress) {

@@ -212,10 +212,11 @@
     <Compile Include="gl\ShaderCompiler.cs" />
     <Compile Include="hacks\AnimatedTextureHacks.cs" />
     <Compile Include="hacks\EnvironmentColorHacks.cs" />
-    <Compile Include="hacks\face\FaceHacks.cs" />
-    <Compile Include="hacks\face\ZeldaAdultFaceHack.cs" />
-    <Compile Include="hacks\face\ZeldaChildFaceHack.cs" />
-    <Compile Include="hacks\face\LinkFaceHack.cs" />
+    <Compile Include="hacks\face\IndirectTextureHacks.cs" />
+    <Compile Include="hacks\face\TektiteIndirectTextureHack.cs" />
+    <Compile Include="hacks\face\ZeldaAdultIndirectTextureHack.cs" />
+    <Compile Include="hacks\face\ZeldaChildIndirectTextureHack.cs" />
+    <Compile Include="hacks\face\LinkIndirectTextureHack.cs" />
     <Compile Include="memory\files\ZFiles.cs" />
     <Compile Include="memory\files\ZFileTypes.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

@@ -1,5 +1,5 @@
 ﻿namespace UoT {
-  public class ZeldaChildFaceHack : IFaceHack {
+  public class ZeldaChildIndirectTextureHack : IIndirectTextureHack {
     // TODO: Support different eyes/mouths depending on animation frame.
     // TODO: Where are the rest of the expressions?
 
