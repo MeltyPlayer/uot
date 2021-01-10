@@ -1554,7 +1554,7 @@ Public Class MainWin
     Me.GroupBox7.Controls.Add(Me.CommandsListbox)
     Me.GroupBox7.Location = New System.Drawing.Point(10, 176)
     Me.GroupBox7.Name = "GroupBox7"
-    Me.GroupBox7.Size = New System.Drawing.Size(206, 469)
+    Me.GroupBox7.Size = New System.Drawing.Size(206, 358)
     Me.GroupBox7.TabIndex = 69
     Me.GroupBox7.TabStop = False
     Me.GroupBox7.Text = "Commands"
@@ -1563,7 +1563,7 @@ Public Class MainWin
     '
     Me.WholeCommandTxt.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.WholeCommandTxt.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-    Me.WholeCommandTxt.Location = New System.Drawing.Point(7, 432)
+    Me.WholeCommandTxt.Location = New System.Drawing.Point(7, 321)
     Me.WholeCommandTxt.MaxLength = 32
     Me.WholeCommandTxt.Name = "WholeCommandTxt"
     Me.WholeCommandTxt.Size = New System.Drawing.Size(107, 20)
@@ -1573,7 +1573,7 @@ Public Class MainWin
     '
     Me.Label3.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.Label3.AutoSize = True
-    Me.Label3.Location = New System.Drawing.Point(3, 349)
+    Me.Label3.Location = New System.Drawing.Point(3, 238)
     Me.Label3.Name = "Label3"
     Me.Label3.Size = New System.Drawing.Size(47, 16)
     Me.Label3.TabIndex = 69
@@ -1582,7 +1582,7 @@ Public Class MainWin
     'Button8
     '
     Me.Button8.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.Button8.Location = New System.Drawing.Point(57, 345)
+    Me.Button8.Location = New System.Drawing.Point(57, 234)
     Me.Button8.Name = "Button8"
     Me.Button8.Size = New System.Drawing.Size(67, 23)
     Me.Button8.TabIndex = 68
@@ -1593,7 +1593,7 @@ Public Class MainWin
     '
     Me.HiwordText.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.HiwordText.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-    Me.HiwordText.Location = New System.Drawing.Point(109, 404)
+    Me.HiwordText.Location = New System.Drawing.Point(109, 293)
     Me.HiwordText.MaxLength = 8
     Me.HiwordText.Name = "HiwordText"
     Me.HiwordText.Size = New System.Drawing.Size(90, 20)
@@ -1602,7 +1602,7 @@ Public Class MainWin
     'Button1
     '
     Me.Button1.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.Button1.Location = New System.Drawing.Point(130, 345)
+    Me.Button1.Location = New System.Drawing.Point(130, 234)
     Me.Button1.Name = "Button1"
     Me.Button1.Size = New System.Drawing.Size(67, 23)
     Me.Button1.TabIndex = 67
@@ -1613,7 +1613,7 @@ Public Class MainWin
     '
     Me.LowordText.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.LowordText.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-    Me.LowordText.Location = New System.Drawing.Point(37, 404)
+    Me.LowordText.Location = New System.Drawing.Point(37, 293)
     Me.LowordText.MaxLength = 6
     Me.LowordText.Name = "LowordText"
     Me.LowordText.Size = New System.Drawing.Size(66, 20)
@@ -1623,7 +1623,7 @@ Public Class MainWin
     '
     Me.CommandCodeText.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.CommandCodeText.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-    Me.CommandCodeText.Location = New System.Drawing.Point(7, 404)
+    Me.CommandCodeText.Location = New System.Drawing.Point(7, 293)
     Me.CommandCodeText.MaxLength = 2
     Me.CommandCodeText.Name = "CommandCodeText"
     Me.CommandCodeText.Size = New System.Drawing.Size(24, 20)
@@ -1634,7 +1634,7 @@ Public Class MainWin
     Me.CommandJumpBox.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.CommandJumpBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
     Me.CommandJumpBox.FormattingEnabled = True
-    Me.CommandJumpBox.Location = New System.Drawing.Point(6, 315)
+    Me.CommandJumpBox.Location = New System.Drawing.Point(6, 204)
     Me.CommandJumpBox.Name = "CommandJumpBox"
     Me.CommandJumpBox.Size = New System.Drawing.Size(192, 24)
     Me.CommandJumpBox.TabIndex = 66
@@ -1643,7 +1643,7 @@ Public Class MainWin
     '
     Me.Label26.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.Label26.AutoSize = True
-    Me.Label26.Location = New System.Drawing.Point(132, 385)
+    Me.Label26.Location = New System.Drawing.Point(132, 274)
     Me.Label26.Name = "Label26"
     Me.Label26.Size = New System.Drawing.Size(44, 16)
     Me.Label26.TabIndex = 65
@@ -1653,7 +1653,7 @@ Public Class MainWin
     '
     Me.Label25.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.Label25.AutoSize = True
-    Me.Label25.Location = New System.Drawing.Point(48, 385)
+    Me.Label25.Location = New System.Drawing.Point(48, 274)
     Me.Label25.Name = "Label25"
     Me.Label25.Size = New System.Drawing.Size(44, 16)
     Me.Label25.TabIndex = 64
@@ -1663,7 +1663,7 @@ Public Class MainWin
     '
     Me.Label9.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.Label9.AutoSize = True
-    Me.Label9.Location = New System.Drawing.Point(5, 385)
+    Me.Label9.Location = New System.Drawing.Point(5, 274)
     Me.Label9.Name = "Label9"
     Me.Label9.Size = New System.Drawing.Size(29, 16)
     Me.Label9.TabIndex = 63
@@ -1672,7 +1672,7 @@ Public Class MainWin
     'Button4
     '
     Me.Button4.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.Button4.Location = New System.Drawing.Point(127, 430)
+    Me.Button4.Location = New System.Drawing.Point(127, 319)
     Me.Button4.Name = "Button4"
     Me.Button4.Size = New System.Drawing.Size(70, 23)
     Me.Button4.TabIndex = 62
@@ -1688,7 +1688,7 @@ Public Class MainWin
     Me.CommandsListbox.ItemHeight = 16
     Me.CommandsListbox.Location = New System.Drawing.Point(6, 22)
     Me.CommandsListbox.Name = "CommandsListbox"
-    Me.CommandsListbox.Size = New System.Drawing.Size(192, 452)
+    Me.CommandsListbox.Size = New System.Drawing.Size(192, 180)
     Me.CommandsListbox.TabIndex = 61
     '
     'DLEditorContextMenu
@@ -4381,8 +4381,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
 
   Private Function FindAllDLs(Buffer As IBank, ByRef DL() As N64DisplayList)
     Dim DLCnt As Integer = 0
-    DListSelection.Items.Clear()
-    DListSelection.Items.Add("Render all")
     For i As Integer = 0 To Buffer.Count - 8 Step 8
       If Buffer(i) = &HE7 And Buffer(i + 1) = 0 And Buffer(i + 2) = 0 _
          And Buffer(i + 3) = 0 And Buffer(i + 4) = 0 And Buffer(i + 5) = 0 _
@@ -4401,7 +4399,10 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       AnimationEntries = Nothing
       ReDim LimbEntries(-1)
       AnimationPlaybackPanel.Reset()
+
       DListSelection.Items.Clear()
+      DListSelection.Items.Add("Render all")
+
       AnimationList.Items.Clear()
       Select Case LoadedDataType
         Case FileTypes.MAP
