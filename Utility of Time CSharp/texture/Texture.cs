@@ -18,13 +18,13 @@ namespace UoT {
       if (save) {
         var format = tileDescriptor.ColorFormat;
         var size = tileDescriptor.BitSize;
-        var uuid = tileDescriptor.Uuid;
+        var address = tileDescriptor.Address;
         var filename = "R:/Noesis/Output/" +
                        format +
                        "_" +
                        size +
                        "_" +
-                       uuid.ToString("X8") +
+                       address.ToString("X8") +
                        ".bmp";
         this.SaveToFile(filename);
       }

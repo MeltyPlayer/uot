@@ -51,6 +51,27 @@
     public uint OGLTexObj;
     public Color4UByte[] Palette32;
 
-    public long Uuid => this.Address;
+    public long Uuid {
+      get {
+        // These values impact how texture-clamping parameters are set in
+        // OpenGl; they require unique texture instances.
+
+        // The lower-right coords are each 3 bytes (12 bits) long.
+        long lrs = this.LRS;
+        long lrt = this.LRT;
+
+        // The clamp flag values are 2 bits long.
+        long cms = this.CMS;
+        long cmt = this.CMT;
+
+        long uuid = this.Address;
+        uuid |= lrs << (32 + 4 + 12);
+        uuid |= lrt << (32 + 4);
+        uuid |= cms << (32 + 2);
+        uuid |= cmt << 32;
+
+        return uuid;
+      }
+    }
   }
 }
