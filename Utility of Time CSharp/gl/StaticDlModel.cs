@@ -12,6 +12,8 @@ namespace UoT {
     // TODO: How to apply matrix to specific limb's vertices?
     // TODO: Keep track of texture params, combine modes, env colors, etc.
     // TODO: Support submeshes (e.g. held items).
+    // TODO: Simplify some triangles to quads.
+    // TODO: Separate common shader params as different materials.
 
     public bool IsComplete { get; set; }
 
