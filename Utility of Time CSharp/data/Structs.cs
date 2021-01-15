@@ -35,9 +35,16 @@ namespace UoT {
     Item2 = 2,
     Item3 = 3
   }
+
   /* TODO ERROR: Skipped EndRegionDirectiveTrivia */
   /* TODO ERROR: Skipped RegionDirectiveTrivia */
   public struct Limb {
+    /// <summary>
+    ///   Limb hierarchies include invisible entries, but matrices are indexed
+    ///   by *visible* index.
+    /// </summary>
+    public int VisibleIndex;
+
     public double r;
     public double g;
     public double b;
@@ -149,6 +156,7 @@ namespace UoT {
     public byte pickG;
     public byte pickB;
   }
+
   /* TODO ERROR: Skipped EndRegionDirectiveTrivia */
   /* TODO ERROR: Skipped RegionDirectiveTrivia */
   public struct N64Vertex {
@@ -162,6 +170,7 @@ namespace UoT {
     public byte[] b;
     public byte[] a;
   }
+
   /* TODO ERROR: Skipped EndRegionDirectiveTrivia */
   /* TODO ERROR: Skipped RegionDirectiveTrivia */
   public struct ActorTbl {
@@ -175,6 +184,7 @@ namespace UoT {
     public uint Startoff;
     public uint Endoff;
   }
+
   /* TODO ERROR: Skipped EndRegionDirectiveTrivia */
   /* TODO ERROR: Skipped RegionDirectiveTrivia */
   public enum FileTypes {
@@ -206,6 +216,7 @@ namespace UoT {
     public byte Bank;
     public uint Offset;
   }
+
   /* TODO ERROR: Skipped EndRegionDirectiveTrivia */
   /* TODO ERROR: Skipped RegionDirectiveTrivia */
   public enum UCodes {
@@ -322,7 +333,9 @@ namespace UoT {
     public byte _VertB;
     public byte _VertC;
   }
-  /* TODO ERROR: Skipped EndRegionDirectiveTrivia *//* TODO ERROR: Skipped EndRegionDirectiveTrivia */
+
+  /* TODO ERROR: Skipped EndRegionDirectiveTrivia */
+  /* TODO ERROR: Skipped EndRegionDirectiveTrivia */
   /* TODO ERROR: Skipped RegionDirectiveTrivia */
   public struct Tools {
     public int CurrentTool;
@@ -366,5 +379,6 @@ namespace UoT {
     public variable[] var;
     public uint grp;
   }
+
   /* TODO ERROR: Skipped EndRegionDirectiveTrivia */
 }

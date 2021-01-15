@@ -70,6 +70,7 @@ Public Class F3DEX2_Parser
   Private ModColorWithAlpha As Boolean = False
 
   Public ShaderManager As New DlShaderManager
+  Public LimbMatrices As New LimbMatrices
 
   Structure RSPMatrix
     Dim N64Mat() As Byte
@@ -102,48 +103,13 @@ Public Class F3DEX2_Parser
 
   Private MatrixMap As New Dictionary(Of UInteger, Matrix(Of Double))
 
-  Public Sub ParseDL(isFirstVisibleLimb As Boolean, ByVal DL As N64DisplayList)
+  Public Sub ParseDL(DL As N64DisplayList)
     If HackEnvColor IsNot Nothing Then
       ShaderManager.SetEnvironmentColor(HackEnvColor(0) / 255.0F,
                                         HackEnvColor(1) / 255.0F,
                                         HackEnvColor(2) / 255.0F,
                                         HackEnvColor(3) / 255.0F)
     End If
-
-    ' TODO: Ingo and Talon don't follow the "first visible limb" rule, it seems
-    ' like the expected matrix is on an invisible limb?
-    ' TODO: Clean up this logic.
-
-    Dim isSubLimb As Boolean = False
-    Dim subLimbMatrix As Matrix(Of Double)
-
-    ' First visible limb is &HD000000
-    If isFirstVisibleLimb Then
-      Dim rootMatrix As Matrix(Of Double)
-      Dim targetAddress = &HD000000
-      If Not MatrixMap.TryGetValue(targetAddress, rootMatrix) Then
-        rootMatrix = New DenseMatrix(4, 4)
-        MatrixMap.Add(targetAddress, rootMatrix)
-      End If
-      ModelViewMatrixTransformer.Get(rootMatrix)
-    Else
-      For i As Integer = 0 To DL.Commands.Length - 1
-        If DL.Commands(i).CMDParams(0) = F3DZEX.VTX Then
-          If DL.Commands(i + 1).CMDParams(0) = F3DZEX.MTX Then
-            isSubLimb = True
-
-            Dim targetAddress = DL.Commands(i + 1).CMDHigh
-            If Not MatrixMap.TryGetValue(targetAddress, subLimbMatrix) Then
-              subLimbMatrix = New DenseMatrix(4, 4)
-              MatrixMap.Add(targetAddress, subLimbMatrix)
-            End If
-            ModelViewMatrixTransformer.Get(subLimbMatrix)
-            Exit For
-          End If
-        End If
-      Next
-    End If
-
 
     For i As Integer = 0 To DL.Commands.Length - 1
       With DL.Commands(i)
@@ -225,56 +191,15 @@ seothtermodelow:
 matrix:
               ' MTX(.CMDLow, .CMDHigh)
               Dim targetAddress As UInteger = .CMDHigh
-              If Not isSubLimb Then
-                Dim matrix As Matrix(Of Double)
-                If Not MatrixMap.TryGetValue(targetAddress, matrix) Then
-                  matrix = New DenseMatrix(4, 4)
-                  MatrixMap.Add(targetAddress, matrix)
-                End If
-                ModelViewMatrixTransformer.Get(matrix)
-              Else
-                Dim isFirst As Boolean = i = 0
-                Dim previousIsVtx As Boolean = False
 
-                If Not isFirst Then
-                  previousIsVtx = DL.Commands(i - 1).CMDParams(0) = F3DZEX.VTX
-                End If
-
-                If isFirst Or Not previousIsVtx Then
-                  ' TODO: This is probably not robust.
-
-                  If MatrixMap.ContainsKey(targetAddress) Then
-                    Dim temp As Matrix(Of Double) = MatrixMap(targetAddress)
-                    ModelViewMatrixTransformer.Set(temp)
-                  Else
-                    ' TODO: Do not create a new matrix each frame.
-                    Dim m As New DenseMatrix(4, 4)
-                    ModelViewMatrixTransformer.GetLastVisible(m)
-                    ModelViewMatrixTransformer.Set(m)
-                  End If
-                End If
-              End If
+              Dim m As Matrix = LimbMatrices.GetMatrixAtAddress(targetAddress)
+              ModelViewMatrixTransformer.Set(m)
 
             Case F3DZEX.VTX
 vertex:
               Dim nextIsNotCulling As Boolean = DL.Commands(i + 1).CMDParams(0) <> F3DZEX.CULLDL
-
-              ' TODO: Is this robust?
-              ' For all animated models, at the beginning of each limb's DL it
-              ' will bring some of the previous DL's vertices back to link them
-              ' together. Then, in the next command, it will use a matrix to
-              ' set up this limb's translation and rotation.
-              ' We've already done this outside the method, so we need to pop
-              ' back up to a previous matrix.
-              Dim nextIsNotMatrix As Boolean = DL.Commands(i + 1).CMDParams(0) <> F3DZEX.MTX
-
               If nextIsNotCulling Then
-                If nextIsNotMatrix Then
-                  VTX(.CMDLow, .CMDHigh)
-                ElseIf isSubLimb Then
-                  VTX(.CMDLow, .CMDHigh)
-                  ModelViewMatrixTransformer.Set(subLimbMatrix)
-                End If
+                VTX(.CMDLow, .CMDHigh)
               End If
 
             Case F3DZEX.MODIFYVTX
@@ -449,7 +374,7 @@ enddisplaylist:
     '        Gl.glPushMatrix()
     '    End If
     'End If
-    ModelViewMatrixTransformer.Push(True)
+    ModelViewMatrixTransformer.Push()
 
     'If Param And F3DZEX.MTX_LOAD > 0 Then
     '    Gl.glLoadMatrixf(mtxPtr)

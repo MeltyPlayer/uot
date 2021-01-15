@@ -3176,7 +3176,7 @@ Public Class MainWin
       Gl.glRotated(cam.Yaw, 0.0F, 1.0F, 0.0F)
       Gl.glTranslated(cam.X, cam.Y, cam.Z)
 
-      ModelViewMatrixTransformer.Push(False)
+      ModelViewMatrixTransformer.Push()
       If LoadedDataType = FileTypes.MAP Then DrawActorBoxes(False)
       If RenderGraphics Then DrawDLArray(GlobalVarsCs.N64DList, ToolID.NONE)
       If RenderCollision Then DrawCollision(CollisionPolies, CollisionVerts, False)
@@ -3302,11 +3302,11 @@ Public Class MainWin
       DLParser.ParseMode = DLParser.Parse.EVERYTHING
     End If
 
-    ModelViewMatrixTransformer.Push(True)
+    ModelViewMatrixTransformer.Push()
 
     If Not DlManager.HasLimbs Then
       For i As Integer = 0 To DLists.Length - 1
-        DrawDL(i, i, SelectionMode)
+        DrawDL(i, SelectionMode)
       Next
     Else
       CurrLimb = 0
@@ -3341,8 +3341,16 @@ Public Class MainWin
         Next
       End If
 
-      Dim visibleLimbIndex As UInteger = 0
-      DrawJoint(visibleLimbIndex, 0)
+      ' TODO: Precalculate matrices via a helper class.
+
+      Dim animation As IAnimation
+      If AnimationEntries IsNot Nothing Then
+        animation = AnimationEntries(CurrAnimation)
+      End If
+
+      DLParser.LimbMatrices.UpdateLimbMatrices(LimbEntries, animation, AnimationPlaybackPanel)
+
+      DrawJoint(0)
 
     End If
     ModelViewMatrixTransformer.Pop()
@@ -3350,9 +3358,7 @@ Public Class MainWin
     DlModel.IsComplete = True
   End Sub
 
-  Private Sub DrawJoint(ByRef visibleLimbIndex As UInteger, ByVal id As Integer)
-
-
+  Private Sub DrawJoint(ByVal id As Integer)
     With LimbEntries(id)
       'If id + 1 < LimbEntries.Length - 1 Then
       'CurrLimb = id + 1
@@ -3402,27 +3408,18 @@ Public Class MainWin
         Gl.glDepthRange(0, 1)
       End If
 
-      ModelViewMatrixTransformer.Push(False)
-      ModelViewMatrixTransformer.Translate(.x, .y, .z)
-
-      If AnimationEntries IsNot Nothing Then
-        Dim q As Quaternion = AnimParser.GetTrackRot(AnimationEntries(CurrAnimation), AnimationPlaybackPanel, id)
-        q = Quaternion.Normalize(q)
-
-        ApplyQuaternion1(q)
-        ' ApplyQuaternion2(q)
-      End If
+      ModelViewMatrixTransformer.Push()
+      ModelViewMatrixTransformer.Set(DLParser.LimbMatrices.GetMatrixForLimb(id))
 
       If validDl Then
-        DrawDL(visibleLimbIndex, dlIndex, False)
-        visibleLimbIndex += 1
+        DrawDL(dlIndex, False)
       End If
 
       If .firstChild > -1 Then
         BoneColorFactor.r = 255
         BoneColorFactor.g = 0
         BoneColorFactor.b = 0
-        DrawJoint(visibleLimbIndex, .firstChild)
+        DrawJoint(.firstChild)
       Else
         BoneColorFactor.r = 255
         BoneColorFactor.g = 255
@@ -3435,7 +3432,7 @@ Public Class MainWin
         BoneColorFactor.r = 0
         BoneColorFactor.g = 0
         BoneColorFactor.b = 255
-        DrawJoint(visibleLimbIndex, .nextSibling)
+        DrawJoint(.nextSibling)
       Else
         BoneColorFactor.r = 255
         BoneColorFactor.g = 255
@@ -3444,82 +3441,22 @@ Public Class MainWin
     End With
   End Sub
 
-  Private Sub ApplyQuaternion2(q As Quaternion)
-    Dim m4 As Matrix4x4 = Matrix4x4.CreateFromQuaternion(q)
-
-    Dim m(15) As Double
-
-    m(0) = m4.M11
-    m(1) = m4.M12
-    m(2) = m4.M13
-    m(3) = m4.M14
-
-    m(4) = m4.M21
-    m(5) = m4.M22
-    m(6) = m4.M23
-    m(7) = m4.M24
-
-    m(8) = m4.M31
-    m(9) = m4.M32
-    m(10) = m4.M33
-    m(11) = m4.M34
-
-    m(12) = m4.M41
-    m(13) = m4.M42
-    m(14) = m4.M43
-    m(15) = m4.M44
-
-    Gl.glMultMatrixd(m)
-  End Sub
-
-  Private Sub ApplyQuaternion1(q As Quaternion)
-    Dim qx As Single = q.X
-    Dim qy As Single = q.Y
-    Dim qz As Single = q.Z
-    Dim qw As Single = q.W
-
-    Dim m As New DenseMatrix(4, 4)
-    m(0, 0) = 1.0F - 2.0F * qy * qy - 2.0F * qz * qz
-    m(0, 1) = 2.0F * qx * qy - 2.0F * qz * qw
-    m(0, 2) = 2.0F * qx * qz + 2.0F * qy * qw
-    m(0, 3) = 0.0F
-
-    m(1, 0) = 2.0F * qx * qy + 2.0F * qz * qw
-    m(1, 1) = 1.0F - 2.0F * qx * qx - 2.0F * qz * qz
-    m(1, 2) = 2.0F * qy * qz - 2.0F * qx * qw
-    m(1, 3) = 0.0F
-
-    m(2, 0) = 2.0F * qx * qz - 2.0F * qy * qw
-    m(2, 1) = 2.0F * qy * qz + 2.0F * qx * qw
-    m(2, 2) = 1.0F - 2.0F * qx * qx - 2.0F * qy * qy
-    m(2, 3) = 0.0F
-
-    m(3, 0) = 0
-    m(3, 1) = 0
-    m(3, 2) = 0
-    m(3, 3) = 1
-
-    ModelViewMatrixTransformer.MultMatrix(m)
-  End Sub
-
-  Private Sub DrawDL(visibleLimbIndex As Integer, ByVal index As Integer, ByVal SelectionMode As Integer)
-    Dim isFirstVisibleLimb As Boolean = visibleLimbIndex = 0
-
+  Private Sub DrawDL(ByVal index As Integer, ByVal SelectionMode As Integer)
     If Not GlobalVarsCs.N64DList(index).Skip Then
       If SelectionMode = ToolID.NONE Then
-        DLParser.ParseDL(isFirstVisibleLimb, GlobalVarsCs.N64DList(index))
+        DLParser.ParseDL(GlobalVarsCs.N64DList(index))
         If GlobalVarsCs.N64DList(index).Highlight Then
           DLParser.ParseMode = DLParser.Parse.GEOMETRY
           Gl.glBindProgramARB(Gl.GL_FRAGMENT_PROGRAM_ARB, HighlightProg)
           Gl.glEnable(Gl.GL_FRAGMENT_PROGRAM_ARB)
           Gl.glEnable(Gl.GL_BLEND)
           Gl.glBlendFunc(Gl.GL_SRC_ALPHA, Gl.GL_ONE_MINUS_SRC_ALPHA)
-          DLParser.ParseDL(isFirstVisibleLimb, GlobalVarsCs.N64DList(index))
+          DLParser.ParseDL(GlobalVarsCs.N64DList(index))
           DLParser.ParseMode = DLParser.Parse.EVERYTHING
         End If
       ElseIf SelectionMode = ToolID.DLIST Then
         Gl.glColor3ub(GlobalVarsCs.N64DList(index).PickCol.r, GlobalVarsCs.N64DList(index).PickCol.g, GlobalVarsCs.N64DList(index).PickCol.b)
-        DLParser.ParseDL(isFirstVisibleLimb, GlobalVarsCs.N64DList(index))
+        DLParser.ParseDL(GlobalVarsCs.N64DList(index))
         ReadPixel = MousePixelRead(NewMouseX, NewMouseY)
         If _
           ReadPixel(0) = GlobalVarsCs.N64DList(index).PickCol.r And ReadPixel(1) = GlobalVarsCs.N64DList(index).PickCol.g And
@@ -4414,6 +4351,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
           LimbEntries = AnimParser.GetHierarchies(RamBanks.ZFileBuffer, False, DlModel)
           If LimbEntries IsNot Nothing Then
             DlManager.HasLimbs = True
+            DLParser.LimbMatrices.Retarget(LimbEntries)
 
             ' Selects first animation indirectly to fix an issue where NPC 
             ' heads were sideways.

@@ -14,7 +14,7 @@ namespace UoT {
         ref double normalY,
         ref double normalZ);
 
-    IModelViewMatrixTransformer Push(bool isVisible);
+    IModelViewMatrixTransformer Push();
     IModelViewMatrixTransformer Pop();
 
     IModelViewMatrixTransformer Identity();
@@ -28,9 +28,6 @@ namespace UoT {
         double z);
 
     IModelViewMatrixTransformer MultMatrix(Matrix<double> m);
-
-    // Needed to link the vertices of limbs.
-    void GetLastVisible(Matrix<double> m);
 
     void Get(Matrix<double> m);
     void Set(Matrix<double> m);
@@ -52,8 +49,8 @@ namespace UoT {
           ref normalY,
           ref normalZ);
 
-    public static IModelViewMatrixTransformer Push(bool isVisible)
-      => ModelViewMatrixTransformer.INSTANCE.Push(isVisible);
+    public static IModelViewMatrixTransformer Push()
+      => ModelViewMatrixTransformer.INSTANCE.Push();
 
     public static IModelViewMatrixTransformer Pop()
       => ModelViewMatrixTransformer.INSTANCE.Pop();
@@ -80,9 +77,6 @@ namespace UoT {
 
     public static void Set(Matrix<double> m)
       => ModelViewMatrixTransformer.INSTANCE.Set(m);
-
-    public static void GetLastVisible(Matrix<double> m)
-      => ModelViewMatrixTransformer.INSTANCE.GetLastVisible(m);
   }
 
 
@@ -107,7 +101,7 @@ namespace UoT {
                            0);
     }
 
-    public IModelViewMatrixTransformer Push(bool isVisible) {
+    public IModelViewMatrixTransformer Push() {
       Gl.glPushMatrix();
       return this;
     }
@@ -146,10 +140,6 @@ namespace UoT {
 
     public void Set(Matrix<double> m)
       => GlMatrixUtil.Set(m);
-
-    public void GetLastVisible(Matrix<double> m) {
-      throw new NotImplementedException();
-    }
   }
 
   public class
@@ -158,11 +148,10 @@ namespace UoT {
     private LinkedList<MatrixNode> stack_ = new LinkedList<MatrixNode>();
 
     private class MatrixNode {
-      public bool IsVisible { get; set; }
       public Matrix<double> Matrix { get; set; }
     }
 
-    public SoftwareModelViewMatrixTransformer() => this.Push(false);
+    public SoftwareModelViewMatrixTransformer() => this.Push();
 
     public void ProjectVertex(ref double x, ref double y, ref double z)
       => GlMatrixUtil.Project(this.current_, ref x, ref y, ref z, 1);
@@ -173,7 +162,7 @@ namespace UoT {
         ref double normalZ)
       => GlMatrixUtil.Project(this.current_, ref normalX, ref normalY, ref normalZ, 0);
 
-    public IModelViewMatrixTransformer Push(bool isVisible) {
+    public IModelViewMatrixTransformer Push() {
       Matrix<double> newMatrix;
       if (this.current_ == null) {
         newMatrix = Matrix<double>.Build.DenseIdentity(4, 4);
@@ -182,7 +171,6 @@ namespace UoT {
       }
 
       this.stack_.AddLast(new MatrixNode {
-          IsVisible = isVisible,
           Matrix = newMatrix
       });
       this.UpdateCurrent_();
@@ -296,21 +284,6 @@ namespace UoT {
     public void Set(Matrix<double> m) {
       m.CopyTo(this.current_);
       this.UpdateGl_();
-    }
-
-    public void GetLastVisible(Matrix<double> m) {
-      Matrix<double> last = null;
-      int len = this.stack_.Count;
-      int i = 0;
-      foreach (var node in this.stack_) {
-        if (i < len - 1) {
-          last = node.Matrix;
-        }
-        i++;
-      }
-
-      // Should never be null!
-      last.CopyTo(m);
     }
 
     private void UpdateGl_() {
