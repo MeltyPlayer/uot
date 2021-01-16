@@ -29,8 +29,19 @@ namespace UoT {
     ///   Gets the matrix at the given address, as specified within a display
     ///   list. This DOES take visibility into account.
     /// </summary>
-    public Matrix GetMatrixAtAddress(uint address)
-      => this.visible_[this.ConvertAddressToVisibleLimbIndex_(address)];
+    private readonly Matrix identity_ = new DiagonalMatrix(4, 4, 1);
+    public Matrix GetMatrixAtAddress(uint address) {
+      IoUtil.SplitAddress(address, out var bank, out var offset);
+
+      if (bank == 0x0d) {
+        var visibleLimbIndex = offset / 0x40;
+        return this.visible_[visibleLimbIndex];
+      }
+
+      // TODO: Zelda's hair is 0x0c?
+
+      return this.identity_;
+    }
 
     private uint ConvertAddressToVisibleLimbIndex_(uint address)
       => (address - 0x0d000000) / 0x40;
@@ -56,8 +67,8 @@ namespace UoT {
       for (var i = 0; i < limbs.Length; ++i) {
         var limb = limbs[i];
 
-        IoUtil.SplitAddress(limb.DisplayList, out var bank, out _);
-        if (bank > 0) {
+        // TODO: Split this to check if bank is 0 instead?
+        if (limb.DisplayList > 0) {
           limb.VisibleIndex = currentVisibleCount++;
         } else {
           limb.VisibleIndex = -1;
