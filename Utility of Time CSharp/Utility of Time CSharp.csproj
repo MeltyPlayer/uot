@@ -207,7 +207,8 @@
     <Compile Include="common\fuzzy\SymSpellFuzzySearchDictionary.cs" />
     <Compile Include="data\Structs.cs" />
     <Compile Include="displaylist\DlShaderGenerator.cs" />
-    <Compile Include="displaylist\LimbMatrices.cs" />
+    <Compile Include="displaylist\DisplayListInterfaces.cs" />
+    <Compile Include="limbs\LimbMatrices.cs" />
     <Compile Include="displaylist\VertexCache.cs" />
     <Compile Include="gl\GlConstants.cs" />
     <Compile Include="gl\ShaderCompiler.cs" />
@@ -218,6 +219,7 @@
     <Compile Include="hacks\face\ZeldaAdultIndirectTextureHack.cs" />
     <Compile Include="hacks\face\ZeldaChildIndirectTextureHack.cs" />
     <Compile Include="hacks\face\LinkIndirectTextureHack.cs" />
+    <Compile Include="limbs\LimbInterfaces.cs" />
     <Compile Include="memory\files\ZFiles.cs" />
     <Compile Include="memory\files\ZFileTypes.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

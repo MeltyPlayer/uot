@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace UoT {
+﻿namespace UoT {
   // ALL UCODES - BASIC
 
   // F3DZEX (F3DEX v2.0)
