@@ -32,6 +32,8 @@
 
           Do
             ReDim Preserve .Commands(.CommandCount)
+
+            .Commands(.CommandCount) = New DLCommand()
             ReDim .Commands(.CommandCount).CMDParams(7)
 
             .Commands(.CommandCount).Name = DLParser.IdentifyCommand(Data(EPLoc))
@@ -40,9 +42,9 @@
               .Commands(.CommandCount).CMDParams(i) = Data(EPLoc + i)
             Next
 
-            .Commands(.CommandCount).CMDLow = IoUtil.ReadUInt24(Data, EPLoc + 1)
+            .Commands(.CommandCount).Low = IoUtil.ReadUInt24(Data, EPLoc + 1)
 
-            .Commands(.CommandCount).CMDHigh = IoUtil.ReadUInt32(Data, EPLoc + 4)
+            .Commands(.CommandCount).High = IoUtil.ReadUInt32(Data, EPLoc + 4)
 
             .Commands(.CommandCount).DLPos = .CommandCount
 

@@ -36,7 +36,7 @@ Public Class CombinerEditor
 
 
   Private Sub UpdateEnvColor(ByVal Cmd As DLCommand)
-    If Cmd.CMDHigh > 0 Then
+    If Cmd.High > 0 Then
       Dim tempEnv As New Color4UByte
       tempEnv.r = Cmd.CMDParams(4)
       tempEnv.g = Cmd.CMDParams(5)
@@ -57,7 +57,7 @@ Public Class CombinerEditor
   End Sub
 
   Private Sub UpdatePrimColor(ByVal Cmd As DLCommand)
-    If Cmd.CMDHigh > 0 Then
+    If Cmd.High > 0 Then
       Dim tempPrim As New Color4UByte
       tempPrim.r = Cmd.CMDParams(4)
       tempPrim.g = Cmd.CMDParams(5)
@@ -125,8 +125,8 @@ Public Class CombinerEditor
 
   Private Sub Compile()
     CompiledCmb = CompileDL.Compile(UCodes.RDP, RDP.G_SETCOMBINE, CombinerColors)
-    CompiledCmbCmd.Text = CompiledCmb.CMDParams(0).ToString("X2") & CompiledCmb.CMDLow.ToString("X6") &
-                          CompiledCmb.CMDHigh.ToString("X8")
+    CompiledCmbCmd.Text = CompiledCmb.CMDParams(0).ToString("X2") & CompiledCmb.Low.ToString("X6") &
+                          CompiledCmb.High.ToString("X8")
   End Sub
 
   Private Sub cA0_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
@@ -231,8 +231,8 @@ Public Class CombinerEditor
 
   Private Sub CompiledCmbCmd_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
     Handles CompiledCmbCmd.TextChanged
-    MainWin.LowordText.Text = CompiledCmb.CMDLow.ToString("X6")
-    MainWin.HiwordText.Text = CompiledCmb.CMDHigh.ToString("X8")
+    MainWin.LowordText.Text = CompiledCmb.Low.ToString("X6")
+    MainWin.HiwordText.Text = CompiledCmb.High.ToString("X8")
     UpdateCommand(GlobalVarsCs.N64DList(MainWin.DListSelection.SelectedIndex - 1), MainWin.CommandsListbox.SelectedIndex,
                   Convert.ToByte(MainWin.CommandCodeText.Text, 16), Convert.ToUInt32(MainWin.HiwordText.Text, 16),
                   Convert.ToUInt32(MainWin.LowordText.Text, 16))
@@ -242,8 +242,8 @@ Public Class CombinerEditor
     If ColorSelector.ShowDialog() = Windows.Forms.DialogResult.OK Then
       LinkedCommands.PrimColor = CompileDL.Compile(UCodes.RDP, RDP.G_SETPRIMCOLOR, ColorSelector.Color)
       UpdateCommand(GlobalVarsCs.N64DList(LinkedCommands.PrimColor.DLPos), LinkedCommands.PrimColor.DLPos,
-                    LinkedCommands.PrimColor.CMDParams(0), LinkedCommands.PrimColor.CMDHigh,
-                    LinkedCommands.PrimColor.CMDLow)
+                    LinkedCommands.PrimColor.CMDParams(0), LinkedCommands.PrimColor.High,
+                    LinkedCommands.PrimColor.Low)
       UpdatePrimColor(LinkedCommands.PrimColor)
     End If
   End Sub

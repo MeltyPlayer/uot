@@ -146,51 +146,51 @@ settextureimg:
                 DlModel.UpdateTexture(1, Nothing)
               End If
 
-              SETTIMG(.CMDLow, .CMDHigh, paletteMode)
+              SETTIMG(.Low, .High, paletteMode)
 
             Case RDP.G_LOADTLUT
 loadtexturelut:
-              LOADTLUT(.CMDHigh)
+              LOADTLUT(.High)
 
             Case RDP.G_LOADBLOCK
 loadtexblock:
-              LOADBLOCK(.CMDLow, .CMDHigh)
+              LOADBLOCK(.Low, .High)
 
             Case RDP.G_LOADTILE
-              LOADTILE(.CMDLow, .CMDHigh)
+              LOADTILE(.Low, .High)
 
             Case RDP.G_SETTILESIZE
 settilesize:
-              SETTILESIZE(.CMDLow, .CMDHigh)
+              SETTILESIZE(.Low, .High)
 
             Case RDP.G_SETTILE
 settile:
-              If .CMDParams(1) > 0 Then SETTILE(.CMDLow, .CMDHigh)
+              If .CMDParams(1) > 0 Then SETTILE(.Low, .High)
 
             Case RDP.G_SETCOMBINE
 setcombiner:
-              SETCOMBINE(.CMDLow, .CMDHigh)
+              SETCOMBINE(.Low, .High)
 
             Case F3DZEX.TEXTURE
 texture:
-              TEXTURE(.CMDLow, .CMDHigh)
+              TEXTURE(.Low, .High)
 
             Case F3DZEX.GEOMETRYMODE
 geometrymode:
-              GEOMETRYMODE(.CMDLow, .CMDHigh)
+              GEOMETRYMODE(.Low, .High)
 
             Case F3DZEX.SETOTHERMODE_H
 setothermodehigh:
-              SETOTHERMODE_H(.CMDLow, .CMDHigh)
+              SETOTHERMODE_H(.Low, .High)
 
             Case F3DZEX.SETOTHERMODE_L
 seothtermodelow:
-              SETOTHERMODE_L(.CMDLow, .CMDHigh)
+              SETOTHERMODE_L(.Low, .High)
 
             Case F3DZEX.MTX
 matrix:
               ' MTX(.CMDLow, .CMDHigh)
-              Dim targetAddress As UInteger = .CMDHigh
+              Dim targetAddress As UInteger = .High
 
               Dim m As Matrix = LimbMatrices.GetMatrixAtAddress(targetAddress)
               ModelViewMatrixTransformer.Set(m)
@@ -199,7 +199,7 @@ matrix:
 vertex:
               Dim nextIsNotCulling As Boolean = DL.Commands(i + 1).CMDParams(0) <> F3DZEX.CULLDL
               If nextIsNotCulling Then
-                VTX(.CMDLow, .CMDHigh)
+                VTX(.Low, .High)
               End If
 
             Case F3DZEX.MODIFYVTX
@@ -222,7 +222,7 @@ quad:
 dl:
               ' TODO: Support jumping to another DL.
               ' TODO: Decide to continue or quit depending on pp from w0. 
-              Debug.NotImplemented("Tried to jump to display list with address: " & .CMDHigh.ToString("X8"))
+              Debug.NotImplemented("Tried to jump to display list with address: " & .High.ToString("X8"))
 
             Case F3DZEX.BRANCH_Z
 branchz:

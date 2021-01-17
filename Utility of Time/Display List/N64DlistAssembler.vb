@@ -21,14 +21,14 @@
                 End If
             End With
             With Output
-                .CMDHigh = tCmdHi
-                .CMDLow = tCmdLo
+                .High = tCmdHi
+                .Low = tCmdLo
             End With
         End Function
         Public Function SETCONSTCOLOR(ByVal Color As Color, ByRef Output As DLCommand)
             With Output
-                .CMDLow = 0
-                .CMDHigh = (Color.R >> 24 And &HFF) Or _
+                .Low = 0
+                .High = (Color.R >> 24 And &HFF) Or _
                            (Color.G >> 16 And &HFF) Or _
                            (Color.B >> 8 And &HFF) Or _
                            (Color.A >> 0 And &HFF)
@@ -40,14 +40,14 @@
         End Function
         Public Function SETCOMBINE(ByVal CombinerFlags As UnpackedCombiner, ByRef Output As DLCommand)
             With CombinerFlags
-                Output.CMDLow = (.cA(0) << 20) Or _
+                Output.Low = (.cA(0) << 20) Or _
                            (.cC(0) << 15) Or _
                            (.aA(0) << 12) Or _
                            (.aC(0) << 9) Or _
                            (.cA(1) << 5) Or _
                            (.cC(1) << 0)
 
-                Output.CMDHigh = (.cB(0) << 28) Or _
+                Output.High = (.cB(0) << 28) Or _
                            (.cB(1) << 24) Or _
                            (.aA(1) << 21) Or _
                            (.aC(1) << 18) Or _

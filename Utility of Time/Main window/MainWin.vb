@@ -5705,8 +5705,8 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
         For ii As Integer = 0 To GlobalVarsCs.N64DList(i).CommandCount - 1
           RamBanks.ZFileBuffer(DLStart) = GlobalVarsCs.N64DList(i).Commands(ii).CMDParams(0)
           DLStart += 1
-          IoUtil.WriteInt24(RamBanks.ZFileBuffer, GlobalVarsCs.N64DList(i).Commands(ii).CMDLow, DLStart)
-          IoUtil.WriteInt32(RamBanks.ZFileBuffer, GlobalVarsCs.N64DList(i).Commands(ii).CMDHigh, DLStart)
+          IoUtil.WriteInt24(RamBanks.ZFileBuffer, GlobalVarsCs.N64DList(i).Commands(ii).Low, DLStart)
+          IoUtil.WriteInt32(RamBanks.ZFileBuffer, GlobalVarsCs.N64DList(i).Commands(ii).High, DLStart)
         Next
       Next
 
@@ -6466,9 +6466,9 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     CommandCodeText.Text =
       GlobalVarsCs.N64DList(DListSelection.SelectedIndex - 1).Commands(CommandsListbox.SelectedIndex).CMDParams(0).ToString("X2")
     LowordText.Text =
-      GlobalVarsCs.N64DList(DListSelection.SelectedIndex - 1).Commands(CommandsListbox.SelectedIndex).CMDLow.ToString("X6")
+      GlobalVarsCs.N64DList(DListSelection.SelectedIndex - 1).Commands(CommandsListbox.SelectedIndex).Low.ToString("X6")
     HiwordText.Text =
-      GlobalVarsCs.N64DList(DListSelection.SelectedIndex - 1).Commands(CommandsListbox.SelectedIndex).CMDHigh.ToString("X8")
+      GlobalVarsCs.N64DList(DListSelection.SelectedIndex - 1).Commands(CommandsListbox.SelectedIndex).High.ToString("X8")
     WholeCommandTxt.Text = CommandCodeText.Text & LowordText.Text & HiwordText.Text
   End Sub
 

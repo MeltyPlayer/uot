@@ -56,8 +56,8 @@ Module Functions
     Command = New DLCommand
     With Command
       ReDim .CMDParams(7)
-      .CMDHigh = 0
-      .CMDLow = 0
+      .High = 0
+      .Low = 0
       .CMDParams(0) = CommandCode
       For i As Integer = 1 To 7
         .CMDParams(i) = 0
@@ -220,8 +220,8 @@ Module Functions
   Public Sub UpdateCommand(ByRef DL As N64DisplayList, ByVal CmdPos As UInteger, ByVal newCmd As Byte,
                            ByVal newHW As UInteger, ByVal newLW As UInteger)
     With DL.Commands(CmdPos)
-      .CMDHigh = newHW
-      .CMDLow = newLW
+      .High = newHW
+      .Low = newLW
       .CMDParams(0) = newCmd
       .DLPos = CmdPos
       IoUtil.WriteInt24(.CMDParams, newLW, 1)

@@ -5,7 +5,16 @@
     uint High { get; }
     uint Low { get; }
 
-    IDisplayList FirstChild { get; }
-    IDisplayList NextSibling { get; }
+    IDisplayListInstruction EntryPoint { get; }
+  }
+
+  public interface IDisplayListInstruction {
+    F3DZEX Opcode { get; }
+
+    uint High { get; }
+    uint Low { get; }
+
+    IDisplayListInstruction FirstChild { get; }
+    IDisplayListInstruction NextSibling { get; }
   }
 }
