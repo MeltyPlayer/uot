@@ -225,25 +225,6 @@ namespace UoT {
     F3DEX2 = 2
   }
 
-  public struct DLCommand {
-    public byte[] CMDParams;
-    public uint CMDHigh;
-    public uint CMDLow;
-    public string Name;
-    public int DLPos;
-  }
-
-  public struct N64DisplayList {
-    public bool Skip;
-    public bool Highlight;
-    public Color3UByte PickCol;
-    public ZSegment StartPos;
-    public ZSegment EndPos;
-    public int CommandCount;
-    public DLCommand[] Commands;
-    public DLCommand[] CommandsCopy;
-  }
-
   public struct ZCamera {
     public short x;
     public short y;

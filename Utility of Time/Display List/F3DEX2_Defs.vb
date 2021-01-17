@@ -32,7 +32,6 @@
 
           Do
             ReDim Preserve .Commands(.CommandCount)
-            ReDim Preserve .CommandsCopy(.CommandCount)
             ReDim .Commands(.CommandCount).CMDParams(7)
 
             .Commands(.CommandCount).Name = DLParser.IdentifyCommand(Data(EPLoc))
@@ -55,7 +54,6 @@
             EPLoc += 8
             .CommandCount += 1
           Loop
-          .CommandsCopy = .Commands
         End With
 
         Return EPLoc

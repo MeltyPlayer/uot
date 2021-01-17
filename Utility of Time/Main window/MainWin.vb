@@ -5703,7 +5703,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       For i As Integer = 0 To GlobalVarsCs.N64DList.Length - 1
         DLStart = GlobalVarsCs.N64DList(i).StartPos.Offset
         For ii As Integer = 0 To GlobalVarsCs.N64DList(i).CommandCount - 1
-          GlobalVarsCs.N64DList(i).CommandsCopy(ii) = GlobalVarsCs.N64DList(i).Commands(ii)
           RamBanks.ZFileBuffer(DLStart) = GlobalVarsCs.N64DList(i).Commands(ii).CMDParams(0)
           DLStart += 1
           IoUtil.WriteInt24(RamBanks.ZFileBuffer, GlobalVarsCs.N64DList(i).Commands(ii).CMDLow, DLStart)

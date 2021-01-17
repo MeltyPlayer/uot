@@ -69,6 +69,7 @@
     <Compile Include="common\fuzzy\IFuzzySearchDictionary.cs" />
     <Compile Include="common\fuzzy\SymSpellFuzzySearchDictionary.cs" />
     <Compile Include="data\Structs.cs" />
+    <Compile Include="displaylist\DisplayListStructs.cs" />
     <Compile Include="displaylist\DlShaderGenerator.cs" />
     <Compile Include="displaylist\DisplayListInterfaces.cs" />
     <Compile Include="limbs\LimbMatrices.cs" />
