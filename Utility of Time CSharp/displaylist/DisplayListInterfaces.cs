@@ -9,10 +9,10 @@
   }
 
   public interface IDisplayListInstruction {
-    F3DZEX Opcode { get; }
+    byte Opcode { get; }
 
-    uint High { get; }
     uint Low { get; }
+    uint High { get; }
 
     IDisplayListInstruction FirstChild { get; }
     IDisplayListInstruction NextSibling { get; }

@@ -17,7 +17,7 @@
         ReDim Preserve DisplayList(Index)
         DisplayList(Index) = New N64DisplayList
 
-        Dim EPLoc As Integer = Offset
+        Dim EPLoc As UInteger = Offset
 
         MainWin.DListSelection.Items.Add((Index + 1).ToString & ". " & Hex(Offset))
 
@@ -32,21 +32,7 @@
 
           Do
             ReDim Preserve .Commands(.CommandCount)
-
-            .Commands(.CommandCount) = New DLCommand()
-            ReDim .Commands(.CommandCount).CMDParams(7)
-
-            .Commands(.CommandCount).Name = DLParser.IdentifyCommand(Data(EPLoc))
-
-            For i As Integer = 0 To 7
-              .Commands(.CommandCount).CMDParams(i) = Data(EPLoc + i)
-            Next
-
-            .Commands(.CommandCount).Low = IoUtil.ReadUInt24(Data, EPLoc + 1)
-
-            .Commands(.CommandCount).High = IoUtil.ReadUInt32(Data, EPLoc + 4)
-
-            .Commands(.CommandCount).DLPos = .CommandCount
+            .Commands(.CommandCount) = New DLCommand(Data, EPLoc)
 
             If Data(EPLoc) = F3DZEX.ENDDL Or EPLoc >= Data.Count Then
               EPLoc += 8

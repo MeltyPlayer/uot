@@ -6512,11 +6512,16 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     Dim cmd As String = Mid(WholeCommandTxt.Text, 1, 2)
     Dim lo As String = Mid(WholeCommandTxt.Text, 3, 6)
     Dim hi As String = Mid(WholeCommandTxt.Text, 9, 8)
+
     CommandCodeText.Text = cmd
     LowordText.Text = lo
     HiwordText.Text = hi
-    UpdateCommand(GlobalVarsCs.N64DList(DListSelection.SelectedIndex - 1), CommandsListbox.SelectedIndex, Convert.ToByte(cmd, 16),
-                  Convert.ToUInt32(hi, 16), Convert.ToUInt32(lo, 16))
+
+    Dim displayList As N64DisplayList = GlobalVarsCs.N64DList(DListSelection.SelectedIndex - 1)
+    Dim command As DLCommand = displayList.Commands(CommandsListbox.SelectedIndex)
+    command.Update(Convert.ToByte(cmd, 16),
+                   Convert.ToUInt32(lo, 16),
+                   Convert.ToUInt32(hi, 16))
   End Sub
 
   Private Sub EnableDLHighlight()

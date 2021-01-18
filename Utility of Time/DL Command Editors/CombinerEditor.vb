@@ -231,19 +231,22 @@ Public Class CombinerEditor
 
   Private Sub CompiledCmbCmd_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
     Handles CompiledCmbCmd.TextChanged
+    ' TODO: Shouldn't have to convert to hex string and back.
     MainWin.LowordText.Text = CompiledCmb.Low.ToString("X6")
     MainWin.HiwordText.Text = CompiledCmb.High.ToString("X8")
-    UpdateCommand(GlobalVarsCs.N64DList(MainWin.DListSelection.SelectedIndex - 1), MainWin.CommandsListbox.SelectedIndex,
-                  Convert.ToByte(MainWin.CommandCodeText.Text, 16), Convert.ToUInt32(MainWin.HiwordText.Text, 16),
-                  Convert.ToUInt32(MainWin.LowordText.Text, 16))
+
+    Dim displayList As N64DisplayList = GlobalVarsCs.N64DList(MainWin.DListSelection.SelectedIndex - 1)
+    Dim command As DLCommand = displayList.Commands(MainWin.CommandsListbox.SelectedIndex)
+
+    command.Update(Convert.ToByte(MainWin.CommandCodeText.Text, 16),
+                   Convert.ToUInt32(MainWin.LowordText.Text, 16),
+                   Convert.ToUInt32(MainWin.HiwordText.Text, 16))
   End Sub
 
   Private Sub PrimR_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PrimR.Click
     If ColorSelector.ShowDialog() = Windows.Forms.DialogResult.OK Then
       LinkedCommands.PrimColor = CompileDL.Compile(UCodes.RDP, RDP.G_SETPRIMCOLOR, ColorSelector.Color)
-      UpdateCommand(GlobalVarsCs.N64DList(LinkedCommands.PrimColor.DLPos), LinkedCommands.PrimColor.DLPos,
-                    LinkedCommands.PrimColor.CMDParams(0), LinkedCommands.PrimColor.High,
-                    LinkedCommands.PrimColor.Low)
+      LinkedCommands.PrimColor.Update(LinkedCommands.PrimColor.Low, LinkedCommands.PrimColor.High)
       UpdatePrimColor(LinkedCommands.PrimColor)
     End If
   End Sub

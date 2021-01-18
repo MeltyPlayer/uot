@@ -267,57 +267,6 @@ enddisplaylist:
     Next
   End Sub
 
-  Public Function IdentifyCommand(ByVal CommandCode As Byte) As String
-    Select Case CommandCode
-      Case RDP.G_RDPPIPESYNC
-        Return "G_RDPPIPESYNC (unemulated)"
-      Case RDP.G_RDPLOADSYNC
-        Return "G_RDPLOADSYNC (unemulated)"
-      Case RDP.G_SETENVCOLOR
-        Return "G_SETENVCOLOR"
-      Case RDP.G_SETPRIMCOLOR
-        Return "G_SETPRIMCOLOR"
-      Case RDP.G_SETTIMG
-        Return "G_SETTIMG"
-      Case RDP.G_LOADTLUT
-        Return "G_LOADTLUT"
-      Case RDP.G_LOADBLOCK
-        Return "G_LOADBLOCK"
-      Case RDP.G_SETTILESIZE
-        Return "G_SETTILESIZE"
-      Case RDP.G_SETTILE
-        Return "G_SETTILE"
-      Case RDP.G_SETCOMBINE
-        Return "G_SETCOMBINE"
-      Case F3DZEX.TEXTURE
-        Return "F3DEX2_TEXTURE"
-      Case F3DZEX.GEOMETRYMODE
-        Return "F3DEX2_GEOMETRYMODE"
-      Case F3DZEX.SETOTHERMODE_H
-        Return "F3DEX2_SETOTHERMODE_H (partial)"
-      Case F3DZEX.SETOTHERMODE_L
-        Return "F3DEX2_SETOTHERMODE_L"
-      Case F3DZEX.MTX
-        Return "F3DEX2_MTX (unemulated)"
-      Case F3DZEX.VTX
-        Return "F3DEX2_VTX"
-      Case F3DZEX.MODIFYVTX
-        Return "F3DEX2_MODIFYVTX"
-      Case F3DZEX.TRI1
-        Return "F3DEX2_TRI1"
-      Case F3DZEX.TRI2
-        Return "F3DEX2_TRI2"
-      Case F3DZEX.CULLDL
-        Return "F3DEX2_CULLDL (unemulated)"
-      Case F3DZEX.DL
-        Return "F3DEX2_DL (unemulated)"
-      Case F3DZEX.ENDDL
-        Return "F3DEX2_ENDDL"
-      Case Else
-        Return "Unrecognized (0x" & CommandCode.ToString("X2") & ")"
-    End Select
-  End Function
-
 #Region "GEOMETRY HANDLING"
 
   Private Sub MTX(ByVal w0 As UInt32, ByVal w1 As UInt32)
