@@ -103,7 +103,7 @@ Public Class F3DEX2_Parser
 
   Private MatrixMap As New Dictionary(Of UInteger, Matrix(Of Double))
 
-  Public Sub ParseDL(DL As N64DisplayList)
+  Public Sub ParseDL(DL As N64DisplayList, dlManager As DlManager)
     If HackEnvColor IsNot Nothing Then
       ShaderManager.SetEnvironmentColor(HackEnvColor(0) / 255.0F,
                                         HackEnvColor(1) / 255.0F,
@@ -222,7 +222,21 @@ quad:
 dl:
               ' TODO: Support jumping to another DL.
               ' TODO: Decide to continue or quit depending on pp from w0. 
-              Debug.NotImplemented("Tried to jump to display list with address: " & .High.ToString("X8"))
+              Dim address As UInteger = .High
+
+              Dim pushDl As Boolean = IoUtil.ShiftR(.Low, 16, 8) = 0
+
+              Dim bank As Byte
+              Dim offset As UInteger
+              IoUtil.SplitAddress(address, bank, offset)
+
+              ' TODO: Attempting to jump to addresses w/ bank 0x00 and 0x0c.
+              ' One of these is probably held items!
+              If bank <> 0 Then
+                Dim something = 0
+              Else
+                Debug.NotImplemented("Tried to jump to display list with address: " & address.ToString("X8"))
+              End If
 
             Case F3DZEX.BRANCH_Z
 branchz:

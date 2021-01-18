@@ -115,7 +115,7 @@ badLimbIndexOffset:
                 ElseIf Not somethingVisible Then
                   .DisplayListAddress = displayListAddress
                 Else
-                  .DisplayListAddress = Nothing
+                  .DisplayListAddress = displayListAddress
                 End If
 
                 ' Far model display list (i.e. LOD model). Only used for Link.

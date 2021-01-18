@@ -3449,19 +3449,19 @@ Public Class MainWin
     End If
 
     If SelectionMode = ToolID.NONE Then
-      DLParser.ParseDL(displayList)
+      DLParser.ParseDL(displayList, DlManager)
       If displayList.Highlight Then
         DLParser.ParseMode = DLParser.Parse.GEOMETRY
         Gl.glBindProgramARB(Gl.GL_FRAGMENT_PROGRAM_ARB, HighlightProg)
         Gl.glEnable(Gl.GL_FRAGMENT_PROGRAM_ARB)
         Gl.glEnable(Gl.GL_BLEND)
         Gl.glBlendFunc(Gl.GL_SRC_ALPHA, Gl.GL_ONE_MINUS_SRC_ALPHA)
-        DLParser.ParseDL(displayList)
+        DLParser.ParseDL(displayList, DlManager)
         DLParser.ParseMode = DLParser.Parse.EVERYTHING
       End If
     ElseIf SelectionMode = ToolID.DLIST Then
       Gl.glColor3ub(displayList.PickCol.r, displayList.PickCol.g, displayList.PickCol.b)
-      DLParser.ParseDL(displayList)
+      DLParser.ParseDL(displayList, DlManager)
       ReadPixel = MousePixelRead(NewMouseX, NewMouseY)
       If _
           ReadPixel(0) = displayList.PickCol.r And ReadPixel(1) = displayList.PickCol.g And
