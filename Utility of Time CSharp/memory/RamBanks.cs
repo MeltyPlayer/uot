@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.IO;
 
 namespace UoT {
-  public interface IBank : IList<byte> {}
+  public interface IBank : IList<byte> {
+    byte Segment { get; }
+  }
 
   public abstract class BList : IList<byte> {
     public abstract int Count { get; }
     public abstract byte this[int index] { get; set; }
-    
+
 
     // TODO: Get rid of all this crap.
     public IEnumerator<byte> GetEnumerator()
@@ -54,6 +56,7 @@ namespace UoT {
   public class RomBank : BList, IBank {
     private byte[] impl_ = new byte[0];
 
+    public byte Segment { get; set; }
     public void Resize(int size) => Array.Resize(ref this.impl_, size);
 
     public int StartOffset { get; private set; }
@@ -94,9 +97,11 @@ namespace UoT {
     }
   }
 
-  public class RdRamBank : BList, IBank {
+  /*public class RdRamBank : BList, IBank {
     private const int RDRAM_SIZE = 0x7A1200;
     private readonly RomBank impl_;
+
+
 
     public RdRamBank() {
       this.impl_ = new RomBank();
@@ -111,36 +116,35 @@ namespace UoT {
       } 
       set => this.impl_[offset] = value;
     }
-  }
+  }*/
 
   public static class RamBanks {
     static RamBanks() {
       // TODO: Initialize RDRAM.
     }
 
-    //public static RdRamBank Rdram { get; } = new RdRamBank();
 
     public static RomBank ZFileBuffer { get; } = new RomBank();
 
     /// <summary>
     ///   Bank 2, Current Scene.
     /// </summary>
-    public static RomBank ZSceneBuffer { get; } = new RomBank();
+    public static RomBank ZSceneBuffer { get; } = new RomBank {Segment = 2};
 
     // TODO: Figure out why textures are not parsed correctly from 8 and 9.
     /// <summary>
     ///   Bank 8, "icon_item_static". Contains animated textures, such as eyes,
     ///   mouths, etc.
     /// </summary>
-    public static RomBank IconItemStatic { get; } = new RomBank();
+    public static RomBank IconItemStatic { get; } = new RomBank {Segment = 8};
 
     /// <summary>
     ///   Bank 9, "icon_item_24_static". Contains animated textures.
     /// </summary>
-    public static RomBank IconItem24Static { get; } = new RomBank();
+    public static RomBank IconItem24Static { get; } = new RomBank {Segment = 9};
 
 
-    public static int CurrentBank { get; set; }
+    public static int CurrentBank => RamBanks.ZFileBuffer.Segment;
     public static BankSwitch CommonBankUse { get; set; }
 
     public static ObjectExchange CommonBanks { get; set; }
@@ -174,9 +178,11 @@ namespace UoT {
         case 2:
           return RamBanks.ZSceneBuffer;
         case 4:
-          return RamBanks.CommonBanks.Bank4.Banks[RamBanks.CommonBankUse.Bank04];
+          return RamBanks.CommonBanks.Bank4.Banks
+              [RamBanks.CommonBankUse.Bank04];
         case 5:
-          return RamBanks.CommonBanks.Bank5.Banks[RamBanks.CommonBankUse.Bank05];
+          return RamBanks.CommonBanks.Bank5.Banks
+              [RamBanks.CommonBankUse.Bank05];
 
         default:
           // TODO: Should throw an error for unsupported banks.

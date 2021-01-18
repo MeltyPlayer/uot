@@ -53,7 +53,7 @@ namespace UoT {
     public short z;
     public sbyte firstChild;
     public sbyte nextSibling;
-    public uint DisplayList;
+    public uint DisplayListAddress;
     public uint DisplayListLow;
   }
 

@@ -3178,7 +3178,7 @@ Public Class MainWin
 
       ModelViewMatrixTransformer.Push()
       If LoadedDataType = FileTypes.MAP Then DrawActorBoxes(False)
-      If RenderGraphics Then DrawDLArray(GlobalVarsCs.N64DList, ToolID.NONE)
+      If RenderGraphics Then DrawDLArray(ToolID.NONE)
       If RenderCollision Then DrawCollision(CollisionPolies, CollisionVerts, False)
       ModelViewMatrixTransformer.Pop()
 
@@ -3278,7 +3278,7 @@ Public Class MainWin
     End If
   End Sub
 
-  Private Sub DrawDLArray(ByVal DLists() As N64DisplayList, ByVal SelectionMode As Integer)
+  Private Sub DrawDLArray(ByVal SelectionMode As Integer)
     ' Used for some hacks.
     Time.UpdateCurrent()
 
@@ -3305,7 +3305,7 @@ Public Class MainWin
     ModelViewMatrixTransformer.Push()
 
     If Not DlManager.HasLimbs Then
-      For i As Integer = 0 To DLists.Length - 1
+      For i As Integer = 0 To DlManager.Count - 1
         DrawDL(i, SelectionMode)
       Next
     Else
@@ -3369,8 +3369,8 @@ Public Class MainWin
       DlModel.SetCurrentLimb(id)
 
       Dim dlIndex As Integer = -1
-      If .DisplayList > Nothing Then
-        dlIndex = SearchDLCache(GlobalVarsCs.N64DList, .DisplayList) 'index of limb's requested DL, -1 if none found
+      If .DisplayListAddress > Nothing Then
+        dlIndex = DlManager.GetIndexByAddress(.DisplayListAddress)
       End If
       Dim validDl As Boolean = dlIndex > -1
 
@@ -3441,33 +3441,37 @@ Public Class MainWin
     End With
   End Sub
 
-  Private Sub DrawDL(ByVal index As Integer, ByVal SelectionMode As Integer)
-    If Not GlobalVarsCs.N64DList(index).Skip Then
-      If SelectionMode = ToolID.NONE Then
-        DLParser.ParseDL(GlobalVarsCs.N64DList(index))
-        If GlobalVarsCs.N64DList(index).Highlight Then
-          DLParser.ParseMode = DLParser.Parse.GEOMETRY
-          Gl.glBindProgramARB(Gl.GL_FRAGMENT_PROGRAM_ARB, HighlightProg)
-          Gl.glEnable(Gl.GL_FRAGMENT_PROGRAM_ARB)
-          Gl.glEnable(Gl.GL_BLEND)
-          Gl.glBlendFunc(Gl.GL_SRC_ALPHA, Gl.GL_ONE_MINUS_SRC_ALPHA)
-          DLParser.ParseDL(GlobalVarsCs.N64DList(index))
-          DLParser.ParseMode = DLParser.Parse.EVERYTHING
-        End If
-      ElseIf SelectionMode = ToolID.DLIST Then
-        Gl.glColor3ub(GlobalVarsCs.N64DList(index).PickCol.r, GlobalVarsCs.N64DList(index).PickCol.g, GlobalVarsCs.N64DList(index).PickCol.b)
-        DLParser.ParseDL(GlobalVarsCs.N64DList(index))
-        ReadPixel = MousePixelRead(NewMouseX, NewMouseY)
-        If _
-          ReadPixel(0) = GlobalVarsCs.N64DList(index).PickCol.r And ReadPixel(1) = GlobalVarsCs.N64DList(index).PickCol.g And
-          ReadPixel(2) = GlobalVarsCs.N64DList(index).PickCol.b Then
-          DListSelection.SelectedIndex = index + 1
-          EditingTabs.SelectedTab = EditingTabs.TabPages("DLTab")
-          ToolModes.SelectedItemType = ToolID.DLIST
-          Exit Sub
-        End If
-        ToolModes.SelectedItemType = ToolID.NONE
+  Private Sub DrawDL(index As Integer, SelectionMode As Integer)
+    Dim displayList As N64DisplayList = DlManager.GetDisplayListByIndex(index)
+
+    If displayList.Skip Then
+      Return
+    End If
+
+    If SelectionMode = ToolID.NONE Then
+      DLParser.ParseDL(displayList)
+      If displayList.Highlight Then
+        DLParser.ParseMode = DLParser.Parse.GEOMETRY
+        Gl.glBindProgramARB(Gl.GL_FRAGMENT_PROGRAM_ARB, HighlightProg)
+        Gl.glEnable(Gl.GL_FRAGMENT_PROGRAM_ARB)
+        Gl.glEnable(Gl.GL_BLEND)
+        Gl.glBlendFunc(Gl.GL_SRC_ALPHA, Gl.GL_ONE_MINUS_SRC_ALPHA)
+        DLParser.ParseDL(displayList)
+        DLParser.ParseMode = DLParser.Parse.EVERYTHING
       End If
+    ElseIf SelectionMode = ToolID.DLIST Then
+      Gl.glColor3ub(displayList.PickCol.r, displayList.PickCol.g, displayList.PickCol.b)
+      DLParser.ParseDL(displayList)
+      ReadPixel = MousePixelRead(NewMouseX, NewMouseY)
+      If _
+          ReadPixel(0) = displayList.PickCol.r And ReadPixel(1) = displayList.PickCol.g And
+          ReadPixel(2) = displayList.PickCol.b Then
+        DListSelection.SelectedIndex = index + 1
+        EditingTabs.SelectedTab = EditingTabs.TabPages("DLTab")
+        ToolModes.SelectedItemType = ToolID.DLIST
+        Exit Sub
+      End If
+      ToolModes.SelectedItemType = ToolID.NONE
     End If
   End Sub
 
@@ -4316,13 +4320,15 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     End Try
   End Sub
 
-  Private Function FindAllDLs(Buffer As IBank, ByRef DL() As N64DisplayList)
+  Private Function FindAllDLs(buffer As IBank)
     Dim DLCnt As Integer = 0
-    For i As Integer = 0 To Buffer.Count - 8 Step 8
-      If Buffer(i) = &HE7 And Buffer(i + 1) = 0 And Buffer(i + 2) = 0 _
-         And Buffer(i + 3) = 0 And Buffer(i + 4) = 0 And Buffer(i + 5) = 0 _
-         And Buffer(i + 6) = 0 And Buffer(i + 7) = 0 Then
-        i = ReadInDL(RamBanks.ZFileBuffer, DL, i, DLCnt)
+    For i As Integer = 0 To buffer.Count - 8 Step 8
+      If buffer(i) = &HE7 And buffer(i + 1) = 0 And buffer(i + 2) = 0 _
+         And buffer(i + 3) = 0 And buffer(i + 4) = 0 And buffer(i + 5) = 0 _
+         And buffer(i + 6) = 0 And buffer(i + 7) = 0 Then
+
+        Dim address As UInteger = IoUtil.MergeAddress(buffer.Segment, i)
+        i = ReadInDL(DlManager, address)
         DLCnt += 1
       End If
     Next
@@ -4332,7 +4338,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     Try
       Dim DLCnt As Integer = 0
       Dim FileTreeIndex As Integer = 0
-      ReDim GlobalVarsCs.N64DList(-1)
+      DlManager.Clear()
       AnimationEntries = Nothing
       ReDim LimbEntries(-1)
       AnimationPlaybackPanel.Reset()
@@ -4343,12 +4349,12 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       AnimationList.Items.Clear()
       Select Case LoadedDataType
         Case FileTypes.MAP
-          FindAllDLs(RamBanks.ZFileBuffer, GlobalVarsCs.N64DList)
+          FindAllDLs(RamBanks.ZFileBuffer)
           DlManager.HasLimbs = False
         Case FileTypes.ACTORMODEL
           animationbank.SelectedIndex = 0
           ' TODO: Determine if model is link to auto-select animations.
-          LimbEntries = AnimParser.GetHierarchies(RamBanks.ZFileBuffer, False, DlModel)
+          LimbEntries = AnimParser.GetHierarchies(RamBanks.ZFileBuffer, False, DlManager, DlModel)
           If LimbEntries IsNot Nothing Then
             DlManager.HasLimbs = True
             DLParser.LimbMatrices.Retarget(LimbEntries)
@@ -4359,7 +4365,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
             animationbank_SelectedIndexChanged(Nothing, Nothing)
           Else
             DlManager.HasLimbs = False
-            FindAllDLs(RamBanks.ZFileBuffer, GlobalVarsCs.N64DList)
+            FindAllDLs(RamBanks.ZFileBuffer)
           End If
       End Select
     Catch err As System.Exception
@@ -4368,11 +4374,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       Exit Sub
     End Try
   End Sub
-
-  Private Function ReadInDL(Data As IBank, ByRef DisplayList() As N64DisplayList, ByVal Offset As Integer,
-                            ByVal Index As Integer) As Integer
-    Return F3DEX2_Defs.ReadInDL(Data, DisplayList, Offset, Index)
-  End Function
 
   Private Function IdentifyActor(ByVal ActorType As UInteger, ByVal Actor As Integer) As String
     If ActorType = 0 Then
@@ -4548,12 +4549,15 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
         fileSize = ROMFiles.Others(i).EndOffset - ROMFiles.Others(i).StartOffset
         If ROMFiles.Others(i).FileName = "gameplay_keep" Then
           .Bank4.Banks(0) = New RomBank
+          .Bank4.Banks(0).Segment = 4
           .Bank4.Banks(0).PopulateFromBytes(romBytes, ROMFiles.Others(i).StartOffset, fileSize)
         ElseIf ROMFiles.Others(i).FileName = "gameplay_field_keep" Then
           .Bank5.Banks(0) = New RomBank
+          .Bank5.Banks(0).Segment = 5
           .Bank5.Banks(0).PopulateFromBytes(romBytes, ROMFiles.Others(i).StartOffset, fileSize)
         ElseIf ROMFiles.Others(i).FileName = "gameplay_dangeon_keep" Then
           .Bank5.Banks(1) = New RomBank
+          .Bank5.Banks(1).Segment = 5
           .Bank5.Banks(1).PopulateFromBytes(romBytes, ROMFiles.Others(i).StartOffset, fileSize)
         ElseIf ROMFiles.Others(i).FileName = "icon_item_static" Then
           RamBanks.IconItemStatic.PopulateFromBytes(romBytes, ROMFiles.Others(i).StartOffset, fileSize)
@@ -4595,7 +4599,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
 
   Public Sub Start(ByVal individual As Boolean)
     Try
-      ReDim GlobalVarsCs.N64DList(-1)
+      DlManager.Clear()
       DLParser.KillTexCache()
       Working = True
       If Not individual Then
@@ -4826,7 +4830,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
         Gl.glEnable(Gl.GL_POLYGON_OFFSET_POINT)
         Gl.glPolygonOffset(-6, -6)
         If RenderGraphics Then
-          DrawDLArray(GlobalVarsCs.N64DList, ToolID.VERTEX)
+          DrawDLArray(ToolID.VERTEX)
         End If
         If RenderCollision Then
           DrawCollision(CollisionPolies, CollisionVerts, True)
@@ -4844,7 +4848,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
         Gl.glEnable(Gl.GL_POLYGON_OFFSET_FILL)
         Gl.glPolygonOffset(-7, -7)
         If RenderGraphics Then
-          DrawDLArray(GlobalVarsCs.N64DList, ToolID.DLIST)
+          DrawDLArray(ToolID.DLIST)
         End If
         Gl.glDisable(Gl.GL_POLYGON_OFFSET_FILL)
       Case ToolID.COLTRI
@@ -5617,7 +5621,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     DLParser.Initialize()
     Select Case ftype
       Case SceneFileType.ZSCENE
-        RamBanks.CurrentBank = &H3
+        RamBanks.ZFileBuffer.Segment = &H3
         RenderGraphics = True
         RenderCollision = True
         LoadedDataType = FileTypes.MAP
@@ -5638,7 +5642,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
         ProcessSceneHeader()
         GetEntryPoints()
       Case SceneFileType.ZOBJ
-        RamBanks.CurrentBank = &H6
+        RamBanks.ZFileBuffer.Segment = &H6
         RenderGraphics = True
         RenderCollision = False
         SwitchTool(ToolID.CAMERA)
@@ -5700,13 +5704,13 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       'start saving to room file buffer...
 
       Dim DLStart As Integer = 0
-      For i As Integer = 0 To GlobalVarsCs.N64DList.Length - 1
-        DLStart = GlobalVarsCs.N64DList(i).StartPos.Offset
-        For ii As Integer = 0 To GlobalVarsCs.N64DList(i).CommandCount - 1
-          RamBanks.ZFileBuffer(DLStart) = GlobalVarsCs.N64DList(i).Commands(ii).CMDParams(0)
+      For Each displayList As N64DisplayList In DlManager
+        DLStart = displayList.StartPos.Offset
+        For Each instruction As IDisplayListInstruction In displayList.Commands
+          RamBanks.ZFileBuffer(DLStart) = instruction.CMDParams(0)
           DLStart += 1
-          IoUtil.WriteInt24(RamBanks.ZFileBuffer, GlobalVarsCs.N64DList(i).Commands(ii).Low, DLStart)
-          IoUtil.WriteInt32(RamBanks.ZFileBuffer, GlobalVarsCs.N64DList(i).Commands(ii).High, DLStart)
+          IoUtil.WriteInt24(RamBanks.ZFileBuffer, instruction.Low, DLStart)
+          IoUtil.WriteInt32(RamBanks.ZFileBuffer, instruction.High, DLStart)
         Next
       Next
 
@@ -6448,27 +6452,35 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       Else
         DisableDLHighlight()
       End If
-      For i As Integer = 0 To GlobalVarsCs.N64DList(DListSelection.SelectedIndex - 1).Commands.Length - 1
-        CommandsListbox.Items.Add(GlobalVarsCs.N64DList(DListSelection.SelectedIndex - 1).Commands(i).Name)
-        If Not CommandJumpBox.Items.Contains(GlobalVarsCs.N64DList(DListSelection.SelectedIndex - 1).Commands(i).Name) Then
-          CommandJumpBox.Items.Add(GlobalVarsCs.N64DList(DListSelection.SelectedIndex - 1).Commands(i).Name)
+      Dim selectedDisplayList As N64DisplayList = DlManager.GetDisplayListByIndex(DListSelection.SelectedIndex - 1)
+      For Each instruction As DLCommand In selectedDisplayList.Commands
+        CommandsListbox.Items.Add(instruction.Name)
+        If Not CommandJumpBox.Items.Contains(instruction.Name) Then
+          CommandJumpBox.Items.Add(instruction.Name)
         End If
       Next
     Else
-      For i As Integer = 0 To GlobalVarsCs.N64DList.Length - 1
-        GlobalVarsCs.N64DList(i).Highlight = False
-        GlobalVarsCs.N64DList(i).Skip = False
+      For Each displayList As N64DisplayList In DlManager
+        displayList.Highlight = False
+        displayList.Skip = False
       Next
     End If
   End Sub
 
   Private Sub UpdateCommandDisplay()
-    CommandCodeText.Text =
-      GlobalVarsCs.N64DList(DListSelection.SelectedIndex - 1).Commands(CommandsListbox.SelectedIndex).CMDParams(0).ToString("X2")
-    LowordText.Text =
-      GlobalVarsCs.N64DList(DListSelection.SelectedIndex - 1).Commands(CommandsListbox.SelectedIndex).Low.ToString("X6")
-    HiwordText.Text =
-      GlobalVarsCs.N64DList(DListSelection.SelectedIndex - 1).Commands(CommandsListbox.SelectedIndex).High.ToString("X8")
+    Dim selectedDisplayList As N64DisplayList = DlManager.GetDisplayListByIndex(DListSelection.SelectedIndex - 1)
+    Dim selectedInstruction = selectedDisplayList.Commands(CommandsListbox.SelectedIndex)
+
+    With selectedInstruction
+      Dim opcode As UInteger = .Opcode
+      Dim low As UInteger = .Low
+      Dim high As UInteger = .High
+
+      CommandCodeText.Text = opcode.ToString("X2")
+      LowordText.Text = low.ToString("X6")
+      HiwordText.Text = high.ToString("X8")
+    End With
+
     WholeCommandTxt.Text = CommandCodeText.Text & LowordText.Text & HiwordText.Text
   End Sub
 
@@ -6479,9 +6491,10 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       Select Case CommandsListbox.SelectedItem
         Case "G_SETCOMBINE"
           If Not CombinerEditor.Visible Then
-            LinkedCommands.EnvColor = RDP_Defs.FindLinkedCommand(GlobalVarsCs.N64DList(DListSelection.SelectedIndex - 1), RDP.G_SETENVCOLOR,
+            Dim selectedDisplayList As N64DisplayList = DlManager.GetDisplayListByIndex(DListSelection.SelectedIndex - 1)
+            LinkedCommands.EnvColor = RDP_Defs.FindLinkedCommand(selectedDisplayList, RDP.G_SETENVCOLOR,
                                                         CommandsListbox.SelectedIndex)
-            LinkedCommands.PrimColor = RDP_Defs.FindLinkedCommand(GlobalVarsCs.N64DList(DListSelection.SelectedIndex - 1), RDP.G_SETPRIMCOLOR,
+            LinkedCommands.PrimColor = RDP_Defs.FindLinkedCommand(selectedDisplayList, RDP.G_SETPRIMCOLOR,
                                                          CommandsListbox.SelectedIndex)
           Else
             CombinerEditor.Close()
@@ -6517,7 +6530,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     LowordText.Text = lo
     HiwordText.Text = hi
 
-    Dim displayList As N64DisplayList = GlobalVarsCs.N64DList(DListSelection.SelectedIndex - 1)
+    Dim displayList As N64DisplayList = DlManager.GetDisplayListByIndex(DListSelection.SelectedIndex - 1)
     Dim command As DLCommand = displayList.Commands(CommandsListbox.SelectedIndex)
     command.Update(Convert.ToByte(cmd, 16),
                    Convert.ToUInt32(lo, 16),
@@ -6525,24 +6538,26 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
   End Sub
 
   Private Sub EnableDLHighlight()
-    For i As Integer = 0 To GlobalVarsCs.N64DList.Length - 1
+    For i As Integer = 0 To DlManager.Count - 1
+      Dim displayList As N64DisplayList = DlManager.GetDisplayListByIndex(i)
       If i = DListSelection.SelectedIndex - 1 Then
-        GlobalVarsCs.N64DList(i).Highlight = True
+        displayList.Highlight = True
       Else
-        GlobalVarsCs.N64DList(i).Highlight = False
+        displayList.Highlight = False
       End If
-      GlobalVarsCs.N64DList(i).Skip = False
+      displayList.Skip = False
     Next
   End Sub
 
   Private Sub DisableDLHighlight()
-    For i As Integer = 0 To GlobalVarsCs.N64DList.Length - 1
+    For i As Integer = 0 To DlManager.Count - 1
+      Dim displayList As N64DisplayList = DlManager.GetDisplayListByIndex(i)
       If i = DListSelection.SelectedIndex - 1 Then
-        GlobalVarsCs.N64DList(i).Skip = False
+        displayList.Skip = False
       Else
-        GlobalVarsCs.N64DList(i).Skip = True
+        displayList.Skip = True
       End If
-      GlobalVarsCs.N64DList(i).Highlight = False
+      displayList.Highlight = False
     Next
   End Sub
 
@@ -6622,11 +6637,11 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     End If
     RawDLFile = File.Create(RipDL.FileName)
     If RipAllDLs Then
-      For I As Integer = 0 To GlobalVarsCs.N64DList.Length - 1
-        WriteDLToFile(GlobalVarsCs.N64DList(I), RawDLFile)
+      For Each displayList As N64DisplayList In DlManager
+        WriteDLToFile(displayList, RawDLFile)
       Next
     Else
-      WriteDLToFile(GlobalVarsCs.N64DList(DListSelection.SelectedIndex - 1), RawDLFile)
+      WriteDLToFile(DlManager.GetDisplayListByIndex(DListSelection.SelectedIndex - 1), RawDLFile)
     End If
     RawDLFile.Dispose()
   End Sub

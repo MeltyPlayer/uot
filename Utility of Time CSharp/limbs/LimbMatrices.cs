@@ -68,7 +68,7 @@ namespace UoT {
         var limb = limbs[i];
 
         // TODO: Split this to check if bank is 0 instead?
-        if (limb.DisplayList > 0) {
+        if (limb.DisplayListAddress > 0) {
           limb.VisibleIndex = currentVisibleCount++;
         } else {
           limb.VisibleIndex = -1;

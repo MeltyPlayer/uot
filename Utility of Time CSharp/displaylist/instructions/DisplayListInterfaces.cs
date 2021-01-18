@@ -1,8 +1,12 @@
 ﻿using System.Collections.Generic;
 
 namespace UoT {
-  public interface IDisplayListManager {
-    IDisplayList GetDisplayListAtAddress(uint address);
+  public interface IDisplayListManager : IEnumerable<N64DisplayList> {
+    int Count { get; }
+
+    void Add(N64DisplayList displayList);
+    N64DisplayList GetDisplayListByIndex(int index);
+    int GetIndexByAddress(uint address);
   }
 
   public interface IDisplayList {

@@ -36,15 +36,6 @@ Module Functions
     Return (angle / &HFFFF) * 360.0
   End Function
 
-  Public Function SearchDLCache(ByVal N64DList() As N64DisplayList, ByVal Offset As UInteger) As Integer
-    For i As Integer = 0 To N64DList.Length - 1
-      If N64DList(i).StartPos.Offset = Offset Then
-        Return i
-      End If
-    Next
-    Return -1
-  End Function
-
   Public Function ToggleBoolean(ByRef bool As Boolean, ByRef MenuItem As ToolStripMenuItem)
     If bool Then bool = False Else bool = True
     If MenuItem IsNot Nothing Then

@@ -3,6 +3,20 @@
 namespace UoT.helpers {
   public class IoUtilTest {
     [Test]
+    public void TestSplitAddress() {
+      IoUtil.SplitAddress(0x12345678, out var bank, out var offset);
+
+      Assert.AreEqual(0x12, bank);
+      Assert.AreEqual(0x345678, offset);
+    }
+
+    [Test]
+    public void TestMergeAddress() {
+      Assert.AreEqual(0x12345678, IoUtil.MergeAddress(0x12, 0x345678));
+    }
+
+
+    [Test]
     public void TestReadUInt24() {
       var buffer = new byte[] { 0, 1, 2, 3, 4, 5, 6, 7 };
       Assert.AreEqual(66051, IoUtil.ReadUInt24(buffer, 1));

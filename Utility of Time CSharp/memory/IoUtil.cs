@@ -8,6 +8,10 @@ namespace UoT {
       offset = address << 8 >> 8;
     }
 
+    public static uint MergeAddress(byte bank, uint offset) {
+      return (uint) ((bank << 24) | (offset & 0x00ffffff));
+    }
+
 
     // TODO: Rename params.
     /// <summary>

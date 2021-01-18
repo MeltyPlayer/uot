@@ -1,30 +1,37 @@
 ﻿Module F3DEX2_Defs
-  Public Function ReadInDL(Data As IBank, ByRef DisplayList() As N64DisplayList, ByVal Offset As Integer,
-                           ByVal Index As Integer) As Integer
+  Public Function ReadInDL(dlManager As DlManager, address As UInteger) As Integer
+    Dim bank As Byte
+    Dim offset As UInteger
+    IoUtil.SplitAddress(address, bank, offset)
+
+    Dim data As IBank = RamBanks.GetBankByIndex(bank)
+
     Try
-      If Offset < Data.Count Then
+      If offset < Data.Count Then
         ' TODO: This jumps into the lowest level DL, but the 0xDE command (DL)
         ' actually allows returning back up and calling more DLs. So this seems
         ' like it will sometimes overlook any DLs that follow.
         ' This should just be deleted and replaced w/ emulating in
         ' F3DEX2_Parser.
-        If Data(Offset) = &HDE Then
-          Do Until Data(Offset) <> &HDE
-            Offset = IoUtil.ReadUInt24(Data, Offset + 5)
+        If Data(offset) = &HDE Then
+          Do Until Data(offset) <> &HDE
+            offset = IoUtil.ReadUInt24(Data, offset + 5)
           Loop
         End If
 
-        ReDim Preserve DisplayList(Index)
-        DisplayList(Index) = New N64DisplayList
+        Dim index As Integer = dlManager.Count
 
-        Dim EPLoc As UInteger = Offset
+        Dim displayList As New N64DisplayList
+        dlManager.Add(displayList)
 
-        MainWin.DListSelection.Items.Add((Index + 1).ToString & ". " & Hex(Offset))
+        Dim EPLoc As UInteger = offset
 
-        With DisplayList(Index)
+        MainWin.DListSelection.Items.Add((index + 1).ToString & ". " & Hex(offset))
+
+        With displayList
           .StartPos = New ZSegment
-          .StartPos.Offset = Offset
-          .StartPos.Bank = RamBanks.CurrentBank
+          .StartPos.Offset = offset
+          .StartPos.Bank = data.Segment
           .Skip = False
 
           .PickCol = New Color3UByte
@@ -32,9 +39,9 @@
 
           Do
             ReDim Preserve .Commands(.CommandCount)
-            .Commands(.CommandCount) = New DLCommand(Data, EPLoc)
+            .Commands(.CommandCount) = New DLCommand(data, EPLoc)
 
-            If Data(EPLoc) = F3DZEX.ENDDL Or EPLoc >= Data.Count Then
+            If data(EPLoc) = F3DZEX.ENDDL Or EPLoc >= data.Count Then
               EPLoc += 8
               Exit Do
             End If

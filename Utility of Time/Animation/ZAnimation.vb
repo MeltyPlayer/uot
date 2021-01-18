@@ -6,7 +6,7 @@ Public Class ZAnimation
   '''   Parses a limb hierarchy according to the following spec:
   '''   https://wiki.cloudmodding.com/oot/Animation_Format#Hierarchy
   ''' </summary>
-  Public Function GetHierarchies(Data As IBank, isLink As Boolean, model As StaticDlModel) As Limb()
+  Public Function GetHierarchies(Data As IBank, isLink As Boolean, dlManager As DlManager, model As StaticDlModel) As Limb()
     Dim limbIndexAddress As UInteger
     Dim limbIndexBank As UInteger
     Dim limbIndexOffset As UInteger
@@ -109,13 +109,13 @@ badLimbIndexOffset:
 
                 If displayListBank <> 0 Then
                   Dim displayListBankBuffer As IBank = RamBanks.GetBankByIndex(displayListBank)
-                  .DisplayList = displayListOffset
-                  ReDim Preserve GlobalVarsCs.N64DList(GlobalVarsCs.N64DList.Length)
-                  ReadInDL(displayListBankBuffer, GlobalVarsCs.N64DList, .DisplayList, GlobalVarsCs.N64DList.Length - 1)
+                  .DisplayListAddress = displayListAddress
+
+                  ReadInDL(dlManager, displayListAddress)
                 ElseIf Not somethingVisible Then
-                  .DisplayList = displayListOffset
+                  .DisplayListAddress = displayListAddress
                 Else
-                  .DisplayList = Nothing
+                  .DisplayListAddress = Nothing
                 End If
 
                 ' Far model display list (i.e. LOD model). Only used for Link.
