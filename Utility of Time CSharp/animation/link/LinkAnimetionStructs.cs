@@ -14,8 +14,13 @@
 
 
     // TODO: Support these fields.
-    public Vec3s[] Positions;
+    public Vec3s[] Positions { get; set; }
     public Vec3s GetPosition(int i) => this.Positions[i];
+
+
+    public FacialState[] FacialStates { get; set; }
+    public FacialState GetFacialState(int i) => this.FacialStates[i];
+
 
     public int TrackCount => this.Tracks.Length;
     public IAnimationTrack GetTrack(int i) => this.Tracks[i];

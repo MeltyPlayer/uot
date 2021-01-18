@@ -343,6 +343,8 @@ badTTracks:
               ReDim .Tracks(t).Frames(frameCount - 1)
             Next
 
+            ReDim .FacialStates(frameCount - 1)
+
             For f As Integer = 0 To frameCount - 1
               Dim frameOffset As UInteger = animationOffset + f * frameSize
 
@@ -357,6 +359,15 @@ badTTracks:
 
                 .Tracks(t).Frames(f) = IoUtil.ReadUInt16(animationData, trackOffset)
               Next
+
+              Dim facialStateOffset As UInteger = frameOffset + 2 * (3 + trackCount)
+
+              Dim facialState = animationData(facialStateOffset + 1)
+              Dim mouthState As Byte = IoUtil.ShiftR(facialState, 4, 4)
+              Dim eyeState As Byte = IoUtil.ShiftR(facialState, 0, 4)
+
+              .FacialStates(f).EyeState = eyeState
+              .FacialStates(f).MouthState = mouthState
             Next
 
             MainWin.AnimationList.Items.Add("0x" & Hex(i))

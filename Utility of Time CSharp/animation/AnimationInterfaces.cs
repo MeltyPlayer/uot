@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-
-namespace UoT {
+﻿namespace UoT {
   public interface IAnimation {
     ushort FrameCount { get; }
 
     Vec3s GetPosition(int i);
+    FacialState GetFacialState(int i);
 
     int TrackCount { get; }
     IAnimationTrack GetTrack(int i);
@@ -20,5 +19,10 @@ namespace UoT {
     public short X;
     public short Y;
     public short Z;
+  }
+
+  public struct FacialState {
+    public EyeState EyeState { get; set; }
+    public MouthState MouthState { get; set; }
   }
 }

@@ -33,7 +33,7 @@ Public Class F3DEX2_Parser
 
   Private UseJank As Boolean = True
 
-  Private JankTileDescriptors(- 1) As TileDescriptor
+  Private JankTileDescriptors(-1) As TileDescriptor
   Private JankCache As New TextureCache
   Private JankTextures(1) As Texture
 
@@ -50,7 +50,7 @@ Public Class F3DEX2_Parser
   '''   Judging from GLideN64's source, these are selected in TEXTURE() as tile
   '''   and tile+1.
   ''' </summary>
-  Private SelectedTileDescriptors(- 1) As Integer
+  Private SelectedTileDescriptors(-1) As Integer
 
   ' TODO: Delete this field?
   Private CurrentSelectedTileDescriptor As Integer
@@ -87,11 +87,11 @@ Public Class F3DEX2_Parser
 
 #Region "Hacks"
 
-  Private FaceHack As IIndirectTextureHack
+  Private FaceHack_ As IIndirectTextureHack
   Private HackEnvColor() As Byte
 
-  Public Sub EnableHacksFor(filename As String)
-    FaceHack = IndirectTextureHacks.Get(filename)
+  Public Sub EnableHacksFor(filename As String, faceHack As IIndirectTextureHack)
+    FaceHack_ = faceHack
 
     Dim envColor() As Byte = EnvironmentColorHacks.GetColorForObject(filename)
     HackEnvColor = envColor
@@ -927,8 +927,8 @@ enddisplaylist:
   Private Sub SETTIMG(w0 As UInt32, w1 As UInt32, ByVal paletteMode As Boolean)
     Dim address As UInt32 = w1
 
-    If FaceHack IsNot Nothing Then
-      address = FaceHack.MapTextureAddress(address)
+    If FaceHack_ IsNot Nothing Then
+      address = FaceHack_.MapTextureAddress(address)
     End If
 
     Dim tmpBank As Integer

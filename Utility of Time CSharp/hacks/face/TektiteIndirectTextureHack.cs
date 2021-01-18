@@ -9,6 +9,9 @@
   public class TektiteIndirectTextureHack : IIndirectTextureHack {
     // TODO: Support switching between the sets in the editor.
 
+    public EyeState EyeState { get => default; set { } }
+    public MouthState MouthState { get => default; set { } }
+
     public uint MapTextureAddress(uint originalAddress) {
       var blueOffset = 0x1300;
       var redOffset = 0x1B00;

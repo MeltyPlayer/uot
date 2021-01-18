@@ -1,7 +1,30 @@
 ﻿using System.Collections.Generic;
 
 namespace UoT {
+  public enum EyeState {
+    AUTO = 0,
+    OPEN = 1,
+    HALF_OPEN = 2,
+    CLOSED = 3,
+    LOOKING_LEFT = 4,
+    LOOKING_RIGHT = 5,
+    SHOCK = 6,
+    LOOKING_DOWN = 7,
+    CLOSED_TIGHT = 8,
+  }
+
+  public enum MouthState {
+    AUTO = 0,
+    CLOSED = 1,
+    SLIGHTLY_OPEN = 2,
+    OPEN = 3,
+    SMILE = 4,
+  }
+
   public interface IIndirectTextureHack {
+    EyeState EyeState { get; set; }
+    MouthState MouthState { get; set; }
+
     /// <summary>
     ///   Maps a given texture address to a new address. This is needed to map
     ///   an eye/mouth address from a random spot in RAM to where they're

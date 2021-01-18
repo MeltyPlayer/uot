@@ -3282,7 +3282,9 @@ Public Class MainWin
     ' Used for some hacks.
     Time.UpdateCurrent()
 
-    DLParser.EnableHacksFor(ObjectFilename)
+    ' TODO: Don't update this each frame.
+    Dim indirectTextureHack As IIndirectTextureHack = IndirectTextureHacks.Get(ObjectFilename)
+    DLParser.EnableHacksFor(ObjectFilename, indirectTextureHack)
 
     AnimationPlaybackPanel.Tick()
 
@@ -3327,6 +3329,10 @@ Public Class MainWin
           Dim z As Double = startPos.Z * (1 - f) + endPos.Z * f
 
           ModelViewMatrixTransformer.Translate(x, y, z)
+
+          Dim face As FacialState = .GetFacialState(frameIndex)
+          indirectTextureHack.EyeState = face.EyeState
+          indirectTextureHack.MouthState = face.MouthState
         End With
       End If
 

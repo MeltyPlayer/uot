@@ -7,6 +7,10 @@
       NORMAL = 0x30C8,
     }
 
+    public EyeState EyeState { get => default; set { } }
+    public MouthState MouthState { get => default; set { } }
+
+
     public uint MapTextureAddress(uint originalAddress) {
       // Left eye
       if (originalAddress == 0x09000000) {

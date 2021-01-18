@@ -12,6 +12,7 @@
 
     public Vec3s Position;
     public Vec3s GetPosition(int _) => this.Position;
+    public FacialState GetFacialState(int _) => default;
 
     public int TrackCount => this.Tracks.Length;
     public IAnimationTrack GetTrack(int i) => this.Tracks[i];
