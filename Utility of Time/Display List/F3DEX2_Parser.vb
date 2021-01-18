@@ -114,7 +114,7 @@ Public Class F3DEX2_Parser
     For i As Integer = 0 To DL.Commands.Length - 1
       With DL.Commands(i)
         If ParseMode = Parse.EVERYTHING Then
-          Select Case .CMDParams(0)
+          Select Case .Opcode
             Case F3DZEX.POPMTX
 popmatrix:
               Debug.NotImplemented()
@@ -129,9 +129,9 @@ setprimitivecolor:
 
             Case RDP.G_SETTIMG
 settextureimg:
-              Dim paletteMode As Boolean = (DL.Commands(i + 1).CMDParams(0) = RDP.G_RDPTILESYNC)
+              Dim paletteMode As Boolean = (DL.Commands(i + 1).Opcode = RDP.G_RDPTILESYNC)
 
-              If DL.Commands(i - 1).CMDParams(0) = RDP.G_SETTILESIZE Then
+              If DL.Commands(i - 1).Opcode = RDP.G_SETTILESIZE Then
                 CurrentSelectedTileDescriptor = 1
                 If GLExtensions.GLMultiTexture And GLExtensions.GLFragProg Then
                   MultiTexCoord = True
@@ -197,7 +197,7 @@ matrix:
 
             Case F3DZEX.VTX
 vertex:
-              Dim nextIsNotCulling As Boolean = DL.Commands(i + 1).CMDParams(0) <> F3DZEX.CULLDL
+              Dim nextIsNotCulling As Boolean = DL.Commands(i + 1).Opcode <> F3DZEX.CULLDL
               If nextIsNotCulling Then
                 VTX(.Low, .High)
               End If
@@ -234,7 +234,7 @@ enddisplaylist:
               Exit Sub
           End Select
         ElseIf ParseMode = Parse.GEOMETRY Then
-          Select Case .CMDParams(0)
+          Select Case .Opcode
             Case F3DZEX.VTX
               GoTo vertex
 

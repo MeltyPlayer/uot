@@ -235,10 +235,10 @@ Public Class CombinerEditor
     MainWin.LowordText.Text = CompiledCmb.Low.ToString("X6")
     MainWin.HiwordText.Text = CompiledCmb.High.ToString("X8")
 
-    Dim displayList As N64DisplayList = GlobalVarsCs.N64DList(MainWin.DListSelection.SelectedIndex - 1)
-    Dim command As DLCommand = displayList.Commands(MainWin.CommandsListbox.SelectedIndex)
+    Dim displayList As IDisplayList = GlobalVarsCs.N64DList(MainWin.DListSelection.SelectedIndex - 1)
+    Dim instruction As IDisplayListInstruction = displayList.Commands(MainWin.CommandsListbox.SelectedIndex)
 
-    command.Update(Convert.ToByte(MainWin.CommandCodeText.Text, 16),
+    instruction.Update(Convert.ToByte(MainWin.CommandCodeText.Text, 16),
                    Convert.ToUInt32(MainWin.LowordText.Text, 16),
                    Convert.ToUInt32(MainWin.HiwordText.Text, 16))
   End Sub

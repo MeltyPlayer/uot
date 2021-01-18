@@ -69,9 +69,10 @@
     <Compile Include="common\fuzzy\IFuzzySearchDictionary.cs" />
     <Compile Include="common\fuzzy\SymSpellFuzzySearchDictionary.cs" />
     <Compile Include="data\Structs.cs" />
-    <Compile Include="displaylist\DisplayListStructs.cs" />
+    <Compile Include="displaylist\instructions\DLCommand.cs" />
     <Compile Include="displaylist\DlShaderGenerator.cs" />
-    <Compile Include="displaylist\DisplayListInterfaces.cs" />
+    <Compile Include="displaylist\instructions\DisplayListInterfaces.cs" />
+    <Compile Include="displaylist\instructions\N64DisplayList.cs" />
     <Compile Include="limbs\LimbMatrices.cs" />
     <Compile Include="displaylist\VertexCache.cs" />
     <Compile Include="gl\GlConstants.cs" />
@@ -124,7 +125,7 @@
     </Compile>
     <Compile Include="ui\main\viewer\Camera.cs" />
     <Compile Include="util\Debug.cs" />
-    <Compile Include="displaylist\DlManager.cs" />
+    <Compile Include="displaylist\instructions\DlManager.cs" />
     <Compile Include="displaylist\DlShaderManager.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="gl\GLExtensions.cs" />
@@ -203,5 +204,6 @@
   <ItemGroup>
     <Content Include="Resources\uoticon64.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -6608,9 +6608,9 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
   End Sub
 
   Private Sub WriteDLToFile(ByVal DL As N64DisplayList, ByRef file As FileStream)
-    For i As Integer = 0 To DL.Commands.Length - 1
+    For Each command As DLCommand In DL.Commands
       For ii As Integer = 0 To 7
-        file.WriteByte(DL.Commands(i).CMDParams(ii))
+        file.WriteByte(command.CMDParams(ii))
       Next
     Next
   End Sub

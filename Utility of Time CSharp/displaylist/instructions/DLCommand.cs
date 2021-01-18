@@ -1,18 +1,6 @@
 ﻿using System.Collections.Generic;
 
 namespace UoT {
-  public class N64DisplayList {
-    public bool Skip;
-    public ZSegment StartPos;
-    public ZSegment EndPos;
-    public int CommandCount;
-    public DLCommand[] Commands;
-
-    // Picker
-    public bool Highlight { get; set; }
-    public Color3UByte PickCol { get; set; }
-  }
-
   public class DLCommand : IDisplayListInstruction {
     private byte opcode_;
 
@@ -27,18 +15,18 @@ namespace UoT {
     public string Name { get; private set; }
 
 
-    public byte[] CMDParams { get; } = new byte[8];
     public uint Low { get; private set; }
     public uint High { get; private set; }
+    public byte[] CMDParams { get; } = new byte[8];
 
-    public IDisplayListInstruction FirstChild { get; set; }
-    public IDisplayListInstruction NextSibling { get; set; }
 
     public DLCommand() {}
     public DLCommand(byte opcode) => this.Update(opcode, 0, 0);
     public DLCommand(IList<byte> src, uint offset) => this.Update(src, offset);
+
     public DLCommand(byte opcode, uint low, uint high)
       => this.Update(opcode, low, high);
+
     public DLCommand(uint low, uint high) => this.Update(low, high);
 
 
