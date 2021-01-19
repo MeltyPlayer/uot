@@ -3330,9 +3330,11 @@ Public Class MainWin
 
           ModelViewMatrixTransformer.Translate(x, y, z)
 
-          Dim face As FacialState = .GetFacialState(frameIndex)
-          indirectTextureHack.EyeState = face.EyeState
-          indirectTextureHack.MouthState = face.MouthState
+          If indirectTextureHack IsNot Nothing Then
+            Dim face As FacialState = .GetFacialState(frameIndex)
+            indirectTextureHack.EyeState = face.EyeState
+            indirectTextureHack.MouthState = face.MouthState
+          End If
         End With
       End If
 

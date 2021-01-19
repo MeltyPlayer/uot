@@ -73,6 +73,7 @@
     <Compile Include="displaylist\DlShaderGenerator.cs" />
     <Compile Include="displaylist\instructions\DisplayListInterfaces.cs" />
     <Compile Include="displaylist\instructions\N64DisplayList.cs" />
+    <Compile Include="hacks\BlinkUtil.cs" />
     <Compile Include="hacks\displaylist\DisplayListHacks.cs" />
     <Compile Include="hacks\displaylist\LinkChildDisplayListHack.cs" />
     <Compile Include="limbs\LimbMatrices.cs" />
