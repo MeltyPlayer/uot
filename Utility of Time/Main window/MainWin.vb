@@ -2703,14 +2703,6 @@ Public Class MainWin
 
 #End Region
 
-#Region "DISPLAY LIST RELATED"
-
-  Private LAmbient() As Single = {1.0F, 1.0F, 1.0F, 1.0F}
-  Private LDiffuse() As Single = {1.0F, 1.0F, 1.0F, 1.0F}
-  Private LPosition() As Single = {1.0F, 1.0F, 1.0F, 1.0F}
-
-#End Region
-
 #Region "COLLISION RELATED"
 
   Private CollisionTriColor() As CollisionTriColorSelect
@@ -2857,37 +2849,7 @@ Public Class MainWin
   End Sub
 
   Private Sub ResetOGL()
-    Gl.glShadeModel(Gl.GL_SMOOTH)
-    Gl.glEnable(Gl.GL_POINT_SMOOTH)
-    Gl.glHint(Gl.GL_POINT_SMOOTH_HINT, Gl.GL_NICEST)
-
-    Gl.glPolygonMode(Gl.GL_FRONT_AND_BACK, Gl.GL_FILL)
-
-    Gl.glClearDepth(5.0F)
-
-    Gl.glDepthFunc(Gl.GL_LEQUAL)
-    Gl.glEnable(Gl.GL_DEPTH_TEST)
-    Gl.glDepthMask(Gl.GL_TRUE)
-
-    Gl.glHint(Gl.GL_PERSPECTIVE_CORRECTION_HINT, Gl.GL_NICEST)
-
-    Gl.glLightfv(Gl.GL_LIGHT0, Gl.GL_AMBIENT, LAmbient)
-    Gl.glLightfv(Gl.GL_LIGHT0, Gl.GL_DIFFUSE, LDiffuse)
-    Gl.glLightfv(Gl.GL_LIGHT0, Gl.GL_SPECULAR, LAmbient)
-    Gl.glLightfv(Gl.GL_LIGHT0, Gl.GL_POSITION, LPosition)
-
-    Gl.glEnable(Gl.GL_LIGHT0)
-
-    Gl.glEnable(Gl.GL_LIGHTING)
-    Gl.glEnable(Gl.GL_NORMALIZE)
-
-    Gl.glEnable(Gl.GL_CULL_FACE)
-    Gl.glCullFace(Gl.GL_BACK)
-
-    Gl.glEnable(Gl.GL_BLEND)
-    Gl.glBlendFunc(Gl.GL_SRC_ALPHA, Gl.GL_ONE_MINUS_SRC_ALPHA)
-
-    Gl.glClearColor(0.2, 0.5, 0.7, 1)
+    GlConstants.ResetGl()
   End Sub
 
   Private Sub FatherLoop()

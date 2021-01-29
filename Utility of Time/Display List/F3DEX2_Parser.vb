@@ -615,10 +615,10 @@ enddisplaylist:
                                      vertex.U = u
                                      vertex.V = v
 
-                                     vertex.R = r
-                                     vertex.G = g
-                                     vertex.B = b
-                                     vertex.A = a
+                                     'vertex.R = r
+                                     'vertex.G = g
+                                     'vertex.B = b
+                                     'vertex.A = a
                                    End Function)
           Offset += 16
         Next

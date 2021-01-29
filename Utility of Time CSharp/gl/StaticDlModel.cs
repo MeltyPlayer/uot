@@ -70,6 +70,10 @@ namespace UoT {
           Gl.glBegin(Gl.GL_TRIANGLES);
 
           // TODO: Draw.
+          foreach (var vertexId in triangle.Vertices) {
+            var vertex = this.allVertices_[vertexId];
+            Gl.glVertex3d(vertex.X, vertex.Y, vertex.Z);
+          }
 
           Gl.glEnd();
         }
@@ -168,40 +172,51 @@ namespace UoT {
   }
 
   public class LimbInstance {
-    public IList<TriangleParams> Triangles;
-    public IList<int> OwnedVertices;
+    public IList<TriangleParams> Triangles { get; set; }
+    public IList<int> OwnedVertices { get; set; }
 
-    public double X;
-    public double Y;
-    public double Z;
+    public double X { get; set; }
+    public double Y { get; set; }
+    public double Z { get; set; }
 
-    public int FirstChild;
-    public int NextSibling;
+    public int FirstChild { get; set; }
+    public int NextSibling { get; set; }
   }
 
   public struct TriangleParams {
-    public int[] Textures;
-    public int[] Vertices;
+    public int[] Textures { get; set; }
+    public int[] Vertices { get; set; }
   }
 
   public struct VertexParams {
-    public int Uuid;
+    public int Uuid { get; set; }
 
     public double X;
     public double Y;
     public double Z;
 
-    public double U;
-    public double V;
+    public double U { get; set; }
+    public double V { get; set; }
 
-    public double R;
-    public double G;
-    public double B;
-    public double A;
+    public Normal? Normal { get; set; }
+    public Rgba? Rgba { get; set; }
   }
 
   public struct TextureWrapper {
     public int Uuid;
     public Texture Texture;
+  }
+
+  public struct Normal {
+    public double X { get; }
+    public double Y { get; }
+    public double Z { get; }
+  }
+
+  public struct Rgba {
+    public double R { get; set; }
+    public double G { get; set; }
+    public double B { get; set; }
+    public double A { get; set; }
   }
 }

@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -9,27 +8,16 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>UoT</RootNamespace>
     <AssemblyName>Utility of Time CSharp</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
+    <TargetFramework>net472</TargetFramework>
+    <Nullable>enable</Nullable>
+    <LangVersion>8.0</LangVersion>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="FastFuzzyStringMatcher" Version="1.0.0" />
+    <PackageReference Include="MathNet.Numerics" Version="4.15.0" />
+    <PackageReference Include="SymSpell" Version="6.7.0" />
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="OpenSpatialLibrary, Version=0.5.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -61,152 +49,4 @@
       <HintPath>..\Utility of Time\Tao GL Libs\Tao.Platform.Windows.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="actor\link\Tunic.cs" />
-    <Compile Include="animation\AnimationInterfaces.cs" />
-    <Compile Include="animation\link\LinkAnimetionStructs.cs" />
-    <Compile Include="animation\NormalAnimationStructs.cs" />
-    <Compile Include="common\fuzzy\IFuzzySearchDictionary.cs" />
-    <Compile Include="common\fuzzy\SymSpellFuzzySearchDictionary.cs" />
-    <Compile Include="data\Structs.cs" />
-    <Compile Include="displaylist\instructions\DLCommand.cs" />
-    <Compile Include="displaylist\DlShaderGenerator.cs" />
-    <Compile Include="displaylist\instructions\DisplayListInterfaces.cs" />
-    <Compile Include="displaylist\instructions\N64DisplayList.cs" />
-    <Compile Include="hacks\BlinkUtil.cs" />
-    <Compile Include="hacks\displaylist\DisplayListHacks.cs" />
-    <Compile Include="hacks\displaylist\LinkChildDisplayListHack.cs" />
-    <Compile Include="limbs\LimbMatrices.cs" />
-    <Compile Include="displaylist\VertexCache.cs" />
-    <Compile Include="gl\GlConstants.cs" />
-    <Compile Include="gl\ShaderCompiler.cs" />
-    <Compile Include="hacks\AnimatedTextureHacks.cs" />
-    <Compile Include="hacks\EnvironmentColorHacks.cs" />
-    <Compile Include="hacks\face\IndirectTextureHacks.cs" />
-    <Compile Include="hacks\face\TektiteIndirectTextureHack.cs" />
-    <Compile Include="hacks\face\ZeldaAdultIndirectTextureHack.cs" />
-    <Compile Include="hacks\face\ZeldaChildIndirectTextureHack.cs" />
-    <Compile Include="hacks\face\LinkIndirectTextureHack.cs" />
-    <Compile Include="limbs\LimbInterfaces.cs" />
-    <Compile Include="memory\files\ZFiles.cs" />
-    <Compile Include="memory\files\ZFileTypes.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="ui\common\component\BetterTreeView.cs" />
-    <Compile Include="ui\common\component\WaterMarkTextBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="common\fuzzy\BkTreeFuzzySearchDictionary.cs" />
-    <Compile Include="ui\main\tabs\animation\AnimationPlaybackPanel.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ui\main\tabs\animation\AnimationPlaybackPanel.Designer.cs">
-      <DependentUpon>AnimationPlaybackPanel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="animation\playback\FrameAdvancer.cs" />
-    <Compile Include="animation\playback\PlaybackInterfaces.cs" />
-    <Compile Include="ui\common\component\TransparentTrackBar.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ui\main\files\ZFileTreeView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ui\main\files\ZFileTreeView.Designer.cs">
-      <DependentUpon>ZFileTreeView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ui\main\top\help\AboutBoxDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ui\main\top\help\AboutBoxDialog.Designer.cs">
-      <DependentUpon>AboutBoxDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ui\main\top\help\HelpDropdown.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ui\main\viewer\Camera.cs" />
-    <Compile Include="util\Debug.cs" />
-    <Compile Include="displaylist\instructions\DlManager.cs" />
-    <Compile Include="displaylist\DlShaderManager.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="gl\GLExtensions.cs" />
-    <Compile Include="gl\StaticDlModel.cs" />
-    <Compile Include="graphics\Gdp.cs" />
-    <Compile Include="memory\files\BetterFileNames.cs" />
-    <Compile Include="gl\ModelViewMatrixTransformer.cs" />
-    <Compile Include="memory\IoUtil.cs" />
-    <Compile Include="math\trig\Interpolation.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="scene\SceneFileType.cs" />
-    <Compile Include="tao\SimpleOpenGlControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="texture\BitSize.cs" />
-    <Compile Include="texture\ColorFormat.cs" />
-    <Compile Include="texture\DlTextureManager.cs" />
-    <Compile Include="texture\OglTextureConverter.cs" />
-    <Compile Include="memory\RamBanks.cs" />
-    <Compile Include="texture\Texture.cs" />
-    <Compile Include="texture\TextureCache.cs" />
-    <Compile Include="texture\TileDescriptor.cs" />
-    <Compile Include="texture\TimgArgs.cs" />
-    <Compile Include="texture\Tmem.cs" />
-    <Compile Include="ui\main\viewer\PickerUtil.cs" />
-    <Compile Include="util\Time.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TaoButton.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ui\main\tabs\animation\AnimationPlaybackPanel.resx">
-      <DependentUpon>AnimationPlaybackPanel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ui\main\files\ZFileTreeView.resx">
-      <DependentUpon>ZFileTreeView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ui\main\top\help\AboutBoxDialog.resx">
-      <DependentUpon>AboutBoxDialog.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="displaylist\F3DEX_Defs.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="helpers\Functions.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="displaylist\F3DEX2_Defs.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="texture\TextureConverter.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="displaylist\RDP_Defs.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="data\GlobalVars.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="FastFuzzyStringMatcher">
-      <Version>1.0.0</Version>
-    </PackageReference>
-    <PackageReference Include="MathNet.Numerics">
-      <Version>4.12.0</Version>
-    </PackageReference>
-    <PackageReference Include="SymSpell">
-      <Version>6.7.0</Version>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\uoticon64.ico" />
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
