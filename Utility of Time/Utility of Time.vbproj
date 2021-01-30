@@ -281,7 +281,6 @@
     <Compile Include="Animation\ZAnimation.vb" />
     <Compile Include="ApplicationEvents.vb" />
     <Compile Include="Databases\PresetReader.vb" />
-    <Compile Include="Display List\MatrixManipulation.vb" />
     <Compile Include="External Model Formats\3ds.vb" />
     <Compile Include="DL Command Editors\CombinerEditor.Designer.vb">
       <DependentUpon>CombinerEditor.vb</DependentUpon>
