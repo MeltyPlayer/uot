@@ -25,7 +25,7 @@ namespace UoT {
       }
     }
 
-    public Texture Add(TileDescriptor tileDescriptor, byte[] rgba, bool save = false) {
+    public Texture? Add(TileDescriptor tileDescriptor, byte[] rgba, bool save = false) {
       var uuid = tileDescriptor.Uuid;
       if (!this.impl_.ContainsKey(uuid)) {
         var texture = new Texture(tileDescriptor, rgba, save);

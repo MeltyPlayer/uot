@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace UoT.ui.common.component {
-  public class BetterTreeNode<T> {
-    private readonly TreeNode impl_;
+  public class BetterTreeNode<T> where T : class {
+    private readonly TreeNode? impl_;
     private readonly TreeNodeCollection collection_;
 
-    public BetterTreeNode<T> Parent { get; private set; }
+    public BetterTreeNode<T>? Parent { get; private set; }
 
     public int AbsoluteIndex { get; }
 
@@ -16,10 +16,10 @@ namespace UoT.ui.common.component {
         new List<BetterTreeNode<T>>();
 
     // TODO: Possible to remove unboxing?
-    public T AssociatedData { get; set; }
-    public string Text => this.impl_.Text;
+    public T? AssociatedData { get; set; }
+    public string? Text => this.impl_?.Text;
 
-    public BetterTreeNode(TreeNode impl, TreeNodeCollection collection) {
+    public BetterTreeNode(TreeNode? impl, TreeNodeCollection collection) {
       this.impl_ = impl;
 
       if (impl != null) {
@@ -45,7 +45,7 @@ namespace UoT.ui.common.component {
     public void Add(BetterTreeNode<T> node) => this.collection_.Add(node.impl_);
 
     public void ResetChildrenRecursively(
-        Func<BetterTreeNode<T>, bool> filter = null) {
+        Func<BetterTreeNode<T>, bool>? filter = null) {
       this.ClearRecursively_();
       this.ReaddChildrenRecursively(filter);
     }
@@ -63,7 +63,7 @@ namespace UoT.ui.common.component {
     }
 
     private void ReaddChildrenRecursively(
-        Func<BetterTreeNode<T>, bool> filter) {
+        Func<BetterTreeNode<T>, bool>? filter) {
       // TODO: Remove unboxing?
       foreach (var childBetterTreeNode in this.absoluteChildren_) {
         if (filter != null && !filter(childBetterTreeNode)) {
@@ -76,7 +76,7 @@ namespace UoT.ui.common.component {
     }
   }
 
-  public class BetterTreeView<T> {
+  public class BetterTreeView<T> where T : class {
     // TODO: Add tests.
     // TODO: Add support for different hierarchies.
 
@@ -91,7 +91,7 @@ namespace UoT.ui.common.component {
 
     public event SelectedHandler Selected = delegate {};
 
-    public IComparer<BetterTreeNode<T>> Comparer {
+    public IComparer<BetterTreeNode<T>>? Comparer {
       get => this.comparer_.Comparer;
       set => this.comparer_.Comparer = value;
     }
@@ -102,7 +102,7 @@ namespace UoT.ui.common.component {
 
       this.impl_.AfterSelect += (sender, args) =>
           this.Selected.Invoke(
-              (BetterTreeNode<T>) this.impl_.SelectedNode?.Tag);
+              (BetterTreeNode<T>) this.impl_.SelectedNode!.Tag);
 
       this.impl_.TreeViewNodeSorter = this.comparer_;
     }
@@ -123,7 +123,7 @@ namespace UoT.ui.common.component {
 
       public bool Enabled { get; set; }
 
-      public IComparer<BetterTreeNode<T>> Comparer { get; set; }
+      public IComparer<BetterTreeNode<T>>? Comparer { get; set; }
 
       public int Compare(object lhs, object rhs) {
         if (!this.Enabled) {

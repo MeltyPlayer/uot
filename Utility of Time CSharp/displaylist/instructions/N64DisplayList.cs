@@ -9,6 +9,6 @@
     public bool Highlight { get; set; }
     public Color3UByte PickCol { get; set; }
 
-    public IDisplayListInstruction[] Commands { get; set; }
+    public IDisplayListInstruction[]? Commands { get; set; }
   }
 }

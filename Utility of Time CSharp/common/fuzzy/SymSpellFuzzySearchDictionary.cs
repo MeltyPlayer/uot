@@ -4,8 +4,13 @@ using System.Linq;
 
 namespace UoT.common.fuzzy {
   public class SymSpellFuzzySearchResult<T> : IFuzzySearchResult<T> {
-    public T AssociatedData { get; set; }
+    // TODO: Make nonnull via init, C#9.
+    public T AssociatedData { get; }
     public float MatchPercentage { get; set; }
+
+    public SymSpellFuzzySearchResult(T associatedData) {
+      this.AssociatedData = associatedData;
+    }
   }
 
   public class SymSpellFuzzySearchDictionary<T> : IFuzzySearchDictionary<T> {
@@ -74,9 +79,7 @@ namespace UoT.common.fuzzy {
           var associatedDatas = this.associatedData_[matchedKeyword];
           foreach (var associatedData in associatedDatas) {
             if (!wipResults.TryGetValue(associatedData, out var result)) {
-              result = new SymSpellFuzzySearchResult<T> {
-                  AssociatedData = associatedData
-              };
+              result = new SymSpellFuzzySearchResult<T>(associatedData);
               wipResults.Add(associatedData, result);
             }
 

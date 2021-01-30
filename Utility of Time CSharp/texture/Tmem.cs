@@ -1,5 +1,7 @@
 ﻿using System;
 
+using UoT.util;
+
 namespace UoT {
   // TODO: Delete statics, use this within DlManager.
   /// <summary>
@@ -203,7 +205,7 @@ namespace UoT {
 
       IoUtil.SplitAddress(timgArgs.Address, out var bank, out var offset);
 
-      var targetBank = RamBanks.GetBankByIndex(bank);
+      var targetBank = Asserts.Assert(RamBanks.GetBankByIndex(bank));
 
       var timgWidth = timgArgs.Width;
 

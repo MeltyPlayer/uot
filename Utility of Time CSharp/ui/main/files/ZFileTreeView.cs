@@ -27,11 +27,13 @@ namespace UoT.ui.main.files {
 
     // TODO: Clean this up.
     private class ZFileNode {
-      public ZFileNode Parent;
-      public IZFile ZFile;
-      public ISet<string> Keywords;
-      public double MatchPercentage;
-      public IList<ZFileNode> AllChildZFileNodes = new List<ZFileNode>();
+      public ZFileNode? Parent { get; set; }
+      public IZFile? ZFile { get; set; }
+      public ISet<string> Keywords { get;} = new HashSet<string>();
+      public double MatchPercentage { get; set; }
+
+      public IList<ZFileNode> AllChildZFileNodes { get; } =
+        new List<ZFileNode>();
     }
 
     public ZFileTreeView() {
@@ -57,25 +59,25 @@ namespace UoT.ui.main.files {
       var modelsNode = root.Add("Actor models");
       this.AddZFileNodeFor(null, modelsNode);
       foreach (var model in zFiles.Objects) {
-        var modelNode = modelsNode.Add(model.BetterFileName);
+        var modelNode = modelsNode.Add(model.BetterFileName!);
         this.AddZFileNodeFor(model, modelNode);
       }
 
       var actorCodeNode = root.Add("Actor code");
       this.AddZFileNodeFor(null, actorCodeNode);
       foreach (var code in zFiles.ActorCode) {
-        var codeNode = actorCodeNode.Add(code.BetterFileName);
+        var codeNode = actorCodeNode.Add(code.BetterFileName!);
         this.AddZFileNodeFor(code, codeNode);
       }
 
       var scenesNode = root.Add("Scenes");
       this.AddZFileNodeFor(null, scenesNode);
       foreach (var scene in zFiles.Scenes) {
-        var sceneNode = scenesNode.Add(scene.BetterFileName);
+        var sceneNode = scenesNode.Add(scene.BetterFileName!);
         this.AddZFileNodeFor(scene, sceneNode);
 
         foreach (var map in scene.Maps) {
-          var mapNode = sceneNode.Add(map.BetterFileName);
+          var mapNode = sceneNode.Add(map.BetterFileName!);
           this.AddZFileNodeFor(map, mapNode);
         }
       }
@@ -83,7 +85,7 @@ namespace UoT.ui.main.files {
       var othersNode = root.Add("Others");
       this.AddZFileNodeFor(null, othersNode);
       foreach (var other in zFiles.Others) {
-        var otherNode = othersNode.Add(other.BetterFileName);
+        var otherNode = othersNode.Add(other.BetterFileName!);
         this.AddZFileNodeFor(other, otherNode);
       }
 
@@ -93,7 +95,7 @@ namespace UoT.ui.main.files {
     }
 
     private void AddZFileNodeFor(
-        IZFile zFile,
+        IZFile? zFile,
         BetterTreeNode<ZFileNode> treeNode) {
       var parentZFileNode = treeNode.Parent?.AssociatedData;
 
@@ -107,15 +109,15 @@ namespace UoT.ui.main.files {
       parentZFileNode?.AllChildZFileNodes?.Add(zFileNode);
 
       // Gathers keywords.
-      var keywords = zFileNode.Keywords = new HashSet<string>();
+      var keywords = zFileNode.Keywords;
 
       if (zFile != null) {
         var fileName = zFile.FileName;
-        keywords.Add(fileName);
+        keywords.Add(fileName!);
 
         var betterFileName = zFile.BetterFileName;
         if (!string.IsNullOrEmpty(betterFileName)) {
-          keywords.Add(betterFileName);
+          keywords.Add(betterFileName!);
         }
 
         foreach (var keyword in keywords) {

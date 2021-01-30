@@ -43,7 +43,7 @@ namespace UoT.Tao.Platform.Windows {
   public class SimpleOpenGlControl : UserControl {
     // --- Fields ---
     #region Private Fields
-    private IContainer components;                                      // Required for designer support
+    private IContainer? components;                                      // Required for designer support
     private IntPtr deviceContext = IntPtr.Zero;                         // GDI device context
     private IntPtr renderingContext = IntPtr.Zero;                      // Rendering context
     private IntPtr windowHandle = IntPtr.Zero;                          // Holds our window handle

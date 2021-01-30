@@ -108,7 +108,7 @@ namespace UoT {
     private void UpdateLimbMatricesRecursively_(
         IReadOnlyList<Limb> limbs,
         int limbIndex,
-        IAnimation animation,
+        IAnimation? animation,
         IAnimationPlaybackManager playbackManager) {
       var limb = limbs[limbIndex];
 

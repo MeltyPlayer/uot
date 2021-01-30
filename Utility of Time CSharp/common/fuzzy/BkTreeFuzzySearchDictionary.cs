@@ -5,21 +5,29 @@ using FastFuzzyStringMatcher;
 
 namespace UoT.common.fuzzy {
   public class BkTreeFuzzySearchResult<T> : IFuzzySearchResult<T> {
-    public T AssociatedData { get; set; }
+    // TODO: Make notnull w/ C#9.
+    public T AssociatedData { get; }
     public float MatchPercentage { get; set; }
+
+    public BkTreeFuzzySearchResult(T associatedData) {
+      this.AssociatedData = associatedData;
+    }
   }
 
   public class BkTreeFuzzySearchDictionary<T> : IFuzzySearchDictionary<T> {
     private readonly StringMatcher<T> impl_ = new StringMatcher<T>();
 
     public void Add(string keyword, T associatedData)
-        => this.impl_.Add(keyword, associatedData);
+      => this.impl_.Add(keyword, associatedData);
 
-    public IEnumerable<IFuzzySearchResult<T>> Search(string keyword, float matchPercentage)
+    public IEnumerable<IFuzzySearchResult<T>> Search(
+        string keyword,
+        float matchPercentage)
       => this.impl_.Search(keyword, matchPercentage)
-             .Select(searchResult => new BkTreeFuzzySearchResult<T> {
-                 AssociatedData = searchResult.AssociatedData,
-                 MatchPercentage = searchResult.MatchPercentage
-             });
+             .Select(searchResult
+                         => new BkTreeFuzzySearchResult<T>(
+                             searchResult.AssociatedData) {
+                             MatchPercentage = searchResult.MatchPercentage
+                         });
   }
 }

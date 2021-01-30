@@ -6,7 +6,7 @@
     // TODO: Add a tab for these toggles.
     // TODO: Add toggle for Link's tunic.
 
-    public static byte[] GetColorForObject(string filename) {
+    public static byte[]? GetColorForObject(string filename) {
       if (filename == "object_link_boy" || filename == "object_link_child") {
         return Tunic.TUNIC_COLOR_KOKIRI;
       }

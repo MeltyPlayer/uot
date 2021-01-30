@@ -5,6 +5,8 @@ using MathNet.Numerics.LinearAlgebra;
 
 using Tao.OpenGl;
 
+using UoT.util;
+
 namespace UoT {
   public interface IModelViewMatrixTransformer {
     void ProjectVertex(ref double x, ref double y, ref double z);
@@ -144,23 +146,31 @@ namespace UoT {
 
   public class
       SoftwareModelViewMatrixTransformer : IModelViewMatrixTransformer {
-    private Matrix<double> current_;
+    private Matrix<double>? current_;
     private LinkedList<MatrixNode> stack_ = new LinkedList<MatrixNode>();
 
     private class MatrixNode {
-      public Matrix<double> Matrix { get; set; }
+      public Matrix<double>? Matrix { get; set; }
     }
 
     public SoftwareModelViewMatrixTransformer() => this.Push();
 
     public void ProjectVertex(ref double x, ref double y, ref double z)
-      => GlMatrixUtil.Project(this.current_, ref x, ref y, ref z, 1);
+      => GlMatrixUtil.Project(Asserts.Assert(this.current_),
+                              ref x,
+                              ref y,
+                              ref z,
+                              1);
 
     public void ProjectNormal(
         ref double normalX,
         ref double normalY,
         ref double normalZ)
-      => GlMatrixUtil.Project(this.current_, ref normalX, ref normalY, ref normalZ, 0);
+      => GlMatrixUtil.Project(Asserts.Assert(this.current_),
+                              ref normalX,
+                              ref normalY,
+                              ref normalZ,
+                              0);
 
     public IModelViewMatrixTransformer Push() {
       Matrix<double> newMatrix;

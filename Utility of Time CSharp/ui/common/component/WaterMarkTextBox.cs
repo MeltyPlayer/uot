@@ -5,7 +5,7 @@ using System.Drawing;
 namespace UoT {
   // From https://www.codeproject.com/Articles/27849/WaterMark-TextBox-For-Desktop-Applications-Using-C.
   public class WaterMarkTextBox : TextBox {
-    private Font oldFont = null;
+    private Font? oldFont = null;
     private Boolean waterMarkTextEnabled = false;
 
     #region Attributes 
@@ -33,7 +33,7 @@ namespace UoT {
     //Override OnCreateControl ... thanks to  "lpgray .. codeproject guy"
     protected override void OnCreateControl() {
       base.OnCreateControl();
-      WaterMark_Toggel(null, null);
+      WaterMark_Toggle(null, null);
     }
 
     //Override OnPaint
@@ -51,8 +51,8 @@ namespace UoT {
 
     private void JoinEvents(Boolean join) {
       if (join) {
-        this.TextChanged += new System.EventHandler(this.WaterMark_Toggel);
-        this.LostFocus += new System.EventHandler(this.WaterMark_Toggel);
+        this.TextChanged += new System.EventHandler(this.WaterMark_Toggle);
+        this.LostFocus += new System.EventHandler(this.WaterMark_Toggle);
         this.FontChanged += new System.EventHandler(this.WaterMark_FontChanged);
         //No one of the above events will start immeddiatlly 
         //TextBox control still in constructing, so,
@@ -66,7 +66,7 @@ namespace UoT {
       }
     }
 
-    private void WaterMark_Toggel(object sender, EventArgs args) {
+    private void WaterMark_Toggle(object? sender, EventArgs? args) {
       if (this.Text.Length <= 0)
         EnableWaterMark();
       else

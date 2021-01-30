@@ -167,7 +167,7 @@ namespace UoT {
       }
     }
 
-    public static IBank GetBankByIndex(uint bankIndex) {
+    public static IBank? GetBankByIndex(uint bankIndex) {
       if (bankIndex == RamBanks.CurrentBank) {
         return RamBanks.ZFileBuffer;
       }

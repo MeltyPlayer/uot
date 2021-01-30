@@ -312,7 +312,7 @@ namespace UoT {
       this.CreateShaderProgram_(2, ref Cache, CacheEntry);
     }
 
-    public object UnpackMUX(
+    public void UnpackMUX(
         uint MUXS0,
         uint MUXS1,
         ref UnpackedCombiner CC_Colors) {
@@ -341,7 +341,6 @@ namespace UoT {
       CC_Colors.aB[1] = (uint) (MUXS1 >> 3 & 0x7L);
       CC_Colors.aC[1] = (uint) (MUXS1 >> 18 & 0x7L);
       CC_Colors.aD[1] = (uint) (MUXS1 >> 0 & 0x7L);
-      return default;
     }
 
     private void CreateShaderProgram_(

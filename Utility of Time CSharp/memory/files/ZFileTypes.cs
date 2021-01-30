@@ -17,8 +17,9 @@ namespace UoT.memory.files {
   public interface IZFile {
     ZFileType Type { get; }
 
-    string FileName { get; set; }
-    string BetterFileName { get; set; }
+    // TODO: Make these nonnull via init setters in C#9.
+    string? FileName { get; set; }
+    string? BetterFileName { get; set; }
 
     int StartOffset { get; set; }
     int EndOffset { get; set; }
@@ -27,8 +28,8 @@ namespace UoT.memory.files {
 
   public class ZObj : IZFile {
     public ZFileType Type => ZFileType.OBJECT;
-    public string FileName { get; set; }
-    public string BetterFileName { get; set; }
+    public string? FileName { get; set; }
+    public string? BetterFileName { get; set; }
     public int StartOffset { get; set; }
     public int EndOffset { get; set; }
   }
@@ -36,8 +37,8 @@ namespace UoT.memory.files {
 
   public class ZCodeFiles : IZFile {
     public ZFileType Type => ZFileType.CODE;
-    public string FileName { get; set; }
-    public string BetterFileName { get; set; }
+    public string? FileName { get; set; }
+    public string? BetterFileName { get; set; }
     public int StartOffset { get; set; }
     public int EndOffset { get; set; }
   }
@@ -45,28 +46,29 @@ namespace UoT.memory.files {
 
   public class ZSc : IZFile {
     public ZFileType Type => ZFileType.SCENE;
-    public string FileName { get; set; }
-    public string BetterFileName { get; set; }
+    public string? FileName { get; set; }
+    public string? BetterFileName { get; set; }
     public int StartOffset { get; set; }
     public int EndOffset { get; set; }
 
-    public ZMap[] Maps;
+    public ZMap[]? Maps;
   }
 
   public class ZMap : IZFile {
     public ZFileType Type => ZFileType.MAP;
-    public string FileName { get; set; }
-    public string BetterFileName { get; set; }
+    public string? FileName { get; set; }
+    public string? BetterFileName { get; set; }
     public int StartOffset { get; set; }
     public int EndOffset { get; set; }
 
-    public ZSc Scene;
+    // TODO: Make nonnull via init, C#9.
+    public ZSc? Scene { get; set; }
   }
 
   public class ZObjectSet : IZFile {
     public ZFileType Type => ZFileType.OBJECT_SET;
-    public string FileName { get; set; }
-    public string BetterFileName { get; set; }
+    public string? FileName { get; set; }
+    public string? BetterFileName { get; set; }
     public int StartOffset { get; set; }
     public int EndOffset { get; set; }
   }
@@ -74,8 +76,8 @@ namespace UoT.memory.files {
 
   public class ZOtherData : IZFile {
     public ZFileType Type => ZFileType.OTHER;
-    public string FileName { get; set; }
-    public string BetterFileName { get; set; }
+    public string? FileName { get; set; }
+    public string? BetterFileName { get; set; }
     public int StartOffset { get; set; }
     public int EndOffset { get; set; }
   }

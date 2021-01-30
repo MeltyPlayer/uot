@@ -17,17 +17,20 @@ namespace UoT {
 
     public bool IsComplete { get; set; }
 
-    private LimbInstance activeLimb_;
-    private int[] activeVertices_ = new int[32];
-    private int[] activeTextures_ = new int[2];
+    private LimbInstance? activeLimb_;
+    private readonly int[] activeVertices_ = new int[32];
+    private readonly int[] activeTextures_ = new int[2];
 
     // TODO: Needed for models w/o limbs.
-    private LimbInstance root_;
+    private LimbInstance? root_;
 
-    private IList<LimbInstance> allLimbs_ = new List<LimbInstance>();
-    private IList<VertexParams> allVertices_ = new List<VertexParams>();
+    private readonly IList<LimbInstance> allLimbs_ = new List<LimbInstance>();
 
-    public IList<TextureWrapper> allTextures_ = new List<TextureWrapper>();
+    private readonly IList<VertexParams>
+        allVertices_ = new List<VertexParams>();
+
+    private readonly IList<TextureWrapper> allTextures_ =
+        new List<TextureWrapper>();
 
     public void Reset() {
       this.IsComplete = false;
@@ -40,8 +43,6 @@ namespace UoT {
       }
 
       this.root_ = new LimbInstance {
-          Triangles = new List<TriangleParams>(),
-          OwnedVertices = new List<int>(),
           FirstChild = -1,
           NextSibling = -1
       };
@@ -80,14 +81,17 @@ namespace UoT {
       }
     }
 
-    public void AddLimb(double x, double y, double z, int firstChild, int nextSibling) {
+    public void AddLimb(
+        double x,
+        double y,
+        double z,
+        int firstChild,
+        int nextSibling) {
       if (this.IsComplete) {
         return;
       }
 
       this.allLimbs_.Add(new LimbInstance {
-          Triangles = new List<TriangleParams>(),
-          OwnedVertices = new List<int>(),
           X = x,
           Y = y,
           Z = z,
@@ -172,8 +176,10 @@ namespace UoT {
   }
 
   public class LimbInstance {
-    public IList<TriangleParams> Triangles { get; set; }
-    public IList<int> OwnedVertices { get; set; }
+    public IList<TriangleParams> Triangles { get; } =
+      new List<TriangleParams>();
+
+    public IList<int> OwnedVertices { get; } = new List<int>();
 
     public double X { get; set; }
     public double Y { get; set; }

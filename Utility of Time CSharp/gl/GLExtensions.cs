@@ -8,10 +8,9 @@ namespace UoT {
     public static bool GLAnisotropic { get; }
     public static bool GLSL { get; }
     public static bool GLMultiSample { get; }
-    public static float[] AnisotropicSamples { get; }
-   
+    public static float AnisotropicSamples { get; }
+
     public static bool WGLMultiSample { get; }
-    public static float[] MultiSampleLevels { get; }
 
     static GLExtensions() {
       var extstr = Gl.glGetString(Gl.GL_EXTENSIONS).ToLower();
@@ -24,13 +23,13 @@ namespace UoT {
       GLExtensions.GLMultiSample = extstr.Contains("gl_arb_multisample");
 
       if (GLExtensions.GLAnisotropic) {
-        // TODO: Just make this a float?
-        GLExtensions.AnisotropicSamples = new float[1];
         Gl.glGetFloatv(Gl.GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT,
-                       GLExtensions.AnisotropicSamples);
+                       out var anisotropicSamples);
+        GLExtensions.AnisotropicSamples = anisotropicSamples;
       }
 
-      GLExtensions.WGLMultiSample = Wgl.wglGetProcAddress("WGL_ARB_Multisample") != null;
+      GLExtensions.WGLMultiSample =
+          Wgl.wglGetProcAddress("WGL_ARB_Multisample") != null;
     }
   }
 }

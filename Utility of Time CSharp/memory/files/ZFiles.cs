@@ -19,7 +19,7 @@ namespace UoT.memory.files {
     }
 
 
-    public static ZFiles FromRom(string filename) {
+    public static ZFiles? FromRom(string filename) {
       var romBytes = ZFiles.LoadRomBytes(filename);
 
       //var segments = ZFiles.GetSegments_(romBytes);
@@ -35,14 +35,17 @@ namespace UoT.memory.files {
     }
 
     // TODO: Make private.
-    public static Header GetHeader() {
-      return null;
-    }
+    public static Header? GetHeader() => null;
 
     private class Segment {
-      public string FileName;
+      // Make nonnull via init, C#9
+      public string FileName { get; set; }
       public uint StartOffset;
       public uint EndOffset;
+
+      public Segment(string filename) {
+        this.FileName = filename;
+      }
     }
 
     private static IEnumerable<Segment> GetSegments_(byte[] romBytes, uint segmentOffset, uint nameOffset) {
@@ -68,8 +71,7 @@ namespace UoT.memory.files {
                   0,
                   fileNameBytes.Count);
 
-          segments.Add(new Segment {
-              FileName = fileName,
+          segments.Add(new Segment(fileName) {
               StartOffset = startAddress,
               EndOffset = endAddress
           });

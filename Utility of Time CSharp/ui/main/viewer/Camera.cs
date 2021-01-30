@@ -5,7 +5,7 @@ namespace UoT.ui.main.viewer {
     // TODO: Add x/y/z locking.
     
     // TODO: Remove static instance.
-    public static Camera Instance { get; private set; }
+    public static Camera? Instance { get; private set; }
 
     public Camera() {
       Camera.Instance = this;

@@ -187,7 +187,7 @@
         0x350CF37F, 0xFFFFF9F8, 0x1FFCFDF8
     };
 
-    public static IDisplayListInstruction FindLinkedCommand(
+    public static IDisplayListInstruction? FindLinkedCommand(
         N64DisplayList DL,
         byte Command,
         int StartIndex) {

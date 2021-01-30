@@ -132,8 +132,7 @@ namespace UoT {
       //if (UoT.GlobalVars.RenderToggles.Anisotropic) {
       Gl.glTexParameterf(Gl.GL_TEXTURE_2D,
                          Gl.GL_TEXTURE_MAX_ANISOTROPY_EXT,
-                         GLExtensions.AnisotropicSamples[
-                             GLExtensions.AnisotropicSamples.Length - 1]);
+                         GLExtensions.AnisotropicSamples);
       /*} else {
         Gl.glTexParameterf(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MAX_ANISOTROPY_EXT, 1.0f);
       }*/
