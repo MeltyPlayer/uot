@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace UoT.util.array {
-  public class ArrayEnumerator<T> : IEnumerator<T> {
-    private readonly T[] data_;
+namespace UoT.util.span {
+  public class SpanEnumerator<T> : IEnumerator<T> {
+    private readonly ISpannable<T> data_;
     private int index_;
 
-    public ArrayEnumerator(T[] data) {
+    public SpanEnumerator(ISpannable<T> data) {
       this.data_ = data;
       this.Reset();
     }

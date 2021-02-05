@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using UoT.util.array;
-using UoT.util.enumerator;
+using UoT.util.span;
 
 namespace UoT.util.data {
   public interface IShardedListAddress {
@@ -24,16 +24,18 @@ namespace UoT.util.data {
   }
 
   public class ShardedList<T> : IShardedList<T> {
+    private readonly ShardedList<T>? parent_;
     private readonly IList<IShardedList<T>> regions_ =
         new List<IShardedList<T>>();
 
     private ShardedList(
         ShardedList<T>? parent,
-        T[] ts
+        ISpannable<T> ts
     ) {
-      this.regions_.Add(new RawShardedList(this, ts));
+      this.parent_ = parent;
+      this.regions_.Add(new SpanShardedList(this, ts));
 
-      this.Parent = parent;
+      this.UpdateLength_();
 
       if (parent != null) {
         this.GlobalOffset = new ShardedListAddress(
@@ -44,13 +46,24 @@ namespace UoT.util.data {
     }
 
     public static ShardedList<T> From(params T[] ts)
-      => new ShardedList<T>(null, ts);
+      => new ShardedList<T>(null, new SpannableArray<T>(ts));
 
-    public IShardedList<T>? Parent { get; }
+    public IShardedList<T>? Parent => this.parent_;
     public IShardedListAddress GlobalOffset { get; }
 
     // TODO: Can this be cached?
-    public int Length => this.regions_.Sum(region => region.Length);
+    public int Length { get; private set; }
+    public int RegionCount => this.regions_.Count;
+
+    private void UpdateLength_() {
+      var len = 0;
+      foreach (var region in this.regions_) {
+        len += region.Length;
+      }
+      this.Length = len;
+
+      this.parent_?.UpdateLength_();
+    }
 
     public T this[int localOffset] {
       get {
@@ -98,7 +111,10 @@ namespace UoT.util.data {
       Asserts.Fail("Failed to find a matching region, this should not happen.");
     }
 
-    public IShardedList<T> Shard(int localOffset, int length) {
+    IShardedList<T> IShardedList<T>.Shard(int localOffset, int length)
+      => this.Shard(localOffset, length);
+
+    public ShardedList<T> Shard(int localOffset, int length) {
       Asserts.Assert(length > 0, "Tried to shard a region of size 0!");
       Asserts.Assert(localOffset + length <= this.Length,
                      "Tried to shard a region that extends beyond the size of this shard!");
@@ -112,8 +128,8 @@ namespace UoT.util.data {
                                    out var regionOffset,
                                    out var regionIndex);
 
-      var rawRegion = region as RawShardedList;
-      Asserts.Assert(rawRegion != null,
+      var spanRegion = region as SpanShardedList;
+      Asserts.Assert(spanRegion != null,
                      "Tried to shard a previously sharded region.");
 
       var regionLocalOffset = localOffset - regionOffset;
@@ -126,42 +142,33 @@ namespace UoT.util.data {
 
       this.regions_.RemoveAt(regionIndex);
 
-      var regionImpl = rawRegion!.Impl;
+      var regionImpl = spanRegion!.Impl;
 
       if (afterLength > 0) {
-        ArrayUtil.ExtractTo(regionImpl,
-                            beforeLength + newRegionLength,
-                            out var afterImpl,
-                            0,
-                            afterLength);
+        var afterSpan =
+            regionImpl.Sub(beforeLength + newRegionLength, afterLength);
         this.regions_.Insert(regionIndex,
-                             new RawShardedList(this, afterImpl));
+                             new SpanShardedList(this, afterSpan));
       }
 
-      ArrayUtil.ExtractTo(regionImpl,
-                          beforeLength,
-                          out var newRegionImpl,
-                          0,
-                          newRegionLength);
-      var newRegion = new ShardedList<T>(this, newRegionImpl);
+      var newRegionSpan = regionImpl.Sub(beforeLength, newRegionLength);
+      var newRegion = new ShardedList<T>(this, newRegionSpan);
       this.regions_.Insert(regionIndex, newRegion);
 
       if (beforeLength > 0) {
-        ArrayUtil.ExtractTo(regionImpl,
-                            0,
-                            out var beforeImpl,
-                            0,
-                            beforeLength);
+        var beforeSpan = regionImpl.Sub(0, beforeLength);
         this.regions_.Insert(regionIndex,
-                             new RawShardedList(this, beforeImpl));
+                             new SpanShardedList(this, beforeSpan));
       }
 
-      this.MergeNeighboringRawRegions_();
+      this.UpdateLength_();
+
+      //this.MergeNeighboringRawRegions_();
 
       return newRegion;
     }
 
-    private void MergeNeighboringRawRegions_() {
+    /*private void MergeNeighboringRawRegions_() {
       var didMerge = false;
 
       var previousRegion = this.regions_[0];
@@ -193,12 +200,28 @@ namespace UoT.util.data {
       if (didMerge) {
         this.MergeNeighboringRawRegions_();
       }
-    }
+    }*/
 
     public void Resize(int newLength) {
       Asserts.Assert(this.regions_.Count == 1,
                      "Attempted to resize a sharded list with multiple regions!");
-      this.regions_[0].Resize(newLength);
+
+      var spanRegion = this.regions_[0] as SpanShardedList;
+      if (spanRegion != null) {
+        var spanRegionImpl = spanRegion!.Impl;
+
+        var regionImpl = new T[newLength];
+        var copyLength = Math.Min(spanRegionImpl.Length, newLength);
+        for (var i = 0; i < copyLength; ++i) {
+          regionImpl[i] = spanRegionImpl[i];
+        }
+
+        this.regions_[0] = new RawShardedList(this, regionImpl);
+      } else {
+        this.regions_[0].Resize(newLength);
+      }
+
+      this.UpdateLength_();
     }
 
     private class NullShardedListAddress : IShardedListAddress {
@@ -301,6 +324,38 @@ namespace UoT.util.data {
       public IEnumerator<T> GetEnumerator()
         => new ArrayEnumerator<T>(this.Impl);
 
+      IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+    }
+
+    private class SpanShardedList : IShardedList<T> {
+      public SpanShardedList(ShardedList<T> parent, ISpannable<T> impl) {
+        this.Impl = impl;
+
+        this.Parent = parent;
+        this.GlobalOffset =
+            new ShardedListAddress(() => parent.LocateRegion_(this));
+      }
+
+      public ISpannable<T> Impl { get; }
+
+      public IShardedList<T>? Parent { get; }
+
+      public IShardedListAddress GlobalOffset { get; }
+
+      public int Length => this.Impl.Length;
+
+      public T this[int localOffset] {
+        get => this.Impl[localOffset];
+        set => this.Impl[localOffset] = value;
+      }
+
+      public IShardedList<T> Shard(int localOffset, int length)
+        => throw new NotSupportedException("Attempted to shard view region.");
+
+      public void Resize(int newLength)
+        => throw new NotSupportedException("Attempted to resize view region.");
+
+      public IEnumerator<T> GetEnumerator() => this.Impl.GetEnumerator();
       IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
     }
   }

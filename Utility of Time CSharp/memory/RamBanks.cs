@@ -1,99 +1,40 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 
+using UoT.memory.map;
+using UoT.util.array;
+
 namespace UoT {
-  public interface IBank : IList<byte> {
+  public interface IBank : IIndexable<byte> {
     byte Segment { get; }
   }
 
-  public abstract class BList : IList<byte> {
-    public abstract int Count { get; }
-    public abstract byte this[int index] { get; set; }
-
-
-    // TODO: Get rid of all this crap.
-    public IEnumerator<byte> GetEnumerator()
-      => throw new NotImplementedException();
-
-    IEnumerator IEnumerable.GetEnumerator()
-      => throw new NotImplementedException();
-
-    public void Add(byte item) => throw new NotImplementedException();
-
-    public void Clear() {
-      throw new NotImplementedException();
-    }
-
-    public bool Contains(byte item) {
-      throw new NotImplementedException();
-    }
-
-    public void CopyTo(byte[] array, int arrayIndex) {
-      throw new NotImplementedException();
-    }
-
-    public bool Remove(byte item) {
-      throw new NotImplementedException();
-    }
-
-    public bool IsReadOnly => false;
-
-    public int IndexOf(byte item) {
-      throw new NotImplementedException();
-    }
-
-    public void Insert(int index, byte item) {
-      throw new NotImplementedException();
-    }
-
-    public void RemoveAt(int index) {
-      throw new NotImplementedException();
-    }
-  }
-
-  public class RomBank : BList, IBank {
-    private byte[] impl_ = new byte[0];
-
+  public class RomBank : BIndexable, IBank {
     public byte Segment { get; set; }
-    public void Resize(int size) => Array.Resize(ref this.impl_, size);
+    public void Resize(int size) => this.Region!.Resize(size);
 
-    public int StartOffset { get; private set; }
-    public int EndOffset => this.StartOffset + this.Count;
-    public override int Count => this.impl_.Length;
+    public IShardedMemory? Region { get; set; }
+    public override int Count => this.Region?.Count ?? 0;
 
     public override byte this[int offset] {
-      get => this.impl_[offset];
-      set => this.impl_[offset] = value;
+      get => this.Region![offset];
+      set => this.Region![offset] = value;
     }
 
     public void PopulateFromFile(string filename) {
-      this.impl_ = File.ReadAllBytes(filename);
-      this.StartOffset = 0;
-    }
-
-    public void PopulateFromBytes(byte[] src, int srcOffset, int count) {
-      this.Resize(count);
-      Buffer.BlockCopy(src, srcOffset, this.impl_, 0, count);
-
-      this.StartOffset = srcOffset;
-    }
-
-    public void PopulateFromStream(FileStream src, int srcOffset, int count) {
-      this.Resize(count);
-      src.Position = srcOffset;
-      src.Read(this.impl_, 0, count);
-
-      this.StartOffset = srcOffset;
+      throw new NotSupportedException();
+      //this.impl_ = File.ReadAllBytes(filename);
+      //this.StartOffset = 0;
     }
 
     public void WriteToFile(string filename)
-      => File.WriteAllBytes(filename, this.impl_);
+      => throw new NotSupportedException();
+      // => File.WriteAllBytes(filename, this.impl_);
 
     public void WriteToStream(FileStream fs, int fsOffset) {
-      fs.Position = fsOffset;
-      fs.Write(this.impl_, 0, this.Count);
+      throw new NotSupportedException();
+      //fs.Position = fsOffset;
+      //fs.Write(this.impl_, 0, this.Count);
     }
   }
 

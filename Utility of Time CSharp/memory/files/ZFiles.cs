@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 
+using UoT.memory.map;
+
 namespace UoT.memory.files {
   public class ZFiles {
     public IReadOnlyList<ZObj> Objects;
@@ -11,7 +13,11 @@ namespace UoT.memory.files {
     public IReadOnlyList<ZSc> Scenes;
     public IReadOnlyList<ZOtherData> Others;
 
-    private ZFiles(IList<ZObj> objects, IList<ZCodeFiles> actorCode, IList<ZSc> levels, IList<ZOtherData> others) {
+    private ZFiles(
+        IList<ZObj> objects,
+        IList<ZCodeFiles> actorCode,
+        IList<ZSc> levels,
+        IList<ZOtherData> others) {
       this.Objects = new ReadOnlyCollection<ZObj>(objects);
       this.ActorCode = new ReadOnlyCollection<ZCodeFiles>(actorCode);
       this.Scenes = new ReadOnlyCollection<ZSc>(levels);
@@ -28,42 +34,44 @@ namespace UoT.memory.files {
     }
 
     // TODO: Make private.
-    public static byte[] LoadRomBytes(string filename) 
+    public static byte[] LoadRomBytes(string filename)
       => File.ReadAllBytes(filename);
 
-    public class Header {
-    }
+    public class Header {}
 
     // TODO: Make private.
     public static Header? GetHeader() => null;
 
     private class Segment {
       // Make nonnull via init, C#9
-      public string FileName { get; set; }
-      public uint StartOffset;
-      public uint EndOffset;
+      public string FileName { get; }
+      public IShardedMemory Region { get; }
 
-      public Segment(string filename) {
+      public Segment(string filename, IShardedMemory region) {
         this.FileName = filename;
+        this.Region = region;
       }
     }
 
-    private static IEnumerable<Segment> GetSegments_(byte[] romBytes, uint segmentOffset, uint nameOffset) {
+    private static IEnumerable<Segment> GetSegments_(
+        IShardedMemory romMemory,
+        uint segmentOffset,
+        int nameOffset) {
       var segments = new List<Segment>();
 
       bool bothZero;
       do {
-        var startAddress = IoUtil.ReadUInt32(romBytes, segmentOffset);
-        var endAddress = IoUtil.ReadUInt32(romBytes, segmentOffset + 4);
-        
+        var startAddress = (int) IoUtil.ReadUInt32(romMemory, segmentOffset);
+        var endAddress = (int) IoUtil.ReadUInt32(romMemory, segmentOffset + 4);
+
         bothZero = startAddress == 0 && endAddress == 0;
         if (!bothZero) {
           var fileNameBytes = new List<byte>();
-          while (romBytes[nameOffset] == 0) {
+          while (romMemory[nameOffset] == 0) {
             nameOffset++;
           }
-          while(romBytes[nameOffset] != 0) {
-            fileNameBytes.Add(romBytes[nameOffset++]);
+          while (romMemory[nameOffset] != 0) {
+            fileNameBytes.Add(romMemory[nameOffset++]);
           }
           var fileName =
               System.Text.Encoding.UTF8.GetString(
@@ -71,10 +79,10 @@ namespace UoT.memory.files {
                   0,
                   fileNameBytes.Count);
 
-          segments.Add(new Segment(fileName) {
-              StartOffset = startAddress,
-              EndOffset = endAddress
-          });
+          segments.Add(new Segment(fileName,
+                                   romMemory.Shard(
+                                       startAddress,
+                                       endAddress - startAddress)));
 
           segmentOffset += 16;
         }
@@ -84,59 +92,60 @@ namespace UoT.memory.files {
     }
 
     public static ZFiles GetFiles(
-        byte[] romBytes,
+        IShardedMemory romMemory,
         uint segmentOffset,
-        uint nameOffset) {
-      var segments = ZFiles.GetSegments_(romBytes, segmentOffset, nameOffset);
+        int nameOffset) {
+      var segments = ZFiles.GetSegments_(romMemory, segmentOffset, nameOffset);
 
       var objects = new List<ZObj>();
       var actorCode = new List<ZCodeFiles>();
       var scenes = new LinkedList<ZSc>();
       var others = new List<ZOtherData>();
 
-      foreach(var segment in segments) {
+      foreach (var segment in segments) {
         var fileName = segment.FileName;
         var betterFileName = BetterFileNames.Get(fileName);
+        var region = segment.Region;
 
         IZFile file;
         if (fileName.StartsWith("object_")) {
-          var obj = new ZObj();
+          region.ShardType = ShardedMemoryType.OBJECT;
+          var obj = new ZObj(region);
           file = obj;
 
           objects.Add(obj);
-        }
-        else if (fileName.StartsWith("ovl_")) {
-          var ovl = new ZCodeFiles();
+        } else if (fileName.StartsWith("ovl_")) {
+          region.ShardType = ShardedMemoryType.CODE;
+          var ovl = new ZCodeFiles(region);
           file = ovl;
 
           actorCode.Add(ovl);
-        }
-        else if (fileName.EndsWith("_scene")) {
-          var scene = new ZSc();
+        } else if (fileName.EndsWith("_scene")) {
+          region.ShardType = ShardedMemoryType.SCENE;
+          var scene = new ZSc(region);
           file = scene;
 
           scenes.AddLast(scene);
         } else if (fileName.Contains("_room")) {
           var scene = scenes.Last.Value;
 
-          var map = new ZMap { Scene = scene };
+          region.ShardType = ShardedMemoryType.MAP;
+          var map = new ZMap(region) {Scene = scene};
           file = map;
 
-          var mapCount = scene.Maps?.Length ?? 0; 
+          var mapCount = scene.Maps?.Length ?? 0;
           Array.Resize(ref scene.Maps, mapCount + 1);
           scene.Maps[mapCount] = map;
-        }
-        else {
-          var other = new ZOtherData();
+        } else {
+          region.ShardType = ShardedMemoryType.OTHER_DATA;
+          var other = new ZOtherData(region);
           file = other;
 
           others.Add(other);
         }
 
-        file.FileName = fileName; 
+        file.FileName = fileName;
         file.BetterFileName = betterFileName;
-        file.StartOffset = (int) segment.StartOffset;
-        file.EndOffset = (int)segment.EndOffset;
       }
 
       return new ZFiles(objects, actorCode, scenes.ToArray(), others);

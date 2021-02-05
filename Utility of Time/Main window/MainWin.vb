@@ -6,6 +6,7 @@ Imports Tao.FreeGlut
 Imports System.Numerics
 Imports MathNet.Numerics.LinearAlgebra.Double
 Imports UoT.memory.files
+Imports UoT.memory.map
 Imports UoT.ui.main.top.help
 Imports UoT.ui.main.viewer
 
@@ -2653,13 +2654,7 @@ Public Class MainWin
 #Region "ROM HANDLING RELATED"
 
   Private ObjectTable() As ObjectTbl
-  Private MapSt As Integer = 0
-  Private SceneSt As Integer = 0
-  Private ScBuffSize As Integer = 0
-  Private MapBuffSize As Integer = 0
-  Private ObjBuffSize As Integer = 0
   Private ObjectFilename As String = ""
-  Private ActorBuffSize As Integer = 0
   Private ROMFiles As ZFiles
   Private Z64Code() As Byte
   Private IndMapFileName As String = ""
@@ -4500,14 +4495,13 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     Start(False)
   End Sub
 
-  Public Sub PopulateCommonBanks(romBytes() As Byte)
+  Public Sub PopulateCommonBanks()
     Dim Banks As ObjectExchange = RamBanks.CommonBanks
 
     With Banks
       ReDim .Bank4.Banks(0)
       ReDim .Bank5.Banks(1)
       ReDim .Anims.Banks(1)
-      Dim fileSize As UInteger = 0
 
       Dim commonBankUse As BankSwitch = RamBanks.CommonBankUse
       commonBankUse.AnimBank = -1
@@ -4516,23 +4510,24 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       RamBanks.CommonBankUse = commonBankUse
 
       For i As Integer = 0 To ROMFiles.Others.Count - 1
-        fileSize = ROMFiles.Others(i).EndOffset - ROMFiles.Others(i).StartOffset
+        Dim region As IShardedMemory = ROMFiles.Others(i).Region
+
         If ROMFiles.Others(i).FileName = "gameplay_keep" Then
           .Bank4.Banks(0) = New RomBank
           .Bank4.Banks(0).Segment = 4
-          .Bank4.Banks(0).PopulateFromBytes(romBytes, ROMFiles.Others(i).StartOffset, fileSize)
+          .Bank4.Banks(0).Region = region
         ElseIf ROMFiles.Others(i).FileName = "gameplay_field_keep" Then
           .Bank5.Banks(0) = New RomBank
           .Bank5.Banks(0).Segment = 5
-          .Bank5.Banks(0).PopulateFromBytes(romBytes, ROMFiles.Others(i).StartOffset, fileSize)
+          .Bank5.Banks(0).Region = region
         ElseIf ROMFiles.Others(i).FileName = "gameplay_dangeon_keep" Then
           .Bank5.Banks(1) = New RomBank
           .Bank5.Banks(1).Segment = 5
-          .Bank5.Banks(1).PopulateFromBytes(romBytes, ROMFiles.Others(i).StartOffset, fileSize)
+          .Bank5.Banks(1).Region = region
         ElseIf ROMFiles.Others(i).FileName = "icon_item_static" Then
-          RamBanks.IconItemStatic.PopulateFromBytes(romBytes, ROMFiles.Others(i).StartOffset, fileSize)
+          RamBanks.IconItemStatic.Region = region
         ElseIf ROMFiles.Others(i).FileName = "icon_item_24_static" Then
-          RamBanks.IconItem24Static.PopulateFromBytes(romBytes, ROMFiles.Others(i).StartOffset, fileSize)
+          RamBanks.IconItem24Static.Region = region
         End If
       Next
       Dim animBankCnt As Integer = 0
@@ -4540,25 +4535,26 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       animationbank.Items.Add("Inline with model")
 
       For i As Integer = 0 To ROMFiles.Others.Count - 1
-        fileSize = ROMFiles.Others(i).EndOffset - ROMFiles.Others(i).StartOffset
+        Dim region As IShardedMemory = ROMFiles.Others(i).Region
+
         If ROMFiles.Others(i).FileName = "link_animetion" Then
           animationbank.Items.Add(ROMFiles.Others(i).FileName)
           ReDim Preserve .Anims.Banks(animBankCnt)
           .Anims.Banks(animBankCnt) = New RomBank
-          .Anims.Banks(animBankCnt).PopulateFromBytes(romBytes, ROMFiles.Others(i).StartOffset, fileSize)
+          .Anims.Banks(animBankCnt).Region = region
           animBankCnt += 1
         End If
       Next
 
       For i As Integer = 0 To ROMFiles.Objects.Count - 1
-        fileSize = ROMFiles.Objects(i).EndOffset - ROMFiles.Objects(i).StartOffset
+        Dim region As IShardedMemory = ROMFiles.Objects(i).Region
         If _
           (ROMFiles.Objects(i).FileName.ToLower.Contains("object_") And
            ROMFiles.Objects(i).FileName.ToLower.Contains("_anime")) Then
           animationbank.Items.Add(ROMFiles.Objects(i).BetterFileName)
           ReDim Preserve .Anims.Banks(animBankCnt)
           .Anims.Banks(animBankCnt) = New RomBank
-          .Anims.Banks(animBankCnt).PopulateFromBytes(romBytes, ROMFiles.Objects(i).StartOffset, fileSize)
+          .Anims.Banks(animBankCnt).Region = region
           animBankCnt += 1
         End If
       Next
@@ -4568,12 +4564,13 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
   End Sub
 
   Public Sub Start(ByVal individual As Boolean)
-    Try
-      DlManager.Clear()
+    'Try
+    DlManager.Clear()
       DLParser.KillTexCache()
       Working = True
       If Not individual Then
         Dim romBytes() As Byte = ZFiles.LoadRomBytes(LoadROM.FileName)
+        Dim romMemory As IShardedMemory = ShardedMemory.From(romBytes)
 
         Dim ROMID As String = ""
         Dim ROMIDBytes(5) As Byte
@@ -4629,8 +4626,8 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
           End If
         Next
 
-        ROMFiles = ZFiles.GetFiles(romBytes, tSegOff, tNameOff)
-        PopulateCommonBanks(romBytes)
+        ROMFiles = ZFiles.GetFiles(romMemory, tSegOff, tNameOff)
+        PopulateCommonBanks()
         Reshape()
         zFileTreeView_.Populate(ROMFiles)
 
@@ -4645,9 +4642,9 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
           SetVariables(SceneFileType.ZOBJ)
         End If
       End If
-    Catch err As Exception
-      MsgBox("Error reading file: " & err.Message, MsgBoxStyle.Critical, "Error")
-    End Try
+      'Catch err As Exception
+    '  MsgBox("Error reading file: " & err.Message, MsgBoxStyle.Critical, "Error")
+    'End Try
   End Sub
 
   Private Sub ParseActorTable(ByVal ActorTableOff As UInteger, ByVal ActorTableEnd As UInteger,
@@ -5764,11 +5761,12 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
   Private Sub SaveFiles(ByVal fn As String)
     If IndMapFileName = "" Then 'write files to ROM
       If DefROM <> "" Then
+        ' TODO: Write files to ROM
         Dim ROMFileStream As New FileStream(fn, FileMode.Open)
-        RamBanks.ZFileBuffer.WriteToStream(ROMFileStream, MapSt)
+        'RamBanks.ZFileBuffer.WriteToStream(ROMFileStream, MapSt)
 
         If LoadedDataType = FileTypes.MAP Then
-          RamBanks.ZSceneBuffer.WriteToStream(ROMFileStream, SceneSt)
+          'RamBanks.ZSceneBuffer.WriteToStream(ROMFileStream, SceneSt)
         End If
 
         ROMFileStream.Dispose()
@@ -6035,6 +6033,9 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
 
   Private Sub LoadIndividual_FileOk(ByVal sender As System.Object, ByVal e As System.ComponentModel.CancelEventArgs) _
     Handles LoadIndividual.FileOk
+
+    Throw New NotSupportedException()
+
     If LoadIndividual.FileName.Contains(".zscene") Then
       IndScFileName = LoadIndividual.FileName
       RamBanks.ZSceneBuffer.PopulateFromFile(IndScFileName)
@@ -6066,7 +6067,8 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       Me.Text = "Utility of Time - " & LoadIndividual.FileName
       IndMapFileName = LoadIndividual.FileName
       RamBanks.ZFileBuffer.PopulateFromFile(IndMapFileName)
-      RamBanks.ZSceneBuffer.Resize(0)
+      ' TODO: How to reset state here?
+      'RamBanks.ZSceneBuffer.Region = null;
       SetVariables(SceneFileType.ZOBJ)
     End If
   End Sub
@@ -6279,15 +6281,10 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
   Private Sub FileTree_NodeMouseDoubleClick(zFile As IZFile) _
     Handles zFileTreeView_.FileSelected
 
-    ObjectFilename = ""
-
-    Dim ROMFileStream As New FileStream(DefROM, FileMode.Open)
-
     Select Case zFile.Type
       Case ZFileType.OBJECT
         ObjectFilename = zFile.FileName
-        ObjBuffSize = zFile.EndOffset - zFile.StartOffset
-        RamBanks.ZFileBuffer.PopulateFromStream(ROMFileStream, zFile.StartOffset, ObjBuffSize)
+        RamBanks.ZFileBuffer.Region = zFile.Region
 
         SetVariables(SceneFileType.ZOBJ)
 
@@ -6301,8 +6298,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
         MapsCombobox.Enabled = False
 
       Case ZFileType.CODE
-        ActorBuffSize = zFile.EndOffset - zFile.StartOffset
-        RamBanks.ZFileBuffer.PopulateFromStream(ROMFileStream, zFile.StartOffset, ActorBuffSize)
+        RamBanks.ZFileBuffer.Region = zFile.Region
 
         'RSPInterpreter.Parse(ZFileBuffer)
 
@@ -6319,14 +6315,8 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
         Dim map As ZMap = zFile
         Dim scene As ZSc = map.Scene
 
-        SceneSt = scene.StartOffset
-        MapSt = map.StartOffset
-
-        MapBuffSize = map.EndOffset - MapSt
-        ScBuffSize = scene.EndOffset - SceneSt
-
-        RamBanks.ZSceneBuffer.PopulateFromStream(ROMFileStream, SceneSt, ScBuffSize)
-        RamBanks.ZFileBuffer.PopulateFromStream(ROMFileStream, MapSt, MapBuffSize)
+        RamBanks.ZSceneBuffer.Region = scene.Region
+        RamBanks.ZFileBuffer.Region = map.Region
 
         SetVariables(SceneFileType.ZSCENE)
 
@@ -6351,8 +6341,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
         ' ScannedObjSet = True
         ' ProcessMapHeader()
     End Select
-
-    ROMFileStream.Dispose()
   End Sub
 
   Private Sub ToolStripMenuItem2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _

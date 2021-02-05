@@ -1,4 +1,5 @@
 ﻿using UoT.memory.mapper;
+using UoT.util.array;
 using UoT.util.data;
 
 namespace UoT.memory.map {
@@ -8,8 +9,11 @@ namespace UoT.memory.map {
     ROOT,
 
     // Files
-    ACTOR,
-    OVL,
+    OBJECT,
+    CODE,
+    SCENE,
+    MAP,
+    OTHER_DATA,
 
     // Graphics
     LIMB_HIERARCHY,
@@ -24,49 +28,38 @@ namespace UoT.memory.map {
   ///   e.g. regions that have not yet been identified.
   /// </summary>
   public interface IShardedMemory : IMemorySource {
+    ShardedMemoryType ShardType { get; set; }
+
     IShardedListAddress GlobalOffset { get; }
 
-    IShardedMemory Shard(
-        ShardedMemoryType shardType,
-        int localOffset,
-        int length);
+    IShardedMemory Shard(int localOffset, int length);
 
     void Resize(int newLength);
   }
 
-  public class ShardedMemory : IShardedMemory {
+  public sealed class ShardedMemory : BIndexable, IShardedMemory {
     private readonly IShardedList<byte> impl_;
 
-    private ShardedMemory(
-        ShardedMemoryType shardType,
-        IShardedList<byte> impl
-    ) {
-      this.ShardType = shardType;
+    private ShardedMemory(IShardedList<byte> impl) {
       this.impl_ = impl;
     }
 
-    public static ShardedMemory From(
-        ShardedMemoryType shardType,
-        params byte[] bytes)
-      => new ShardedMemory(shardType, ShardedList<byte>.From(bytes));
+    public static ShardedMemory From(params byte[] bytes)
+      => new ShardedMemory(ShardedList<byte>.From(bytes));
 
-    public ShardedMemoryType ShardType { get; }
+    public ShardedMemoryType ShardType { get; set; }
 
-    public int Length => this.impl_.Length;
+    public override int Count => this.impl_.Length;
 
-    public byte this[int localOffset] {
+    public override byte this[int localOffset] {
       get => this.impl_[localOffset];
       set => this.impl_[localOffset] = value;
     }
 
     public IShardedListAddress GlobalOffset => this.impl_.GlobalOffset;
 
-    public IShardedMemory Shard(
-        ShardedMemoryType shardType,
-        int localOffset,
-        int length
-    )
-      => new ShardedMemory(shardType, this.impl_.Shard(localOffset, length));
+    public IShardedMemory Shard(int localOffset, int length)
+      => new ShardedMemory(this.impl_.Shard(localOffset, length));
 
     public void Resize(int newLength) => this.impl_.Resize(newLength);
   }

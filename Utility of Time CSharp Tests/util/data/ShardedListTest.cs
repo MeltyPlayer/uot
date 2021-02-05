@@ -88,5 +88,66 @@ namespace UoT.util.data {
 
       Assert.Throws<AssertException>(() => shardedList.Shard(2, 3));
     }
+
+
+    [Test]
+    public void ResizingSingleShardDown() {
+      var shardedList = ShardedList<int>.From(1, 2, 3, 4, 5, 6);
+
+      shardedList.Resize(5);
+
+      Assert.AreEqual(new[] { 1, 2, 3, 4, 5 }, shardedList.ToArray());
+    }
+
+    [Test]
+    public void ResizingSingleShardUp() {
+      var shardedList = ShardedList<int>.From(1, 2, 3, 4, 5, 6);
+      shardedList.Resize(7);
+      Assert.AreEqual(new[] { 1, 2, 3, 4, 5, 6, 0 }, shardedList.ToArray());
+    }
+
+    [Test]
+    public void ResizingSubRegionDown() {
+      var shardedList = ShardedList<int>.From(1, 2, 3, 4, 5, 6);
+      var subRegion = shardedList.Shard(1, 4);
+
+      subRegion.Resize(3);
+
+      Assert.AreEqual(new[] { 1, 2, 3, 4, 6 }, shardedList.ToArray());
+      Assert.AreEqual(new[] { 2, 3, 4 }, subRegion.ToArray());
+    }
+
+    [Test]
+    public void ResizingSubRegionUp() {
+      var shardedList = ShardedList<int>.From(1, 2, 3, 4, 5, 6);
+      var subRegion = shardedList.Shard(1, 4);
+
+      subRegion.Resize(5);
+
+      Assert.AreEqual(new[] { 1, 2, 3, 4, 5, 0, 6 }, shardedList.ToArray());
+      Assert.AreEqual(new[] { 2, 3, 4, 5, 0 }, subRegion.ToArray());
+    }
+
+
+    [Test]
+    public void ShardsAsExpected() {
+      var shardedList = ShardedList<int>.From(1, 2, 3, 4, 5, 6);
+      Assert.AreEqual(1, shardedList.RegionCount);
+
+      var subRegion1 = shardedList.Shard(0, 2);
+      Assert.AreEqual(1, subRegion1.RegionCount);
+      var subRegion2 = shardedList.Shard(2, 2);
+      Assert.AreEqual(1, subRegion2.RegionCount);
+      var subRegion3 = shardedList.Shard(4, 2);
+      Assert.AreEqual(1, subRegion3.RegionCount);
+
+      Assert.AreEqual(3, shardedList.RegionCount);
+
+      var subRegion1a = subRegion1.Shard(0, 1);
+      var subRegion1b = subRegion1.Shard(1, 1);
+      Assert.AreEqual(2, subRegion1.RegionCount);
+
+      Assert.AreEqual(3, shardedList.RegionCount);
+    }
   }
 }

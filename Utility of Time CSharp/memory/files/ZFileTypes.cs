@@ -1,4 +1,5 @@
-﻿
+﻿using UoT.memory.map;
+
 namespace UoT.memory.files {
   public enum ZFileType {
     OBJECT,
@@ -21,64 +22,60 @@ namespace UoT.memory.files {
     string? FileName { get; set; }
     string? BetterFileName { get; set; }
 
-    int StartOffset { get; set; }
-    int EndOffset { get; set; }
+    IShardedMemory Region { get; }
   }
 
 
-  public class ZObj : IZFile {
-    public ZFileType Type => ZFileType.OBJECT;
+  public abstract class BZFile : IZFile {
+    protected BZFile(IShardedMemory region) {
+      this.Region = region;
+    }
+
+    public abstract ZFileType Type { get; }
+
     public string? FileName { get; set; }
     public string? BetterFileName { get; set; }
-    public int StartOffset { get; set; }
-    public int EndOffset { get; set; }
+
+    public IShardedMemory Region { get; }
   }
 
 
-  public class ZCodeFiles : IZFile {
-    public ZFileType Type => ZFileType.CODE;
-    public string? FileName { get; set; }
-    public string? BetterFileName { get; set; }
-    public int StartOffset { get; set; }
-    public int EndOffset { get; set; }
+  public class ZObj : BZFile {
+    public ZObj(IShardedMemory region) : base(region) {}
+    public override ZFileType Type => ZFileType.OBJECT;
   }
 
 
-  public class ZSc : IZFile {
-    public ZFileType Type => ZFileType.SCENE;
-    public string? FileName { get; set; }
-    public string? BetterFileName { get; set; }
-    public int StartOffset { get; set; }
-    public int EndOffset { get; set; }
+  public class ZCodeFiles : BZFile {
+    public ZCodeFiles(IShardedMemory region) : base(region) { }
+    public override ZFileType Type => ZFileType.CODE;
+  }
 
+
+  public class ZSc : BZFile {
+    public ZSc(IShardedMemory region) : base(region) { }
+    public override ZFileType Type => ZFileType.SCENE;
+
+    // TODO: Make nonnull via init, C#9.
     public ZMap[]? Maps;
   }
 
-  public class ZMap : IZFile {
-    public ZFileType Type => ZFileType.MAP;
-    public string? FileName { get; set; }
-    public string? BetterFileName { get; set; }
-    public int StartOffset { get; set; }
-    public int EndOffset { get; set; }
+  public class ZMap : BZFile {
+    public ZMap(IShardedMemory region) : base(region) { }
+    public override ZFileType Type => ZFileType.MAP;
 
     // TODO: Make nonnull via init, C#9.
     public ZSc? Scene { get; set; }
   }
 
-  public class ZObjectSet : IZFile {
-    public ZFileType Type => ZFileType.OBJECT_SET;
-    public string? FileName { get; set; }
-    public string? BetterFileName { get; set; }
-    public int StartOffset { get; set; }
-    public int EndOffset { get; set; }
+  public class ZObjectSet : BZFile {
+    public ZObjectSet(IShardedMemory region) : base(region) { }
+    public override ZFileType Type => ZFileType.OBJECT_SET;
   }
 
 
-  public class ZOtherData : IZFile {
-    public ZFileType Type => ZFileType.OTHER;
-    public string? FileName { get; set; }
-    public string? BetterFileName { get; set; }
-    public int StartOffset { get; set; }
-    public int EndOffset { get; set; }
+  public class ZOtherData : BZFile {
+    public ZOtherData(IShardedMemory region) : base(region) { }
+    public override ZFileType Type => ZFileType.OTHER;
   }
 }

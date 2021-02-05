@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using UoT.util.array;
+
 namespace UoT {
   public static class IoUtil {
     public static void SplitAddress(uint address, out byte bank, out uint offset) {
