@@ -16,4 +16,8 @@
     <ProjectReference Include="..\Utility of Time CSharp\Utility of Time CSharp.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="util\enumerator\" />
+  </ItemGroup>
+
 </Project>

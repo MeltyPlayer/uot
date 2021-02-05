@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
+using UoT.util.array;
+using UoT.util.enumerator;
+
 namespace UoT.util.data {
   public interface IShardedListAddress {
     int Offset { get; }
@@ -17,7 +20,7 @@ namespace UoT.util.data {
 
     IShardedList<T> Shard(int localOffset, int length);
 
-    // TODO: Resizing
+    void Resize(int newLength);
   }
 
   public class ShardedList<T> : IShardedList<T> {
@@ -28,7 +31,7 @@ namespace UoT.util.data {
         ShardedList<T>? parent,
         T[] ts
     ) {
-      this.regions_.Add(new RawShardedList<T>(this, ts));
+      this.regions_.Add(new RawShardedList(this, ts));
 
       this.Parent = parent;
 
@@ -109,7 +112,7 @@ namespace UoT.util.data {
                                    out var regionOffset,
                                    out var regionIndex);
 
-      var rawRegion = region as RawShardedList<T>;
+      var rawRegion = region as RawShardedList;
       Asserts.Assert(rawRegion != null,
                      "Tried to shard a previously sharded region.");
 
@@ -126,28 +129,31 @@ namespace UoT.util.data {
       var regionImpl = rawRegion!.Impl;
 
       if (afterLength > 0) {
-        var afterImpl = new T[afterLength];
-        for (var i = 0; i < afterLength; ++i) {
-          afterImpl[i] = regionImpl[beforeLength + newRegionLength + i];
-        }
+        ArrayUtil.ExtractTo(regionImpl,
+                            beforeLength + newRegionLength,
+                            out var afterImpl,
+                            0,
+                            afterLength);
         this.regions_.Insert(regionIndex,
-                             new RawShardedList<T>(this, afterImpl));
+                             new RawShardedList(this, afterImpl));
       }
 
-      var newRegionImpl = new T[newRegionLength];
-      for (var i = 0; i < newRegionLength; ++i) {
-        newRegionImpl[i] = regionImpl[beforeLength + i];
-      }
+      ArrayUtil.ExtractTo(regionImpl,
+                          beforeLength,
+                          out var newRegionImpl,
+                          0,
+                          newRegionLength);
       var newRegion = new ShardedList<T>(this, newRegionImpl);
       this.regions_.Insert(regionIndex, newRegion);
 
       if (beforeLength > 0) {
-        var beforeImpl = new T[beforeLength];
-        for (var i = 0; i < beforeLength; ++i) {
-          beforeImpl[i] = regionImpl[i];
-        }
+        ArrayUtil.ExtractTo(regionImpl,
+                            0,
+                            out var beforeImpl,
+                            0,
+                            beforeLength);
         this.regions_.Insert(regionIndex,
-                             new RawShardedList<T>(this, beforeImpl));
+                             new RawShardedList(this, beforeImpl));
       }
 
       this.MergeNeighboringRawRegions_();
@@ -162,8 +168,8 @@ namespace UoT.util.data {
       for (var i = 1; i < this.regions_.Count; ++i) {
         var currentRegion = this.regions_[i];
 
-        if (previousRegion is RawShardedList<T> rawPreviousRegion &&
-            currentRegion is RawShardedList<T> rawCurrentRegion) {
+        if (previousRegion is RawShardedList rawPreviousRegion &&
+            currentRegion is RawShardedList rawCurrentRegion) {
           didMerge = true;
 
           var mergedImpl = new T[previousRegion.Length + currentRegion.Length];
@@ -171,7 +177,7 @@ namespace UoT.util.data {
           rawPreviousRegion.Impl.CopyTo(mergedImpl, 0);
           rawCurrentRegion.Impl.CopyTo(mergedImpl, previousRegion.Length);
 
-          var mergedRegion = new RawShardedList<T>(this, mergedImpl);
+          var mergedRegion = new RawShardedList(this, mergedImpl);
 
           this.regions_.RemoveAt(i);
           this.regions_.RemoveAt(i - 1);
@@ -187,6 +193,12 @@ namespace UoT.util.data {
       if (didMerge) {
         this.MergeNeighboringRawRegions_();
       }
+    }
+
+    public void Resize(int newLength) {
+      Asserts.Assert(this.regions_.Count == 1,
+                     "Attempted to resize a sharded list with multiple regions!");
+      this.regions_[0].Resize(newLength);
     }
 
     private class NullShardedListAddress : IShardedListAddress {
@@ -214,13 +226,13 @@ namespace UoT.util.data {
         this.topEnumerator_ = regions.GetEnumerator();
       }
 
-      public T Current => this.currentEnumerator_!.Current;
-      object IEnumerator.Current => this.Current!;
-
       public void Dispose() {
         this.topEnumerator_.Dispose();
         this.currentEnumerator_?.Dispose();
       }
+
+      public T Current => this.currentEnumerator_!.Current;
+      object IEnumerator.Current => this.Current!;
 
       public bool MoveNext() {
         if (this.currentEnumerator_?.MoveNext() ?? false) {
@@ -254,8 +266,8 @@ namespace UoT.util.data {
       public int Offset => this.getOffsetHandler_();
     }
 
-    private class RawShardedList<T> : IShardedList<T> {
-      public RawShardedList(ShardedList<T> parent, IList<T> impl) {
+    private class RawShardedList : IShardedList<T> {
+      public RawShardedList(ShardedList<T> parent, T[] impl) {
         this.Impl = impl;
 
         this.Parent = parent;
@@ -263,13 +275,13 @@ namespace UoT.util.data {
             new ShardedListAddress(() => parent.LocateRegion_(this));
       }
 
-      public IList<T> Impl { get; }
+      public T[] Impl { get; private set; }
 
       public IShardedList<T>? Parent { get; }
 
       public IShardedListAddress GlobalOffset { get; }
 
-      public int Length => this.Impl.Count;
+      public int Length => this.Impl.Length;
 
       public T this[int localOffset] {
         get => this.Impl[localOffset];
@@ -279,7 +291,16 @@ namespace UoT.util.data {
       public IShardedList<T> Shard(int localOffset, int length)
         => throw new NotSupportedException("Attempted to shard raw region.");
 
-      public IEnumerator<T> GetEnumerator() => this.Impl.GetEnumerator();
+      public void Resize(int newLength) {
+        var impl = this.Impl;
+
+        Array.Resize(ref impl, newLength);
+        this.Impl = impl;
+      }
+
+      public IEnumerator<T> GetEnumerator()
+        => new ArrayEnumerator<T>(this.Impl);
+
       IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
     }
   }

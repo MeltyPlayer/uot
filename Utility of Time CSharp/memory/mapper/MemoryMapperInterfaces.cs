@@ -8,7 +8,7 @@
   // TODO: DL memory
 
   public interface IMemorySource {
-    byte this[uint offset] { get; set; }
-    uint Length { get; }
+    int Length { get; }
+    byte this[int localOffset] { get; set; }
   }
 }
