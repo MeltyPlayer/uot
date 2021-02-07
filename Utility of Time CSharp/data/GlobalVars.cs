@@ -1,4 +1,3 @@
 ﻿namespace UoT {
-  public static class GlobalVarsCs {
-  }
+  public static class GlobalVarsCs {}
 }

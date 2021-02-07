@@ -191,8 +191,8 @@
     <Import Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Animation\ZAnimation.vb" />
     <Compile Include="Data Storage\GlobalVars.vb" />
-    <Compile Include="Display List\F3DEX2_Defs.vb" />
     <Compile Include="Display List\F3DEX2_Parser.vb" />
     <Compile Include="Helpers\Functions.vb" />
     <Compile Include="Main window\ApplicationEvents.vb" />
@@ -278,7 +278,6 @@
     <Content Include="Tao GL Libs\Tao.Platform.Windows.dll" />
     <Content Include="Tao GL Libs\Tao.Platform.Windows.xml" />
     <None Include="Resources\icon_txt.gif" />
-    <Compile Include="Animation\ZAnimation.vb" />
     <Compile Include="ApplicationEvents.vb" />
     <Compile Include="Databases\PresetReader.vb" />
     <Compile Include="External Model Formats\3ds.vb" />

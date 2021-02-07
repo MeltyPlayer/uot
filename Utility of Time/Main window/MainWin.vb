@@ -4293,7 +4293,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
          And buffer(i + 6) = 0 And buffer(i + 7) = 0 Then
 
         Dim address As UInteger = IoUtil.MergeAddress(buffer.Segment, i)
-        i = ReadInDL(DlManager, address)
+        i = DisplayListReader.ReadInDL(DlManager, address, DListSelection)
         DLCnt += 1
       End If
     Next
@@ -4319,7 +4319,12 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
         Case FileTypes.ACTORMODEL
           animationbank.SelectedIndex = 0
           ' TODO: Determine if model is link to auto-select animations.
-          LimbEntries = AnimParser.GetHierarchies(RamBanks.ZFileBuffer, False, DlManager, DlModel)
+          LimbEntries = LimbHierarchyReader.GetHierarchies(
+            RamBanks.ZFileBuffer,
+            False,
+            DlManager,
+            DlModel,
+            DListSelection)
           If LimbEntries IsNot Nothing Then
             DlManager.HasLimbs = True
             DLParser.LimbMatrices.Retarget(LimbEntries)
