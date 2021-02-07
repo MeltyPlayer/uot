@@ -1,6 +1,7 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 using UoT.hacks;
+using UoT.hacks.fields;
 
 namespace UoT {
   public class ZeldaChildIndirectTextureHack : IIndirectTextureHack {
@@ -9,6 +10,9 @@ namespace UoT {
     // TODO: Where are happy eyes/mouth?
 
     // TODO: Map animation # to eye/mouth states
+
+    public IReadOnlyList<IField> Fields { get; } =
+      new List<IField>().AsReadOnly();
 
     public enum Eye {
       OPEN = 0x7208,

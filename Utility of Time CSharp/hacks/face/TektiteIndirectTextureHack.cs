@@ -1,4 +1,9 @@
-﻿namespace UoT {
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
+using UoT.hacks.fields;
+
+namespace UoT {
   /// <summary>
   ///   Indirect textures for Tektites. This is needed for this object because
   ///   it chooses between two sets of textures depending on the color.
@@ -6,19 +11,29 @@
   ///   These addresses were found by searching the ROM for specific color
   ///   values.
   /// </summary>
-  public class TektiteIndirectTextureHack : IIndirectTextureHack {
-    // TODO: Support switching between the sets in the editor.
+  public sealed class TektiteIndirectTextureHack : BIndirectTextureHack {
 
-    public EyeState EyeState { get => default; set { } }
-    public MouthState MouthState { get => default; set { } }
+    public TektiteIndirectTextureHack() {
+      var fields = new List<IField>();
+      fields.Add(this.color_);
 
-    public uint MapTextureAddress(uint originalAddress) {
-      var blueOffset = 0x1300;
-      var redOffset = 0x1B00;
+      this.Fields = fields.AsReadOnly();
+    }
 
-      var topOffset = blueOffset;
-      var eyeOffset = topOffset + (0x1F20 - 0x1B00);
-      var bottomOffset = topOffset + (0x2100 - 0x1B00);
+    public override IReadOnlyList<IField> Fields { get; }
+
+    private readonly IDiscretField<ushort> color_ =
+        new DiscreteField<ushort>.Builder("Color")
+            .AddPossibleValue("Red", 0x1B00)
+            .AddPossibleValue("Blue", 0x1300)
+            .Build();
+
+    public override uint MapTextureAddress(uint originalAddress) {
+      var baseOffset = this.color_.Value;
+
+      var topOffset = baseOffset;
+      var eyeOffset = baseOffset + (0x1F20 - 0x1B00);
+      var bottomOffset = baseOffset + (0x2100 - 0x1B00);
 
       // Top
       if (originalAddress == 0x08000000) {

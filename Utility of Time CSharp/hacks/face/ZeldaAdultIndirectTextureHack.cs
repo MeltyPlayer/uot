@@ -1,7 +1,14 @@
-﻿namespace UoT {
+﻿using System.Collections.Generic;
+
+using UoT.hacks.fields;
+
+namespace UoT {
   public class ZeldaAdultIndirectTextureHack : IIndirectTextureHack {
     // TODO: Support different eyes/mouths depending on animation frame.
     // TODO: Where are the rest of the expressions?
+
+    public IReadOnlyList<IField> Fields { get; } =
+      new List<IField>().AsReadOnly();
 
     public enum Eye {
       NORMAL = 0x30C8,

@@ -1,7 +1,14 @@
-﻿using UoT.hacks;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
+using UoT.hacks;
+using UoT.hacks.fields;
 
 namespace UoT {
   public class LinkIndirectTextureHack : IIndirectTextureHack {
+    public IReadOnlyList<IField> Fields { get; } =
+      new List<IField>().AsReadOnly();
+
     public EyeState EyeState { get; set; }
     public MouthState MouthState { get; set; }
 
@@ -11,9 +18,10 @@ namespace UoT {
         var eyeIndex = (uint) this.EyeState > 0
                            ? (uint) this.EyeState - 1
                            : (uint) BlinkUtil.Get(
-                               EyeState.OPEN,
-                               EyeState.HALF_OPEN,
-                               EyeState.CLOSED) - 1;
+                                 EyeState.OPEN,
+                                 EyeState.HALF_OPEN,
+                                 EyeState.CLOSED) -
+                             1;
         return 0x06000000 + (uint) eyeIndex * 0x800;
       }
 

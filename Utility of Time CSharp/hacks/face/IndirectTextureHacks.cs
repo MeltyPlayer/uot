@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 
+using UoT.hacks;
+using UoT.hacks.fields;
+
 namespace UoT {
   public enum EyeState {
     AUTO = 0,
@@ -21,7 +24,7 @@ namespace UoT {
     SMILE = 4,
   }
 
-  public interface IIndirectTextureHack {
+  public interface IIndirectTextureHack : IHack {
     EyeState EyeState { get; set; }
     MouthState MouthState { get; set; }
 
@@ -33,6 +36,16 @@ namespace UoT {
     /// </summary>
     uint MapTextureAddress(uint originalAddress);
   }
+
+  public abstract class BIndirectTextureHack : IIndirectTextureHack {
+    public abstract IReadOnlyList<IField> Fields { get; }
+
+    public EyeState EyeState { get => default; set { } }
+    public MouthState MouthState { get => default; set { } }
+
+    public abstract uint MapTextureAddress(uint originalAddress);
+  }
+
 
   public static class IndirectTextureHacks {
     private static IDictionary<string, IIndirectTextureHack> impl_ =
