@@ -139,11 +139,14 @@ namespace UoT {
                 }
 
                 withBlock.Position.X = IoUtil.ReadInt16(
-                    rotationIndicesBuffer, withBlock.TrackOffset);
+                    rotationIndicesBuffer,
+                    withBlock.TrackOffset);
                 withBlock.Position.Y = IoUtil.ReadInt16(
-                    rotationIndicesBuffer, withBlock.TrackOffset + 2);
+                    rotationIndicesBuffer,
+                    withBlock.TrackOffset + 2);
                 withBlock.Position.Z = IoUtil.ReadInt16(
-                    rotationIndicesBuffer,withBlock.TrackOffset + 4);
+                    rotationIndicesBuffer,
+                    withBlock.TrackOffset + 4);
 
                 int tTrackOffset = (int) (withBlock.TrackOffset + 6L);
                 for (int i1 = 0, loopTo3 = (int) (trackCount - 1L);
@@ -223,7 +226,7 @@ namespace UoT {
 
         // TODO: Is this really needed?
         var validOffset = animationOffset + frameSize * frameCount <
-                           animationData.Count;
+                          animationData.Count;
         if (validAnimationBank & hasZeroes & validOffset) {
           animCnt += 1;
           Array.Resize(ref animations, animCnt + 1);
@@ -264,16 +267,10 @@ namespace UoT {
                       IoUtil.ReadUInt16(animationData, trackOffset);
                 }
 
-                var facialStateOffset = frameOffset + 2 * (3 + trackCount);
-                var facialState = animationData[(int) (facialStateOffset + 1L)];
-                byte mouthState =
-                    (byte) IoUtil.ShiftR(Conversions.ToUInteger(facialState),
-                                         4,
-                                         4);
-                byte eyeState =
-                    (byte) IoUtil.ShiftR(Conversions.ToUInteger(facialState),
-                                         0,
-                                         4);
+                var facialStateOffset = (int) (frameOffset + 2 * (3 + trackCount));
+                var facialState = animationData[facialStateOffset + 1];
+                var mouthState = IoUtil.ShiftR(facialState, 4, 4);
+                var eyeState = IoUtil.ShiftR(facialState, 0, 4);
                 withBlock.FacialStates[f].EyeState = (EyeState) eyeState;
                 withBlock.FacialStates[f].MouthState = (MouthState) mouthState;
               }
