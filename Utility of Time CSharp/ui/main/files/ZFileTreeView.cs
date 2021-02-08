@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using UoT.common.fuzzy;
 using UoT.memory.files;
 using UoT.ui.common.component;
+using UoT.util;
 
 namespace UoT.ui.main.files {
   public partial class ZFileTreeView : UserControl {
@@ -76,7 +77,7 @@ namespace UoT.ui.main.files {
         var sceneNode = scenesNode.Add(scene.BetterFileName!);
         this.AddZFileNodeFor(scene, sceneNode);
 
-        foreach (var map in scene.Maps) {
+        foreach (var map in Asserts.Assert(scene.Maps)) {
           var mapNode = sceneNode.Add(map.BetterFileName!);
           this.AddZFileNodeFor(map, mapNode);
         }
@@ -158,7 +159,7 @@ namespace UoT.ui.main.files {
         this.PropagateMatchPercentages_(matches);
         this.betterTreeView_.Root.ResetChildrenRecursively(
             betterTreeNode
-                => betterTreeNode.AssociatedData.MatchPercentage >=
+                => Asserts.Assert(betterTreeNode.AssociatedData).MatchPercentage >=
                    matchPercentage);
 
         this.betterTreeView_.Comparer =
@@ -202,8 +203,8 @@ namespace UoT.ui.main.files {
       public int Compare(
           BetterTreeNode<ZFileNode> lhs,
           BetterTreeNode<ZFileNode> rhs)
-        => -lhs.AssociatedData.MatchPercentage.CompareTo(
-               rhs.AssociatedData.MatchPercentage);
+        => -Asserts.Assert(lhs.AssociatedData).MatchPercentage.CompareTo(
+               Asserts.Assert(rhs.AssociatedData).MatchPercentage);
     }
   }
 }

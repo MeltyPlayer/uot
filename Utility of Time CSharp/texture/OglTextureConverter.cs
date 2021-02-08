@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 using Tao.OpenGl;
 
+using UoT.util;
+
 namespace UoT {
   // TODO: Come up w/ better name.
   public class OglTextureConverter {
@@ -75,7 +77,7 @@ namespace UoT {
                             Gl.GL_UNSIGNED_BYTE,
                             loadedRgba);
 
-      var texture = cache.Add(tileDescriptor, loadedRgba, save);
+      var texture = Asserts.Assert(cache.Add(tileDescriptor, loadedRgba, save));
 
       /**
        * Lets OpenGL manage wrapping instead of calculating it within the

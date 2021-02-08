@@ -69,7 +69,7 @@ Module GlobalVars
   Public ExternalHierarchy As Byte()
   Public ExternalAnimBank As Byte()
   Public RenderToggles As New RendererOptions
-  Public AnimParser As New ZAnimation
+  Public AnimParser As New AnimationReader
   Public DLParser As New F3DEX2_Parser
 
   Public UseStaticDlModel As Boolean = False

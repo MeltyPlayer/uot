@@ -191,7 +191,6 @@
     <Import Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Animation\ZAnimation.vb" />
     <Compile Include="Data Storage\GlobalVars.vb" />
     <Compile Include="Display List\F3DEX2_Parser.vb" />
     <Compile Include="Helpers\Functions.vb" />
@@ -348,6 +347,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Animation\" />
     <Folder Include="bin\Debug\ext\" />
   </ItemGroup>
   <ItemGroup>

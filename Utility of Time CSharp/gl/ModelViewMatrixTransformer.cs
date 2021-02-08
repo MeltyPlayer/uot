@@ -146,14 +146,19 @@ namespace UoT {
 
   public class
       SoftwareModelViewMatrixTransformer : IModelViewMatrixTransformer {
-    private Matrix<double>? current_;
+    private Matrix<double> current_;
     private LinkedList<MatrixNode> stack_ = new LinkedList<MatrixNode>();
 
     private class MatrixNode {
       public Matrix<double>? Matrix { get; set; }
     }
 
-    public SoftwareModelViewMatrixTransformer() => this.Push();
+    public SoftwareModelViewMatrixTransformer() {
+      this.Push();
+
+      // TODO: Assigned in push, possible to fix this?
+      this.current_ = this.current_;
+    } 
 
     public void ProjectVertex(ref double x, ref double y, ref double z)
       => GlMatrixUtil.Project(Asserts.Assert(this.current_),
@@ -202,7 +207,7 @@ namespace UoT {
     }
 
     private void UpdateCurrent_()
-      => this.current_ = this.stack_.Last.Value.Matrix;
+      => this.current_ = Asserts.Assert(this.stack_.Last.Value.Matrix);
 
     private readonly Matrix<double> rhsBuffer_ =
         Matrix<double>.Build.DenseIdentity(4, 4);

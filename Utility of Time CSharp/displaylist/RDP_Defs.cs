@@ -1,4 +1,6 @@
-﻿namespace UoT {
+﻿using UoT.util;
+
+namespace UoT {
   public enum RDP {
     // GENERAL
     G_SETCIMG = 0xFF,
@@ -191,17 +193,18 @@
         N64DisplayList DL,
         byte Command,
         int StartIndex) {
-      for (int i = StartIndex, loopTo = DL.Commands.Length - 1;
-           i <= loopTo;
-           i++) {
-        if (DL.Commands[i].CMDParams[0] == Command) {
-          return DL.Commands[i];
-        } else if (i > StartIndex &
-                   DL.Commands[i].CMDParams[0] == (int) F3DZEX.VTX) {
-          return default;
+      var commands = Asserts.Assert(DL.Commands);
+      for (var i = 0; i < commands.Length; ++i) {
+        var command = commands[i];
+        if (command.CMDParams[0] == Command) {
+          return command;
+        }
+        
+        if (i > StartIndex && command.CMDParams[0] == (int)F3DZEX.VTX) {
+          return null;
         }
       }
-      return default;
+      return null;
     }
   }
 }

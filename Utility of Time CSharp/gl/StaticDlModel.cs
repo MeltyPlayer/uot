@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 using Tao.OpenGl;
 
+using UoT.util;
+
 namespace UoT {
   public class StaticDlModel {
     // TODO: Prune unused values.
@@ -129,7 +131,7 @@ namespace UoT {
       triangle.Vertices[1] = this.activeVertices_[vertex2];
       triangle.Vertices[2] = this.activeVertices_[vertex3];
 
-      this.activeLimb_.Triangles.Add(triangle);
+      Asserts.Assert(this.activeLimb_).Triangles.Add(triangle);
     }
 
     public void UpdateVertex(
@@ -150,7 +152,7 @@ namespace UoT {
       vertex = modifier(vertex);
       vertex.Uuid = this.allVertices_.Count;
 
-      this.activeLimb_.OwnedVertices.Add(vertex.Uuid);
+      Asserts.Assert(this.activeLimb_).OwnedVertices.Add(vertex.Uuid);
       this.activeVertices_[index] = vertex.Uuid;
       this.allVertices_.Add(vertex);
     }

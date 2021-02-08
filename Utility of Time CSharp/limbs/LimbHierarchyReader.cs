@@ -6,19 +6,23 @@ using UoT.util;
 
 namespace UoT {
   public static class LimbHierarchyReader {
-
     /// <summary>
     ///   Parses a limb hierarchy according to the following spec:
     ///   https://wiki.cloudmodding.com/oot/Animation_Format#Hierarchy
     /// </summary>
-    public static IList<Limb>? GetHierarchies(IBank Data, bool isLink, DlManager dlManager, StaticDlModel model, ComboBox dListSelection) {
+    public static IList<Limb>? GetHierarchies(
+        IBank Data,
+        bool isLink,
+        DlManager dlManager,
+        StaticDlModel model,
+        ComboBox dListSelection) {
       uint limbIndexAddress;
       model.Reset();
       int j = 0;
       for (int i = 0, loopTo = Data.Count - 8; i <= loopTo; i += 4) {
-        limbIndexAddress = IoUtil.ReadUInt32(Data, (uint)i);
-        IoUtil.SplitAddress(limbIndexAddress, 
-                            out var limbIndexBank, 
+        limbIndexAddress = IoUtil.ReadUInt32(Data, (uint) i);
+        IoUtil.SplitAddress(limbIndexAddress,
+                            out var limbIndexBank,
                             out var limbIndexOffset);
         uint limbCount = Data[i + 4];
         uint limbAddress;
@@ -32,18 +36,23 @@ namespace UoT {
           limbSize = 12U;
         }
 
-        if (RamBanks.IsValidBank((byte)limbIndexBank) & limbCount > 0L) {
+        if (RamBanks.IsValidBank((byte) limbIndexBank) & limbCount > 0L) {
           var limbIndexBankBuffer = RamBanks.GetBankByIndex(limbIndexBank);
-          if (limbIndexOffset + 4L * limbCount < limbIndexBankBuffer.Count) {
+
+          if (limbIndexBankBuffer != null &&
+              limbIndexOffset + 4L * limbCount < limbIndexBankBuffer.Count) {
             byte firstChild;
             byte nextSibling;
             bool isValid = true;
             bool somethingVisible = false;
-            var loopTo1 = (int)(limbCount - 1L);
+            var loopTo1 = (int) (limbCount - 1L);
             for (j = 0; j <= loopTo1; j++) {
-              limbAddress = IoUtil.ReadUInt32(limbIndexBankBuffer, (uint)(limbIndexOffset + j * 4));
+              limbAddress = IoUtil.ReadUInt32(limbIndexBankBuffer,
+                                              (uint) (limbIndexOffset + j * 4));
 
-              IoUtil.SplitAddress(limbAddress, out var limbBank, out var limbOffset);
+              IoUtil.SplitAddress(limbAddress,
+                                  out var limbBank,
+                                  out var limbOffset);
 
               if (!RamBanks.IsValidBank(limbBank)) {
                 isValid = false;
@@ -51,28 +60,35 @@ namespace UoT {
               }
 
               var limbBankBuffer = RamBanks.GetBankByIndex(limbBank);
+              if (limbBankBuffer == null) {
+                isValid = false;
+                goto badLimbIndexOffset;
+              }
+
               if (limbOffset + limbSize >= limbBankBuffer.Count) {
                 isValid = false;
                 goto badLimbIndexOffset;
               }
 
-              firstChild = limbBankBuffer[(int)(limbOffset + 6L)];
-              nextSibling = limbBankBuffer[(int)(limbOffset + 7L)];
+              firstChild = limbBankBuffer[(int) (limbOffset + 6L)];
+              nextSibling = limbBankBuffer[(int) (limbOffset + 7L)];
               if (firstChild == j | nextSibling == j) {
                 isValid = false;
                 goto badLimbIndexOffset;
               }
 
-              var displayListAddress = IoUtil.ReadUInt32(limbBankBuffer, (uint)(limbOffset + 8L));
-              IoUtil.SplitAddress(displayListAddress, 
-                                  out var displayListBank, 
+              var displayListAddress =
+                  IoUtil.ReadUInt32(limbBankBuffer, (uint) (limbOffset + 8L));
+              IoUtil.SplitAddress(displayListAddress,
+                                  out var displayListBank,
                                   out var displayListOffset);
-              
+
               if (displayListBank != 0L) {
                 somethingVisible = true;
               }
 
-              if (displayListBank != 0L & !RamBanks.IsValidBank((byte)displayListBank)) {
+              if (displayListBank != 0L &
+                  !RamBanks.IsValidBank((byte) displayListBank)) {
                 isValid = false;
                 goto badLimbIndexOffset;
               }
@@ -81,31 +97,58 @@ namespace UoT {
             badLimbIndexOffset:
 
             if (isValid) {
-              var tmpHierarchy = new Limb[(int)(limbCount - 1L + 1)];
-              for (int k = 0, loopTo2 = (int)(limbCount - 1L); k <= loopTo2; k++) {
-                limbAddress = IoUtil.ReadUInt32(limbIndexBankBuffer, (uint)(limbIndexOffset + 4 * k));
-                IoUtil.SplitAddress(limbAddress, out var limbBank, out var limbOffset);
-                var limbBankBuffer = Asserts.Assert(RamBanks.GetBankByIndex(limbBank));
+              var tmpHierarchy = new Limb[(int) (limbCount - 1L + 1)];
+              for (int k = 0, loopTo2 = (int) (limbCount - 1L);
+                   k <= loopTo2;
+                   k++) {
+                limbAddress = IoUtil.ReadUInt32(limbIndexBankBuffer,
+                                                (uint) (limbIndexOffset +
+                                                        4 * k));
+                IoUtil.SplitAddress(limbAddress,
+                                    out var limbBank,
+                                    out var limbOffset);
+                var limbBankBuffer =
+                    Asserts.Assert(RamBanks.GetBankByIndex(limbBank));
 
                 tmpHierarchy[k] = new Limb();
                 {
                   var withBlock = tmpHierarchy[k];
-                  withBlock.x = (short)IoUtil.ReadUInt16(limbBankBuffer, (uint)(limbOffset + 0L));
-                  withBlock.y = (short)IoUtil.ReadUInt16(limbBankBuffer, (uint)(limbOffset + 2L));
-                  withBlock.z = (short)IoUtil.ReadUInt16(limbBankBuffer, (uint)(limbOffset + 4L));
-                  withBlock.firstChild = (sbyte)limbBankBuffer[(int)(limbOffset + 6L)];
-                  withBlock.nextSibling = (sbyte)limbBankBuffer[(int)(limbOffset + 7L)];
-                  model.AddLimb(withBlock.x, withBlock.y, withBlock.z, withBlock.firstChild, withBlock.nextSibling);
+                  withBlock.x =
+                      (short) IoUtil.ReadUInt16(
+                          limbBankBuffer,
+                          (uint) (limbOffset + 0L));
+                  withBlock.y =
+                      (short) IoUtil.ReadUInt16(
+                          limbBankBuffer,
+                          (uint) (limbOffset + 2L));
+                  withBlock.z =
+                      (short) IoUtil.ReadUInt16(
+                          limbBankBuffer,
+                          (uint) (limbOffset + 4L));
+                  withBlock.firstChild =
+                      (sbyte) limbBankBuffer[(int) (limbOffset + 6L)];
+                  withBlock.nextSibling =
+                      (sbyte) limbBankBuffer[(int) (limbOffset + 7L)];
+                  model.AddLimb(withBlock.x,
+                                withBlock.y,
+                                withBlock.z,
+                                withBlock.firstChild,
+                                withBlock.nextSibling);
 
-                  var displayListAddress = IoUtil.ReadUInt32(limbBankBuffer, (uint)(limbOffset + 8L));
+                  var displayListAddress =
+                      IoUtil.ReadUInt32(limbBankBuffer,
+                                        (uint) (limbOffset + 8L));
                   IoUtil.SplitAddress(displayListAddress,
-                                      out var displayListBank, 
+                                      out var displayListBank,
                                       out var displayListOffset);
-                  
+
                   if (displayListBank != 0L) {
-                    var displayListBankBuffer = RamBanks.GetBankByIndex(displayListBank);
+                    var displayListBankBuffer =
+                        RamBanks.GetBankByIndex(displayListBank);
                     withBlock.DisplayListAddress = displayListAddress;
-                    DisplayListReader.ReadInDL(dlManager, displayListAddress, dListSelection);
+                    DisplayListReader.ReadInDL(dlManager,
+                                               displayListAddress,
+                                               dListSelection);
                   } else if (!somethingVisible) {
                     withBlock.DisplayListAddress = displayListAddress;
                   } else {
@@ -131,7 +174,8 @@ namespace UoT {
               }
 
               if (isValid & !somethingVisible) {
-                throw new NotSupportedException("model format is not rendering a valid model!");
+                throw new NotSupportedException(
+                    "model format is not rendering a valid model!");
               }
 
               return tmpHierarchy;

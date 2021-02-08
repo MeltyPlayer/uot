@@ -3,6 +3,8 @@ using System.Windows.Forms;
 
 using Microsoft.VisualBasic;
 
+using UoT.util;
+
 namespace UoT {
   public static class DisplayListReader {
     // TODO: Remove combo box input.
@@ -11,7 +13,7 @@ namespace UoT {
         uint address,
         ComboBox dListSelection) {
       IoUtil.SplitAddress(address, out var bank, out var offset);
-      var data = RamBanks.GetBankByIndex(bank);
+      var data = Asserts.Assert(RamBanks.GetBankByIndex(bank));
       try {
         if (offset < data.Count) {
           // TODO: This jumps into the lowest level DL, but the 0xDE command (DL)

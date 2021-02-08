@@ -4,6 +4,7 @@ using System.Text;
 using Tao.OpenGl;
 
 using UoT.ui.main.viewer;
+using UoT.util;
 
 namespace UoT {
   /// <summary>
@@ -256,7 +257,7 @@ namespace UoT {
     public void PassValuesToShader() {
       if (this.EnableCombiner) {
         Gl.glUniform1f(this.timeLocation_, (float) Time.Current);
-        var camera = Camera.Instance;
+        var camera = Asserts.Assert(Camera.Instance);
         Gl.glUniform3f(this.cameraPositionLocation_,
                        (float) camera.X,
                        (float) camera.Y,

@@ -6664,18 +6664,23 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
         RamBanks.CommonBankUse = commonBankUse
 
         If RamBanks.CommonBankUse.AnimBank = UseBank.Inline Then
-          AnimationEntries = AnimParser.GetCommonAnimations(RamBanks.ZFileBuffer, LimbEntries.Length)
+          AnimationEntries = AnimParser.GetCommonAnimations(
+            RamBanks.ZFileBuffer,
+            LimbEntries.Length,
+            AnimationList)
         Else
           If animationbank.SelectedItem = "link_animetion" Then
             AnimationEntries = AnimParser.GetLinkAnimations(
               RamBanks.GetBankByIndex(4),
               LimbEntries.Length,
-              RamBanks.CommonBanks.Anims.Banks(RamBanks.CommonBankUse.AnimBank))
+              RamBanks.CommonBanks.Anims.Banks(RamBanks.CommonBankUse.AnimBank),
+              AnimationList)
           Else
             ' Normal animations.
             AnimationEntries = AnimParser.GetCommonAnimations(
               RamBanks.CommonBanks.Anims.Banks(RamBanks.CommonBankUse.AnimBank),
-              LimbEntries.Length)
+              LimbEntries.Length,
+              AnimationList)
           End If
         End If
 

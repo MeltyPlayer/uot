@@ -3,7 +3,7 @@
   '''   Parses a set of animations according to the spec at:
   '''   https://wiki.cloudmodding.com/oot/Animation_Format#Normal_Animations
   ''' </summary>
-  Public Function GetCommonAnimations(Data As IBank, ByVal LimbCount As Integer) _
+  Public Function GetCommonAnimations(Data As IBank, ByVal LimbCount As Integer, animationList As ListBox) _
     As IList(Of IAnimation)
     Dim trackCount As UInteger = LimbCount * 3
 
@@ -103,7 +103,7 @@ badTTracks:
               ReDim .Angles(.AngleCount - 1)
               ReDim .Tracks(trackCount - 1)
 
-              MainWin.AnimationList.Items.Add("0x" & Hex(i))
+              animationList.Items.Add("0x" & Hex(i))
 
               For i1 As Integer = 0 To .AngleCount - 1
                 .Angles(i1) = IoUtil.ReadUInt16(rotationValuesBuffer, rotationValuesOffset)
@@ -160,7 +160,7 @@ badTTracks:
   '''   Parses a set of animations according to the spec at:
   '''   https://wiki.cloudmodding.com/oot/Animation_Format#C_code
   ''' </summary>
-  Public Function GetLinkAnimations(HeaderData As IBank, ByVal LimbCount As Integer, animationData As IBank) _
+  Public Function GetLinkAnimations(HeaderData As IBank, ByVal LimbCount As Integer, animationData As IBank, animationList As ListBox) _
     As IList(Of IAnimation)
     Dim animCnt As Integer = -1
     Dim animations(-1) As LinkAnimetion
@@ -225,7 +225,7 @@ badTTracks:
               .FacialStates(f).MouthState = mouthState
             Next
 
-            MainWin.AnimationList.Items.Add("0x" & Hex(i))
+            animationList.Items.Add("0x" & Hex(i))
           Else
             ReDim Preserve animations(animCnt - 1)
           End If
