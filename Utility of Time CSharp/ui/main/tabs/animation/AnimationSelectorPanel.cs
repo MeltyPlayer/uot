@@ -7,7 +7,7 @@ using UoT.util;
 
 namespace UoT.ui.main.tabs.animation {
   public partial class AnimationSelectorPanel : UserControl, IAnimationBanks {
-    // TODO: Make sure expected # of events are fired in expected places.
+    // TODO: Add tests to make sure expected # of events are fired in expected places.
 
     private readonly AnimationReader animationReader_ = new AnimationReader();
     private IReadOnlyList<IAnimationBank>? animationBanks_;
