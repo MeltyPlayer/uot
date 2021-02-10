@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using UoT.limbs;
+
 namespace UoT.animation.banks {
   public interface IAnimationBanks {
     void Populate(IReadOnlyList<IAnimationBank> banks);

@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 using UoT.util;
 
-namespace UoT {
+namespace UoT.limbs {
   public static class LimbHierarchyReader {
     /// <summary>
     ///   Parses a limb hierarchy according to the following spec:

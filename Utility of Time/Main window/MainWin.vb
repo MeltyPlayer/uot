@@ -3,12 +3,10 @@ Imports Tao.Platform.Windows
 Imports System.Math
 Imports System.IO
 Imports Tao.FreeGlut
-Imports System.Numerics
-Imports MathNet.Numerics.LinearAlgebra.Double
 Imports UoT.animation
+Imports UoT.limbs
 Imports UoT.memory.files
 Imports UoT.memory.map
-Imports UoT.ui.main.top.help
 Imports UoT.ui.main.viewer
 
 Public Class MainWin

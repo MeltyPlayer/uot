@@ -6,7 +6,7 @@ using MathNet.Numerics.LinearAlgebra.Double;
 
 using UoT.animation.playback;
 
-namespace UoT {
+namespace UoT.limbs {
   /// <summary>
   ///   Helper class for managing a model's matrices for each limb.
   ///   Precalculates each matrix before rendering a frame.

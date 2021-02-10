@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 
 using UoT.animation.banks;
+using UoT.limbs;
 using UoT.util;
 
 namespace UoT.ui.main.tabs.animation {
