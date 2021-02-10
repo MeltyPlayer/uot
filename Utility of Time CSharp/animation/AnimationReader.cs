@@ -4,6 +4,8 @@ using System.Windows.Forms;
 
 using Microsoft.VisualBasic;
 
+using UoT.util;
+
 namespace UoT {
   public class AnimationReader {
     /// <summary>
@@ -11,69 +13,62 @@ namespace UoT {
     ///   https://wiki.cloudmodding.com/oot/Animation_Format#Normal_Animations
     /// </summary>
     public IList<IAnimation>? GetCommonAnimations(
-        IBank Data,
-        int LimbCount,
+        IBank bank,
+        int limbCount,
         ListBox animationList) {
-      uint trackCount = (uint) (LimbCount * 3);
-      int animCnt = -1;
-      var tAnimation = new NormalAnimation[0];
       animationList.Items.Clear();
+
+      uint trackCount = (uint) (limbCount * 3);
+      var animations = new List<IAnimation>();
 
       // Guesstimating the index by looking for an spot where the header's angle
       // address and track address have the same bank as the param at the top.
-      // TODO: Is this robust enough?
-      for (int i = 4, loopTo = Data.Count - 12 - 1; i <= loopTo; i += 4) {
+      for (var i = 4; i < bank.Count - 12; i += 4) {
         var attemptOffset = (uint) (i - 4);
-        var frameCount = IoUtil.ReadUInt16(Data, attemptOffset);
+
+        // Verifies the frame count is positive.
+        var frameCount = IoUtil.ReadUInt16(bank, attemptOffset);
         if (frameCount == 0) {
           continue;
         }
 
         var rotationValuesAddress = IoUtil.ReadUInt32(
-            Data,
+            bank,
             attemptOffset + 4);
-        var rotationIndicesAddress = IoUtil.ReadUInt32(
-            Data,
-            attemptOffset + 8);
         IoUtil.SplitAddress(rotationValuesAddress,
                             out var rotationValuesBank,
                             out var rotationValuesOffset);
+
+        // Verifies the rotation values address has a valid bank.
+        if (!RamBanks.IsValidBank(rotationValuesBank)) {
+          continue;
+        }
+
+        // Verifies the rotation indices address has a valid bank.
+        var rotationIndicesAddress = IoUtil.ReadUInt32(
+            bank,
+            attemptOffset + 8);
         IoUtil.SplitAddress(rotationIndicesAddress,
                             out var rotationIndicesBank,
                             out var rotationIndicesOffset);
+        if (!RamBanks.IsValidBank(rotationIndicesBank)) {
+          continue;
+        }
 
-        var limit = IoUtil.ReadUInt16(Data, attemptOffset + 12);
-        bool validAttemptOffset = RamBanks.IsValidBank(rotationValuesBank) &
-                                  RamBanks.IsValidBank(rotationIndicesBank);
+        // Obtains the specified banks.
+        var rotationValuesBuffer =
+            Asserts.Assert(RamBanks.GetBankByIndex(rotationValuesBank));
+        var rotationIndicesBuffer =
+            Asserts.Assert(RamBanks.GetBankByIndex(rotationIndicesBank));
 
-        var rotationValuesBuffer = default(IBank);
-        var rotationIndicesBuffer = default(IBank);
+        // Offsets should be within bounds of the bank.
+        var validRotationValuesOffset =
+            rotationValuesOffset < rotationValuesBuffer.Count;
+        var validRotationIndicesOffset =
+            rotationIndicesOffset < rotationIndicesBuffer.Count;
 
-        bool validRotationOffsets = false;
-        if (validAttemptOffset) {
-          // 6 is "current file", which is whatever was passed into "Data".
-          if (rotationValuesBank == 6) {
-            rotationValuesBuffer = Data;
-          } else {
-            rotationValuesBuffer = RamBanks.GetBankByIndex(rotationValuesBank);
-          }
-
-          if (rotationIndicesBank == 6) {
-            rotationIndicesBuffer = Data;
-          } else {
-            rotationIndicesBuffer =
-                RamBanks.GetBankByIndex(rotationIndicesBank);
-          }
-
-          // Offsets should be within bounds of the bank.
-          var validRotationValuesOffset =
-              rotationValuesBuffer != null &&
-              rotationValuesOffset < rotationValuesBuffer.Count;
-          var validRotationIndicesOffset =
-              rotationIndicesBuffer != null &&
-              rotationIndicesOffset < rotationIndicesBuffer.Count;
-          validRotationOffsets =
-              validRotationValuesOffset && validRotationIndicesOffset;
+        if (!validRotationValuesOffset || !validRotationIndicesOffset) {
+          continue;
         }
 
         // Angle count should be greater than 0.
@@ -81,122 +76,99 @@ namespace UoT {
             (uint) ((rotationIndicesOffset - rotationValuesOffset) / 2L);
         var validAngleCount = rotationIndicesOffset > rotationValuesOffset &&
                               angleCount > 0L;
-        if (validAttemptOffset &&
-            validRotationOffsets &&
-            validAngleCount &&
-            rotationValuesBuffer != null &&
-            rotationIndicesBuffer != null) {
-          // Should have zeroes present in two spots of the animation header. 
-          var hasZeroes =
-              IoUtil.ReadUInt16(Data, attemptOffset + 2) == 0 &&
-              IoUtil.ReadUInt16(Data, attemptOffset + 14) == 0;
+        if (!validAngleCount) {
+          continue;
+        }
 
-          // TODO: Assumes 0 is one of the angles, is this valid?
-          // Dim validAngles As Boolean = IoUtil.ReadUInt16(Data, rotationValuesOffset) = 0 And IoUtil.ReadUInt16(Data, rotationValuesOffset + 2) > 0
+        // Should have zeroes present in two spots of the animation header. 
+        var hasZeroes =
+            IoUtil.ReadUInt16(bank, attemptOffset + 2) == 0 &&
+            IoUtil.ReadUInt16(bank, attemptOffset + 14) == 0;
+        if (!hasZeroes) {
+          continue;
+        }
 
-          // All values of "tTrack" should be within the bounds of .Angles.
-          bool validTTracks = true;
-          for (int i1 = 0, loopTo1 = (int) (trackCount - 1L);
-               i1 <= loopTo1;
-               i1++) {
-            var tTrack = IoUtil.ReadUInt16(
-                rotationIndicesBuffer,
-                (uint) (rotationIndicesOffset + 6L + 2 * i1));
-            if (tTrack < limit) {
-              if (tTrack >= angleCount) {
-                validTTracks = false;
-                goto badTTracks;
-              }
-            } else if ((uint) (tTrack + frameCount) > angleCount) {
+        // All values of "tTrack" should be within the bounds of .Angles.
+        var validTTracks = true;
+        var limit = IoUtil.ReadUInt16(bank, attemptOffset + 12);
+        for (var i1 = 0; i1 < trackCount; i1++) {
+          var tTrack = IoUtil.ReadUInt16(
+              rotationIndicesBuffer,
+              (uint) (rotationIndicesOffset + 6L + 2 * i1));
+          if (tTrack < limit) {
+            if (tTrack >= angleCount) {
               validTTracks = false;
               goto badTTracks;
             }
+          } else if ((uint) (tTrack + frameCount) > angleCount) {
+            validTTracks = false;
+            goto badTTracks;
           }
+        }
 
-          badTTracks: ;
-          if (hasZeroes & validTTracks) {
-            animCnt += 1;
-            Array.Resize(ref tAnimation, animCnt + 1);
-            {
-              var animation = tAnimation[animCnt] = new NormalAnimation();
-              animation.FrameCount = frameCount;
-              animation.TrackOffset = rotationIndicesOffset;
-              animation.AngleCount = angleCount;
-              if (animation.FrameCount > 0) {
-                animation.Angles =
-                    new ushort[(int) (animation.AngleCount - 1L + 1)];
-                animationList.Items.Add("0x" + Conversion.Hex(i));
-                for (int i1 = 0, loopTo2 = (int) (animation.AngleCount - 1L);
-                     i1 <= loopTo2;
-                     i1++) {
-                  animation.Angles[i1] =
-                      IoUtil.ReadUInt16(rotationValuesBuffer,
-                                        rotationValuesOffset);
-                  rotationValuesOffset = (uint) (rotationValuesOffset + 2L);
-                }
+        badTTracks:
+        if (!validTTracks) {
+          continue;
+        }
 
-                var position = animation.Position = new Vec3s();
-                position.X = IoUtil.ReadInt16(
-                    rotationIndicesBuffer,
-                    animation.TrackOffset);
-                position.Y = IoUtil.ReadInt16(
-                    rotationIndicesBuffer,
-                    animation.TrackOffset + 2);
-                position.Z = IoUtil.ReadInt16(
-                    rotationIndicesBuffer,
-                    animation.TrackOffset + 4);
+        var animation = new NormalAnimation {
+            FrameCount = frameCount,
+            TrackOffset = rotationIndicesOffset,
+            AngleCount = angleCount
+        };
 
-                animation.Tracks =
-                    new NormalAnimationTrack[(int) (trackCount - 1L + 1)];
+        animation.Angles = new ushort[animation.AngleCount];
+        for (var i1 = 0; i1 < animation.AngleCount; ++i1) {
+          animation.Angles[i1] =
+              IoUtil.ReadUInt16(rotationValuesBuffer,
+                                rotationValuesOffset);
+          rotationValuesOffset = (uint) (rotationValuesOffset + 2L);
+        }
 
-                int tTrackOffset = (int) (animation.TrackOffset + 6L);
-                for (int i1 = 0, loopTo3 = (int) (trackCount - 1L);
-                     i1 <= loopTo3;
-                     i1++) {
-                  var track = animation.Tracks[i1] = new NormalAnimationTrack();
+        animation.Position = new Vec3s {
+            X = IoUtil.ReadInt16(rotationIndicesBuffer, animation.TrackOffset),
+            Y = IoUtil.ReadInt16(rotationIndicesBuffer,
+                                 animation.TrackOffset + 2),
+            Z = IoUtil.ReadInt16(rotationIndicesBuffer,
+                                 animation.TrackOffset + 4),
+        };
 
-                  var tTrack =
-                      IoUtil.ReadUInt16(rotationIndicesBuffer,
-                                        (uint) tTrackOffset);
-                  if (tTrack < limit) {
-                    // Constant (single value)
-                    track.Type = 0;
-                    track.Frames = new ushort[1];
-                    track.Frames[0] = animation.Angles[tTrack];
-                  } else {
-                    // Keyframes
-                    track.Type = 1;
-                    track.Frames = new ushort[animation.FrameCount];
-                    for (int i2 = 0, loopTo4 = animation.FrameCount - 1;
-                         i2 <= loopTo4;
-                         i2++) {
-                      try {
-                        track.Frames[i2] = animation.Angles[tTrack + i2];
-                      } catch {
-                        return null;
-                      }
-                    }
-                  }
+        animation.Tracks = new NormalAnimationTrack[trackCount];
 
-                  tTrackOffset += 2;
-                }
-              } else {
-                Array.Resize(ref tAnimation, animCnt);
+        var tTrackOffset = (int) (animation.TrackOffset + 6L);
+        for (var i1 = 0; i1 < trackCount; ++i1) {
+          var track = animation.Tracks[i1] = new NormalAnimationTrack();
+
+          var tTrack =
+              IoUtil.ReadUInt16(rotationIndicesBuffer,
+                                (uint) tTrackOffset);
+          if (tTrack < limit) {
+            // Constant (single value)
+            track.Type = 0;
+            track.Frames = new ushort[1];
+            track.Frames[0] = animation.Angles[tTrack];
+          } else {
+            // Keyframes
+            track.Type = 1;
+            track.Frames = new ushort[animation.FrameCount];
+            for (var i2 = 0; i2 < animation.FrameCount; ++i2) {
+              try {
+                track.Frames[i2] = animation.Angles[tTrack + i2];
+              } catch {
+                return null;
               }
             }
           }
+
+          tTrackOffset += 2;
         }
+
+        animations.Add(animation);
+
+        animationList.Items.Add("0x" + Conversion.Hex(i));
       }
 
-      if (tAnimation.Length > 0) {
-        var outList = new List<IAnimation>();
-        foreach (NormalAnimation animation in tAnimation) {
-          outList.Add(animation);
-        }
-        return outList;
-      }
-
-      return null;
+      return animations.Count > 0 ? animations : null;
     }
 
     /// <summary>
@@ -214,6 +186,7 @@ namespace UoT {
       var trackCount = (uint) (LimbCount * 3);
       var frameSize = 2 * (3 + trackCount) + 2;
       for (uint i = 0x2310; i <= 0x34F8; i += 4) {
+        // Verifies the frame count is positive.
         var frameCount = IoUtil.ReadUInt16(HeaderData, i);
         if (frameCount == 0) {
           continue;
@@ -223,7 +196,7 @@ namespace UoT {
         IoUtil.SplitAddress(animationAddress,
                             out var animationBank,
                             out var animationOffset);
-        
+
         // Should use link_animetion bank.
         var validAnimationBank = animationBank == 7;
         if (!validAnimationBank) {
@@ -289,11 +262,7 @@ namespace UoT {
         animationList.Items.Add("0x" + Conversion.Hex(i));
       }
 
-      if (animations.Count > 0) {
-        return animations;
-      }
-
-      return null;
+      return animations.Count > 0 ? animations : null;
     }
   }
 }
