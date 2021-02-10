@@ -43,7 +43,8 @@ Public Class MainWin
   <System.Diagnostics.DebuggerStepThrough()>
   Private Sub InitializeComponent()
     Me.components = New System.ComponentModel.Container()
-    Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainWin))
+    Dim resources As System.ComponentModel.ComponentResourceManager =
+          New System.ComponentModel.ComponentResourceManager(GetType(MainWin))
     Me.LoadROM = New System.Windows.Forms.OpenFileDialog()
     Me.UoTStatus = New System.Windows.Forms.StatusStrip()
     Me.ToolStatusLabel = New System.Windows.Forms.ToolStripStatusLabel()
@@ -156,7 +157,6 @@ Public Class MainWin
     Me.Label24 = New System.Windows.Forms.Label()
     Me.EditingTabs = New System.Windows.Forms.TabControl()
     Me.AnimationsTab = New System.Windows.Forms.TabPage()
-    Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
     Me.DLTab = New System.Windows.Forms.TabPage()
     Me.RadioButton2 = New System.Windows.Forms.RadioButton()
     Me.GroupBox7 = New System.Windows.Forms.GroupBox()
@@ -299,9 +299,8 @@ Public Class MainWin
     Me.NumContextMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
     Me.GrpContextMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
     Me.zFileTreeView_ = New UoT.ui.main.files.ZFileTreeView()
-    Me.AnimationPlaybackPanel = New UoT.ui.main.tabs.animation.AnimationPlaybackPanel()
     Me.UoTRender = New UoT.Tao.Platform.Windows.SimpleOpenGlControl()
-    Me.animationSelectorPanel_ = New UoT.ui.main.tabs.animation.AnimationSelectorPanel()
+    Me.animationTab_ = New UoT.ui.main.tabs.animation.AnimationTab()
     Me.UoTStatus.SuspendLayout()
     CType(Me.TrackBar4, System.ComponentModel.ISupportInitialize).BeginInit()
     Me.CollisionTab.SuspendLayout()
@@ -318,10 +317,6 @@ Public Class MainWin
     Me.GroupBox5.SuspendLayout()
     Me.EditingTabs.SuspendLayout()
     Me.AnimationsTab.SuspendLayout()
-    CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
-    Me.SplitContainer1.Panel1.SuspendLayout()
-    Me.SplitContainer1.Panel2.SuspendLayout()
-    Me.SplitContainer1.SuspendLayout()
     Me.DLTab.SuspendLayout()
     Me.GroupBox7.SuspendLayout()
     Me.DLEditorContextMenu.SuspendLayout()
@@ -341,7 +336,8 @@ Public Class MainWin
     'UoTStatus
     '
     Me.UoTStatus.AutoSize = False
-    Me.UoTStatus.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStatusLabel, Me.CamXLabel, Me.CamYLabel, Me.CamZLabel})
+    Me.UoTStatus.Items.AddRange(New System.Windows.Forms.ToolStripItem() _
+                                 {Me.ToolStatusLabel, Me.CamXLabel, Me.CamYLabel, Me.CamZLabel})
     Me.UoTStatus.Location = New System.Drawing.Point(0, 620)
     Me.UoTStatus.Name = "UoTStatus"
     Me.UoTStatus.Size = New System.Drawing.Size(1160, 29)
@@ -350,7 +346,8 @@ Public Class MainWin
     '
     'ToolStatusLabel
     '
-    Me.ToolStatusLabel.Font = New System.Drawing.Font("Verdana", 9.75!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+    Me.ToolStatusLabel.Font = New System.Drawing.Font("Verdana", 9.75!, System.Drawing.FontStyle.Underline,
+                                                      System.Drawing.GraphicsUnit.Point, CType(0, Byte))
     Me.ToolStatusLabel.ForeColor = System.Drawing.Color.Red
     Me.ToolStatusLabel.Name = "ToolStatusLabel"
     Me.ToolStatusLabel.Size = New System.Drawing.Size(95, 24)
@@ -376,9 +373,13 @@ Public Class MainWin
     '
     'ToolStripStatusLabel5
     '
-    Me.ToolStripStatusLabel5.BorderSides = CType((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) _
-            Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) _
-            Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom), System.Windows.Forms.ToolStripStatusLabelBorderSides)
+    Me.ToolStripStatusLabel5.BorderSides =
+      CType(
+        (((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left Or
+           System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) _
+          Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) _
+         Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom),
+        System.Windows.Forms.ToolStripStatusLabelBorderSides)
     Me.ToolStripStatusLabel5.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter
     Me.ToolStripStatusLabel5.Name = "ToolStripStatusLabel5"
     Me.ToolStripStatusLabel5.Size = New System.Drawing.Size(29, 22)
@@ -386,12 +387,17 @@ Public Class MainWin
     '
     'ToolStripStatusLabel4
     '
-    Me.ToolStripStatusLabel4.BorderSides = CType((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) _
-            Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) _
-            Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom), System.Windows.Forms.ToolStripStatusLabelBorderSides)
+    Me.ToolStripStatusLabel4.BorderSides =
+      CType(
+        (((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left Or
+           System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) _
+          Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) _
+         Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom),
+        System.Windows.Forms.ToolStripStatusLabelBorderSides)
     Me.ToolStripStatusLabel4.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter
     Me.ToolStripStatusLabel4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-    Me.ToolStripStatusLabel4.Font = New System.Drawing.Font("Trebuchet MS", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+    Me.ToolStripStatusLabel4.Font = New System.Drawing.Font("Trebuchet MS", 9.0!, System.Drawing.FontStyle.Regular,
+                                                            System.Drawing.GraphicsUnit.Point, CType(0, Byte))
     Me.ToolStripStatusLabel4.Name = "ToolStripStatusLabel4"
     Me.ToolStripStatusLabel4.Size = New System.Drawing.Size(111, 22)
     Me.ToolStripStatusLabel4.Text = "Tool: Camera only"
@@ -432,10 +438,12 @@ Public Class MainWin
     '
     'Label12
     '
-    Me.Label12.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+    Me.Label12.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right),
+                              System.Windows.Forms.AnchorStyles)
     Me.Label12.AutoSize = True
     Me.Label12.BackColor = System.Drawing.SystemColors.Control
-    Me.Label12.Font = New System.Drawing.Font("Trebuchet MS", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+    Me.Label12.Font = New System.Drawing.Font("Trebuchet MS", 9.0!, System.Drawing.FontStyle.Regular,
+                                              System.Drawing.GraphicsUnit.Point, CType(0, Byte))
     Me.Label12.Location = New System.Drawing.Point(946, 626)
     Me.Label12.Name = "Label12"
     Me.Label12.Size = New System.Drawing.Size(94, 18)
@@ -444,7 +452,8 @@ Public Class MainWin
     '
     'TrackBar4
     '
-    Me.TrackBar4.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+    Me.TrackBar4.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right),
+                                System.Windows.Forms.AnchorStyles)
     Me.TrackBar4.AutoSize = False
     Me.TrackBar4.Cursor = System.Windows.Forms.Cursors.Hand
     Me.TrackBar4.LargeChange = 1
@@ -458,16 +467,22 @@ Public Class MainWin
     '
     'FeaturesToolStripMenuItem
     '
-    Me.FeaturesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RenderModeToolStripMenuItem, Me.PrimitiveTypeToolStripMenuItem, Me.ToolStripSeparator8, Me.MouseToolToolStripMenuItem, Me.SetupToolStripMenuItem})
+    Me.FeaturesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+                                                         {Me.RenderModeToolStripMenuItem,
+                                                          Me.PrimitiveTypeToolStripMenuItem, Me.ToolStripSeparator8,
+                                                          Me.MouseToolToolStripMenuItem, Me.SetupToolStripMenuItem})
     Me.FeaturesToolStripMenuItem.Name = "FeaturesToolStripMenuItem"
     Me.FeaturesToolStripMenuItem.Size = New System.Drawing.Size(81, 17)
     Me.FeaturesToolStripMenuItem.Text = "Preferences"
     '
     'RenderModeToolStripMenuItem
     '
-    Me.RenderModeToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ViewingMeshToolStripMenuItem1, Me.CollisionMeshToolStripMenuItem})
+    Me.RenderModeToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+                                                           {Me.ViewingMeshToolStripMenuItem1,
+                                                            Me.CollisionMeshToolStripMenuItem})
     Me.RenderModeToolStripMenuItem.Name = "RenderModeToolStripMenuItem"
-    Me.RenderModeToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.R), System.Windows.Forms.Keys)
+    Me.RenderModeToolStripMenuItem.ShortcutKeys =
+      CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.R), System.Windows.Forms.Keys)
     Me.RenderModeToolStripMenuItem.Size = New System.Drawing.Size(174, 22)
     Me.RenderModeToolStripMenuItem.Text = "&Render"
     '
@@ -487,7 +502,8 @@ Public Class MainWin
     '
     'PrimitiveTypeToolStripMenuItem
     '
-    Me.PrimitiveTypeToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FilledToolStripMenuItem, Me.WireframeToolStripMenuItem})
+    Me.PrimitiveTypeToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+                                                              {Me.FilledToolStripMenuItem, Me.WireframeToolStripMenuItem})
     Me.PrimitiveTypeToolStripMenuItem.Name = "PrimitiveTypeToolStripMenuItem"
     Me.PrimitiveTypeToolStripMenuItem.ShortcutKeyDisplayString = "F1"
     Me.PrimitiveTypeToolStripMenuItem.Size = New System.Drawing.Size(174, 22)
@@ -504,7 +520,8 @@ Public Class MainWin
     'WireframeToolStripMenuItem
     '
     Me.WireframeToolStripMenuItem.AutoSize = False
-    Me.WireframeToolStripMenuItem.Image = CType(resources.GetObject("WireframeToolStripMenuItem.Image"), System.Drawing.Image)
+    Me.WireframeToolStripMenuItem.Image = CType(resources.GetObject("WireframeToolStripMenuItem.Image"),
+                                                System.Drawing.Image)
     Me.WireframeToolStripMenuItem.Name = "WireframeToolStripMenuItem"
     Me.WireframeToolStripMenuItem.Size = New System.Drawing.Size(152, 20)
     Me.WireframeToolStripMenuItem.Text = "&Wireframe"
@@ -535,10 +552,10 @@ Public Class MainWin
     '
     Me.CollisionTab.Controls.Add(Me.GroupBox1)
     Me.CollisionTab.Controls.Add(Me.CollisionGroupBox)
-    Me.CollisionTab.Location = New System.Drawing.Point(4, 25)
+    Me.CollisionTab.Location = New System.Drawing.Point(4, 46)
     Me.CollisionTab.Name = "CollisionTab"
     Me.CollisionTab.Padding = New System.Windows.Forms.Padding(3)
-    Me.CollisionTab.Size = New System.Drawing.Size(224, 558)
+    Me.CollisionTab.Size = New System.Drawing.Size(224, 537)
     Me.CollisionTab.TabIndex = 4
     Me.CollisionTab.Text = "Collision"
     Me.CollisionTab.UseVisualStyleBackColor = True
@@ -892,7 +909,8 @@ Public Class MainWin
     '
     'Label28
     '
-    Me.Label28.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+    Me.Label28.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right),
+                              System.Windows.Forms.AnchorStyles)
     Me.Label28.AutoSize = True
     Me.Label28.BackColor = System.Drawing.SystemColors.Control
     Me.Label28.Location = New System.Drawing.Point(119, 0)
@@ -922,7 +940,8 @@ Public Class MainWin
     '
     'Label45
     '
-    Me.Label45.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+    Me.Label45.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left),
+                              System.Windows.Forms.AnchorStyles)
     Me.Label45.AutoSize = True
     Me.Label45.Location = New System.Drawing.Point(12, 421)
     Me.Label45.Name = "Label45"
@@ -933,7 +952,8 @@ Public Class MainWin
     '
     'AnimStart
     '
-    Me.AnimStart.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+    Me.AnimStart.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left),
+                                System.Windows.Forms.AnchorStyles)
     Me.AnimStart.Location = New System.Drawing.Point(14, 438)
     Me.AnimStart.Name = "AnimStart"
     Me.AnimStart.Size = New System.Drawing.Size(100, 20)
@@ -942,7 +962,8 @@ Public Class MainWin
     '
     'Label30
     '
-    Me.Label30.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+    Me.Label30.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left),
+                              System.Windows.Forms.AnchorStyles)
     Me.Label30.AutoSize = True
     Me.Label30.Location = New System.Drawing.Point(12, 379)
     Me.Label30.Name = "Label30"
@@ -953,7 +974,8 @@ Public Class MainWin
     '
     'LimbStart
     '
-    Me.LimbStart.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+    Me.LimbStart.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left),
+                                System.Windows.Forms.AnchorStyles)
     Me.LimbStart.Location = New System.Drawing.Point(13, 398)
     Me.LimbStart.Name = "LimbStart"
     Me.LimbStart.Size = New System.Drawing.Size(100, 20)
@@ -1046,9 +1068,9 @@ Public Class MainWin
     '
     Me.LevelFlagsTab.BackColor = System.Drawing.Color.Transparent
     Me.LevelFlagsTab.Controls.Add(Me.GroupBox6)
-    Me.LevelFlagsTab.Location = New System.Drawing.Point(4, 25)
+    Me.LevelFlagsTab.Location = New System.Drawing.Point(4, 46)
     Me.LevelFlagsTab.Name = "LevelFlagsTab"
-    Me.LevelFlagsTab.Size = New System.Drawing.Size(224, 558)
+    Me.LevelFlagsTab.Size = New System.Drawing.Size(224, 537)
     Me.LevelFlagsTab.TabIndex = 2
     Me.LevelFlagsTab.Text = "Level Flags"
     Me.LevelFlagsTab.UseVisualStyleBackColor = True
@@ -1390,14 +1412,16 @@ Public Class MainWin
     'EditingTabs
     '
     Me.EditingTabs.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+                                   Or System.Windows.Forms.AnchorStyles.Right),
+                                  System.Windows.Forms.AnchorStyles)
     Me.EditingTabs.Controls.Add(Me.ActorsTab)
     Me.EditingTabs.Controls.Add(Me.LevelFlagsTab)
     Me.EditingTabs.Controls.Add(Me.CollisionTab)
     Me.EditingTabs.Controls.Add(Me.MiscTab)
     Me.EditingTabs.Controls.Add(Me.AnimationsTab)
     Me.EditingTabs.Controls.Add(Me.DLTab)
-    Me.EditingTabs.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+    Me.EditingTabs.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Regular,
+                                                  System.Drawing.GraphicsUnit.Point, CType(0, Byte))
     Me.EditingTabs.HotTrack = True
     Me.EditingTabs.Location = New System.Drawing.Point(930, 33)
     Me.EditingTabs.Multiline = True
@@ -1409,34 +1433,13 @@ Public Class MainWin
     '
     'AnimationsTab
     '
-    Me.AnimationsTab.Controls.Add(Me.SplitContainer1)
+    Me.AnimationsTab.Controls.Add(Me.animationTab_)
     Me.AnimationsTab.Location = New System.Drawing.Point(4, 46)
     Me.AnimationsTab.Name = "AnimationsTab"
     Me.AnimationsTab.Size = New System.Drawing.Size(224, 537)
     Me.AnimationsTab.TabIndex = 7
     Me.AnimationsTab.Text = "Animations"
     Me.AnimationsTab.UseVisualStyleBackColor = True
-    '
-    'SplitContainer1
-    '
-    Me.SplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill
-    Me.SplitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2
-    Me.SplitContainer1.IsSplitterFixed = True
-    Me.SplitContainer1.Location = New System.Drawing.Point(0, 0)
-    Me.SplitContainer1.Name = "SplitContainer1"
-    Me.SplitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal
-    '
-    'SplitContainer1.Panel1
-    '
-    Me.SplitContainer1.Panel1.Controls.Add(Me.animationSelectorPanel_)
-    '
-    'SplitContainer1.Panel2
-    '
-    Me.SplitContainer1.Panel2.Controls.Add(Me.AnimationPlaybackPanel)
-    Me.SplitContainer1.Panel2MinSize = 147
-    Me.SplitContainer1.Size = New System.Drawing.Size(224, 537)
-    Me.SplitContainer1.SplitterDistance = 390
-    Me.SplitContainer1.TabIndex = 15
     '
     'DLTab
     '
@@ -1466,7 +1469,8 @@ Public Class MainWin
     'GroupBox7
     '
     Me.GroupBox7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+                                 Or System.Windows.Forms.AnchorStyles.Left),
+                                System.Windows.Forms.AnchorStyles)
     Me.GroupBox7.Controls.Add(Me.WholeCommandTxt)
     Me.GroupBox7.Controls.Add(Me.Label3)
     Me.GroupBox7.Controls.Add(Me.Button8)
@@ -1609,8 +1613,10 @@ Public Class MainWin
     '
     'CommandsListbox
     '
-    Me.CommandsListbox.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+    Me.CommandsListbox.Anchor =
+      CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+             Or System.Windows.Forms.AnchorStyles.Left),
+            System.Windows.Forms.AnchorStyles)
     Me.CommandsListbox.ContextMenuStrip = Me.DLEditorContextMenu
     Me.CommandsListbox.FormattingEnabled = True
     Me.CommandsListbox.ItemHeight = 16
@@ -1718,9 +1724,11 @@ Public Class MainWin
     '
     'Label43
     '
-    Me.Label43.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+    Me.Label43.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right),
+                              System.Windows.Forms.AnchorStyles)
     Me.Label43.AutoSize = True
-    Me.Label43.Font = New System.Drawing.Font("Trebuchet MS", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+    Me.Label43.Font = New System.Drawing.Font("Trebuchet MS", 9.0!, System.Drawing.FontStyle.Regular,
+                                              System.Drawing.GraphicsUnit.Point, CType(0, Byte))
     Me.Label43.Location = New System.Drawing.Point(763, 626)
     Me.Label43.Name = "Label43"
     Me.Label43.Size = New System.Drawing.Size(89, 18)
@@ -1729,7 +1737,8 @@ Public Class MainWin
     '
     'TrackBar1
     '
-    Me.TrackBar1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+    Me.TrackBar1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right),
+                                System.Windows.Forms.AnchorStyles)
     Me.TrackBar1.AutoSize = False
     Me.TrackBar1.Cursor = System.Windows.Forms.Cursors.Hand
     Me.TrackBar1.Location = New System.Drawing.Point(850, 628)
@@ -1743,7 +1752,11 @@ Public Class MainWin
     'ActorContextMenu
     '
     Me.ActorContextMenu.BackColor = System.Drawing.SystemColors.Control
-    Me.ActorContextMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DeselectToolStripMenuItem, Me.ToolStripSeparator14, Me.EditToolStripMenuItem2, Me.AlignToolItem, Me.ToolStripSeparator13, Me.CopyToolStripMenuItem, Me.PasteToolStripMenuItem, Me.ClearClipboardToolStripMenuItem})
+    Me.ActorContextMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() _
+                                        {Me.DeselectToolStripMenuItem, Me.ToolStripSeparator14,
+                                         Me.EditToolStripMenuItem2, Me.AlignToolItem, Me.ToolStripSeparator13,
+                                         Me.CopyToolStripMenuItem, Me.PasteToolStripMenuItem,
+                                         Me.ClearClipboardToolStripMenuItem})
     Me.ActorContextMenu.Name = "ContextMenuStrip4"
     Me.ActorContextMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
     Me.ActorContextMenu.Size = New System.Drawing.Size(156, 148)
@@ -1761,14 +1774,18 @@ Public Class MainWin
     '
     'EditToolStripMenuItem2
     '
-    Me.EditToolStripMenuItem2.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CamXRotationToolStripMenuItem, Me.CamYRotationToolStripMenuItem, Me.CamZRotationToolStripMenuItem})
+    Me.EditToolStripMenuItem2.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+                                                      {Me.CamXRotationToolStripMenuItem,
+                                                       Me.CamYRotationToolStripMenuItem,
+                                                       Me.CamZRotationToolStripMenuItem})
     Me.EditToolStripMenuItem2.Name = "EditToolStripMenuItem2"
     Me.EditToolStripMenuItem2.Size = New System.Drawing.Size(155, 22)
     Me.EditToolStripMenuItem2.Text = "Rotate"
     '
     'CamXRotationToolStripMenuItem
     '
-    Me.CamXRotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DegreesToolStripMenuItem, Me.DegreesToolStripMenuItem1})
+    Me.CamXRotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+                                                             {Me.DegreesToolStripMenuItem, Me.DegreesToolStripMenuItem1})
     Me.CamXRotationToolStripMenuItem.Name = "CamXRotationToolStripMenuItem"
     Me.CamXRotationToolStripMenuItem.Size = New System.Drawing.Size(81, 22)
     Me.CamXRotationToolStripMenuItem.Text = "X"
@@ -1787,7 +1804,8 @@ Public Class MainWin
     '
     'CamYRotationToolStripMenuItem
     '
-    Me.CamYRotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DegreesToolStripMenuItem2, Me.DegreesToolStripMenuItem3})
+    Me.CamYRotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+                                                             {Me.DegreesToolStripMenuItem2, Me.DegreesToolStripMenuItem3})
     Me.CamYRotationToolStripMenuItem.Name = "CamYRotationToolStripMenuItem"
     Me.CamYRotationToolStripMenuItem.Size = New System.Drawing.Size(81, 22)
     Me.CamYRotationToolStripMenuItem.Text = "Y"
@@ -1806,7 +1824,8 @@ Public Class MainWin
     '
     'CamZRotationToolStripMenuItem
     '
-    Me.CamZRotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DegreesToolStripMenuItem4, Me.DegreesToolStripMenuItem5})
+    Me.CamZRotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+                                                             {Me.DegreesToolStripMenuItem4, Me.DegreesToolStripMenuItem5})
     Me.CamZRotationToolStripMenuItem.Name = "CamZRotationToolStripMenuItem"
     Me.CamZRotationToolStripMenuItem.Size = New System.Drawing.Size(81, 22)
     Me.CamZRotationToolStripMenuItem.Text = "Z"
@@ -1825,7 +1844,8 @@ Public Class MainWin
     '
     'AlignToolItem
     '
-    Me.AlignToolItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.XToolStripMenuItem3, Me.YToolStripMenuItem3, Me.ZToolStripMenuItem2})
+    Me.AlignToolItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+                                             {Me.XToolStripMenuItem3, Me.YToolStripMenuItem3, Me.ZToolStripMenuItem2})
     Me.AlignToolItem.Name = "AlignToolItem"
     Me.AlignToolItem.Size = New System.Drawing.Size(155, 22)
     Me.AlignToolItem.Text = "Align"
@@ -1861,7 +1881,9 @@ Public Class MainWin
     '
     'PasteToolStripMenuItem
     '
-    Me.PasteToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PositionToolStripMenuItem, Me.RotationToolStripMenuItem, Me.NumberAndVariableToolStripMenuItem})
+    Me.PasteToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+                                                      {Me.PositionToolStripMenuItem, Me.RotationToolStripMenuItem,
+                                                       Me.NumberAndVariableToolStripMenuItem})
     Me.PasteToolStripMenuItem.Enabled = False
     Me.PasteToolStripMenuItem.Name = "PasteToolStripMenuItem"
     Me.PasteToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
@@ -1869,7 +1891,9 @@ Public Class MainWin
     '
     'PositionToolStripMenuItem
     '
-    Me.PositionToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.XToolStripMenuItem1, Me.YToolStripMenuItem1, Me.ZToolStripMenuItem, Me.AllToolStripMenuItem1})
+    Me.PositionToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+                                                         {Me.XToolStripMenuItem1, Me.YToolStripMenuItem1,
+                                                          Me.ZToolStripMenuItem, Me.AllToolStripMenuItem1})
     Me.PositionToolStripMenuItem.Name = "PositionToolStripMenuItem"
     Me.PositionToolStripMenuItem.Size = New System.Drawing.Size(185, 22)
     Me.PositionToolStripMenuItem.Text = "Position"
@@ -1900,7 +1924,9 @@ Public Class MainWin
     '
     'RotationToolStripMenuItem
     '
-    Me.RotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.XToolStripMenuItem2, Me.YToolStripMenuItem2, Me.ZToolStripMenuItem1, Me.AllToolStripMenuItem})
+    Me.RotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+                                                         {Me.XToolStripMenuItem2, Me.YToolStripMenuItem2,
+                                                          Me.ZToolStripMenuItem1, Me.AllToolStripMenuItem})
     Me.RotationToolStripMenuItem.Name = "RotationToolStripMenuItem"
     Me.RotationToolStripMenuItem.Size = New System.Drawing.Size(185, 22)
     Me.RotationToolStripMenuItem.Text = "Rotation"
@@ -1952,7 +1978,11 @@ Public Class MainWin
     '
     'FileToolStripMenuItem1
     '
-    Me.FileToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem35, Me.ToolStripMenuItem2, Me.CustomLevel, Me.toolStripSeparator, Me.SaveToolStripMenuItem, Me.ToolStripMenuItem34, Me.toolStripSeparator12, Me.ExitToolStripMenuItem})
+    Me.FileToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+                                                      {Me.ToolStripMenuItem35, Me.ToolStripMenuItem2, Me.CustomLevel,
+                                                       Me.toolStripSeparator, Me.SaveToolStripMenuItem,
+                                                       Me.ToolStripMenuItem34, Me.toolStripSeparator12,
+                                                       Me.ExitToolStripMenuItem})
     Me.FileToolStripMenuItem1.Name = "FileToolStripMenuItem1"
     Me.FileToolStripMenuItem1.Size = New System.Drawing.Size(37, 27)
     Me.FileToolStripMenuItem1.Text = "&File"
@@ -2014,7 +2044,9 @@ Public Class MainWin
     '
     'EditToolStripMenuItem1
     '
-    Me.EditToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UndoToolStripMenuItem, Me.WireframeModeToolStripMenuItem, Me.RenderToolStripMenuItem})
+    Me.EditToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+                                                      {Me.UndoToolStripMenuItem, Me.WireframeModeToolStripMenuItem,
+                                                       Me.RenderToolStripMenuItem})
     Me.EditToolStripMenuItem1.Name = "EditToolStripMenuItem1"
     Me.EditToolStripMenuItem1.Size = New System.Drawing.Size(44, 27)
     Me.EditToolStripMenuItem1.Text = "&View"
@@ -2037,7 +2069,9 @@ Public Class MainWin
     '
     'RenderToolStripMenuItem
     '
-    Me.RenderToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.GraphicsToolStripMenuItem, Me.CollisionOverlayToolStripMenuItem})
+    Me.RenderToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+                                                       {Me.GraphicsToolStripMenuItem,
+                                                        Me.CollisionOverlayToolStripMenuItem})
     Me.RenderToolStripMenuItem.Name = "RenderToolStripMenuItem"
     Me.RenderToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+R"
     Me.RenderToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
@@ -2062,14 +2096,19 @@ Public Class MainWin
     '
     'ToolsToolStripMenuItem1
     '
-    Me.ToolsToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MouseToolToolStripMenuItem1, Me.LockAxesToolStripMenuItem, Me.OptionsToolStripMenuItem2})
+    Me.ToolsToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+                                                       {Me.MouseToolToolStripMenuItem1, Me.LockAxesToolStripMenuItem,
+                                                        Me.OptionsToolStripMenuItem2})
     Me.ToolsToolStripMenuItem1.Name = "ToolsToolStripMenuItem1"
     Me.ToolsToolStripMenuItem1.Size = New System.Drawing.Size(44, 27)
     Me.ToolsToolStripMenuItem1.Text = "&Tools"
     '
     'MouseToolToolStripMenuItem1
     '
-    Me.MouseToolToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CameraOnlyMenu, Me.ActorSelectorMenu, Me.CollisionToolStripMenuItem, Me.CollisionSelectorMenu, Me.DisplayListSelectorToolStripMenuItem})
+    Me.MouseToolToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+                                                           {Me.CameraOnlyMenu, Me.ActorSelectorMenu,
+                                                            Me.CollisionToolStripMenuItem, Me.CollisionSelectorMenu,
+                                                            Me.DisplayListSelectorToolStripMenuItem})
     Me.MouseToolToolStripMenuItem1.Name = "MouseToolToolStripMenuItem1"
     Me.MouseToolToolStripMenuItem1.ShortcutKeyDisplayString = ""
     Me.MouseToolToolStripMenuItem1.Size = New System.Drawing.Size(163, 22)
@@ -2098,7 +2137,9 @@ Public Class MainWin
     '
     'CollisionSelectorMenu
     '
-    Me.CollisionSelectorMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EdgeToolStripMenuItem, Me.TriangleToolStripMenuItem, Me.VertexToolStripMenuItem})
+    Me.CollisionSelectorMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+                                                     {Me.EdgeToolStripMenuItem, Me.TriangleToolStripMenuItem,
+                                                      Me.VertexToolStripMenuItem})
     Me.CollisionSelectorMenu.Name = "CollisionSelectorMenu"
     Me.CollisionSelectorMenu.ShortcutKeyDisplayString = ""
     Me.CollisionSelectorMenu.Size = New System.Drawing.Size(191, 22)
@@ -2135,7 +2176,9 @@ Public Class MainWin
     '
     'LockAxesToolStripMenuItem
     '
-    Me.LockAxesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.XToolStripMenuItem, Me.YToolStripMenuItem, Me.DisableToolStripMenuItem})
+    Me.LockAxesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+                                                         {Me.XToolStripMenuItem, Me.YToolStripMenuItem,
+                                                          Me.DisableToolStripMenuItem})
     Me.LockAxesToolStripMenuItem.Name = "LockAxesToolStripMenuItem"
     Me.LockAxesToolStripMenuItem.ShortcutKeyDisplayString = "Space"
     Me.LockAxesToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
@@ -2164,7 +2207,8 @@ Public Class MainWin
     '
     'OptionsToolStripMenuItem2
     '
-    Me.OptionsToolStripMenuItem2.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DisableDepthTestToolStripMenuItem})
+    Me.OptionsToolStripMenuItem2.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+                                                         {Me.DisableDepthTestToolStripMenuItem})
     Me.OptionsToolStripMenuItem2.Name = "OptionsToolStripMenuItem2"
     Me.OptionsToolStripMenuItem2.Size = New System.Drawing.Size(163, 22)
     Me.OptionsToolStripMenuItem2.Text = "Options"
@@ -2178,7 +2222,8 @@ Public Class MainWin
     '
     'ToolsToolStripMenuItem
     '
-    Me.ToolsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OptionsToolStripMenuItem1, Me.RendererToolStripMenuItem})
+    Me.ToolsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+                                                      {Me.OptionsToolStripMenuItem1, Me.RendererToolStripMenuItem})
     Me.ToolsToolStripMenuItem.Name = "ToolsToolStripMenuItem"
     Me.ToolsToolStripMenuItem.Size = New System.Drawing.Size(80, 27)
     Me.ToolsToolStripMenuItem.Text = "&Preferences"
@@ -2191,7 +2236,11 @@ Public Class MainWin
     '
     'RendererToolStripMenuItem
     '
-    Me.RendererToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TexturesToolStripMenuItem, Me.ColorCombinerToolStripMenuItem, Me.AnisotropicFilteringToolStripMenuItem, Me.FullSceneAntialiasingToolStripMenuItem})
+    Me.RendererToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+                                                         {Me.TexturesToolStripMenuItem,
+                                                          Me.ColorCombinerToolStripMenuItem,
+                                                          Me.AnisotropicFilteringToolStripMenuItem,
+                                                          Me.FullSceneAntialiasingToolStripMenuItem})
     Me.RendererToolStripMenuItem.Name = "RendererToolStripMenuItem"
     Me.RendererToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
     Me.RendererToolStripMenuItem.Text = "Renderer"
@@ -2233,8 +2282,11 @@ Public Class MainWin
     Me.UoTMainMenu.AllowMerge = False
     Me.UoTMainMenu.AutoSize = False
     Me.UoTMainMenu.BackColor = System.Drawing.SystemColors.ControlLight
-    Me.UoTMainMenu.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-    Me.UoTMainMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem1, Me.EditToolStripMenuItem1, Me.ToolsToolStripMenuItem, Me.ToolsToolStripMenuItem1})
+    Me.UoTMainMenu.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Regular,
+                                                  System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+    Me.UoTMainMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() _
+                                   {Me.FileToolStripMenuItem1, Me.EditToolStripMenuItem1, Me.ToolsToolStripMenuItem,
+                                    Me.ToolsToolStripMenuItem1})
     Me.UoTMainMenu.Location = New System.Drawing.Point(0, 0)
     Me.UoTMainMenu.Name = "UoTMainMenu"
     Me.UoTMainMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
@@ -2246,7 +2298,10 @@ Public Class MainWin
     'VertContextMenu
     '
     Me.VertContextMenu.BackColor = System.Drawing.SystemColors.Control
-    Me.VertContextMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem5, Me.ToolStripSeparator15, Me.ToolStripMenuItem6, Me.ToolStripMenuItem16, Me.ToolStripSeparator16, Me.ToolStripMenuItem20, Me.ToolStripMenuItem21, Me.ToolStripMenuItem33})
+    Me.VertContextMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() _
+                                       {Me.ToolStripMenuItem5, Me.ToolStripSeparator15, Me.ToolStripMenuItem6,
+                                        Me.ToolStripMenuItem16, Me.ToolStripSeparator16, Me.ToolStripMenuItem20,
+                                        Me.ToolStripMenuItem21, Me.ToolStripMenuItem33})
     Me.VertContextMenu.Name = "ContextMenuStrip4"
     Me.VertContextMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
     Me.VertContextMenu.Size = New System.Drawing.Size(156, 148)
@@ -2264,14 +2319,16 @@ Public Class MainWin
     '
     'ToolStripMenuItem6
     '
-    Me.ToolStripMenuItem6.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem7, Me.ToolStripMenuItem10, Me.ToolStripMenuItem13})
+    Me.ToolStripMenuItem6.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+                                                  {Me.ToolStripMenuItem7, Me.ToolStripMenuItem10, Me.ToolStripMenuItem13})
     Me.ToolStripMenuItem6.Name = "ToolStripMenuItem6"
     Me.ToolStripMenuItem6.Size = New System.Drawing.Size(155, 22)
     Me.ToolStripMenuItem6.Text = "Rotate"
     '
     'ToolStripMenuItem7
     '
-    Me.ToolStripMenuItem7.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem8, Me.ToolStripMenuItem9})
+    Me.ToolStripMenuItem7.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+                                                  {Me.ToolStripMenuItem8, Me.ToolStripMenuItem9})
     Me.ToolStripMenuItem7.Name = "ToolStripMenuItem7"
     Me.ToolStripMenuItem7.Size = New System.Drawing.Size(81, 22)
     Me.ToolStripMenuItem7.Text = "X"
@@ -2290,7 +2347,8 @@ Public Class MainWin
     '
     'ToolStripMenuItem10
     '
-    Me.ToolStripMenuItem10.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem11, Me.ToolStripMenuItem12})
+    Me.ToolStripMenuItem10.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+                                                   {Me.ToolStripMenuItem11, Me.ToolStripMenuItem12})
     Me.ToolStripMenuItem10.Name = "ToolStripMenuItem10"
     Me.ToolStripMenuItem10.Size = New System.Drawing.Size(81, 22)
     Me.ToolStripMenuItem10.Text = "Y"
@@ -2309,7 +2367,8 @@ Public Class MainWin
     '
     'ToolStripMenuItem13
     '
-    Me.ToolStripMenuItem13.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem14, Me.ToolStripMenuItem15})
+    Me.ToolStripMenuItem13.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+                                                   {Me.ToolStripMenuItem14, Me.ToolStripMenuItem15})
     Me.ToolStripMenuItem13.Name = "ToolStripMenuItem13"
     Me.ToolStripMenuItem13.Size = New System.Drawing.Size(81, 22)
     Me.ToolStripMenuItem13.Text = "Z"
@@ -2328,7 +2387,9 @@ Public Class MainWin
     '
     'ToolStripMenuItem16
     '
-    Me.ToolStripMenuItem16.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem17, Me.ToolStripMenuItem18, Me.ToolStripMenuItem19})
+    Me.ToolStripMenuItem16.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+                                                   {Me.ToolStripMenuItem17, Me.ToolStripMenuItem18,
+                                                    Me.ToolStripMenuItem19})
     Me.ToolStripMenuItem16.Name = "ToolStripMenuItem16"
     Me.ToolStripMenuItem16.Size = New System.Drawing.Size(155, 22)
     Me.ToolStripMenuItem16.Text = "Align"
@@ -2364,7 +2425,9 @@ Public Class MainWin
     '
     'ToolStripMenuItem21
     '
-    Me.ToolStripMenuItem21.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem22, Me.ToolStripMenuItem27, Me.ToolStripMenuItem32})
+    Me.ToolStripMenuItem21.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+                                                   {Me.ToolStripMenuItem22, Me.ToolStripMenuItem27,
+                                                    Me.ToolStripMenuItem32})
     Me.ToolStripMenuItem21.Enabled = False
     Me.ToolStripMenuItem21.Name = "ToolStripMenuItem21"
     Me.ToolStripMenuItem21.Size = New System.Drawing.Size(155, 22)
@@ -2372,7 +2435,9 @@ Public Class MainWin
     '
     'ToolStripMenuItem22
     '
-    Me.ToolStripMenuItem22.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem23, Me.ToolStripMenuItem24, Me.ToolStripMenuItem25, Me.ToolStripMenuItem26})
+    Me.ToolStripMenuItem22.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+                                                   {Me.ToolStripMenuItem23, Me.ToolStripMenuItem24,
+                                                    Me.ToolStripMenuItem25, Me.ToolStripMenuItem26})
     Me.ToolStripMenuItem22.Name = "ToolStripMenuItem22"
     Me.ToolStripMenuItem22.Size = New System.Drawing.Size(185, 22)
     Me.ToolStripMenuItem22.Text = "Position"
@@ -2403,7 +2468,9 @@ Public Class MainWin
     '
     'ToolStripMenuItem27
     '
-    Me.ToolStripMenuItem27.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem28, Me.ToolStripMenuItem29, Me.ToolStripMenuItem30, Me.ToolStripMenuItem31})
+    Me.ToolStripMenuItem27.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+                                                   {Me.ToolStripMenuItem28, Me.ToolStripMenuItem29,
+                                                    Me.ToolStripMenuItem30, Me.ToolStripMenuItem31})
     Me.ToolStripMenuItem27.Name = "ToolStripMenuItem27"
     Me.ToolStripMenuItem27.Size = New System.Drawing.Size(185, 22)
     Me.ToolStripMenuItem27.Text = "Rotation"
@@ -2470,34 +2537,24 @@ Public Class MainWin
     '
     'zFileTreeView_
     '
-    Me.zFileTreeView_.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+    Me.zFileTreeView_.Anchor =
+      CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+             Or System.Windows.Forms.AnchorStyles.Left),
+            System.Windows.Forms.AnchorStyles)
     Me.zFileTreeView_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
     Me.zFileTreeView_.Location = New System.Drawing.Point(5, 33)
     Me.zFileTreeView_.Name = "zFileTreeView_"
     Me.zFileTreeView_.Size = New System.Drawing.Size(218, 583)
     Me.zFileTreeView_.TabIndex = 104
     '
-    'AnimationPlaybackPanel
-    '
-    Me.AnimationPlaybackPanel.Dock = System.Windows.Forms.DockStyle.Fill
-    Me.AnimationPlaybackPanel.Frame = 0R
-    Me.AnimationPlaybackPanel.FrameRate = 20
-    Me.AnimationPlaybackPanel.IsPlaying = False
-    Me.AnimationPlaybackPanel.Location = New System.Drawing.Point(0, 0)
-    Me.AnimationPlaybackPanel.Name = "AnimationPlaybackPanel"
-    Me.AnimationPlaybackPanel.ShouldLoop = False
-    Me.AnimationPlaybackPanel.Size = New System.Drawing.Size(224, 143)
-    Me.AnimationPlaybackPanel.TabIndex = 14
-    Me.AnimationPlaybackPanel.TotalFrames = 0
-    '
     'UoTRender
     '
     Me.UoTRender.AccumBits = CType(0, Byte)
     Me.UoTRender.AllowDrop = True
     Me.UoTRender.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+                                  Or System.Windows.Forms.AnchorStyles.Left) _
+                                 Or System.Windows.Forms.AnchorStyles.Right),
+                                System.Windows.Forms.AnchorStyles)
     Me.UoTRender.AutoCheckErrors = False
     Me.UoTRender.AutoFinish = True
     Me.UoTRender.AutoMakeCurrent = True
@@ -2516,13 +2573,13 @@ Public Class MainWin
     Me.UoTRender.StencilBits = CType(0, Byte)
     Me.UoTRender.TabIndex = 0
     '
-    'AnimationSetsPanel1
+    'animationTab_
     '
-    Me.animationSelectorPanel_.Dock = System.Windows.Forms.DockStyle.Fill
-    Me.animationSelectorPanel_.Location = New System.Drawing.Point(0, 0)
-    Me.animationSelectorPanel_.Name = "AnimationSetsPanel1"
-    Me.animationSelectorPanel_.Size = New System.Drawing.Size(224, 390)
-    Me.animationSelectorPanel_.TabIndex = 11
+    Me.animationTab_.Dock = System.Windows.Forms.DockStyle.Fill
+    Me.animationTab_.Location = New System.Drawing.Point(0, 0)
+    Me.animationTab_.Name = "animationTab_"
+    Me.animationTab_.Size = New System.Drawing.Size(224, 537)
+    Me.animationTab_.TabIndex = 0
     '
     'MainWin
     '
@@ -2570,10 +2627,6 @@ Public Class MainWin
     Me.GroupBox5.PerformLayout()
     Me.EditingTabs.ResumeLayout(False)
     Me.AnimationsTab.ResumeLayout(False)
-    Me.SplitContainer1.Panel1.ResumeLayout(False)
-    Me.SplitContainer1.Panel2.ResumeLayout(False)
-    CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
-    Me.SplitContainer1.ResumeLayout(False)
     Me.DLTab.ResumeLayout(False)
     Me.DLTab.PerformLayout()
     Me.GroupBox7.ResumeLayout(False)
@@ -2589,7 +2642,6 @@ Public Class MainWin
     Me.VertContextMenu.ResumeLayout(False)
     Me.ResumeLayout(False)
     Me.PerformLayout()
-
   End Sub
 
 #End Region
@@ -2616,7 +2668,7 @@ Public Class MainWin
   Private SceneActors() As Door
   Private rmActorCount As Integer = 0
   Private scActorCount As Integer = 0
-  Private CopyActor() As Integer = {-1, -1, -1, -1, -1, -1, -1, -1} _
+  Private CopyActor() As Integer = {- 1, - 1, - 1, - 1, - 1, - 1, - 1, - 1} _
   'x pos, y pos, z pos, x rot, y rot, z rot, number, variable
   Private ActorPointer() As UInteger = {0, 0, 0} 'header pos, count, pointer
   Private RelocateActorPtr As Boolean = False
@@ -2635,7 +2687,7 @@ Public Class MainWin
 
 #Region "ANIMATION & HEIRARCHY"
 
-  Private LimbEntries(-1) As Limb
+  Private LimbEntries(- 1) As Limb
   Private CurrLimb As Integer = 0
   Private BoneColorFactor As New Color3UByte
   Private CurrAnimation As IAnimation
@@ -2805,13 +2857,13 @@ Public Class MainWin
   Private Sub SyncCameraToActor(ByVal ActorType As Integer, ByVal Actor As Integer)
     Select Case ActorType
       Case 0
-        cam.X = -RoomActors(Actor).x
-        cam.Y = -RoomActors(Actor).y - 1000
-        cam.Z = -RoomActors(Actor).z - 1000
+        cam.X = - RoomActors(Actor).x
+        cam.Y = - RoomActors(Actor).y - 1000
+        cam.Z = - RoomActors(Actor).z - 1000
       Case 1
-        cam.X = -SceneActors(Actor).x
-        cam.Y = -SceneActors(Actor).y - 1000
-        cam.Z = -SceneActors(Actor).z - 1000
+        cam.X = - SceneActors(Actor).x
+        cam.Y = - SceneActors(Actor).y - 1000
+        cam.Z = - SceneActors(Actor).z - 1000
     End Select
     cam.Pitch = 45
   End Sub
@@ -2825,18 +2877,18 @@ Public Class MainWin
       NewMouseX = LocalMouse.X
       NewMouseY = LocalMouse.Y
 
-      Dim camXRotd As Double = cam.Pitch / 180 * PI
-      Dim camYRotd As Double = cam.Yaw / 180 * PI
+      Dim camXRotd As Double = cam.Pitch/180*PI
+      Dim camYRotd As Double = cam.Yaw/180*PI
 
       ' TODO: What on earth is going on below?
 
       Dim MouseChanged As Boolean = False
       If NewMouseX <> OldMouseX Then
-        Dx = (NewMouseX - OldMouseX) * ToolSensitivity
+        Dx = (NewMouseX - OldMouseX)*ToolSensitivity
         MouseChanged = True
       End If
       If NewMouseY <> OldMouseY Then
-        Dy = (NewMouseY - OldMouseY) * ToolSensitivity
+        Dy = (NewMouseY - OldMouseY)*ToolSensitivity
         MouseChanged = True
       End If
 
@@ -2845,7 +2897,7 @@ Public Class MainWin
           If OldMouseX < NewMouseX Then
             '(MOUSE MOVE RIGHT)
             If ToolModes.SelectedItemType = ToolID.NONE Then
-              cam.Yaw += (NewMouseX - OldMouseX) * 0.5
+              cam.Yaw += (NewMouseX - OldMouseX)*0.5
               cam.Yaw = cam.Yaw Mod 360
             End If
             If _
@@ -2855,18 +2907,18 @@ Public Class MainWin
                 If OnSceneActor Then
                   For i As Integer = 0 To SelectedSceneActors.Count - 1
                     i1 = SelectedSceneActors(i)
-                    SceneActors(i1).x += Cos(camYRotd) * Dx
-                    SceneActors(i1).z += Sin(camYRotd) * Dx
+                    SceneActors(i1).x += Cos(camYRotd)*Dx
+                    SceneActors(i1).z += Sin(camYRotd)*Dx
                   Next
                 Else
                   For i As Integer = 0 To SelectedRoomActors.Count - 1
                     i1 = SelectedRoomActors(i)
-                    RoomActors(i1).x += Cos(camYRotd) * Dx
-                    RoomActors(i1).z += Sin(camYRotd) * Dx
+                    RoomActors(i1).x += Cos(camYRotd)*Dx
+                    RoomActors(i1).z += Sin(camYRotd)*Dx
                   Next
                 End If
-                cam.X += -Cos(camYRotd) * Dx
-                cam.Z += -Sin(camYRotd) * Dx
+                cam.X += - Cos(camYRotd)*Dx
+                cam.Z += - Sin(camYRotd)*Dx
                 UpdateActorPos()
               ElseIf ToolModes.SelectedItemType = ToolID.VERTEX Then
                 If RenderGraphics Then
@@ -2874,19 +2926,19 @@ Public Class MainWin
                 End If
                 If RenderCollision Then
                   For i2 = 0 To SelectedCollisionVert.Count - 1
-                    CollisionVerts.x(SelectedCollisionVert(i2)) += Cos(camYRotd) * Dx
-                    CollisionVerts.z(SelectedCollisionVert(i2)) += Sin(camYRotd) * Dx
+                    CollisionVerts.x(SelectedCollisionVert(i2)) += Cos(camYRotd)*Dx
+                    CollisionVerts.z(SelectedCollisionVert(i2)) += Sin(camYRotd)*Dx
                   Next
                 End If
-                cam.X += -Cos(camYRotd) * Dx
-                cam.Z += -Sin(camYRotd) * Dx
+                cam.X += - Cos(camYRotd)*Dx
+                cam.Z += - Sin(camYRotd)*Dx
               End If
             End If
           End If
           If OldMouseX > NewMouseX Then
             '(MOUSE MOVE LEFT) 
             If ToolModes.SelectedItemType = ToolID.NONE Then
-              cam.Yaw -= (OldMouseX - NewMouseX) * 0.5
+              cam.Yaw -= (OldMouseX - NewMouseX)*0.5
               cam.Yaw = cam.Yaw Mod 360
             End If
             If _
@@ -2896,18 +2948,18 @@ Public Class MainWin
                 If OnSceneActor Then
                   For i As Integer = 0 To SelectedSceneActors.Count - 1
                     i1 = SelectedSceneActors(i)
-                    SceneActors(i1).x += Cos(camYRotd) * Dx
-                    SceneActors(i1).z += Sin(camYRotd) * Dx
+                    SceneActors(i1).x += Cos(camYRotd)*Dx
+                    SceneActors(i1).z += Sin(camYRotd)*Dx
                   Next
                 Else
                   For i As Integer = 0 To SelectedRoomActors.Count - 1
                     i1 = SelectedRoomActors(i)
-                    RoomActors(i1).x += Cos(camYRotd) * Dx
-                    RoomActors(i1).z += Sin(camYRotd) * Dx
+                    RoomActors(i1).x += Cos(camYRotd)*Dx
+                    RoomActors(i1).z += Sin(camYRotd)*Dx
                   Next
                 End If
-                cam.X -= Cos(camYRotd) * Dx
-                cam.Z -= Sin(camYRotd) * Dx
+                cam.X -= Cos(camYRotd)*Dx
+                cam.Z -= Sin(camYRotd)*Dx
                 UpdateActorPos()
               ElseIf ToolModes.SelectedItemType = ToolID.VERTEX Then
                 If RenderGraphics Then
@@ -2915,22 +2967,22 @@ Public Class MainWin
                 End If
                 If RenderCollision Then
                   For i2 = 0 To SelectedCollisionVert.Count - 1
-                    CollisionVerts.x(SelectedCollisionVert(i2)) += Cos(camYRotd) * Dx
-                    CollisionVerts.z(SelectedCollisionVert(i2)) += Sin(camYRotd) * Dx
+                    CollisionVerts.x(SelectedCollisionVert(i2)) += Cos(camYRotd)*Dx
+                    CollisionVerts.z(SelectedCollisionVert(i2)) += Sin(camYRotd)*Dx
                   Next
                 End If
-                cam.X -= Cos(camYRotd) * Dx
-                cam.Z -= Sin(camYRotd) * Dx
+                cam.X -= Cos(camYRotd)*Dx
+                cam.Z -= Sin(camYRotd)*Dx
               End If
             End If
           End If
           If OldMouseY > NewMouseY Then
             '(MOUSE MOVE UP) 
             If ToolModes.SelectedItemType = ToolID.NONE Then
-              If cam.Pitch <= -90 Then
-                cam.Pitch = -90
+              If cam.Pitch <= - 90 Then
+                cam.Pitch = - 90
               Else
-                cam.Pitch += (Dy \ ToolSensitivity) * 0.5
+                cam.Pitch += (Dy\ToolSensitivity)*0.5
               End If
             End If
             If _
@@ -2967,7 +3019,7 @@ Public Class MainWin
               If cam.Pitch >= 90 Then
                 cam.Pitch = 90
               Else
-                cam.Pitch += (Dy \ ToolSensitivity) * 0.5
+                cam.Pitch += (Dy\ToolSensitivity)*0.5
               End If
             End If
             If _
@@ -3002,46 +3054,46 @@ Public Class MainWin
           If OldMouseY < NewMouseY Then
             '(MOUSE MOVE DOWN) 
             If ToolModes.SelectedItemType = ToolID.NONE Then
-              cam.Y += (OldMouseY - NewMouseY) * (CameraCoef / 8)
+              cam.Y += (OldMouseY - NewMouseY)*(CameraCoef/8)
             ElseIf ToolModes.SelectedItemType = ToolID.ACTOR Then
               If OnSceneActor Then
                 For i As Integer = 0 To SelectedSceneActors.Count - 1
                   i1 = SelectedSceneActors(i)
-                  SceneActors(i1).x += Sin(camYRotd) * Dy
-                  SceneActors(i1).z -= Cos(camYRotd) * Dy
+                  SceneActors(i1).x += Sin(camYRotd)*Dy
+                  SceneActors(i1).z -= Cos(camYRotd)*Dy
                 Next
               Else
                 For i As Integer = 0 To SelectedRoomActors.Count - 1
                   i1 = SelectedRoomActors(i)
-                  RoomActors(i1).x += Sin(camYRotd) * Dy
-                  RoomActors(i1).z -= Cos(camYRotd) * Dy
+                  RoomActors(i1).x += Sin(camYRotd)*Dy
+                  RoomActors(i1).z -= Cos(camYRotd)*Dy
                 Next
               End If
-              cam.X -= Sin(camYRotd) * Dy
-              cam.Z += Cos(camYRotd) * Dy
+              cam.X -= Sin(camYRotd)*Dy
+              cam.Z += Cos(camYRotd)*Dy
               UpdateActorPos()
             End If
           End If
           If OldMouseY > NewMouseY Then
             '(MOUSE MOVE DOWN) 
             If ToolModes.SelectedItemType = ToolID.NONE Then
-              cam.Y -= (NewMouseY - OldMouseY) * (CameraCoef / 8)
+              cam.Y -= (NewMouseY - OldMouseY)*(CameraCoef/8)
             ElseIf ToolModes.SelectedItemType = ToolID.ACTOR Then
               If OnSceneActor Then
                 For i As Integer = 0 To SelectedSceneActors.Count - 1
                   i1 = SelectedSceneActors(i)
-                  SceneActors(i1).x += Sin(camYRotd) * Dy
-                  SceneActors(i1).z -= Cos(camYRotd) * Dy
+                  SceneActors(i1).x += Sin(camYRotd)*Dy
+                  SceneActors(i1).z -= Cos(camYRotd)*Dy
                 Next
               Else
                 For i As Integer = 0 To SelectedRoomActors.Count - 1
                   i1 = SelectedRoomActors(i)
-                  RoomActors(i1).x += Sin(camYRotd) * Dy
-                  RoomActors(i1).z -= Cos(camYRotd) * Dy
+                  RoomActors(i1).x += Sin(camYRotd)*Dy
+                  RoomActors(i1).z -= Cos(camYRotd)*Dy
                 Next
               End If
-              cam.X -= Sin(camYRotd) * Dy
-              cam.Z += Cos(camYRotd) * Dy
+              cam.X -= Sin(camYRotd)*Dy
+              cam.Z += Cos(camYRotd)*Dy
               UpdateActorPos()
             End If
           End If
@@ -3059,7 +3111,7 @@ Public Class MainWin
           Case ToolID.DLIST
             curColor = Color.Blue
         End Select
-        GLPrint2D("+", UoTRender.PointToClient(Cursor.Position), curColor, Glut.GLUT_BITMAP_TIMES_ROMAN_24, -10, -15,
+        GLPrint2D("+", UoTRender.PointToClient(Cursor.Position), curColor, Glut.GLUT_BITMAP_TIMES_ROMAN_24, - 10, - 15,
                   True)
       End If
       If PrintTool Then
@@ -3117,9 +3169,9 @@ Public Class MainWin
       For i As Integer = 0 To RoomActors.Length - 1
         Gl.glPushMatrix()
         Gl.glTranslatef(RoomActors(i).x, RoomActors(i).y + 16, RoomActors(i).z)
-        Gl.glRotatef(RoomActors(i).xr \ 180, 1.0F, 0.0F, 0.0F)
-        Gl.glRotatef(RoomActors(i).yr \ 180, 0.0F, 1.0F, 0.0F)
-        Gl.glRotatef(RoomActors(i).zr \ 180, 0.0F, 0.0F, 1.0F)
+        Gl.glRotatef(RoomActors(i).xr\180, 1.0F, 0.0F, 0.0F)
+        Gl.glRotatef(RoomActors(i).yr\180, 0.0F, 1.0F, 0.0F)
+        Gl.glRotatef(RoomActors(i).zr\180, 0.0F, 0.0F, 1.0F)
         If SelectionMode Then
           If ToolModes.NoDepthTest Then Gl.glDisable(Gl.GL_DEPTH_TEST)
           Gl.glColor3ub(RoomActors(i).pickR, RoomActors(i).pickG, RoomActors(i).pickB)
@@ -3150,7 +3202,7 @@ Public Class MainWin
       For i As Integer = 0 To SceneActors.Length - 1
         Gl.glPushMatrix()
         Gl.glTranslatef(SceneActors(i).x, SceneActors(i).y + 16, SceneActors(i).z)
-        Gl.glRotatef(SceneActors(i).yr \ 180, 0.0F, 1.0F, 0.0F)
+        Gl.glRotatef(SceneActors(i).yr\180, 0.0F, 1.0F, 0.0F)
         If SelectionMode Then
           Gl.glColor3ub(SceneActors(i).pickR, SceneActors(i).pickG, SceneActors(i).pickB)
           Glut.glutSolidCube(ActorScaleP)
@@ -3188,10 +3240,10 @@ Public Class MainWin
     Dim indirectTextureHack As IIndirectTextureHack = IndirectTextureHacks.Get(ObjectFilename)
     DLParser.EnableHacksFor(ObjectFilename, indirectTextureHack)
 
-    AnimationPlaybackPanel.Tick()
+    animationTab_.AnimationPlaybackManager.Tick()
 
     If UseStaticDlModel And DlModel.IsComplete Then
-      DlModel.DrawWithAnimation(CurrAnimation, AnimationPlaybackPanel.Frame)
+      DlModel.DrawWithAnimation(CurrAnimation, animationTab_.AnimationPlaybackManager.Frame)
       Return
     End If
 
@@ -3211,11 +3263,14 @@ Public Class MainWin
       CurrLimb = 0
 
       If CurrAnimation IsNot Nothing Then
-        Dim frameIndex As Integer = Math.Floor(AnimationPlaybackPanel.Frame)
-        Dim frameDelta As Double = AnimationPlaybackPanel.Frame Mod 1
+        Dim frame As Double = animationTab_.AnimationPlaybackManager.Frame
+        Dim totalFrames As Integer = animationTab_.AnimationPlaybackManager.TotalFrames
+
+        Dim frameIndex As Integer = Math.Floor(frame)
+        Dim frameDelta As Double = frame Mod 1
 
         Dim startPos As Vec3s = CurrAnimation.GetPosition(frameIndex)
-        Dim endPos As Vec3s = CurrAnimation.GetPosition((frameIndex + 1) Mod AnimationPlaybackPanel.TotalFrames)
+        Dim endPos As Vec3s = CurrAnimation.GetPosition((frameIndex + 1) Mod totalFrames)
 
         Dim f As Double = frameDelta
 
@@ -3246,7 +3301,7 @@ Public Class MainWin
 
       ' TODO: Precalculate matrices via a helper class.
 
-      DLParser.LimbMatrices.UpdateLimbMatrices(LimbEntries, CurrAnimation, AnimationPlaybackPanel)
+      DLParser.LimbMatrices.UpdateLimbMatrices(LimbEntries, CurrAnimation, animationTab_.AnimationPlaybackManager)
 
       DrawJoint(0)
 
@@ -3266,11 +3321,11 @@ Public Class MainWin
 
       DlModel.SetCurrentLimb(id)
 
-      Dim dlIndex As Integer = -1
+      Dim dlIndex As Integer = - 1
       If .DisplayListAddress > Nothing Then
         dlIndex = DlManager.GetIndexByAddress(.DisplayListAddress)
       End If
-      Dim validDl As Boolean = dlIndex > -1
+      Dim validDl As Boolean = dlIndex > - 1
 
       If DlManager.ShowBones Then 'draw bones
         Dim xI As Double = 0
@@ -3290,7 +3345,7 @@ Public Class MainWin
         Gl.glVertex3f(xI, yI, zI)
         Gl.glVertex3f(xF, yF, zF)
         Gl.glEnd()
-        Gl.glDepthRange(0, -0.5)
+        Gl.glDepthRange(0, - 0.5)
         Gl.glPointSize(11)
         Gl.glBegin(Gl.GL_POINTS)
         Gl.glColor3f(0, 0, 0)
@@ -3313,7 +3368,7 @@ Public Class MainWin
         DrawDL(dlIndex, False)
       End If
 
-      If .firstChild > -1 Then
+      If .firstChild > - 1 Then
         BoneColorFactor.r = 255
         BoneColorFactor.g = 0
         BoneColorFactor.b = 0
@@ -3326,7 +3381,7 @@ Public Class MainWin
 
       ModelViewMatrixTransformer.Pop()
 
-      If .nextSibling > -1 Then
+      If .nextSibling > - 1 Then
         BoneColorFactor.r = 0
         BoneColorFactor.g = 0
         BoneColorFactor.b = 255
@@ -3362,8 +3417,8 @@ Public Class MainWin
       DLParser.ParseDL(displayList, DlManager)
       ReadPixel = MousePixelRead(NewMouseX, NewMouseY)
       If _
-          ReadPixel(0) = displayList.PickCol.r And ReadPixel(1) = displayList.PickCol.g And
-          ReadPixel(2) = displayList.PickCol.b Then
+        ReadPixel(0) = displayList.PickCol.r And ReadPixel(1) = displayList.PickCol.g And
+        ReadPixel(2) = displayList.PickCol.b Then
         DListSelection.SelectedIndex = index + 1
         EditingTabs.SelectedTab = EditingTabs.TabPages("DLTab")
         ToolModes.SelectedItemType = ToolID.DLIST
@@ -3385,7 +3440,7 @@ Public Class MainWin
       Gl.glEnable(Gl.GL_POLYGON_OFFSET_LINE)
       Gl.glPolygonMode(Gl.GL_FRONT_AND_BACK, Gl.GL_LINE)
 
-      Gl.glPolygonOffset(-5.0, -5.0)
+      Gl.glPolygonOffset(- 5.0, - 5.0)
 
       Gl.glBegin(Gl.GL_TRIANGLES)
       Gl.glColor3f(0, 0, 0)
@@ -3406,7 +3461,7 @@ Public Class MainWin
       Gl.glDisable(Gl.GL_POLYGON_OFFSET_LINE)
       Gl.glPolygonMode(Gl.GL_FRONT_AND_BACK, Gl.GL_FILL)
 
-      Gl.glPolygonOffset(-6, -6)
+      Gl.glPolygonOffset(- 6, - 6)
       Gl.glEnable(Gl.GL_POLYGON_OFFSET_FILL)
       Gl.glBegin(Gl.GL_TRIANGLES)
       For i As Integer = 0 To Polygons.Length - 1
@@ -3457,7 +3512,7 @@ Public Class MainWin
           Dim curedge As Integer = 0
           Gl.glEnable(Gl.GL_POLYGON_OFFSET_LINE)
           Gl.glPolygonMode(Gl.GL_FRONT_AND_BACK, Gl.GL_LINE)
-          Gl.glPolygonOffset(-8.0, -8.0)
+          Gl.glPolygonOffset(- 8.0, - 8.0)
           Gl.glLineWidth(10)
           Gl.glBegin(Gl.GL_TRIANGLES)
           For i As Integer = 0 To Vertices.EdgeR.Count - 1
@@ -3472,7 +3527,7 @@ Public Class MainWin
           Gl.glDisable(Gl.GL_POLYGON_OFFSET_LINE)
           Gl.glPolygonMode(Gl.GL_FRONT_AND_BACK, Gl.GL_FILL)
         Case ToolID.COLTRI
-          Gl.glPolygonOffset(-8, -8)
+          Gl.glPolygonOffset(- 8, - 8)
           Gl.glEnable(Gl.GL_POLYGON_OFFSET_FILL)
           Gl.glBegin(Gl.GL_TRIANGLES)
           For i As Integer = 0 To Polygons.Length - 1
@@ -3616,17 +3671,17 @@ Public Class MainWin
     Gl.glBegin(Gl.GL_LINES)
     Gl.glColor3f(0, 0, 1)
     Gl.glVertex3f(420, 0.1, 0.1)
-    Gl.glVertex3f(-420, 0.1, 0.1)
+    Gl.glVertex3f(- 420, 0.1, 0.1)
     Gl.glEnd()
     Gl.glBegin(Gl.GL_LINES)
     Gl.glColor3f(1, 0, 0)
     Gl.glVertex3f(0.1, 420, 0.1)
-    Gl.glVertex3f(0.1, -420, 0.1)
+    Gl.glVertex3f(0.1, - 420, 0.1)
     Gl.glEnd()
     Gl.glBegin(Gl.GL_LINES)
     Gl.glColor3f(0, 1, 0)
     Gl.glVertex3f(0.1, 0.1, 420)
-    Gl.glVertex3f(0.1, 0.1, -420)
+    Gl.glVertex3f(0.1, 0.1, - 420)
     Gl.glVertex3f(0.1, 0.1, 420)
     Gl.glEnd()
     Gl.glEndList()
@@ -3638,40 +3693,40 @@ Public Class MainWin
     Gl.glBegin(Gl.GL_QUADS)
     'top
     Gl.glColor3f(1, 1, 1)
-    Gl.glVertex3f(1.0F, 1.0F, -1.0F)
-    Gl.glVertex3f(-1.0F, 1.0F, -1.0F)
-    Gl.glVertex3f(-1.0F, 1.0F, 1.0F)
+    Gl.glVertex3f(1.0F, 1.0F, - 1.0F)
+    Gl.glVertex3f(- 1.0F, 1.0F, - 1.0F)
+    Gl.glVertex3f(- 1.0F, 1.0F, 1.0F)
     Gl.glVertex3f(1.0F, 1.0F, 1.0F)
     'bottom
     Gl.glColor3f(0, 0, 0)
-    Gl.glVertex3f(1.0F, -1.0F, 1.0F)
-    Gl.glVertex3f(-1.0F, -1.0F, 1.0F)
-    Gl.glVertex3f(-1.0F, -1.0F, -1.0F)
-    Gl.glVertex3f(1.0F, -1.0F, -1.0F)
+    Gl.glVertex3f(1.0F, - 1.0F, 1.0F)
+    Gl.glVertex3f(- 1.0F, - 1.0F, 1.0F)
+    Gl.glVertex3f(- 1.0F, - 1.0F, - 1.0F)
+    Gl.glVertex3f(1.0F, - 1.0F, - 1.0F)
     'front
     Gl.glColor3f(1, 0, 0)
     Gl.glVertex3f(1.0F, 1.0F, 1.0F)
-    Gl.glVertex3f(-1.0F, 1.0F, 1.0F)
-    Gl.glVertex3f(-1.0F, -1.0F, 1.0F)
-    Gl.glVertex3f(1.0F, -1.0F, 1.0F)
+    Gl.glVertex3f(- 1.0F, 1.0F, 1.0F)
+    Gl.glVertex3f(- 1.0F, - 1.0F, 1.0F)
+    Gl.glVertex3f(1.0F, - 1.0F, 1.0F)
     'back
     Gl.glColor3f(0, 1, 0)
-    Gl.glVertex3f(1.0F, -1.0F, -1.0F)
-    Gl.glVertex3f(-1.0F, -1.0F, -1.0F)
-    Gl.glVertex3f(-1.0F, 1.0F, -1.0F)
-    Gl.glVertex3f(1.0F, 1.0F, -1.0F)
+    Gl.glVertex3f(1.0F, - 1.0F, - 1.0F)
+    Gl.glVertex3f(- 1.0F, - 1.0F, - 1.0F)
+    Gl.glVertex3f(- 1.0F, 1.0F, - 1.0F)
+    Gl.glVertex3f(1.0F, 1.0F, - 1.0F)
     'left
     Gl.glColor3f(1, 1, 0)
-    Gl.glVertex3f(-1.0F, 1.0F, 1.0F)
-    Gl.glVertex3f(-1.0F, 1.0F, -1.0F)
-    Gl.glVertex3f(-1.0F, -1.0F, -1.0F)
-    Gl.glVertex3f(-1.0F, -1.0F, 1.0F)
+    Gl.glVertex3f(- 1.0F, 1.0F, 1.0F)
+    Gl.glVertex3f(- 1.0F, 1.0F, - 1.0F)
+    Gl.glVertex3f(- 1.0F, - 1.0F, - 1.0F)
+    Gl.glVertex3f(- 1.0F, - 1.0F, 1.0F)
     'right
     Gl.glColor3f(0, 0, 1)
-    Gl.glVertex3f(1.0F, 1.0F, -1.0F)
+    Gl.glVertex3f(1.0F, 1.0F, - 1.0F)
     Gl.glVertex3f(1.0F, 1.0F, 1.0F)
-    Gl.glVertex3f(1.0F, -1.0F, 1.0F)
-    Gl.glVertex3f(1.0F, -1.0F, -1.0F)
+    Gl.glVertex3f(1.0F, - 1.0F, 1.0F)
+    Gl.glVertex3f(1.0F, - 1.0F, - 1.0F)
     Gl.glEnd()
     Gl.glEndList()
   End Sub
@@ -3705,7 +3760,7 @@ Public Class MainWin
         .EdgeB = New ArrayList
       End With
 
-      ReDim CollisionPolies(-1)
+      ReDim CollisionPolies(- 1)
 
 
       If GLExtensions.GLAnisotropic Then
@@ -3794,7 +3849,7 @@ Public Class MainWin
         LoadROM.FileName = DefROM
         Start(False)
       End If
-      ReDim args(-1)
+      ReDim args(- 1)
 
       Me.Show()
       Me.Focus()
@@ -3815,8 +3870,8 @@ Public Class MainWin
       Dim nextTokens() As String
       Dim actorCnt As Integer = 0
       Dim varCnt As Integer = 0
-      ReDim tDB(-1)
-readMain: While tReader.Peek <> -1
+      ReDim tDB(- 1)
+      readMain: While tReader.Peek <> - 1
         Tokens = tReader.ReadLine.Split(" ")
         If Tokens.Length > 1 Then
           Dim testOne As String = Tokens(0)
@@ -3827,7 +3882,7 @@ readMain: While tReader.Peek <> -1
             GoTo readMain
           End If
 
-readActor: ReDim Preserve tDB(actorCnt)
+          readActor: ReDim Preserve tDB(actorCnt)
           With tDB(actorCnt)
             .no = Int32.Parse(Tokens(0), Globalization.NumberStyles.HexNumber)
 
@@ -3847,7 +3902,7 @@ readActor: ReDim Preserve tDB(actorCnt)
           End With
           nextTokens = tReader.ReadLine.Split(" ")
           If nextTokens.Length > 1 Then
-readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
+            readVars: While nextTokens(0) = "" And nextTokens(1) = "-"
 
               ReDim Preserve tDB(actorCnt).var(varCnt)
               With tDB(actorCnt).var(varCnt)
@@ -3855,7 +3910,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
                 Int32.TryParse(nextTokens(2), .var)
 
                 .desc = ""
-                If .var > -1 And nextTokens(3) = "=" Then
+                If .var > - 1 And nextTokens(3) = "=" Then
                   For I As Integer = 4 To nextTokens.Length - 1
                     .desc += nextTokens(I) & " "
                   Next
@@ -3897,7 +3952,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     If File.Exists(AppDirectory & ExtraDataPrefix & "\oot_actors_human.txt") Then
       ActorDataBase = ReadActorDBHuman(AppDirectory & ExtraDataPrefix & "\oot_actors_human.txt")
     Else
-      ReDim ActorDataBase(-1)
+      ReDim ActorDataBase(- 1)
     End If
 
     ActorDBGroups.Clear()
@@ -3909,7 +3964,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     ObjectsDesc.Clear()
     If File.Exists(AppDirectory & ExtraDataPrefix & "\objlist.txt") Then
       Dim objfile As New StreamReader(AppDirectory & ExtraDataPrefix & "\objlist.txt")
-      While objfile.Peek <> -1
+      While objfile.Peek <> - 1
         curline = objfile.ReadLine
         Objects.Add(Mid(curline, 1, 4))
         ObjectsDesc.Add(Mid(curline, 28))
@@ -3919,7 +3974,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
   End Sub
 
   Private Sub ScanCollisionPresets()
-    ReDim ColPresets(-1)
+    ReDim ColPresets(- 1)
     Dim curline As String = ""
     If File.Exists(AppDirectory & ExtraDataPrefix & "\CollisionPresets.txt") Then
       Dim presLines(2) As String
@@ -3927,7 +3982,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       Dim endpos As Integer = 0
       Dim no As Integer = 0
       Dim type As String = ""
-      While colpres.Peek <> -1
+      While colpres.Peek <> - 1
         curline = colpres.ReadLine
         presLines = curline.Split(ControlChars.Tab)
         If presLines(0) = "g" Then
@@ -3976,11 +4031,11 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       Dim scActorPos As Integer = 0
       Dim scRoomCnt As Integer = 0
       Dim scRoomPos As Integer = 0
-      ReDim CollisionTriColor(-1)
-      ReDim SceneActors(-1)
-      ReDim ColTypes(-1)
-      ReDim SceneExits(-1)
-      ReDim CollisionPolies(-1)
+      ReDim CollisionTriColor(- 1)
+      ReDim SceneActors(- 1)
+      ReDim ColTypes(- 1)
+      ReDim SceneExits(- 1)
+      ReDim CollisionPolies(- 1)
 
       scActorCount = 0
 
@@ -4055,14 +4110,14 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
 
                   .offset = i1
 
-                  .no = (RamBanks.ZSceneBuffer(i1 + 4) * &H100) + (RamBanks.ZSceneBuffer(i1 + 5))
+                  .no = (RamBanks.ZSceneBuffer(i1 + 4)*&H100) + (RamBanks.ZSceneBuffer(i1 + 5))
 
-                  .x = (RamBanks.ZSceneBuffer(i1 + 6) * &H100) + (RamBanks.ZSceneBuffer(i1 + 7))
-                  .y = (RamBanks.ZSceneBuffer(i1 + 8) * &H100) + (RamBanks.ZSceneBuffer(i1 + 9))
-                  .z = (RamBanks.ZSceneBuffer(i1 + 10) * &H100) + (RamBanks.ZSceneBuffer(i1 + 11))
+                  .x = (RamBanks.ZSceneBuffer(i1 + 6)*&H100) + (RamBanks.ZSceneBuffer(i1 + 7))
+                  .y = (RamBanks.ZSceneBuffer(i1 + 8)*&H100) + (RamBanks.ZSceneBuffer(i1 + 9))
+                  .z = (RamBanks.ZSceneBuffer(i1 + 10)*&H100) + (RamBanks.ZSceneBuffer(i1 + 11))
 
-                  .yr = (RamBanks.ZSceneBuffer(i1 + 12) * &H100) + (RamBanks.ZSceneBuffer(i1 + 13))
-                  .var = (RamBanks.ZSceneBuffer(i1 + 14) * &H100) + (RamBanks.ZSceneBuffer(i1 + 15))
+                  .yr = (RamBanks.ZSceneBuffer(i1 + 12)*&H100) + (RamBanks.ZSceneBuffer(i1 + 13))
+                  .var = (RamBanks.ZSceneBuffer(i1 + 14)*&H100) + (RamBanks.ZSceneBuffer(i1 + 15))
                 End With
                 i1 += 16
 
@@ -4164,7 +4219,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
               End While
 
               ReDim CollisionTriColor(triCount)
-              Dim edgecnt As Integer = -1
+              Dim edgecnt As Integer = - 1
 
               While VertexOffset < colPtr
 
@@ -4237,7 +4292,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       Dim DLCnt As Integer = 0
       Dim FileTreeIndex As Integer = 0
       DlManager.Clear()
-      ReDim LimbEntries(-1)
+      ReDim LimbEntries(- 1)
 
       DListSelection.Items.Clear()
       DListSelection.Items.Add("Render all")
@@ -4263,7 +4318,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
           End If
       End Select
 
-      animationSelectorPanel_.Reset(LimbEntries)
+      animationTab_.AnimationBanks.Reset(LimbEntries)
     Catch err As System.Exception
       MsgBox(
         "Error in entry point searching: " & Environment.NewLine & Environment.NewLine & "Debug Info: " & err.Message)
@@ -4304,8 +4359,8 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       Dim ObjSetStart As Integer = 0
       Dim CurObjSet As Integer = 0
 
-      ReDim RoomActors(-1)
-      ReDim UsedGroupIndex(-1)
+      ReDim RoomActors(- 1)
+      ReDim UsedGroupIndex(- 1)
 
       ComboBox6.SelectedIndex = 0
       rmActorCount = 0
@@ -4374,7 +4429,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
               ActorGroups.Add(gr)
               objind = Objects.IndexOf(gr.ToString("X4"))
               desc = "?"
-              If objind > -1 Then
+              If objind > - 1 Then
                 desc = ObjectsDesc(objind)
               End If
               'Group.Items.Add((i + 1).ToString & " - " & desc)
@@ -4429,7 +4484,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
   Public Sub PopulateCommonBanks()
     RamBanks.PopulateFromRomFiles(ROMFiles)
     banks.AnimationBanks.PopulateFromRomFiles(ROMFiles)
-    animationSelectorPanel_.Populate(banks.AnimationBanks.Banks)
+    animationTab_.AnimationBanks.Populate(banks.AnimationBanks.Banks)
   End Sub
 
   Public Sub Start(ByVal individual As Boolean)
@@ -4469,10 +4524,10 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
           tSegOff = i + &H20
 
           Dim CodeOff As Integer = 0
-          ReDim Z64Code(-1)
+          ReDim Z64Code(- 1)
           Select Case BuildDate
             Case "00-07-31 17:04:16"
-              tNameOff = -1
+              tNameOff = - 1
               ROMType = "Majora's Mask (U)"
               SwitchGame(1)
             Case "03-02-21 00:16:31"
@@ -4540,7 +4595,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     Gl.glViewport(0, 0, UoTRender.Width, UoTRender.Height)
     Gl.glMatrixMode(Gl.GL_PROJECTION)
     Gl.glLoadIdentity()
-    Glu.gluPerspective(45.0, UoTRender.Width / UoTRender.Height, GlConstants.NEAR, GlConstants.FAR)
+    Glu.gluPerspective(45.0, UoTRender.Width/UoTRender.Height, GlConstants.NEAR, GlConstants.FAR)
     Gl.glMatrixMode(Gl.GL_MODELVIEW)
     Gl.glLoadIdentity()
   End Sub
@@ -4664,7 +4719,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
         PrintTool = False
       Case ToolID.VERTEX
         Gl.glEnable(Gl.GL_POLYGON_OFFSET_POINT)
-        Gl.glPolygonOffset(-6, -6)
+        Gl.glPolygonOffset(- 6, - 6)
         If RenderGraphics Then
           DrawDLArray(ToolID.VERTEX)
         End If
@@ -4682,7 +4737,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
         End If
       Case ToolID.DLIST
         Gl.glEnable(Gl.GL_POLYGON_OFFSET_FILL)
-        Gl.glPolygonOffset(-7, -7)
+        Gl.glPolygonOffset(- 7, - 7)
         If RenderGraphics Then
           DrawDLArray(ToolID.DLIST)
         End If
@@ -5132,10 +5187,10 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
   Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) _
     Handles ActorInputTimer.Tick, ActorInputTimer.Tick
 
-    Dim camYRotD As Double = cam.Yaw / 180 * PI
+    Dim camYRotD As Double = cam.Yaw/180*PI
 
-    Dim cosYRot As Double = Cos(camYRotD) * ToolSensitivity
-    Dim sinYRot As Double = Sin(camYRotD) * ToolSensitivity
+    Dim cosYRot As Double = Cos(camYRotD)*ToolSensitivity
+    Dim sinYRot As Double = Sin(camYRotD)*ToolSensitivity
 
     Select Case ToolModes.CurrentTool
       Case ToolID.ACTOR
@@ -5875,13 +5930,13 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
   End Sub
 
   Private Sub AnimationList_SelectedIndexChanged(animation As IAnimation) _
-    Handles animationSelectorPanel_.AnimationSelected
+    Handles animationTab_.AnimationSelected
 
     CurrAnimation = animation
 
-    AnimationPlaybackPanel.Reset()
+    animationTab_.AnimationPlaybackManager.Reset()
     If animation IsNot Nothing Then
-      AnimationPlaybackPanel.TotalFrames = animation.FrameCount
+      animationTab_.AnimationPlaybackManager.TotalFrames = animation.FrameCount
     End If
   End Sub
 
@@ -5915,10 +5970,12 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
         Select Case RamBanks.ZSceneBuffer(tScPos)
           Case &H4
             Dim MapCount As Integer = RamBanks.ZSceneBuffer(tScPos + 1)
-            Dim MapPos As Integer = RamBanks.ZSceneBuffer(tScPos + 5) * &H10000 + RamBanks.ZSceneBuffer(tScPos + 6) * &H100 + RamBanks.ZSceneBuffer(tScPos + 7)
+            Dim MapPos As Integer = RamBanks.ZSceneBuffer(tScPos + 5)*&H10000 + RamBanks.ZSceneBuffer(tScPos + 6)*&H100 +
+                                    RamBanks.ZSceneBuffer(tScPos + 7)
             For i As Integer = 0 To MapCount - 1
-              MapsCombobox.Items.Add(RamBanks.ZSceneBuffer(MapPos).ToString("X2") & RamBanks.ZSceneBuffer(MapPos + 1).ToString("X2") &
-                                     RamBanks.ZSceneBuffer(MapPos + 2).ToString("X2") & RamBanks.ZSceneBuffer(MapPos + 3).ToString("X2"))
+              MapsCombobox.Items.Add(
+                RamBanks.ZSceneBuffer(MapPos).ToString("X2") & RamBanks.ZSceneBuffer(MapPos + 1).ToString("X2") &
+                RamBanks.ZSceneBuffer(MapPos + 2).ToString("X2") & RamBanks.ZSceneBuffer(MapPos + 3).ToString("X2"))
               MapPos += 8
             Next
         End Select
@@ -6059,7 +6116,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     PasteToolStripMenuItem.Enabled = False
     PasteToolStripMenuItem.Text = "Paste attributes"
     For i As Integer = 0 To 7
-      CopyActor(i) = -1
+      CopyActor(i) = - 1
     Next
     ClearClipboardToolStripMenuItem.Enabled = False
   End Sub
@@ -6091,12 +6148,12 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     ReDim Preserve RoomActors(rmActorCount)
     ReDim Preserve UsedGroupIndex(rmActorCount)
 
-    Dim camYRotD As Double = cam.Yaw / 180 * PI
+    Dim camYRotD As Double = cam.Yaw/180*PI
 
     With RoomActors(rmActorCount)
       .y = y + camYRotD
-      .x = -x + Sin(camYRotD) * 640
-      .z = -z - Cos(camYRotD) * 640
+      .x = - x + Sin(camYRotD)*640
+      .z = - z - Cos(camYRotD)*640
       .xr = CamXRot
       .yr = CamYRot
       .zr = CamZRot
@@ -6109,7 +6166,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     End With
     RoomActorCombobox.Items.Add((rmActorCount).ToString & " - " & IdentifyActor(0, rmActorCount))
     RoomActorCombobox.SelectedIndex = rmActorCount + 1
-    RamBanks.ZFileBuffer.Resize(RamBanks.ZFileBuffer.Count + (rmActorCount * &H16))
+    RamBanks.ZFileBuffer.Resize(RamBanks.ZFileBuffer.Count + (rmActorCount*&H16))
     rmActorCount += 1
   End Sub
 
@@ -6239,10 +6296,10 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     CopyActor(0) = CollisionVerts.x(SelectedCollisionVert(0))
     CopyActor(1) = CollisionVerts.y(SelectedCollisionVert(0))
     CopyActor(2) = CollisionVerts.z(SelectedCollisionVert(0))
-    CopyActor(3) = -1
-    CopyActor(4) = -1
-    CopyActor(5) = -1
-    CopyActor(6) = -1
+    CopyActor(3) = - 1
+    CopyActor(4) = - 1
+    CopyActor(5) = - 1
+    CopyActor(6) = - 1
     CopyActor(7) = 1
 
     PasteToolStripMenuItem.Enabled = True
@@ -6320,9 +6377,9 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
           If Not CombinerEditor.Visible Then
             Dim selectedDisplayList As N64DisplayList = DlManager.GetDisplayListByIndex(DListSelection.SelectedIndex - 1)
             LinkedCommands.EnvColor = RDP_Defs.FindLinkedCommand(selectedDisplayList, RDP.G_SETENVCOLOR,
-                                                        CommandsListbox.SelectedIndex)
+                                                                 CommandsListbox.SelectedIndex)
             LinkedCommands.PrimColor = RDP_Defs.FindLinkedCommand(selectedDisplayList, RDP.G_SETPRIMCOLOR,
-                                                         CommandsListbox.SelectedIndex)
+                                                                  CommandsListbox.SelectedIndex)
           Else
             CombinerEditor.Close()
           End If
@@ -6429,7 +6486,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       st = CommandsListbox.SelectedIndex - 1
     End If
 
-    For i As Integer = st To 0 Step -1
+    For i As Integer = st To 0 Step - 1
       If CommandsListbox.Items(i).ToString = CommandJumpBox.SelectedItem.ToString Then
         CommandsListbox.SelectedIndex = i
         Exit Sub
@@ -6522,7 +6579,7 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
 
   Private Sub TrackBar1_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
     Handles TrackBar1.ValueChanged
-    CameraCoef = TrackBar1.Value * 8
+    CameraCoef = TrackBar1.Value*8
   End Sub
 
   Private Sub TrackBar4_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _

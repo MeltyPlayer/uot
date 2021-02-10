@@ -243,6 +243,9 @@ namespace UoT {
           continue;
         }
 
+        // Everything looks good with this animation location!
+
+        // Starts parsing animation from this spot.
         var tracks = new LinkAnimetionTrack[(int) (trackCount - 1L + 1)];
         var positions = new Vec3s[frameCount];
         var facialStates = new FacialState[frameCount];

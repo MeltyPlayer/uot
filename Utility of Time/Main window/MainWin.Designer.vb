@@ -257,8 +257,6 @@ Partial Class MainWin
     Friend WithEvents NumContextMenu As System.Windows.Forms.ContextMenuStrip
     Friend WithEvents GrpContextMenu As System.Windows.Forms.ContextMenuStrip
     Friend WithEvents Button6 As System.Windows.Forms.Button
-    Friend WithEvents AnimationPlaybackPanel As AnimationPlaybackPanel
-    Friend WithEvents SplitContainer1 As SplitContainer
     Private WithEvents zFileTreeView_ As ui.main.files.ZFileTreeView
-    Friend WithEvents animationSelectorPanel_ As AnimationSelectorPanel
+    Private WithEvents animationTab_ As AnimationTab
 End Class
