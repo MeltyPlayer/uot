@@ -1,10 +1,16 @@
 ﻿using System;
 using System.IO;
 
+using UoT.memory.files;
 using UoT.memory.map;
 using UoT.util.array;
 
 namespace UoT {
+  public enum Bank5Type {
+    FIELD,
+    DANGEON,
+  }
+
   public interface IBank : IIndexable<byte> {
     byte Segment { get; }
   }
@@ -29,7 +35,7 @@ namespace UoT {
 
     public void WriteToFile(string filename)
       => throw new NotSupportedException();
-      // => File.WriteAllBytes(filename, this.impl_);
+    // => File.WriteAllBytes(filename, this.impl_);
 
     public void WriteToStream(FileStream fs, int fsOffset) {
       throw new NotSupportedException();
@@ -38,30 +44,36 @@ namespace UoT {
     }
   }
 
-  /*public class RdRamBank : BList, IBank {
-    private const int RDRAM_SIZE = 0x7A1200;
-    private readonly RomBank impl_;
-
-
-
-    public RdRamBank() {
-      this.impl_ = new RomBank();
-      this.impl_.Resize(RDRAM_SIZE);
-    }
-
-    public override int Count => this.impl_.Count;
-
-    public override byte this[int offset] {
-      get {
-        return this.impl_[offset];
-      } 
-      set => this.impl_[offset] = value;
-    }
-  }*/
-
   public static class RamBanks {
-    static RamBanks() {
-      // TODO: Initialize RDRAM.
+    public static void PopulateFromRomFiles(ZFiles romFiles) {
+      RamBanks.ActiveBank5Type = Bank5Type.FIELD;
+
+      foreach (var other in romFiles.Others) {
+        var region = other.Region;
+
+        switch (other.FileName) {
+          case "gameplay_keep": {
+            RamBanks.GameplayKeep.Region = region;
+            break;
+          }
+          case "gameplay_field_keep": {
+            RamBanks.GameplayFieldKeep.Region = region;
+            break;
+          }
+          case "gameplay_dangeon_keep": {
+            RamBanks.GameplayDangeonKeep.Region = region;
+            break;
+          }
+          case "icon_item_static": {
+            RamBanks.IconItemStatic.Region = region;
+            break;
+          }
+          case "icon_item_24_static": {
+            RamBanks.IconItem24Static.Region = region;
+            break;
+          }
+        }
+      }
     }
 
 
@@ -72,7 +84,18 @@ namespace UoT {
     /// </summary>
     public static RomBank ZSceneBuffer { get; } = new RomBank {Segment = 2};
 
-    // TODO: Figure out why textures are not parsed correctly from 8 and 9.
+    public static RomBank GameplayKeep { get; } = new RomBank {Segment = 4};
+
+
+    public static Bank5Type ActiveBank5Type { get; set; }
+
+    public static RomBank GameplayFieldKeep { get; } =
+      new RomBank {Segment = 5};
+
+    public static RomBank GameplayDangeonKeep { get; } =
+      new RomBank {Segment = 5};
+
+
     /// <summary>
     ///   Bank 8, "icon_item_static". Contains animated textures, such as eyes,
     ///   mouths, etc.
@@ -86,9 +109,6 @@ namespace UoT {
 
 
     public static int CurrentBank => RamBanks.ZFileBuffer.Segment;
-    public static BankSwitch CommonBankUse { get; set; }
-
-    public static ObjectExchange CommonBanks { get; set; }
 
     public static bool IsValidBank(byte bankIndex) {
       if (bankIndex == RamBanks.CurrentBank) {
@@ -119,11 +139,11 @@ namespace UoT {
         case 2:
           return RamBanks.ZSceneBuffer;
         case 4:
-          return RamBanks.CommonBanks.Bank4.Banks
-              [RamBanks.CommonBankUse.Bank04];
+          return RamBanks.GameplayKeep;
         case 5:
-          return RamBanks.CommonBanks.Bank5.Banks
-              [RamBanks.CommonBankUse.Bank05];
+          return RamBanks.ActiveBank5Type == Bank5Type.FIELD
+                     ? RamBanks.GameplayFieldKeep
+                     : RamBanks.GameplayDangeonKeep;
 
         default:
           // TODO: Should throw an error for unsupported banks.

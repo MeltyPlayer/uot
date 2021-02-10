@@ -170,7 +170,7 @@ namespace UoT {
       var yFrames = yTrack.Frames;
       var zFrames = zTrack.Frames;
 
-      var frame = (uint) Math.Floor(playbackManager.Frame);
+      var frame = (int) Math.Floor(playbackManager.Frame);
       this.GetFrameAndNext_(xTrack, frame, out var xFrame, out var nextXFrame);
       this.GetFrameAndNext_(yTrack, frame, out var yFrame, out var nextYFrame);
       this.GetFrameAndNext_(zTrack, frame, out var zFrame, out var nextZFrame);
@@ -214,10 +214,10 @@ namespace UoT {
 
     private void GetFrameAndNext_(
         IAnimationTrack track,
-        uint frame,
-        out uint trackFrame,
-        out uint nextTrackFrame) {
-      var frameCount = (uint) track.Frames.Length;
+        int frame,
+        out int trackFrame,
+        out int nextTrackFrame) {
+      var frameCount = track.Frames.Count;
 
       if (track.Type == 1) {
         trackFrame = frame % frameCount;

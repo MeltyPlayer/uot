@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Linq;
+using System.Windows.Forms;
 
 using UoT.hacks.fields;
 
@@ -9,6 +10,10 @@ namespace UoT.ui.common.component.fields {
     public DiscreteFieldControl(IDiscreteField field) {
       this.field_ = field;
       this.group_.Text = field.Name;
+
+      this.dropdown_.DataSource =
+          field.PossibleValues.Select(value => value.Name);
+      this.dropdown_.SelectedIndex = field.SelectedValueIndex;
 
       this.InitializeComponent();
     }

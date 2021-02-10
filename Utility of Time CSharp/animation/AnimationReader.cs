@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 
 using Microsoft.VisualBasic;
-using Microsoft.VisualBasic.CompilerServices;
 
 namespace UoT {
   public class AnimationReader {
@@ -119,58 +118,60 @@ namespace UoT {
             animCnt += 1;
             Array.Resize(ref tAnimation, animCnt + 1);
             {
-              var withBlock = tAnimation[animCnt];
-              withBlock.FrameCount = frameCount;
-              withBlock.TrackOffset = rotationIndicesOffset;
-              withBlock.AngleCount = angleCount;
-              if (withBlock.FrameCount > 0) {
-                withBlock.Angles =
-                    new ushort[(int) (withBlock.AngleCount - 1L + 1)];
-                withBlock.Tracks =
-                    new NormalAnimationTrack[(int) (trackCount - 1L + 1)];
+              var animation = tAnimation[animCnt] = new NormalAnimation();
+              animation.FrameCount = frameCount;
+              animation.TrackOffset = rotationIndicesOffset;
+              animation.AngleCount = angleCount;
+              if (animation.FrameCount > 0) {
+                animation.Angles =
+                    new ushort[(int) (animation.AngleCount - 1L + 1)];
                 animationList.Items.Add("0x" + Conversion.Hex(i));
-                for (int i1 = 0, loopTo2 = (int) (withBlock.AngleCount - 1L);
+                for (int i1 = 0, loopTo2 = (int) (animation.AngleCount - 1L);
                      i1 <= loopTo2;
                      i1++) {
-                  withBlock.Angles[i1] =
+                  animation.Angles[i1] =
                       IoUtil.ReadUInt16(rotationValuesBuffer,
                                         rotationValuesOffset);
                   rotationValuesOffset = (uint) (rotationValuesOffset + 2L);
                 }
 
-                withBlock.Position.X = IoUtil.ReadInt16(
+                var position = animation.Position = new Vec3s();
+                position.X = IoUtil.ReadInt16(
                     rotationIndicesBuffer,
-                    withBlock.TrackOffset);
-                withBlock.Position.Y = IoUtil.ReadInt16(
+                    animation.TrackOffset);
+                position.Y = IoUtil.ReadInt16(
                     rotationIndicesBuffer,
-                    withBlock.TrackOffset + 2);
-                withBlock.Position.Z = IoUtil.ReadInt16(
+                    animation.TrackOffset + 2);
+                position.Z = IoUtil.ReadInt16(
                     rotationIndicesBuffer,
-                    withBlock.TrackOffset + 4);
+                    animation.TrackOffset + 4);
 
-                int tTrackOffset = (int) (withBlock.TrackOffset + 6L);
+                animation.Tracks =
+                    new NormalAnimationTrack[(int) (trackCount - 1L + 1)];
+
+                int tTrackOffset = (int) (animation.TrackOffset + 6L);
                 for (int i1 = 0, loopTo3 = (int) (trackCount - 1L);
                      i1 <= loopTo3;
                      i1++) {
+                  var track = animation.Tracks[i1] = new NormalAnimationTrack();
+
                   var tTrack =
                       IoUtil.ReadUInt16(rotationIndicesBuffer,
                                         (uint) tTrackOffset);
                   if (tTrack < limit) {
                     // Constant (single value)
-                    withBlock.Tracks[i1].Type = 0;
-                    withBlock.Tracks[i1].Frames = new ushort[1];
-                    withBlock.Tracks[i1].Frames[0] = withBlock.Angles[tTrack];
+                    track.Type = 0;
+                    track.Frames = new ushort[1];
+                    track.Frames[0] = animation.Angles[tTrack];
                   } else {
                     // Keyframes
-                    withBlock.Tracks[i1].Type = 1;
-                    withBlock.Tracks[i1].Frames =
-                        new ushort[withBlock.FrameCount];
-                    for (int i2 = 0, loopTo4 = withBlock.FrameCount - 1;
+                    track.Type = 1;
+                    track.Frames = new ushort[animation.FrameCount];
+                    for (int i2 = 0, loopTo4 = animation.FrameCount - 1;
                          i2 <= loopTo4;
                          i2++) {
                       try {
-                        withBlock.Tracks[i1].Frames[i2] =
-                            withBlock.Angles[tTrack + i2];
+                        track.Frames[i2] = animation.Angles[tTrack + i2];
                       } catch {
                         return null;
                       }
@@ -179,8 +180,6 @@ namespace UoT {
 
                   tTrackOffset += 2;
                 }
-
-                tAnimation[animCnt] = withBlock;
               } else {
                 Array.Resize(ref tAnimation, animCnt);
               }
@@ -191,8 +190,9 @@ namespace UoT {
 
       if (tAnimation.Length > 0) {
         var outList = new List<IAnimation>();
-        foreach (NormalAnimation animation in tAnimation)
+        foreach (NormalAnimation animation in tAnimation) {
           outList.Add(animation);
+        }
         return outList;
       }
 
@@ -208,89 +208,86 @@ namespace UoT {
         int LimbCount,
         IBank animationData,
         ListBox animationList) {
-      int animCnt = -1;
-      var animations = new LinkAnimetion[0];
       animationList.Items.Clear();
+      var animations = new List<IAnimation>();
 
       var trackCount = (uint) (LimbCount * 3);
       var frameSize = 2 * (3 + trackCount) + 2;
-      for (int i = 0x2310; i <= 0x34F8; i += 4) {
-        var frameCount = IoUtil.ReadUInt16(HeaderData, (uint) i);
-        var animationAddress = IoUtil.ReadUInt32(HeaderData, (uint) (i + 4));
+      for (uint i = 0x2310; i <= 0x34F8; i += 4) {
+        var frameCount = IoUtil.ReadUInt16(HeaderData, i);
+        if (frameCount == 0) {
+          continue;
+        }
+
+        var animationAddress = IoUtil.ReadUInt32(HeaderData, i + 4);
         IoUtil.SplitAddress(animationAddress,
                             out var animationBank,
                             out var animationOffset);
-        bool validAnimationBank =
-            animationBank == 7; // Corresponds to link_animetions.
-        var hasZeroes = IoUtil.ReadUInt16(HeaderData, (uint) (i + 2)) == 0;
+        
+        // Should use link_animetion bank.
+        var validAnimationBank = animationBank == 7;
+        if (!validAnimationBank) {
+          continue;
+        }
 
-        // TODO: Is this really needed?
+        // Should have zeroes in the expected bytes of the header.
+        var hasZeroes = IoUtil.ReadUInt16(HeaderData, i + 2) == 0;
+        if (!hasZeroes) {
+          continue;
+        }
+
+        // Should be within the bounds of the bank.
         var validOffset = animationOffset + frameSize * frameCount <
                           animationData.Count;
-        if (validAnimationBank & hasZeroes & validOffset) {
-          animCnt += 1;
-          Array.Resize(ref animations, animCnt + 1);
-          {
-            var withBlock = animations[animCnt];
-
-            withBlock.FrameCount = frameCount;
-            if (frameCount > 0) {
-              withBlock.Positions = new Vec3s[frameCount];
-              withBlock.Tracks =
-                  new LinkAnimetionTrack[(int) (trackCount - 1L + 1)];
-              for (int t = 0, loopTo = (int) (trackCount - 1L);
-                   t <= loopTo;
-                   t++) {
-                withBlock.Tracks[t].Type = 1;
-                withBlock.Tracks[t].Frames = new ushort[frameCount];
-              }
-
-              withBlock.FacialStates = new FacialState[frameCount];
-              for (int f = 0, loopTo1 = frameCount - 1; f <= loopTo1; f++) {
-                var frameOffset = (uint) (animationOffset + f * frameSize);
-
-                // TODO: This should be ReadInt16() instead.
-                withBlock.Positions[f].X =
-                    (short) IoUtil.ReadUInt16(animationData,
-                                              frameOffset);
-                withBlock.Positions[f].Y =
-                    (short) IoUtil.ReadUInt16(animationData,
-                                              frameOffset + 2);
-                withBlock.Positions[f].Z =
-                    (short) IoUtil.ReadUInt16(animationData,
-                                              frameOffset + 4);
-                for (int t = 0, loopTo2 = (int) (trackCount - 1L);
-                     t <= loopTo2;
-                     t++) {
-                  var trackOffset = (uint) (frameOffset + 2 * (3 + t));
-                  withBlock.Tracks[t].Frames[f] =
-                      IoUtil.ReadUInt16(animationData, trackOffset);
-                }
-
-                var facialStateOffset = (int) (frameOffset + 2 * (3 + trackCount));
-                var facialState = animationData[facialStateOffset + 1];
-                var mouthState = IoUtil.ShiftR(facialState, 4, 4);
-                var eyeState = IoUtil.ShiftR(facialState, 0, 4);
-                withBlock.FacialStates[f].EyeState = (EyeState) eyeState;
-                withBlock.FacialStates[f].MouthState = (MouthState) mouthState;
-              }
-
-              animationList.Items.Add("0x" + Conversion.Hex(i));
-            } else {
-              Array.Resize(ref animations, animCnt);
-            }
-
-            animations[animCnt] = withBlock;
-          }
+        if (!validOffset) {
+          continue;
         }
+
+        var tracks = new LinkAnimetionTrack[(int) (trackCount - 1L + 1)];
+        var positions = new Vec3s[frameCount];
+        var facialStates = new FacialState[frameCount];
+
+        for (int t = 0, loopTo = (int) (trackCount - 1L);
+             t <= loopTo;
+             t++) {
+          tracks[t] = new LinkAnimetionTrack(1, new ushort[frameCount]);
+        }
+
+        for (int f = 0, loopTo1 = frameCount - 1; f <= loopTo1; f++) {
+          var frameOffset = (uint) (animationOffset + f * frameSize);
+
+          // TODO: This should be ReadInt16() instead.
+          positions[f] = new Vec3s {
+              X = (short) IoUtil.ReadUInt16(animationData, frameOffset),
+              Y = (short) IoUtil.ReadUInt16(animationData, frameOffset + 2),
+              Z = (short) IoUtil.ReadUInt16(animationData, frameOffset + 4),
+          };
+          for (int t = 0, loopTo2 = (int) (trackCount - 1L);
+               t <= loopTo2;
+               t++) {
+            var trackOffset = (uint) (frameOffset + 2 * (3 + t));
+            tracks[t].Frames[f] = IoUtil.ReadUInt16(animationData, trackOffset);
+          }
+
+          var facialStateOffset =
+              (int) (frameOffset + 2 * (3 + trackCount));
+          var facialState = animationData[facialStateOffset + 1];
+          var mouthState = IoUtil.ShiftR(facialState, 4, 4);
+          var eyeState = IoUtil.ShiftR(facialState, 0, 4);
+
+          facialStates[f] = new FacialState((EyeState) eyeState,
+                                            (MouthState) mouthState);
+        }
+
+        var animation =
+            new LinkAnimetion(frameCount, tracks, positions, facialStates);
+        animations.Add(animation);
+
+        animationList.Items.Add("0x" + Conversion.Hex(i));
       }
 
-      if (animations.Length > 0) {
-        var outList = new List<IAnimation>();
-        foreach (LinkAnimetion animation in animations) {
-          outList.Add(animation);
-        }
-        return outList;
+      if (animations.Count > 0) {
+        return animations;
       }
 
       return null;

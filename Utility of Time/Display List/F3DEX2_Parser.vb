@@ -688,9 +688,9 @@ enddisplaylist:
             Case 2
               LoadTex(RamBanks.ZSceneBuffer, 1)
             Case 4
-              LoadTex(RamBanks.CommonBanks.Bank4.Banks(RamBanks.CommonBankUse.Bank04), 0)
+              LoadTex(RamBanks.GetBankByIndex(4), 0)
             Case 5
-              LoadTex(RamBanks.CommonBanks.Bank5.Banks(RamBanks.CommonBankUse.Bank05), 0)
+              LoadTex(RamBanks.GetBankByIndex(5), 0)
             Case Else
               ' TODO: Should throw an error for unsupported banks.
           End Select

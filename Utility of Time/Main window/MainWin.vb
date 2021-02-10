@@ -5,6 +5,7 @@ Imports System.IO
 Imports Tao.FreeGlut
 Imports System.Numerics
 Imports MathNet.Numerics.LinearAlgebra.Double
+Imports UoT.animation
 Imports UoT.memory.files
 Imports UoT.memory.map
 Imports UoT.ui.main.top.help
@@ -156,12 +157,6 @@ Public Class MainWin
     Me.EditingTabs = New System.Windows.Forms.TabControl()
     Me.AnimationsTab = New System.Windows.Forms.TabPage()
     Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
-    Me.AnimationSetGroup = New System.Windows.Forms.GroupBox()
-    Me.Label20 = New System.Windows.Forms.Label()
-    Me.CheckBox2 = New System.Windows.Forms.CheckBox()
-    Me.AnimationList = New System.Windows.Forms.ListBox()
-    Me.animationbank = New System.Windows.Forms.ComboBox()
-    Me.AnimationPlaybackPanel = New UoT.ui.main.tabs.animation.AnimationPlaybackPanel()
     Me.DLTab = New System.Windows.Forms.TabPage()
     Me.RadioButton2 = New System.Windows.Forms.RadioButton()
     Me.GroupBox7 = New System.Windows.Forms.GroupBox()
@@ -192,7 +187,6 @@ Public Class MainWin
     Me.RestorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
     Me.Label43 = New System.Windows.Forms.Label()
     Me.TrackBar1 = New System.Windows.Forms.TrackBar()
-    Me.UoTRender = New UoT.Tao.Platform.Windows.SimpleOpenGlControl()
     Me.ActorContextMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
     Me.DeselectToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
     Me.ToolStripSeparator14 = New System.Windows.Forms.ToolStripSeparator()
@@ -305,6 +299,9 @@ Public Class MainWin
     Me.NumContextMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
     Me.GrpContextMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
     Me.zFileTreeView_ = New UoT.ui.main.files.ZFileTreeView()
+    Me.AnimationPlaybackPanel = New UoT.ui.main.tabs.animation.AnimationPlaybackPanel()
+    Me.UoTRender = New UoT.Tao.Platform.Windows.SimpleOpenGlControl()
+    Me.animationSelectorPanel_ = New UoT.ui.main.tabs.animation.AnimationSelectorPanel()
     Me.UoTStatus.SuspendLayout()
     CType(Me.TrackBar4, System.ComponentModel.ISupportInitialize).BeginInit()
     Me.CollisionTab.SuspendLayout()
@@ -325,7 +322,6 @@ Public Class MainWin
     Me.SplitContainer1.Panel1.SuspendLayout()
     Me.SplitContainer1.Panel2.SuspendLayout()
     Me.SplitContainer1.SuspendLayout()
-    Me.AnimationSetGroup.SuspendLayout()
     Me.DLTab.SuspendLayout()
     Me.GroupBox7.SuspendLayout()
     Me.DLEditorContextMenu.SuspendLayout()
@@ -1432,7 +1428,7 @@ Public Class MainWin
     '
     'SplitContainer1.Panel1
     '
-    Me.SplitContainer1.Panel1.Controls.Add(Me.AnimationSetGroup)
+    Me.SplitContainer1.Panel1.Controls.Add(Me.animationSelectorPanel_)
     '
     'SplitContainer1.Panel2
     '
@@ -1441,75 +1437,6 @@ Public Class MainWin
     Me.SplitContainer1.Size = New System.Drawing.Size(224, 537)
     Me.SplitContainer1.SplitterDistance = 390
     Me.SplitContainer1.TabIndex = 15
-    '
-    'AnimationSetGroup
-    '
-    Me.AnimationSetGroup.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-    Me.AnimationSetGroup.Controls.Add(Me.Label20)
-    Me.AnimationSetGroup.Controls.Add(Me.CheckBox2)
-    Me.AnimationSetGroup.Controls.Add(Me.AnimationList)
-    Me.AnimationSetGroup.Controls.Add(Me.animationbank)
-    Me.AnimationSetGroup.Dock = System.Windows.Forms.DockStyle.Fill
-    Me.AnimationSetGroup.Location = New System.Drawing.Point(0, 0)
-    Me.AnimationSetGroup.Name = "AnimationSetGroup"
-    Me.AnimationSetGroup.Size = New System.Drawing.Size(224, 390)
-    Me.AnimationSetGroup.TabIndex = 13
-    Me.AnimationSetGroup.TabStop = False
-    Me.AnimationSetGroup.Text = "Animation Sets"
-    '
-    'Label20
-    '
-    Me.Label20.AutoSize = True
-    Me.Label20.Location = New System.Drawing.Point(3, 20)
-    Me.Label20.Name = "Label20"
-    Me.Label20.Size = New System.Drawing.Size(32, 16)
-    Me.Label20.TabIndex = 10
-    Me.Label20.Text = "Bank"
-    '
-    'CheckBox2
-    '
-    Me.CheckBox2.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.CheckBox2.AutoSize = True
-    Me.CheckBox2.Location = New System.Drawing.Point(6, 364)
-    Me.CheckBox2.Name = "CheckBox2"
-    Me.CheckBox2.Size = New System.Drawing.Size(56, 20)
-    Me.CheckBox2.TabIndex = 4
-    Me.CheckBox2.Text = "Bones"
-    Me.CheckBox2.UseVisualStyleBackColor = True
-    '
-    'AnimationList
-    '
-    Me.AnimationList.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-    Me.AnimationList.FormattingEnabled = True
-    Me.AnimationList.ItemHeight = 16
-    Me.AnimationList.Location = New System.Drawing.Point(6, 42)
-    Me.AnimationList.Name = "AnimationList"
-    Me.AnimationList.Size = New System.Drawing.Size(212, 308)
-    Me.AnimationList.TabIndex = 0
-    '
-    'animationbank
-    '
-    Me.animationbank.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-    Me.animationbank.FormattingEnabled = True
-    Me.animationbank.Items.AddRange(New Object() {"Inline with object"})
-    Me.animationbank.Location = New System.Drawing.Point(46, 16)
-    Me.animationbank.Name = "animationbank"
-    Me.animationbank.Size = New System.Drawing.Size(171, 24)
-    Me.animationbank.TabIndex = 9
-    '
-    'AnimationPlaybackPanel
-    '
-    Me.AnimationPlaybackPanel.Dock = System.Windows.Forms.DockStyle.Fill
-    Me.AnimationPlaybackPanel.Frame = 0R
-    Me.AnimationPlaybackPanel.FrameRate = 20
-    Me.AnimationPlaybackPanel.IsPlaying = False
-    Me.AnimationPlaybackPanel.Location = New System.Drawing.Point(0, 0)
-    Me.AnimationPlaybackPanel.Name = "AnimationPlaybackPanel"
-    Me.AnimationPlaybackPanel.ShouldLoop = False
-    Me.AnimationPlaybackPanel.Size = New System.Drawing.Size(224, 143)
-    Me.AnimationPlaybackPanel.TabIndex = 14
-    Me.AnimationPlaybackPanel.TotalFrames = 0
     '
     'DLTab
     '
@@ -1555,7 +1482,7 @@ Public Class MainWin
     Me.GroupBox7.Controls.Add(Me.CommandsListbox)
     Me.GroupBox7.Location = New System.Drawing.Point(10, 176)
     Me.GroupBox7.Name = "GroupBox7"
-    Me.GroupBox7.Size = New System.Drawing.Size(206, 358)
+    Me.GroupBox7.Size = New System.Drawing.Size(206, 466)
     Me.GroupBox7.TabIndex = 69
     Me.GroupBox7.TabStop = False
     Me.GroupBox7.Text = "Commands"
@@ -1564,7 +1491,7 @@ Public Class MainWin
     '
     Me.WholeCommandTxt.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.WholeCommandTxt.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-    Me.WholeCommandTxt.Location = New System.Drawing.Point(7, 321)
+    Me.WholeCommandTxt.Location = New System.Drawing.Point(7, 429)
     Me.WholeCommandTxt.MaxLength = 32
     Me.WholeCommandTxt.Name = "WholeCommandTxt"
     Me.WholeCommandTxt.Size = New System.Drawing.Size(107, 20)
@@ -1574,7 +1501,7 @@ Public Class MainWin
     '
     Me.Label3.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.Label3.AutoSize = True
-    Me.Label3.Location = New System.Drawing.Point(3, 238)
+    Me.Label3.Location = New System.Drawing.Point(3, 346)
     Me.Label3.Name = "Label3"
     Me.Label3.Size = New System.Drawing.Size(47, 16)
     Me.Label3.TabIndex = 69
@@ -1583,7 +1510,7 @@ Public Class MainWin
     'Button8
     '
     Me.Button8.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.Button8.Location = New System.Drawing.Point(57, 234)
+    Me.Button8.Location = New System.Drawing.Point(57, 342)
     Me.Button8.Name = "Button8"
     Me.Button8.Size = New System.Drawing.Size(67, 23)
     Me.Button8.TabIndex = 68
@@ -1594,7 +1521,7 @@ Public Class MainWin
     '
     Me.HiwordText.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.HiwordText.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-    Me.HiwordText.Location = New System.Drawing.Point(109, 293)
+    Me.HiwordText.Location = New System.Drawing.Point(109, 401)
     Me.HiwordText.MaxLength = 8
     Me.HiwordText.Name = "HiwordText"
     Me.HiwordText.Size = New System.Drawing.Size(90, 20)
@@ -1603,7 +1530,7 @@ Public Class MainWin
     'Button1
     '
     Me.Button1.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.Button1.Location = New System.Drawing.Point(130, 234)
+    Me.Button1.Location = New System.Drawing.Point(130, 342)
     Me.Button1.Name = "Button1"
     Me.Button1.Size = New System.Drawing.Size(67, 23)
     Me.Button1.TabIndex = 67
@@ -1614,7 +1541,7 @@ Public Class MainWin
     '
     Me.LowordText.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.LowordText.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-    Me.LowordText.Location = New System.Drawing.Point(37, 293)
+    Me.LowordText.Location = New System.Drawing.Point(37, 401)
     Me.LowordText.MaxLength = 6
     Me.LowordText.Name = "LowordText"
     Me.LowordText.Size = New System.Drawing.Size(66, 20)
@@ -1624,7 +1551,7 @@ Public Class MainWin
     '
     Me.CommandCodeText.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.CommandCodeText.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-    Me.CommandCodeText.Location = New System.Drawing.Point(7, 293)
+    Me.CommandCodeText.Location = New System.Drawing.Point(7, 401)
     Me.CommandCodeText.MaxLength = 2
     Me.CommandCodeText.Name = "CommandCodeText"
     Me.CommandCodeText.Size = New System.Drawing.Size(24, 20)
@@ -1635,7 +1562,7 @@ Public Class MainWin
     Me.CommandJumpBox.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.CommandJumpBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
     Me.CommandJumpBox.FormattingEnabled = True
-    Me.CommandJumpBox.Location = New System.Drawing.Point(6, 204)
+    Me.CommandJumpBox.Location = New System.Drawing.Point(6, 312)
     Me.CommandJumpBox.Name = "CommandJumpBox"
     Me.CommandJumpBox.Size = New System.Drawing.Size(192, 24)
     Me.CommandJumpBox.TabIndex = 66
@@ -1644,7 +1571,7 @@ Public Class MainWin
     '
     Me.Label26.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.Label26.AutoSize = True
-    Me.Label26.Location = New System.Drawing.Point(132, 274)
+    Me.Label26.Location = New System.Drawing.Point(132, 382)
     Me.Label26.Name = "Label26"
     Me.Label26.Size = New System.Drawing.Size(44, 16)
     Me.Label26.TabIndex = 65
@@ -1654,7 +1581,7 @@ Public Class MainWin
     '
     Me.Label25.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.Label25.AutoSize = True
-    Me.Label25.Location = New System.Drawing.Point(48, 274)
+    Me.Label25.Location = New System.Drawing.Point(48, 382)
     Me.Label25.Name = "Label25"
     Me.Label25.Size = New System.Drawing.Size(44, 16)
     Me.Label25.TabIndex = 64
@@ -1664,7 +1591,7 @@ Public Class MainWin
     '
     Me.Label9.Anchor = System.Windows.Forms.AnchorStyles.Bottom
     Me.Label9.AutoSize = True
-    Me.Label9.Location = New System.Drawing.Point(5, 274)
+    Me.Label9.Location = New System.Drawing.Point(5, 382)
     Me.Label9.Name = "Label9"
     Me.Label9.Size = New System.Drawing.Size(29, 16)
     Me.Label9.TabIndex = 63
@@ -1673,7 +1600,7 @@ Public Class MainWin
     'Button4
     '
     Me.Button4.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-    Me.Button4.Location = New System.Drawing.Point(127, 319)
+    Me.Button4.Location = New System.Drawing.Point(127, 427)
     Me.Button4.Name = "Button4"
     Me.Button4.Size = New System.Drawing.Size(70, 23)
     Me.Button4.TabIndex = 62
@@ -1689,7 +1616,7 @@ Public Class MainWin
     Me.CommandsListbox.ItemHeight = 16
     Me.CommandsListbox.Location = New System.Drawing.Point(6, 22)
     Me.CommandsListbox.Name = "CommandsListbox"
-    Me.CommandsListbox.Size = New System.Drawing.Size(192, 180)
+    Me.CommandsListbox.Size = New System.Drawing.Size(192, 452)
     Me.CommandsListbox.TabIndex = 61
     '
     'DLEditorContextMenu
@@ -1812,31 +1739,6 @@ Public Class MainWin
     Me.TrackBar1.Size = New System.Drawing.Size(90, 15)
     Me.TrackBar1.TabIndex = 103
     Me.TrackBar1.Value = 20
-    '
-    'UoTRender
-    '
-    Me.UoTRender.AccumBits = CType(0, Byte)
-    Me.UoTRender.AllowDrop = True
-    Me.UoTRender.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-    Me.UoTRender.AutoCheckErrors = False
-    Me.UoTRender.AutoFinish = True
-    Me.UoTRender.AutoMakeCurrent = True
-    Me.UoTRender.AutoSize = True
-    Me.UoTRender.AutoSwapBuffers = False
-    Me.UoTRender.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange
-    Me.UoTRender.BackColor = System.Drawing.Color.Black
-    Me.UoTRender.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-    Me.UoTRender.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-    Me.UoTRender.ColorBits = CType(32, Byte)
-    Me.UoTRender.Cursor = System.Windows.Forms.Cursors.Default
-    Me.UoTRender.DepthBits = CType(24, Byte)
-    Me.UoTRender.Location = New System.Drawing.Point(229, 33)
-    Me.UoTRender.Name = "UoTRender"
-    Me.UoTRender.Size = New System.Drawing.Size(700, 586)
-    Me.UoTRender.StencilBits = CType(0, Byte)
-    Me.UoTRender.TabIndex = 0
     '
     'ActorContextMenu
     '
@@ -2576,6 +2478,52 @@ Public Class MainWin
     Me.zFileTreeView_.Size = New System.Drawing.Size(218, 583)
     Me.zFileTreeView_.TabIndex = 104
     '
+    'AnimationPlaybackPanel
+    '
+    Me.AnimationPlaybackPanel.Dock = System.Windows.Forms.DockStyle.Fill
+    Me.AnimationPlaybackPanel.Frame = 0R
+    Me.AnimationPlaybackPanel.FrameRate = 20
+    Me.AnimationPlaybackPanel.IsPlaying = False
+    Me.AnimationPlaybackPanel.Location = New System.Drawing.Point(0, 0)
+    Me.AnimationPlaybackPanel.Name = "AnimationPlaybackPanel"
+    Me.AnimationPlaybackPanel.ShouldLoop = False
+    Me.AnimationPlaybackPanel.Size = New System.Drawing.Size(224, 143)
+    Me.AnimationPlaybackPanel.TabIndex = 14
+    Me.AnimationPlaybackPanel.TotalFrames = 0
+    '
+    'UoTRender
+    '
+    Me.UoTRender.AccumBits = CType(0, Byte)
+    Me.UoTRender.AllowDrop = True
+    Me.UoTRender.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+    Me.UoTRender.AutoCheckErrors = False
+    Me.UoTRender.AutoFinish = True
+    Me.UoTRender.AutoMakeCurrent = True
+    Me.UoTRender.AutoSize = True
+    Me.UoTRender.AutoSwapBuffers = False
+    Me.UoTRender.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange
+    Me.UoTRender.BackColor = System.Drawing.Color.Black
+    Me.UoTRender.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+    Me.UoTRender.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+    Me.UoTRender.ColorBits = CType(32, Byte)
+    Me.UoTRender.Cursor = System.Windows.Forms.Cursors.Default
+    Me.UoTRender.DepthBits = CType(24, Byte)
+    Me.UoTRender.Location = New System.Drawing.Point(229, 33)
+    Me.UoTRender.Name = "UoTRender"
+    Me.UoTRender.Size = New System.Drawing.Size(700, 586)
+    Me.UoTRender.StencilBits = CType(0, Byte)
+    Me.UoTRender.TabIndex = 0
+    '
+    'AnimationSetsPanel1
+    '
+    Me.animationSelectorPanel_.Dock = System.Windows.Forms.DockStyle.Fill
+    Me.animationSelectorPanel_.Location = New System.Drawing.Point(0, 0)
+    Me.animationSelectorPanel_.Name = "AnimationSetsPanel1"
+    Me.animationSelectorPanel_.Size = New System.Drawing.Size(224, 390)
+    Me.animationSelectorPanel_.TabIndex = 11
+    '
     'MainWin
     '
     Me.AllowDrop = True
@@ -2626,8 +2574,6 @@ Public Class MainWin
     Me.SplitContainer1.Panel2.ResumeLayout(False)
     CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
     Me.SplitContainer1.ResumeLayout(False)
-    Me.AnimationSetGroup.ResumeLayout(False)
-    Me.AnimationSetGroup.PerformLayout()
     Me.DLTab.ResumeLayout(False)
     Me.DLTab.PerformLayout()
     Me.GroupBox7.ResumeLayout(False)
@@ -2689,11 +2635,10 @@ Public Class MainWin
 
 #Region "ANIMATION & HEIRARCHY"
 
-  Private AnimationEntries As IList(Of IAnimation)
   Private LimbEntries(-1) As Limb
   Private CurrLimb As Integer = 0
   Private BoneColorFactor As New Color3UByte
-  Private CurrAnimation As Integer = 0
+  Private CurrAnimation As IAnimation
   Private DlManager As New DlManager
 
 #End Region
@@ -3246,12 +3191,7 @@ Public Class MainWin
     AnimationPlaybackPanel.Tick()
 
     If UseStaticDlModel And DlModel.IsComplete Then
-      Dim animation As IAnimation
-      If AnimationEntries IsNot Nothing Then
-        animation = AnimationEntries(CurrAnimation)
-      End If
-
-      DlModel.DrawWithAnimation(animation, AnimationPlaybackPanel.Frame)
+      DlModel.DrawWithAnimation(CurrAnimation, AnimationPlaybackPanel.Frame)
       Return
     End If
 
@@ -3270,29 +3210,27 @@ Public Class MainWin
     Else
       CurrLimb = 0
 
-      If AnimationEntries IsNot Nothing Then
-        With AnimationEntries(CurrAnimation)
-          Dim frameIndex As Integer = Math.Floor(AnimationPlaybackPanel.Frame)
-          Dim frameDelta As Double = AnimationPlaybackPanel.Frame Mod 1
+      If CurrAnimation IsNot Nothing Then
+        Dim frameIndex As Integer = Math.Floor(AnimationPlaybackPanel.Frame)
+        Dim frameDelta As Double = AnimationPlaybackPanel.Frame Mod 1
 
-          Dim startPos As Vec3s = .GetPosition(frameIndex)
-          Dim endPos As Vec3s = .GetPosition((frameIndex + 1) Mod AnimationPlaybackPanel.TotalFrames)
+        Dim startPos As Vec3s = CurrAnimation.GetPosition(frameIndex)
+        Dim endPos As Vec3s = CurrAnimation.GetPosition((frameIndex + 1) Mod AnimationPlaybackPanel.TotalFrames)
 
-          Dim f As Double = frameDelta
+        Dim f As Double = frameDelta
 
-          ' TODO: Move this out.
-          Dim x As Double = startPos.X * (1 - f) + endPos.X * f
-          Dim y As Double = startPos.Y * (1 - f) + endPos.Y * f
-          Dim z As Double = startPos.Z * (1 - f) + endPos.Z * f
+        ' TODO: Move this out.
+        Dim x As Double = startPos.X * (1 - f) + endPos.X * f
+        Dim y As Double = startPos.Y * (1 - f) + endPos.Y * f
+        Dim z As Double = startPos.Z * (1 - f) + endPos.Z * f
 
-          ModelViewMatrixTransformer.Translate(x, y, z)
+        ModelViewMatrixTransformer.Translate(x, y, z)
 
-          If indirectTextureHack IsNot Nothing Then
-            Dim face As FacialState = .GetFacialState(frameIndex)
-            indirectTextureHack.EyeState = face.EyeState
-            indirectTextureHack.MouthState = face.MouthState
-          End If
-        End With
+        If indirectTextureHack IsNot Nothing Then
+          Dim face As FacialState = CurrAnimation.GetFacialState(frameIndex)
+          indirectTextureHack.EyeState = face.EyeState
+          indirectTextureHack.MouthState = face.MouthState
+        End If
       End If
 
       If False Then
@@ -3308,12 +3246,7 @@ Public Class MainWin
 
       ' TODO: Precalculate matrices via a helper class.
 
-      Dim animation As IAnimation
-      If AnimationEntries IsNot Nothing Then
-        animation = AnimationEntries(CurrAnimation)
-      End If
-
-      DLParser.LimbMatrices.UpdateLimbMatrices(LimbEntries, animation, AnimationPlaybackPanel)
+      DLParser.LimbMatrices.UpdateLimbMatrices(LimbEntries, CurrAnimation, AnimationPlaybackPanel)
 
       DrawJoint(0)
 
@@ -4304,20 +4237,16 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
       Dim DLCnt As Integer = 0
       Dim FileTreeIndex As Integer = 0
       DlManager.Clear()
-      AnimationEntries = Nothing
       ReDim LimbEntries(-1)
-      AnimationPlaybackPanel.Reset()
 
       DListSelection.Items.Clear()
       DListSelection.Items.Add("Render all")
 
-      AnimationList.Items.Clear()
       Select Case LoadedDataType
         Case FileTypes.MAP
           FindAllDLs(RamBanks.ZFileBuffer)
           DlManager.HasLimbs = False
         Case FileTypes.ACTORMODEL
-          animationbank.SelectedIndex = 0
           ' TODO: Determine if model is link to auto-select animations.
           LimbEntries = LimbHierarchyReader.GetHierarchies(
             RamBanks.ZFileBuffer,
@@ -4328,16 +4257,13 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
           If LimbEntries IsNot Nothing Then
             DlManager.HasLimbs = True
             DLParser.LimbMatrices.Retarget(LimbEntries)
-
-            ' Selects first animation indirectly to fix an issue where NPC 
-            ' heads were sideways.
-            animationbank.SelectedIndex = 0
-            animationbank_SelectedIndexChanged(Nothing, Nothing)
           Else
             DlManager.HasLimbs = False
             FindAllDLs(RamBanks.ZFileBuffer)
           End If
       End Select
+
+      animationSelectorPanel_.Reset(LimbEntries)
     Catch err As System.Exception
       MsgBox(
         "Error in entry point searching: " & Environment.NewLine & Environment.NewLine & "Debug Info: " & err.Message)
@@ -4501,153 +4427,91 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
   End Sub
 
   Public Sub PopulateCommonBanks()
-    Dim Banks As ObjectExchange = RamBanks.CommonBanks
-
-    With Banks
-      ReDim .Bank4.Banks(0)
-      ReDim .Bank5.Banks(1)
-      ReDim .Anims.Banks(1)
-
-      Dim commonBankUse As BankSwitch = RamBanks.CommonBankUse
-      commonBankUse.AnimBank = -1
-      commonBankUse.Bank04 = 0
-      commonBankUse.Bank05 = 0
-      RamBanks.CommonBankUse = commonBankUse
-
-      For i As Integer = 0 To ROMFiles.Others.Count - 1
-        Dim region As IShardedMemory = ROMFiles.Others(i).Region
-
-        If ROMFiles.Others(i).FileName = "gameplay_keep" Then
-          .Bank4.Banks(0) = New RomBank
-          .Bank4.Banks(0).Segment = 4
-          .Bank4.Banks(0).Region = region
-        ElseIf ROMFiles.Others(i).FileName = "gameplay_field_keep" Then
-          .Bank5.Banks(0) = New RomBank
-          .Bank5.Banks(0).Segment = 5
-          .Bank5.Banks(0).Region = region
-        ElseIf ROMFiles.Others(i).FileName = "gameplay_dangeon_keep" Then
-          .Bank5.Banks(1) = New RomBank
-          .Bank5.Banks(1).Segment = 5
-          .Bank5.Banks(1).Region = region
-        ElseIf ROMFiles.Others(i).FileName = "icon_item_static" Then
-          RamBanks.IconItemStatic.Region = region
-        ElseIf ROMFiles.Others(i).FileName = "icon_item_24_static" Then
-          RamBanks.IconItem24Static.Region = region
-        End If
-      Next
-      Dim animBankCnt As Integer = 0
-      animationbank.Items.Clear()
-      animationbank.Items.Add("Inline with model")
-
-      For i As Integer = 0 To ROMFiles.Others.Count - 1
-        Dim region As IShardedMemory = ROMFiles.Others(i).Region
-
-        If ROMFiles.Others(i).FileName = "link_animetion" Then
-          animationbank.Items.Add(ROMFiles.Others(i).FileName)
-          ReDim Preserve .Anims.Banks(animBankCnt)
-          .Anims.Banks(animBankCnt) = New RomBank
-          .Anims.Banks(animBankCnt).Region = region
-          animBankCnt += 1
-        End If
-      Next
-
-      For i As Integer = 0 To ROMFiles.Objects.Count - 1
-        Dim region As IShardedMemory = ROMFiles.Objects(i).Region
-        If _
-          (ROMFiles.Objects(i).FileName.ToLower.Contains("object_") And
-           ROMFiles.Objects(i).FileName.ToLower.Contains("_anime")) Then
-          animationbank.Items.Add(ROMFiles.Objects(i).BetterFileName)
-          ReDim Preserve .Anims.Banks(animBankCnt)
-          .Anims.Banks(animBankCnt) = New RomBank
-          .Anims.Banks(animBankCnt).Region = region
-          animBankCnt += 1
-        End If
-      Next
-    End With
-
-    RamBanks.CommonBanks = Banks
+    RamBanks.PopulateFromRomFiles(ROMFiles)
+    banks.AnimationBanks.PopulateFromRomFiles(ROMFiles)
+    animationSelectorPanel_.Populate(banks.AnimationBanks.Banks)
   End Sub
 
   Public Sub Start(ByVal individual As Boolean)
     'Try
     DlManager.Clear()
-      DLParser.KillTexCache()
-      Working = True
-      If Not individual Then
-        Dim romBytes() As Byte = ZFiles.LoadRomBytes(LoadROM.FileName)
-        Dim romMemory As IShardedMemory = ShardedMemory.From(romBytes)
+    DLParser.KillTexCache()
+    Working = True
+    If Not individual Then
+      Dim romBytes() As Byte = ZFiles.LoadRomBytes(LoadROM.FileName)
+      Dim romMemory As IShardedMemory = ShardedMemory.From(romBytes)
 
-        Dim ROMID As String = ""
-        Dim ROMIDBytes(5) As Byte
-        Dim BuildDate As String = ""
-        Dim BuildDateBytes(16) As Byte
-        Dim tSegOff As Integer = 0
-        Dim tNameOff As Integer = 0
-        Dim ROMType As String = ""
-        For i As Integer = 0 To romBytes.Length - 1 Step 16
-          For i1 As Integer = 0 To 5
-            ROMIDBytes(i1) = romBytes(i + i1)
-          Next
-          ROMID = System.Text.Encoding.ASCII.GetString(ROMIDBytes)
-          If ROMID = "zelda@" Then
-            i += &HD
-            If romBytes(i) >> 4 <> 3 Then
-              Do Until romBytes(i) >> 4 = 3
-                i += 1
-              Loop
-            End If
-
-            For i1 As Integer = 0 To 16
-              BuildDateBytes(i1) = romBytes(i + i1)
-            Next
-            BuildDate = System.Text.Encoding.ASCII.GetString(BuildDateBytes)
-
-            tSegOff = i + &H20
-
-            Dim CodeOff As Integer = 0
-            ReDim Z64Code(-1)
-            Select Case BuildDate
-              Case "00-07-31 17:04:16"
-                tNameOff = -1
-                ROMType = "Majora's Mask (U)"
-                SwitchGame(1)
-              Case "03-02-21 00:16:31"
-                tNameOff = &HBE80
-                ROMType = "Master Quest Debug ROM (E)"
-                CodeOff = &HA94000
-                ReDim Z64Code(&H13AF2F)
-                For ii As Integer = 0 To &H13AF30 - 1
-                  Z64Code(ii) = romBytes(CodeOff + ii)
-                Next
-                ParseActorTable(&HF9440, &HF5BE0, &H10A6D0, &H10B360)
-                SwitchGame(0)
-              Case Else
-                MsgBox("ROM not recognized, build date: " & BuildDate)
-                ExtraDataPrefix = "\ext"
-                Working = False
-                Exit Sub
-            End Select
-            Exit For
-          End If
+      Dim ROMID As String = ""
+      Dim ROMIDBytes(5) As Byte
+      Dim BuildDate As String = ""
+      Dim BuildDateBytes(16) As Byte
+      Dim tSegOff As Integer = 0
+      Dim tNameOff As Integer = 0
+      Dim ROMType As String = ""
+      For i As Integer = 0 To romBytes.Length - 1 Step 16
+        For i1 As Integer = 0 To 5
+          ROMIDBytes(i1) = romBytes(i + i1)
         Next
+        ROMID = System.Text.Encoding.ASCII.GetString(ROMIDBytes)
+        If ROMID = "zelda@" Then
+          i += &HD
+          If romBytes(i) >> 4 <> 3 Then
+            Do Until romBytes(i) >> 4 = 3
+              i += 1
+            Loop
+          End If
 
-        ROMFiles = ZFiles.GetFiles(romMemory, tSegOff, tNameOff)
-        PopulateCommonBanks()
-        Reshape()
-        zFileTreeView_.Populate(ROMFiles)
+          For i1 As Integer = 0 To 16
+            BuildDateBytes(i1) = romBytes(i + i1)
+          Next
+          BuildDate = System.Text.Encoding.ASCII.GetString(BuildDateBytes)
 
-        Me.Text = "Utility of Time R8 - " & LoadROM.FileName & " - " & ROMType
-        IndMapFileName = ""
-        IndScFileName = ""
-      Else
-        Me.Text = "Utility of Time R8 - " & IndScFileName
-        If IndScFileName.Contains(".zscene") Then
-          SetVariables(SceneFileType.ZSCENE)
-        ElseIf IndScFileName.Contains(".zobj") Then
-          SetVariables(SceneFileType.ZOBJ)
+          tSegOff = i + &H20
+
+          Dim CodeOff As Integer = 0
+          ReDim Z64Code(-1)
+          Select Case BuildDate
+            Case "00-07-31 17:04:16"
+              tNameOff = -1
+              ROMType = "Majora's Mask (U)"
+              SwitchGame(1)
+            Case "03-02-21 00:16:31"
+              tNameOff = &HBE80
+              ROMType = "Master Quest Debug ROM (E)"
+              CodeOff = &HA94000
+              ReDim Z64Code(&H13AF2F)
+              For ii As Integer = 0 To &H13AF30 - 1
+                Z64Code(ii) = romBytes(CodeOff + ii)
+              Next
+              ParseActorTable(&HF9440, &HF5BE0, &H10A6D0, &H10B360)
+              SwitchGame(0)
+            Case Else
+              MsgBox("ROM not recognized, build date: " & BuildDate)
+              ExtraDataPrefix = "\ext"
+              Working = False
+              Exit Sub
+          End Select
+          Exit For
         End If
+      Next
+
+      ROMFiles = ZFiles.GetFiles(romMemory, tSegOff, tNameOff)
+      PopulateCommonBanks()
+      Reshape()
+      zFileTreeView_.Populate(ROMFiles)
+
+      Me.Text = "Utility of Time R8 - " & LoadROM.FileName & " - " & ROMType
+      IndMapFileName = ""
+      IndScFileName = ""
+    Else
+      Me.Text = "Utility of Time R8 - " & IndScFileName
+      If IndScFileName.Contains(".zscene") Then
+        SetVariables(SceneFileType.ZSCENE)
+      ElseIf IndScFileName.Contains(".zobj") Then
+        SetVariables(SceneFileType.ZOBJ)
       End If
-      'Catch err As Exception
+    End If
+    'Catch err As Exception
     '  MsgBox("Error reading file: " & err.Message, MsgBoxStyle.Critical, "Error")
     'End Try
   End Sub
@@ -6010,14 +5874,14 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     RotationTimer.Start()
   End Sub
 
-  Private Sub AnimationList_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
-    Handles AnimationList.SelectedIndexChanged
-    If AnimationEntries IsNot Nothing Then
-      If AnimationList.SelectedIndex > -1 Then
-        CurrAnimation = AnimationList.SelectedIndex
-        AnimationPlaybackPanel.Reset()
-        AnimationPlaybackPanel.TotalFrames = AnimationEntries(CurrAnimation).FrameCount
-      End If
+  Private Sub AnimationList_SelectedIndexChanged(animation As IAnimation) _
+    Handles animationSelectorPanel_.AnimationSelected
+
+    CurrAnimation = animation
+
+    AnimationPlaybackPanel.Reset()
+    If animation IsNot Nothing Then
+      AnimationPlaybackPanel.TotalFrames = animation.FrameCount
     End If
   End Sub
 
@@ -6631,8 +6495,8 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
     WholeCommandTxt.Text = CommandCodeText.Text & LowordText.Text & HiwordText.Text
   End Sub
 
-  Private Sub CheckBox2_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
-    Handles CheckBox2.CheckedChanged
+  Private Sub CheckBox2_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+
     DlManager.ShowBones = Not DlManager.ShowBones
   End Sub
 
@@ -6654,41 +6518,6 @@ readVars:   While nextTokens(0) = "" And nextTokens(1) = "-"
   Private Sub FullSceneAntialiasingToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
     Handles FullSceneAntialiasingToolStripMenuItem.Click
     ToggleBoolean(RenderToggles.AntiAliasing, FullSceneAntialiasingToolStripMenuItem)
-  End Sub
-  Private Sub animationbank_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
-    Handles animationbank.SelectedIndexChanged
-    If LimbEntries IsNot Nothing Then
-      If LimbEntries.Length > 0 Then
-        Dim commonBankUse As BankSwitch = RamBanks.CommonBankUse
-        commonBankUse.AnimBank = animationbank.SelectedIndex - 1
-        RamBanks.CommonBankUse = commonBankUse
-
-        If RamBanks.CommonBankUse.AnimBank = UseBank.Inline Then
-          AnimationEntries = AnimParser.GetCommonAnimations(
-            RamBanks.ZFileBuffer,
-            LimbEntries.Length,
-            AnimationList)
-        Else
-          If animationbank.SelectedItem = "link_animetion" Then
-            AnimationEntries = AnimParser.GetLinkAnimations(
-              RamBanks.GetBankByIndex(4),
-              LimbEntries.Length,
-              RamBanks.CommonBanks.Anims.Banks(RamBanks.CommonBankUse.AnimBank),
-              AnimationList)
-          Else
-            ' Normal animations.
-            AnimationEntries = AnimParser.GetCommonAnimations(
-              RamBanks.CommonBanks.Anims.Banks(RamBanks.CommonBankUse.AnimBank),
-              LimbEntries.Length,
-              AnimationList)
-          End If
-        End If
-
-        If AnimationEntries IsNot Nothing Then
-          AnimationList.SelectedIndex = 0
-        End If
-      End If
-    End If
   End Sub
 
   Private Sub TrackBar1_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _

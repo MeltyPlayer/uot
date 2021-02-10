@@ -65,8 +65,7 @@
     }
 
     #endregion
-
-    private System.Windows.Forms.GroupBox group_;
     private System.Windows.Forms.ComboBox dropdown_;
+    private System.Windows.Forms.GroupBox group_;
   }
 }

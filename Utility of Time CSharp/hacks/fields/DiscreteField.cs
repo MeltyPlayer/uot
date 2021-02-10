@@ -18,6 +18,8 @@ namespace UoT.hacks.fields {
     /// </summary>
     IReadOnlyList<IDiscreteValue> PossibleValues { get; }
 
+    int SelectedValueIndex { get; }
+
     void Set(IDiscreteValue value);
   }
 
@@ -97,6 +99,20 @@ namespace UoT.hacks.fields {
       => this.PossibleValues;
 
     public IReadOnlyList<IDiscreteValue<T>> PossibleValues { get; }
+
+
+    public int SelectedValueIndex {
+      get {
+        for (var i = 0; i < this.PossibleValues.Count; ++i) {
+          var possibleValue = this.PossibleValues[i].Value;
+          if (this.Value?.Equals(possibleValue) ??
+              false || (this.Value == null && possibleValue == null)) {
+            return i;
+          }
+        }
+        return -1;
+      }
+    }
 
 
     void IDiscreteField.Set(IDiscreteValue value)

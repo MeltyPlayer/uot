@@ -22,20 +22,6 @@ namespace UoT {
     public bool Anisotropic;
   }
 
-  public struct BankSwitch {
-    public int Bank04;
-    public int Bank05;
-    public int AnimBank;
-  }
-
-  public enum UseBank {
-    Inline = -1,
-    Item0 = 0,
-    Item1 = 1,
-    Item2 = 2,
-    Item3 = 3
-  }
-
   /* TODO ERROR: Skipped EndRegionDirectiveTrivia */
   /* TODO ERROR: Skipped RegionDirectiveTrivia */
   public struct Limb {
@@ -191,25 +177,6 @@ namespace UoT {
     MAP = 1,
     ACTORMODEL = 0,
     ACTORCODE = 2
-  }
-
-  public struct ObjectExchange {
-    public Bank04 Bank4;
-    public Bank05 Bank5;
-
-    public AnimBank Anims;
-  }
-
-  public struct Bank04 {
-    public RomBank[] Banks;
-  }
-
-  public struct Bank05 {
-    public RomBank[] Banks;
-  }
-
-  public struct AnimBank {
-    public RomBank[] Banks;
   }
 
   public struct ZSegment {

@@ -1,34 +1,43 @@
-﻿namespace UoT {
+﻿using System.Collections.Generic;
+
+namespace UoT {
   // Structs that store animations from the "link_animetion" (sic) file.
   //
   // Based on the structs at:
   // https://wiki.cloudmodding.com/oot/Animation_Format#C_code
 
-  public struct LinkAnimetion : IAnimation {
-    // TODO: Support animating translation.
-    // TODO: Support animating face.
+  public class LinkAnimetion : IAnimation {
+    private readonly IList<LinkAnimetionTrack> tracks_;
+    private readonly IList<Vec3s> positions_;
+    private readonly IList<FacialState> facialStates_;
 
-    public LinkAnimetionTrack[] Tracks;
+    public LinkAnimetion(ushort frameCount,
+                         IList<LinkAnimetionTrack> tracks,
+                         IList<Vec3s> positions,
+                         IList<FacialState> facialStates) {
+      this.FrameCount = frameCount;
+      this.tracks_ = tracks;
+      this.positions_ = positions;
+      this.facialStates_ = facialStates;
+    }
 
     public ushort FrameCount { get; set; }
+    
+    public Vec3s GetPosition(int i) => this.positions_[i];
+    public FacialState GetFacialState(int i) => this.facialStates_![i];
 
-
-    // TODO: Support these fields.
-    public Vec3s[] Positions { get; set; }
-    public Vec3s GetPosition(int i) => this.Positions[i];
-
-
-    public FacialState[] FacialStates { get; set; }
-    public FacialState GetFacialState(int i) => this.FacialStates[i];
-
-
-    public int TrackCount => this.Tracks.Length;
-    public IAnimationTrack GetTrack(int i) => this.Tracks[i];
+    public int TrackCount => this.tracks_.Count;
+    public IAnimationTrack GetTrack(int i) => this.tracks_[i];
   }
 
-  public struct LinkAnimetionTrack : IAnimationTrack {
-    public int Type { get; set; } // 0 = constant, 1 = keyframe
-    public ushort[] Frames { get; set; }
+  public class LinkAnimetionTrack : IAnimationTrack {
+    public LinkAnimetionTrack(int type, IList<ushort> frames) {
+      this.Type = type;
+      this.Frames = frames;
+    }
+
+    public int Type { get; } // 0 = constant, 1 = keyframe
+    public IList<ushort> Frames { get; }
   }
 
   // TODO: Use below structs instead.
