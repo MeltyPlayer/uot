@@ -9,8 +9,6 @@ namespace UoT {
   public class DlManager : IDisplayListManager {
     private IList<N64DisplayList> impl_ = new List<N64DisplayList>();
 
-    public bool ShowBones { get; set; } = false;
-
     // TODO: Make this private.
     public bool HasLimbs { get; set; } = false;
 

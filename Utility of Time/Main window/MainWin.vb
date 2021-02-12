@@ -334,7 +334,8 @@ Public Class MainWin
     'UoTStatus
     '
     Me.UoTStatus.AutoSize = False
-    Me.UoTStatus.Items.AddRange(New System.Windows.Forms.ToolStripItem() _
+    Me.UoTStatus.Items.AddRange(
+      New System.Windows.Forms.ToolStripItem() _
                                  {Me.ToolStatusLabel, Me.CamXLabel, Me.CamYLabel, Me.CamZLabel})
     Me.UoTStatus.Location = New System.Drawing.Point(0, 620)
     Me.UoTStatus.Name = "UoTStatus"
@@ -465,7 +466,8 @@ Public Class MainWin
     '
     'FeaturesToolStripMenuItem
     '
-    Me.FeaturesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+    Me.FeaturesToolStripMenuItem.DropDownItems.AddRange(
+      New System.Windows.Forms.ToolStripItem() _
                                                          {Me.RenderModeToolStripMenuItem,
                                                           Me.PrimitiveTypeToolStripMenuItem, Me.ToolStripSeparator8,
                                                           Me.MouseToolToolStripMenuItem, Me.SetupToolStripMenuItem})
@@ -475,7 +477,8 @@ Public Class MainWin
     '
     'RenderModeToolStripMenuItem
     '
-    Me.RenderModeToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+    Me.RenderModeToolStripMenuItem.DropDownItems.AddRange(
+      New System.Windows.Forms.ToolStripItem() _
                                                            {Me.ViewingMeshToolStripMenuItem1,
                                                             Me.CollisionMeshToolStripMenuItem})
     Me.RenderModeToolStripMenuItem.Name = "RenderModeToolStripMenuItem"
@@ -500,7 +503,8 @@ Public Class MainWin
     '
     'PrimitiveTypeToolStripMenuItem
     '
-    Me.PrimitiveTypeToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+    Me.PrimitiveTypeToolStripMenuItem.DropDownItems.AddRange(
+      New System.Windows.Forms.ToolStripItem() _
                                                               {Me.FilledToolStripMenuItem, Me.WireframeToolStripMenuItem})
     Me.PrimitiveTypeToolStripMenuItem.Name = "PrimitiveTypeToolStripMenuItem"
     Me.PrimitiveTypeToolStripMenuItem.ShortcutKeyDisplayString = "F1"
@@ -1750,7 +1754,8 @@ Public Class MainWin
     'ActorContextMenu
     '
     Me.ActorContextMenu.BackColor = System.Drawing.SystemColors.Control
-    Me.ActorContextMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() _
+    Me.ActorContextMenu.Items.AddRange(
+      New System.Windows.Forms.ToolStripItem() _
                                         {Me.DeselectToolStripMenuItem, Me.ToolStripSeparator14,
                                          Me.EditToolStripMenuItem2, Me.AlignToolItem, Me.ToolStripSeparator13,
                                          Me.CopyToolStripMenuItem, Me.PasteToolStripMenuItem,
@@ -1772,7 +1777,8 @@ Public Class MainWin
     '
     'EditToolStripMenuItem2
     '
-    Me.EditToolStripMenuItem2.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+    Me.EditToolStripMenuItem2.DropDownItems.AddRange(
+      New System.Windows.Forms.ToolStripItem() _
                                                       {Me.CamXRotationToolStripMenuItem,
                                                        Me.CamYRotationToolStripMenuItem,
                                                        Me.CamZRotationToolStripMenuItem})
@@ -1782,7 +1788,8 @@ Public Class MainWin
     '
     'CamXRotationToolStripMenuItem
     '
-    Me.CamXRotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+    Me.CamXRotationToolStripMenuItem.DropDownItems.AddRange(
+      New System.Windows.Forms.ToolStripItem() _
                                                              {Me.DegreesToolStripMenuItem, Me.DegreesToolStripMenuItem1})
     Me.CamXRotationToolStripMenuItem.Name = "CamXRotationToolStripMenuItem"
     Me.CamXRotationToolStripMenuItem.Size = New System.Drawing.Size(81, 22)
@@ -1802,7 +1809,8 @@ Public Class MainWin
     '
     'CamYRotationToolStripMenuItem
     '
-    Me.CamYRotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+    Me.CamYRotationToolStripMenuItem.DropDownItems.AddRange(
+      New System.Windows.Forms.ToolStripItem() _
                                                              {Me.DegreesToolStripMenuItem2, Me.DegreesToolStripMenuItem3})
     Me.CamYRotationToolStripMenuItem.Name = "CamYRotationToolStripMenuItem"
     Me.CamYRotationToolStripMenuItem.Size = New System.Drawing.Size(81, 22)
@@ -1822,7 +1830,8 @@ Public Class MainWin
     '
     'CamZRotationToolStripMenuItem
     '
-    Me.CamZRotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+    Me.CamZRotationToolStripMenuItem.DropDownItems.AddRange(
+      New System.Windows.Forms.ToolStripItem() _
                                                              {Me.DegreesToolStripMenuItem4, Me.DegreesToolStripMenuItem5})
     Me.CamZRotationToolStripMenuItem.Name = "CamZRotationToolStripMenuItem"
     Me.CamZRotationToolStripMenuItem.Size = New System.Drawing.Size(81, 22)
@@ -1842,7 +1851,8 @@ Public Class MainWin
     '
     'AlignToolItem
     '
-    Me.AlignToolItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+    Me.AlignToolItem.DropDownItems.AddRange(
+      New System.Windows.Forms.ToolStripItem() _
                                              {Me.XToolStripMenuItem3, Me.YToolStripMenuItem3, Me.ZToolStripMenuItem2})
     Me.AlignToolItem.Name = "AlignToolItem"
     Me.AlignToolItem.Size = New System.Drawing.Size(155, 22)
@@ -1879,7 +1889,8 @@ Public Class MainWin
     '
     'PasteToolStripMenuItem
     '
-    Me.PasteToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+    Me.PasteToolStripMenuItem.DropDownItems.AddRange(
+      New System.Windows.Forms.ToolStripItem() _
                                                       {Me.PositionToolStripMenuItem, Me.RotationToolStripMenuItem,
                                                        Me.NumberAndVariableToolStripMenuItem})
     Me.PasteToolStripMenuItem.Enabled = False
@@ -1889,7 +1900,8 @@ Public Class MainWin
     '
     'PositionToolStripMenuItem
     '
-    Me.PositionToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+    Me.PositionToolStripMenuItem.DropDownItems.AddRange(
+      New System.Windows.Forms.ToolStripItem() _
                                                          {Me.XToolStripMenuItem1, Me.YToolStripMenuItem1,
                                                           Me.ZToolStripMenuItem, Me.AllToolStripMenuItem1})
     Me.PositionToolStripMenuItem.Name = "PositionToolStripMenuItem"
@@ -1922,7 +1934,8 @@ Public Class MainWin
     '
     'RotationToolStripMenuItem
     '
-    Me.RotationToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+    Me.RotationToolStripMenuItem.DropDownItems.AddRange(
+      New System.Windows.Forms.ToolStripItem() _
                                                          {Me.XToolStripMenuItem2, Me.YToolStripMenuItem2,
                                                           Me.ZToolStripMenuItem1, Me.AllToolStripMenuItem})
     Me.RotationToolStripMenuItem.Name = "RotationToolStripMenuItem"
@@ -1976,7 +1989,8 @@ Public Class MainWin
     '
     'FileToolStripMenuItem1
     '
-    Me.FileToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+    Me.FileToolStripMenuItem1.DropDownItems.AddRange(
+      New System.Windows.Forms.ToolStripItem() _
                                                       {Me.ToolStripMenuItem35, Me.ToolStripMenuItem2, Me.CustomLevel,
                                                        Me.toolStripSeparator, Me.SaveToolStripMenuItem,
                                                        Me.ToolStripMenuItem34, Me.toolStripSeparator12,
@@ -2042,7 +2056,8 @@ Public Class MainWin
     '
     'EditToolStripMenuItem1
     '
-    Me.EditToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+    Me.EditToolStripMenuItem1.DropDownItems.AddRange(
+      New System.Windows.Forms.ToolStripItem() _
                                                       {Me.UndoToolStripMenuItem, Me.WireframeModeToolStripMenuItem,
                                                        Me.RenderToolStripMenuItem})
     Me.EditToolStripMenuItem1.Name = "EditToolStripMenuItem1"
@@ -2067,7 +2082,8 @@ Public Class MainWin
     '
     'RenderToolStripMenuItem
     '
-    Me.RenderToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+    Me.RenderToolStripMenuItem.DropDownItems.AddRange(
+      New System.Windows.Forms.ToolStripItem() _
                                                        {Me.GraphicsToolStripMenuItem,
                                                         Me.CollisionOverlayToolStripMenuItem})
     Me.RenderToolStripMenuItem.Name = "RenderToolStripMenuItem"
@@ -2094,7 +2110,8 @@ Public Class MainWin
     '
     'ToolsToolStripMenuItem1
     '
-    Me.ToolsToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+    Me.ToolsToolStripMenuItem1.DropDownItems.AddRange(
+      New System.Windows.Forms.ToolStripItem() _
                                                        {Me.MouseToolToolStripMenuItem1, Me.LockAxesToolStripMenuItem,
                                                         Me.OptionsToolStripMenuItem2})
     Me.ToolsToolStripMenuItem1.Name = "ToolsToolStripMenuItem1"
@@ -2103,7 +2120,8 @@ Public Class MainWin
     '
     'MouseToolToolStripMenuItem1
     '
-    Me.MouseToolToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+    Me.MouseToolToolStripMenuItem1.DropDownItems.AddRange(
+      New System.Windows.Forms.ToolStripItem() _
                                                            {Me.CameraOnlyMenu, Me.ActorSelectorMenu,
                                                             Me.CollisionToolStripMenuItem, Me.CollisionSelectorMenu,
                                                             Me.DisplayListSelectorToolStripMenuItem})
@@ -2135,7 +2153,8 @@ Public Class MainWin
     '
     'CollisionSelectorMenu
     '
-    Me.CollisionSelectorMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+    Me.CollisionSelectorMenu.DropDownItems.AddRange(
+      New System.Windows.Forms.ToolStripItem() _
                                                      {Me.EdgeToolStripMenuItem, Me.TriangleToolStripMenuItem,
                                                       Me.VertexToolStripMenuItem})
     Me.CollisionSelectorMenu.Name = "CollisionSelectorMenu"
@@ -2174,7 +2193,8 @@ Public Class MainWin
     '
     'LockAxesToolStripMenuItem
     '
-    Me.LockAxesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+    Me.LockAxesToolStripMenuItem.DropDownItems.AddRange(
+      New System.Windows.Forms.ToolStripItem() _
                                                          {Me.XToolStripMenuItem, Me.YToolStripMenuItem,
                                                           Me.DisableToolStripMenuItem})
     Me.LockAxesToolStripMenuItem.Name = "LockAxesToolStripMenuItem"
@@ -2205,7 +2225,8 @@ Public Class MainWin
     '
     'OptionsToolStripMenuItem2
     '
-    Me.OptionsToolStripMenuItem2.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+    Me.OptionsToolStripMenuItem2.DropDownItems.AddRange(
+      New System.Windows.Forms.ToolStripItem() _
                                                          {Me.DisableDepthTestToolStripMenuItem})
     Me.OptionsToolStripMenuItem2.Name = "OptionsToolStripMenuItem2"
     Me.OptionsToolStripMenuItem2.Size = New System.Drawing.Size(163, 22)
@@ -2220,7 +2241,8 @@ Public Class MainWin
     '
     'ToolsToolStripMenuItem
     '
-    Me.ToolsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+    Me.ToolsToolStripMenuItem.DropDownItems.AddRange(
+      New System.Windows.Forms.ToolStripItem() _
                                                       {Me.OptionsToolStripMenuItem1, Me.RendererToolStripMenuItem})
     Me.ToolsToolStripMenuItem.Name = "ToolsToolStripMenuItem"
     Me.ToolsToolStripMenuItem.Size = New System.Drawing.Size(80, 27)
@@ -2234,7 +2256,8 @@ Public Class MainWin
     '
     'RendererToolStripMenuItem
     '
-    Me.RendererToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+    Me.RendererToolStripMenuItem.DropDownItems.AddRange(
+      New System.Windows.Forms.ToolStripItem() _
                                                          {Me.TexturesToolStripMenuItem,
                                                           Me.ColorCombinerToolStripMenuItem,
                                                           Me.AnisotropicFilteringToolStripMenuItem,
@@ -2282,7 +2305,8 @@ Public Class MainWin
     Me.UoTMainMenu.BackColor = System.Drawing.SystemColors.ControlLight
     Me.UoTMainMenu.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Regular,
                                                   System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-    Me.UoTMainMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() _
+    Me.UoTMainMenu.Items.AddRange(
+      New System.Windows.Forms.ToolStripItem() _
                                    {Me.FileToolStripMenuItem1, Me.EditToolStripMenuItem1, Me.ToolsToolStripMenuItem,
                                     Me.ToolsToolStripMenuItem1})
     Me.UoTMainMenu.Location = New System.Drawing.Point(0, 0)
@@ -2296,7 +2320,8 @@ Public Class MainWin
     'VertContextMenu
     '
     Me.VertContextMenu.BackColor = System.Drawing.SystemColors.Control
-    Me.VertContextMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() _
+    Me.VertContextMenu.Items.AddRange(
+      New System.Windows.Forms.ToolStripItem() _
                                        {Me.ToolStripMenuItem5, Me.ToolStripSeparator15, Me.ToolStripMenuItem6,
                                         Me.ToolStripMenuItem16, Me.ToolStripSeparator16, Me.ToolStripMenuItem20,
                                         Me.ToolStripMenuItem21, Me.ToolStripMenuItem33})
@@ -2317,7 +2342,8 @@ Public Class MainWin
     '
     'ToolStripMenuItem6
     '
-    Me.ToolStripMenuItem6.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+    Me.ToolStripMenuItem6.DropDownItems.AddRange(
+      New System.Windows.Forms.ToolStripItem() _
                                                   {Me.ToolStripMenuItem7, Me.ToolStripMenuItem10, Me.ToolStripMenuItem13})
     Me.ToolStripMenuItem6.Name = "ToolStripMenuItem6"
     Me.ToolStripMenuItem6.Size = New System.Drawing.Size(155, 22)
@@ -2325,7 +2351,8 @@ Public Class MainWin
     '
     'ToolStripMenuItem7
     '
-    Me.ToolStripMenuItem7.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+    Me.ToolStripMenuItem7.DropDownItems.AddRange(
+      New System.Windows.Forms.ToolStripItem() _
                                                   {Me.ToolStripMenuItem8, Me.ToolStripMenuItem9})
     Me.ToolStripMenuItem7.Name = "ToolStripMenuItem7"
     Me.ToolStripMenuItem7.Size = New System.Drawing.Size(81, 22)
@@ -2345,7 +2372,8 @@ Public Class MainWin
     '
     'ToolStripMenuItem10
     '
-    Me.ToolStripMenuItem10.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+    Me.ToolStripMenuItem10.DropDownItems.AddRange(
+      New System.Windows.Forms.ToolStripItem() _
                                                    {Me.ToolStripMenuItem11, Me.ToolStripMenuItem12})
     Me.ToolStripMenuItem10.Name = "ToolStripMenuItem10"
     Me.ToolStripMenuItem10.Size = New System.Drawing.Size(81, 22)
@@ -2365,7 +2393,8 @@ Public Class MainWin
     '
     'ToolStripMenuItem13
     '
-    Me.ToolStripMenuItem13.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+    Me.ToolStripMenuItem13.DropDownItems.AddRange(
+      New System.Windows.Forms.ToolStripItem() _
                                                    {Me.ToolStripMenuItem14, Me.ToolStripMenuItem15})
     Me.ToolStripMenuItem13.Name = "ToolStripMenuItem13"
     Me.ToolStripMenuItem13.Size = New System.Drawing.Size(81, 22)
@@ -2385,7 +2414,8 @@ Public Class MainWin
     '
     'ToolStripMenuItem16
     '
-    Me.ToolStripMenuItem16.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+    Me.ToolStripMenuItem16.DropDownItems.AddRange(
+      New System.Windows.Forms.ToolStripItem() _
                                                    {Me.ToolStripMenuItem17, Me.ToolStripMenuItem18,
                                                     Me.ToolStripMenuItem19})
     Me.ToolStripMenuItem16.Name = "ToolStripMenuItem16"
@@ -2423,7 +2453,8 @@ Public Class MainWin
     '
     'ToolStripMenuItem21
     '
-    Me.ToolStripMenuItem21.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+    Me.ToolStripMenuItem21.DropDownItems.AddRange(
+      New System.Windows.Forms.ToolStripItem() _
                                                    {Me.ToolStripMenuItem22, Me.ToolStripMenuItem27,
                                                     Me.ToolStripMenuItem32})
     Me.ToolStripMenuItem21.Enabled = False
@@ -2433,7 +2464,8 @@ Public Class MainWin
     '
     'ToolStripMenuItem22
     '
-    Me.ToolStripMenuItem22.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+    Me.ToolStripMenuItem22.DropDownItems.AddRange(
+      New System.Windows.Forms.ToolStripItem() _
                                                    {Me.ToolStripMenuItem23, Me.ToolStripMenuItem24,
                                                     Me.ToolStripMenuItem25, Me.ToolStripMenuItem26})
     Me.ToolStripMenuItem22.Name = "ToolStripMenuItem22"
@@ -2466,7 +2498,8 @@ Public Class MainWin
     '
     'ToolStripMenuItem27
     '
-    Me.ToolStripMenuItem27.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() _
+    Me.ToolStripMenuItem27.DropDownItems.AddRange(
+      New System.Windows.Forms.ToolStripItem() _
                                                    {Me.ToolStripMenuItem28, Me.ToolStripMenuItem29,
                                                     Me.ToolStripMenuItem30, Me.ToolStripMenuItem31})
     Me.ToolStripMenuItem27.Name = "ToolStripMenuItem27"
@@ -3240,10 +3273,14 @@ Public Class MainWin
 
     animationTab_.AnimationPlaybackManager.Tick()
 
-    If UseStaticDlModel And DlModel.IsComplete Then
-      DLParser.LimbMatrices.UpdateLimbMatrices(DlModel.Limbs, CurrAnimation, animationTab_.AnimationPlaybackManager)
+    'If True Then
+    'SkeletonRenderer.Render(LimbEntries, DLParser.LimbMatrices, CurrAnimation, animationTab_.AnimationPlaybackManager)
+    'SkeletonRenderer.Render(DlModel.Limbs, DlModel.LimbMatrices, CurrAnimation, animationTab_.AnimationPlaybackManager)
+    'Return
+    'End If
 
-      DlModel.DrawWithLimbMatrices(DLParser.LimbMatrices)
+    If UseStaticDlModel And DlModel.IsComplete Then
+      DlModel.Draw(CurrAnimation, animationTab_.AnimationPlaybackManager)
       Return
     End If
 
@@ -3279,9 +3316,9 @@ Public Class MainWin
         Dim f As Double = frameDelta
 
         ' TODO: Move this out.
-        Dim x As Double = startPos.X * (1 - f) + endPos.X * f
-        Dim y As Double = startPos.Y * (1 - f) + endPos.Y * f
-        Dim z As Double = startPos.Z * (1 - f) + endPos.Z * f
+        Dim x As Double = startPos.X*(1 - f) + endPos.X*f
+        Dim y As Double = startPos.Y*(1 - f) + endPos.Y*f
+        Dim z As Double = startPos.Z*(1 - f) + endPos.Z*f
 
         ModelViewMatrixTransformer.Translate(x, y, z)
 
@@ -3323,13 +3360,13 @@ Public Class MainWin
       ' CurrLimb = id
       'End If
 
-      Dim dlIndex As Integer = -1
+      Dim dlIndex As Integer = - 1
       If .DisplayListAddress > Nothing Then
         dlIndex = DlManager.GetIndexByAddress(.DisplayListAddress)
       End If
       Dim validDl As Boolean = dlIndex > - 1
 
-      If DlManager.ShowBones Then 'draw bones
+      If animationTab_.AnimationBanks.ShowBones Then
         Dim xI As Double = 0
         Dim yI As Double = 0
         Dim zI As Double = 0
@@ -4313,12 +4350,8 @@ Public Class MainWin
             DListSelection)
           If LimbEntries IsNot Nothing Then
             DlManager.HasLimbs = True
-
-            If UseStaticDlModel Then
-              DLParser.LimbMatrices.Retarget(DlModel.Limbs)
-            Else
-              DLParser.LimbMatrices.Retarget(LimbEntries)
-            End If
+            DLParser.LimbMatrices.Retarget(LimbEntries)
+            DlModel.LimbMatrices.Retarget(DlModel.Limbs)
           Else
             DlManager.HasLimbs = False
             FindAllDLs(RamBanks.ZFileBuffer)
@@ -6557,11 +6590,6 @@ Public Class MainWin
   Private Sub CommandCodeText_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
     Handles CommandCodeText.TextChanged, LowordText.TextChanged, HiwordText.TextChanged
     WholeCommandTxt.Text = CommandCodeText.Text & LowordText.Text & HiwordText.Text
-  End Sub
-
-  Private Sub CheckBox2_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
-
-    DlManager.ShowBones = Not DlManager.ShowBones
   End Sub
 
   Private Sub TexturesToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _

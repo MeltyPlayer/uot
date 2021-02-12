@@ -99,14 +99,14 @@ namespace UoT.limbs {
 
 
     public void UpdateLimbMatrices(
-        IReadOnlyList<IOldLimb> limbs,
+        IList<IOldLimb> limbs,
         IAnimation animation,
         IAnimationPlaybackManager playbackManager) {
       this.UpdateLimbMatricesRecursively_(limbs, 0, animation, playbackManager);
     }
 
     private void UpdateLimbMatricesRecursively_(
-        IReadOnlyList<IOldLimb> limbs,
+        IList<IOldLimb> limbs,
         int limbIndex,
         IAnimation? animation,
         IAnimationPlaybackManager playbackManager) {

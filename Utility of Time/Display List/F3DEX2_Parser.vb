@@ -7,6 +7,10 @@ Imports UoT.limbs
 
 Public Class F3DEX2_Parser
 
+  Public Sub New(ShaderManager As DlShaderManager)
+    Me.ShaderManager = ShaderManager
+  End Sub
+
 #Region "VARIABLES"
 
   Public Enum Parse
@@ -14,7 +18,7 @@ Public Class F3DEX2_Parser
     EVERYTHING = 0
   End Enum
 
-  Public ParseMode As Integer = - 1
+  Public ParseMode As Integer = -1
 
 #Region "SHADERS & TEXTURE RELATED"
 
@@ -71,7 +75,7 @@ Public Class F3DEX2_Parser
   Private FullAlphaCombiner As Boolean = False
   Private ModColorWithAlpha As Boolean = False
 
-  Public ShaderManager As New DlShaderManager
+  Public ShaderManager As DlShaderManager
   Public LimbMatrices As New LimbMatrices
 
   Structure RSPMatrix
@@ -640,18 +644,17 @@ enddisplaylist:
   ''' </summary>
   Private Sub PrepareDrawTriangle_()
     If ParseMode = Parse.EVERYTHING Then
-      ShaderManager.PassValuesToShader()
       If Not ShaderManager.Params.EnableCombiner Then
         DlModel.UpdateTexture(1, Nothing)
       End If
 
       Gl.glEnable(Gl.GL_TEXTURE_2D)
-      Gl.glActiveTexture(Gl.GL_TEXTURE0)
-
       Dim texture0 As Texture = GetTexture(0)
-      Dim tileDescriptor0 As TileDescriptor = GetSelectedTileDescriptor(0)
+      Dim texture1 As Texture = Nothing
 
       If texture0 Is Nothing Then
+        Gl.glActiveTexture(Gl.GL_TEXTURE0)
+        Dim tileDescriptor0 As TileDescriptor = GetSelectedTileDescriptor(0)
         Dim targetBuffer0 As IBank = RamBanks.GetBankByIndex(tileDescriptor0.ImageBank)
         If targetBuffer0 IsNot Nothing Then
           LoadTex(targetBuffer0, 0)
@@ -661,31 +664,12 @@ enddisplaylist:
         End If
       End If
 
-      If texture0 IsNot Nothing Then
-        texture0.Bind()
-
-        ShaderManager.TextureParams0.ClampedU = texture0.GlClampedS
-        ShaderManager.TextureParams0.ClampedV = texture0.GlClampedT
-
-        ShaderManager.TextureParams0.MirroredU = texture0.GlMirroredS
-        ShaderManager.TextureParams0.MirroredV = texture0.GlMirroredT
-
-        ShaderManager.TextureParams0.MaxU = (tileDescriptor0.LRS - tileDescriptor0.ULS + 1) /
-                                            texture0.TileDescriptor.LoadWidth
-        ShaderManager.TextureParams0.MaxV = (tileDescriptor0.LRT - tileDescriptor0.ULT + 1) /
-                                            texture0.TileDescriptor.LoadHeight
-
-        ShaderManager.TextureParams0.Bind()
-      Else
-        Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2)
-      End If
-
       If ShaderManager.Params.MultiTexture Then
         Gl.glActiveTexture(Gl.GL_TEXTURE1)
-        Dim texture1 As Texture = GetTexture(1)
-        Dim tileDescriptor1 As TileDescriptor = GetSelectedTileDescriptor(1)
+        texture1 = GetTexture(1)
 
         If texture1 Is Nothing Then
+          Dim tileDescriptor1 As TileDescriptor = GetSelectedTileDescriptor(1)
           Select Case tileDescriptor1.ImageBank
             Case RamBanks.CurrentBank
               LoadTex(RamBanks.ZFileBuffer, 1)
@@ -702,29 +686,12 @@ enddisplaylist:
           texture1 = SearchTexCache(tileDescriptor1)
           DlModel.UpdateTexture(1, texture1)
         End If
-
-        If texture1 IsNot Nothing Then
-          texture1.Bind()
-
-          ShaderManager.TextureParams1.ClampedU = texture1.GlClampedS
-          ShaderManager.TextureParams1.ClampedV = texture1.GlClampedT
-
-          ShaderManager.TextureParams1.MirroredU = texture1.GlMirroredS
-          ShaderManager.TextureParams1.MirroredV = texture1.GlMirroredT
-
-          ShaderManager.TextureParams1.MaxU = (tileDescriptor1.LRS - tileDescriptor1.ULS + 1) /
-                                              texture1.TileDescriptor.LoadWidth
-          ShaderManager.TextureParams1.MaxV = (tileDescriptor1.LRT - tileDescriptor1.ULT + 1) /
-                                              texture1.TileDescriptor.LoadHeight
-
-          ShaderManager.TextureParams1.Bind()
-        Else
-          Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2)
-        End If
-
-        Gl.glDisable(Gl.GL_TEXTURE_2D)
         Gl.glActiveTexture(Gl.GL_TEXTURE0)
       End If
+      Gl.glDisable(Gl.GL_TEXTURE_2D)
+
+      ShaderManager.PassValuesToShader()
+      ShaderManager.BindTextures(texture0, texture1)
     End If
   End Sub
 
@@ -1250,33 +1217,33 @@ enddisplaylist:
   End Sub
 
   Private Sub SETFOGCOLOR(ByVal CMDParams() As Byte)
-    ShaderManager.SetFogColor(CMDParams(4)/255,
-                              CMDParams(5)/255,
-                              CMDParams(6)/255,
-                              CMDParams(7)/255)
+    ShaderManager.SetFogColor(CMDParams(4) / 255,
+                              CMDParams(5) / 255,
+                              CMDParams(6) / 255,
+                              CMDParams(7) / 255)
   End Sub
 
   Private Sub ENVCOLOR(ByVal CMDParams() As Byte)
-    ShaderManager.SetEnvironmentColor(CMDParams(4)/255,
-                                      CMDParams(5)/255,
-                                      CMDParams(6)/255,
-                                      CMDParams(7)/255)
+    ShaderManager.SetEnvironmentColor(CMDParams(4) / 255,
+                                      CMDParams(5) / 255,
+                                      CMDParams(6) / 255,
+                                      CMDParams(7) / 255)
   End Sub
 
   Private Sub SETPRIMCOLOR(ByVal CMDParams() As Byte)
-    ShaderManager.SetPrimaryColor(CMDParams(2)/255,
-                                  CMDParams(3)/255,
-                                  CMDParams(4)/255,
-                                  CMDParams(5)/255,
-                                  CMDParams(6)/255,
-                                  CMDParams(7)/255)
+    ShaderManager.SetPrimaryColor(CMDParams(2) / 255,
+                                  CMDParams(3) / 255,
+                                  CMDParams(4) / 255,
+                                  CMDParams(5) / 255,
+                                  CMDParams(6) / 255,
+                                  CMDParams(7) / 255)
   End Sub
 
   Private Sub SETBLENDCOLOR(ByVal CMDParams() As Byte)
-    ShaderManager.SetBlendColor(CMDParams(4)/255,
-                                CMDParams(5)/255,
-                                CMDParams(6)/255,
-                                CMDParams(7)/255)
+    ShaderManager.SetBlendColor(CMDParams(4) / 255,
+                                CMDParams(5) / 255,
+                                CMDParams(6) / 255,
+                                CMDParams(7) / 255)
   End Sub
 
 #End Region
@@ -1296,7 +1263,6 @@ enddisplaylist:
   End Sub
 
   Public Sub Reset()
-
     Gl.glFinish()
 
     ReDim TileDescriptors(TILE_DESCRIPTOR_MAX)

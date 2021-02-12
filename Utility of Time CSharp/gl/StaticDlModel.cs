@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using Tao.OpenGl;
 
+using UoT.animation.playback;
 using UoT.displaylist;
 using UoT.limbs;
 using UoT.util;
@@ -30,7 +31,13 @@ namespace UoT {
     // TODO: Simplify some triangles to quads.
     // TODO: Separate common shader params as different materials.
 
+    private readonly DlShaderManager shaderManager_;
     private bool isComplete_;
+
+    public StaticDlModel(DlShaderManager shaderManager) {
+      this.shaderManager_ = shaderManager;
+    }
+
 
     public bool IsComplete {
       get => this.isComplete_;
@@ -62,7 +69,7 @@ namespace UoT {
     private readonly IList<TextureWrapper> allTextures_ =
         new List<TextureWrapper>();
 
-    private IList<LimbInstance> allLimbs_ = new List<LimbInstance>();
+    private readonly IList<LimbInstance> allLimbs_ = new List<LimbInstance>();
     public IList<IOldLimb> Limbs { get; } = new List<IOldLimb>();
 
     public void Reset() {
@@ -96,22 +103,89 @@ namespace UoT {
       this.allTextures_.Clear();
     }
 
-    public void DrawWithLimbMatrices(LimbMatrices limbMatrices) {
+    public LimbMatrices LimbMatrices { get; } = new LimbMatrices();
+
+    public void Draw(
+        IAnimation animation,
+        IAnimationPlaybackManager animationPlaybackManager) {
       // TODO: Then draw w/ projected vertices.
       // TODO: Add helper class for shader program.
 
       // TODO: Is the recursive stuff needed?
 
+      // TODO: Why aren't bones working?
+
       ModelViewMatrixTransformer.Push();
+
+      if (animation != null) {
+        var frame = animationPlaybackManager.Frame;
+        var totalFrames = animationPlaybackManager.TotalFrames;
+
+        var frameIndex = (int) Math.Floor(frame);
+        var frameDelta = frame % 1;
+
+        var startPos = animation.GetPosition(frameIndex);
+        var endPos = animation.GetPosition((frameIndex + 1) % totalFrames);
+
+        var f = frameDelta;
+
+        var x = startPos.X * (1 - f) + endPos.X * f;
+        var y = startPos.Y * (1 - f) + endPos.Y * f;
+        var z = startPos.Z * (1 - f) + endPos.Z * f;
+
+        ModelViewMatrixTransformer.Translate(x, y, z);
+
+        /*If indirectTextureHack IsNot Nothing Then
+            Dim face As FacialState = CurrAnimation.GetFacialState(frameIndex)
+        indirectTextureHack.EyeState = face.EyeState
+        indirectTextureHack.MouthState = face.MouthState
+        End If*/
+
+        this.LimbMatrices.UpdateLimbMatrices(this.Limbs,
+                                             animation,
+                                             animationPlaybackManager);
+      }
+
       this.ForEachLimbRecursively_(
           0,
-          limb => {
-            if (limb.VisibleIndex == -1) {
-              return;
-            }
+          (limb, limbIndex) => {
+            var xI = 0.0;
+            var yI = 0.0;
+            var zI = 0.0;
+            ModelViewMatrixTransformer.ProjectVertex(ref xI, ref yI, ref zI);
 
-            var matrix =
-                limbMatrices.GetMatrixForLimb((uint) limb.VisibleIndex);
+            double xF = limb.x;
+            double yF = limb.y;
+            double zF = limb.z;
+            ModelViewMatrixTransformer.ProjectVertex(ref xF, ref yF, ref zF);
+
+            Gl.glDepthRange(0, 0);
+            Gl.glLineWidth(9);
+            Gl.glBegin(Gl.GL_LINES);
+            Gl.glColor3f(1, 1, 1);
+            Gl.glVertex3d(xI, yI, zI);
+            Gl.glVertex3d(xF, yF, zF);
+            Gl.glEnd();
+            Gl.glDepthRange(0, -0.5);
+            Gl.glPointSize(11);
+            Gl.glBegin(Gl.GL_POINTS);
+            Gl.glColor3f(0, 0, 0);
+            Gl.glVertex3d(xF, yF, zF);
+            Gl.glEnd();
+            /*Gl.glPointSize(8);
+            Gl.glBegin(Gl.GL_POINTS);
+            Gl.glColor3ub(BoneColorFactor.r,
+                          BoneColorFactor.g,
+                          BoneColorFactor.b);
+            Gl.glVertex3f(xF, yF, zF);
+            Gl.glEnd();*/
+            Gl.glPointSize(1);
+            Gl.glLineWidth(1);
+            Gl.glDepthRange(0, 1);
+
+            ModelViewMatrixTransformer.Push();
+
+            var matrix = this.LimbMatrices.GetMatrixForLimb((uint) limbIndex);
             ModelViewMatrixTransformer.Set(matrix);
 
             foreach (var vertexIndex in limb.OwnedVertices) {
@@ -128,15 +202,19 @@ namespace UoT {
               projectedVertex.Y = y;
               projectedVertex.Z = z;
             }
+          },
+          (limb, _) => {
+            ModelViewMatrixTransformer.Pop();
           });
       ModelViewMatrixTransformer.Pop();
 
-      Gl.glDisable(Gl.GL_TEXTURE);
-
       this.ForEachLimbRecursively_(
           0,
-          limb => {
+          (limb, _) => {
             foreach (var triangle in limb.Triangles) {
+              this.shaderManager_.Params = triangle.ShaderParams;
+              this.shaderManager_.PassValuesToShader();
+
               Gl.glColor3b(255, 255, 255);
               Gl.glBegin(Gl.GL_TRIANGLES);
 
@@ -145,47 +223,50 @@ namespace UoT {
               // TODO: Use normal.
               // TODO: Use shader.
 
-              // BindTextures(vertex)
+              var textures = triangle.Textures;
+              var texture0 = textures[0] > -1
+                                 ? this.allTextures_[textures[0]].Texture
+                                 : null;
+              var texture1 = textures[1] > -1
+                                 ? this.allTextures_[textures[1]].Texture
+                                 : null;
+              this.shaderManager_.BindTextures(texture0, texture1);
 
               foreach (var vertexId in triangle.Vertices) {
                 var vertex = this.projectedVertices_[vertexId];
-                Gl.glVertex3d(vertex.X, vertex.Y, vertex.Z);
 
-                /*If ShaderManager.EnableLighting Then
-                If(Not ShaderManager.EnableCombiner) Then Gl.glColor4fv(ShaderManager.PrimColor) Else Gl.glColor3f(1, 1, 1)
-                Gl.glVertexAttrib4f(ShaderManager.ColorLocation, 1, 1, 1, 1)
-                Gl.glNormal3f(vertex.NormalX, vertex.NormalY, vertex.NormalZ)
-                Gl.glVertexAttrib3f(ShaderManager.NormalLocation, vertex.NormalX, vertex.NormalY, vertex.NormalZ)
-                Else
-                Gl.glColor4ub(vertex.R, vertex.G, vertex.B, vertex.A)
-                Gl.glVertexAttrib4f(ShaderManager.ColorLocation, vertex.R / 255.0F, vertex.G / 255.0F, vertex.B / 255.0F,
-                                    vertex.A / 255.0F)
-                ' Normal is invalid, but we have to pass a value in to prevent NaNs
-                ' when normalizing in the shader.
-                                          Gl.glVertexAttrib3f(ShaderManager.NormalLocation, 1, 1, 1)
-                End If*/
+                //this.shaderManager_.PassInVertexAttribs(vertex);
+                Gl.glVertex3d(vertex.X, vertex.Y, vertex.Z);
               }
 
               Gl.glEnd();
             }
-          });
+            Gl.glFinish();
+          },
+          null);
     }
 
     private void ForEachLimbRecursively_(
         sbyte limbIndex,
-        Action<LimbInstance> handler) {
+        Action<LimbInstance, sbyte>? beforeChildren,
+        Action<LimbInstance, sbyte>? afterChildren) {
       var limb = this.allLimbs_[limbIndex];
-
-      handler(limb);
+      beforeChildren?.Invoke(limb, limbIndex);
 
       var firstChildIndex = limb.firstChild;
       if (firstChildIndex > -1) {
-        this.ForEachLimbRecursively_(firstChildIndex, handler);
+        this.ForEachLimbRecursively_(firstChildIndex,
+                                     beforeChildren,
+                                     afterChildren);
       }
+
+      afterChildren?.Invoke(limb, limbIndex);
 
       var nextSiblingIndex = limb.nextSibling;
       if (nextSiblingIndex > -1) {
-        this.ForEachLimbRecursively_(nextSiblingIndex, handler);
+        this.ForEachLimbRecursively_(nextSiblingIndex,
+                                     beforeChildren,
+                                     afterChildren);
       }
     }
 
@@ -208,21 +289,8 @@ namespace UoT {
           firstChild = firstChild,
           nextSibling = nextSibling
       };
-
       this.allLimbs_.Add(newLimb);
       this.Limbs.Add(newLimb);
-    }
-
-    public void CalculateVisibleLimbIndices() {
-      var currentVisibleCount = 0;
-      foreach (var limb in this.allLimbs_) {
-        // TODO: Split this to check if bank is 0 instead?
-        if (limb.Visible) {
-          limb.VisibleIndex = currentVisibleCount++;
-        } else {
-          limb.VisibleIndex = -1;
-        }
-      }
     }
 
     public void SetCurrentVisibleLimbByMatrixAddress(uint matrixAddress)
@@ -242,7 +310,6 @@ namespace UoT {
         }
       }
       Asserts.Assert(limbIndex > -1);
-
       this.activeLimb_ = this.allLimbs_[limbIndex];
     }
 
@@ -259,15 +326,15 @@ namespace UoT {
       for (var t = 0; t < 2; ++t) {
         textures[t] = this.activeTextures_[t];
       }
-
       var vertices = new int[3];
       vertices[0] = this.activeVertices_[vertex1];
       vertices[1] = this.activeVertices_[vertex2];
       vertices[2] = this.activeVertices_[vertex3];
 
-      // TODO: Merge existing shader params.
+// TODO: Merge existing shader params.
       var triangle =
           new TriangleParams(shaderParams.Clone(), textures, vertices);
+
       Asserts.Assert(this.activeLimb_).Triangles.Add(triangle);
     }
 
@@ -277,18 +344,16 @@ namespace UoT {
       if (this.IsComplete) {
         return;
       }
-
       VertexParams vertex;
+
       var oldUuid = this.activeVertices_[index];
       if (oldUuid == -1) {
         vertex = new VertexParams();
       } else {
         vertex = this.allVertices_[oldUuid];
       }
-
       vertex = modifier(vertex);
       vertex.Uuid = this.allVertices_.Count;
-
       Asserts.Assert(this.activeLimb_).OwnedVertices.Add(vertex.Uuid);
       this.activeVertices_[index] = vertex.Uuid;
       this.allVertices_.Add(vertex);
@@ -298,7 +363,6 @@ namespace UoT {
       if (this.IsComplete) {
         return;
       }
-
       if (texture == null) {
         this.activeTextures_[index] = -1;
         return;
@@ -308,7 +372,6 @@ namespace UoT {
           Uuid = this.allTextures_.Count,
           Texture = texture
       };
-
       this.activeTextures_[index] = textureWrapper.Uuid;
       this.allTextures_.Add(textureWrapper);
     }

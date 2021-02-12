@@ -179,8 +179,6 @@ namespace UoT.limbs {
                 }
               }
 
-              model.CalculateVisibleLimbIndices();
-
               if (isValid & !somethingVisible) {
                 throw new NotSupportedException(
                     "model format is not rendering a valid model!");

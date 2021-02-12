@@ -1,4 +1,5 @@
 Imports System.IO
+Imports UoT.displaylist
 
 Module GlobalVars
 
@@ -69,10 +70,12 @@ Module GlobalVars
   Public ExternalHierarchy As Byte()
   Public ExternalAnimBank As Byte()
   Public RenderToggles As New RendererOptions
-  Public DLParser As New F3DEX2_Parser
+
+  Public ShaderManager As New DlShaderManager
+  Public DLParser As New F3DEX2_Parser(ShaderManager)
 
   Public UseStaticDlModel As Boolean = False
-  Public DlModel As New StaticDlModel
+  Public DlModel As New StaticDlModel(ShaderManager)
 
   Public CompileDL As New N64DlistAssembler
   Public ParseOBJ As New OBJParser

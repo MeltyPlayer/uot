@@ -34,7 +34,7 @@ namespace UoT.displaylist {
      * ENVIRONMENT: A global color, typically used for coloring in alpha
      *   textures like Link's tunic.
      */
-    public DlShaderParams Params { get; } = new DlShaderParams();
+    public DlShaderParams Params { get; set; } = new DlShaderParams();
 
     private void ResetColor_(float[] color)
       => this.SetColor_(color, 1, 1, 1, .5f);
@@ -356,6 +356,57 @@ namespace UoT.displaylist {
         // when normalizing in the shader.
         Gl.glVertexAttrib3f(this.NormalLocation, 1, 1, 1);
       }
+    }
+
+    public void BindTextures(Texture? texture0, Texture? texture1) {
+      Gl.glEnable(Gl.GL_TEXTURE_2D);
+      if (texture0 != null) {
+        Gl.glActiveTexture(Gl.GL_TEXTURE0);
+        texture0.Bind();
+
+        this.TextureParams0.ClampedU = texture0.GlClampedS;
+        this.TextureParams0.ClampedV = texture0.GlClampedT;
+
+        this.TextureParams0.MirroredU = texture0.GlMirroredS;
+        this.TextureParams0.MirroredV = texture0.GlMirroredT;
+
+        var tileDescriptor0 = texture0.TileDescriptor;
+        this.TextureParams0.MaxU = (tileDescriptor0.LRS - tileDescriptor0.ULS + 1) /
+                                   texture0.TileDescriptor.LoadWidth;
+        this.TextureParams0.MaxV = (tileDescriptor0.LRT - tileDescriptor0.ULT + 1) /
+                                   texture0.TileDescriptor.LoadHeight;
+
+        this.TextureParams0.Bind();
+      } else {
+        Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2);
+      }
+
+      if (this.Params.MultiTexture) {
+        Gl.glActiveTexture(Gl.GL_TEXTURE1);
+        if (texture1 != null) {
+          texture1.Bind();
+
+          this.TextureParams1.ClampedU = texture1.GlClampedS;
+          this.TextureParams1.ClampedV = texture1.GlClampedT;
+
+          this.TextureParams1.MirroredU = texture1.GlMirroredS;
+          this.TextureParams1.MirroredV = texture1.GlMirroredT;
+
+          var tileDescriptor1 = texture1.TileDescriptor;
+          this.TextureParams1.MaxU =
+              (tileDescriptor1.LRS - tileDescriptor1.ULS + 1) /
+              texture1.TileDescriptor.LoadWidth;
+          this.TextureParams1.MaxV =
+              (tileDescriptor1.LRT - tileDescriptor1.ULT + 1) /
+              texture1.TileDescriptor.LoadHeight;
+
+          this.TextureParams1.Bind();
+        } else {
+          Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2);
+        }
+        Gl.glActiveTexture(Gl.GL_TEXTURE0);
+      }
+      Gl.glDisable(Gl.GL_TEXTURE_2D);
     }
   }
 }
