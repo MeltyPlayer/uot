@@ -149,39 +149,41 @@ namespace UoT {
       this.ForEachLimbRecursively_(
           0,
           (limb, limbIndex) => {
-            var xI = 0.0;
-            var yI = 0.0;
-            var zI = 0.0;
-            ModelViewMatrixTransformer.ProjectVertex(ref xI, ref yI, ref zI);
+            if (false) {
+              var xI = 0.0;
+              var yI = 0.0;
+              var zI = 0.0;
+              ModelViewMatrixTransformer.ProjectVertex(ref xI, ref yI, ref zI);
 
-            double xF = limb.x;
-            double yF = limb.y;
-            double zF = limb.z;
-            ModelViewMatrixTransformer.ProjectVertex(ref xF, ref yF, ref zF);
+              double xF = limb.x;
+              double yF = limb.y;
+              double zF = limb.z;
+              ModelViewMatrixTransformer.ProjectVertex(ref xF, ref yF, ref zF);
 
-            Gl.glDepthRange(0, 0);
-            Gl.glLineWidth(9);
-            Gl.glBegin(Gl.GL_LINES);
-            Gl.glColor3f(1, 1, 1);
-            Gl.glVertex3d(xI, yI, zI);
-            Gl.glVertex3d(xF, yF, zF);
-            Gl.glEnd();
-            Gl.glDepthRange(0, -0.5);
-            Gl.glPointSize(11);
-            Gl.glBegin(Gl.GL_POINTS);
-            Gl.glColor3f(0, 0, 0);
-            Gl.glVertex3d(xF, yF, zF);
-            Gl.glEnd();
-            /*Gl.glPointSize(8);
-            Gl.glBegin(Gl.GL_POINTS);
-            Gl.glColor3ub(BoneColorFactor.r,
-                          BoneColorFactor.g,
-                          BoneColorFactor.b);
-            Gl.glVertex3f(xF, yF, zF);
-            Gl.glEnd();*/
-            Gl.glPointSize(1);
-            Gl.glLineWidth(1);
-            Gl.glDepthRange(0, 1);
+              Gl.glDepthRange(0, 0);
+              Gl.glLineWidth(9);
+              Gl.glBegin(Gl.GL_LINES);
+              Gl.glColor3f(1, 1, 1);
+              Gl.glVertex3d(xI, yI, zI);
+              Gl.glVertex3d(xF, yF, zF);
+              Gl.glEnd();
+              Gl.glDepthRange(0, -0.5);
+              Gl.glPointSize(11);
+              Gl.glBegin(Gl.GL_POINTS);
+              Gl.glColor3f(0, 0, 0);
+              Gl.glVertex3d(xF, yF, zF);
+              Gl.glEnd();
+              /*Gl.glPointSize(8);
+              Gl.glBegin(Gl.GL_POINTS);
+              Gl.glColor3ub(BoneColorFactor.r,
+                            BoneColorFactor.g,
+                            BoneColorFactor.b);
+              Gl.glVertex3f(xF, yF, zF);
+              Gl.glEnd();*/
+              Gl.glPointSize(1);
+              Gl.glLineWidth(1);
+              Gl.glDepthRange(0, 1);
+            }
 
             ModelViewMatrixTransformer.Push();
 
@@ -203,9 +205,7 @@ namespace UoT {
               projectedVertex.Z = z;
             }
           },
-          (limb, _) => {
-            ModelViewMatrixTransformer.Pop();
-          });
+          (limb, _) => ModelViewMatrixTransformer.Pop());
       ModelViewMatrixTransformer.Pop();
 
       this.ForEachLimbRecursively_(
@@ -232,11 +232,21 @@ namespace UoT {
                                  : null;
               this.shaderManager_.BindTextures(texture0, texture1);
 
-              foreach (var vertexId in triangle.Vertices) {
-                var vertex = this.projectedVertices_[vertexId];
+              var tileDescriptor0 = texture0?.TileDescriptor;
+              var tileDescriptor1 = texture1?.TileDescriptor;
 
-                //this.shaderManager_.PassInVertexAttribs(vertex);
-                Gl.glVertex3d(vertex.X, vertex.Y, vertex.Z);
+              foreach (var vertexId in triangle.Vertices) {
+                var vertex = this.allVertices_[vertexId];
+                var projectedVertex = this.projectedVertices_[vertexId];
+
+                this.shaderManager_.BindTextureUvs(
+                    vertex,
+                    tileDescriptor0,
+                    tileDescriptor1);
+                this.shaderManager_.PassInVertexAttribs(vertex);
+                Gl.glVertex3d(projectedVertex.X,
+                              projectedVertex.Y,
+                              projectedVertex.Z);
               }
 
               Gl.glEnd();
@@ -303,9 +313,10 @@ namespace UoT {
       }
 
       var limbIndex = -1;
-      foreach (var limb in this.allLimbs_) {
+      for (var i = 0; i < this.allLimbs_.Count; ++i) {
+        var limb = this.allLimbs_[i];
         if (limb.VisibleIndex == visibleLimbIndex) {
-          limbIndex = limb.VisibleIndex;
+          limbIndex = i;
           break;
         }
       }
@@ -409,18 +420,24 @@ namespace UoT {
     public int[] Vertices { get; }
   }
 
-  public struct VertexParams {
+  public struct VertexParams : IVertex {
     public int Uuid { get; set; }
 
     public double X;
     public double Y;
     public double Z;
 
-    public double U { get; set; }
-    public double V { get; set; }
+    public short U { get; set; }
+    public short V { get; set; }
 
-    public Normal? Normal { get; set; }
-    public Rgba? Rgba { get; set; }
+    public float NormalX { get; set; }
+    public float NormalY { get; set; }
+    public float NormalZ { get; set; }
+
+    public byte R { get; set; }
+    public byte G { get; set; }
+    public byte B { get; set; }
+    public byte A { get; set; }
   }
 
   public struct TextureWrapper {

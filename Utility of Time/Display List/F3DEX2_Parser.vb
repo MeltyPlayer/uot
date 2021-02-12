@@ -23,7 +23,6 @@ Public Class F3DEX2_Parser
 #Region "SHADERS & TEXTURE RELATED"
 
   Private N64GeometryMode As UInt32
-  Private MultiTexCoord As Boolean = False
 
   ''' <summary>
   '''   All 8 tile descriptors available to the given display list.
@@ -140,14 +139,14 @@ settextureimg:
               If DL.Commands(i - 1).Opcode = RDP.G_SETTILESIZE Then
                 CurrentSelectedTileDescriptor = 1
                 If GLExtensions.GLMultiTexture And GLExtensions.GLFragProg Then
-                  MultiTexCoord = True
+                  ShaderManager.Params.MultiTexCoord = True
                 Else
-                  MultiTexCoord = False
+                  ShaderManager.Params.MultiTexCoord = False
                 End If
                 ShaderManager.Params.MultiTexture = True
               Else
                 ShaderManager.Params.MultiTexture = False
-                MultiTexCoord = False
+                ShaderManager.Params.MultiTexCoord = False
                 CurrentSelectedTileDescriptor = 0
                 DlModel.UpdateTexture(1, Nothing)
               End If
@@ -400,7 +399,7 @@ enddisplaylist:
   End Function
 
 
-  Private Function GEOMETRYMODE(ByVal w0 As UInt32, ByVal w1 As UInt32)
+  Private Sub GEOMETRYMODE(ByVal w0 As UInt32, ByVal w1 As UInt32)
     Dim MCLEAR As UInt32 = w0
     Dim MSET As UInt32 = w1 And &HFFFFFF
 
@@ -441,7 +440,7 @@ enddisplaylist:
         Gl.glDisable(Gl.GL_LIGHTING)
       End If
     End If
-  End Function
+  End Sub
 
   Private Sub SETOTHERMODE_H(ByVal w0 As UInt32, ByVal w1 As UInt32)
     Dim MDSFT As Byte = (32 - (w0 << 4 >> 4) - 1)
@@ -452,7 +451,7 @@ enddisplaylist:
     End Select
   End Sub
 
-  Private Function SETOTHERMODE_L(ByVal w0 As UInt32, ByVal w1 As UInt32)
+  Private Sub SETOTHERMODE_L(ByVal w0 As UInt32, ByVal w1 As UInt32)
     Dim AA_EN As Boolean = (w1 And &H8) > 0
     Dim Z_CMP As Boolean = (w1 And &H10) > 0
     Dim Z_UPD As Boolean = (w1 And &H20) > 0
@@ -495,7 +494,7 @@ enddisplaylist:
       Case Else
         MsgBox("Unhandled SETOTHERMODE_L MDSFT: 0x" & MDSFT.ToString & "?")
     End Select
-  End Function
+  End Sub
 
   Private Function GetSelectedTileDescriptor(index As Integer) As TileDescriptor
     If UseJank Then
@@ -561,29 +560,19 @@ enddisplaylist:
                                    ByVal Offset As Integer, ByVal n0 As Integer, ByVal v0 As Integer)
     Select Case DataSource
       Case RamBanks.CurrentBank
-        Dim x As Double
-        Dim y As Double
-        Dim z As Double
-
-        Dim u As Short
-        Dim v As Short
-        Dim r As Byte
-        Dim g As Byte
-        Dim b As Byte
-        Dim a As Byte
         For i2 As Integer = v0 To (v0 + n0) - 1
-          x = IoUtil.ReadInt16(Data, Offset)
-          y = IoUtil.ReadInt16(Data, Offset + 2)
-          z = IoUtil.ReadInt16(Data, Offset + 4)
+          Dim x As Double = IoUtil.ReadInt16(Data, Offset)
+          Dim y As Double = IoUtil.ReadInt16(Data, Offset + 2)
+          Dim z As Double = IoUtil.ReadInt16(Data, Offset + 4)
 
           ModelViewMatrixTransformer.ProjectVertex(x, y, z)
 
-          u = CShort(IoUtil.ReadUInt16(Data, Offset + 8))
-          v = CShort(IoUtil.ReadUInt16(Data, Offset + 10))
-          r = Data(Offset + 12)
-          g = Data(Offset + 13)
-          b = Data(Offset + 14)
-          a = Data(Offset + 15)
+          Dim u As Short = CShort(IoUtil.ReadUInt16(Data, Offset + 8))
+          Dim v As Short = CShort(IoUtil.ReadUInt16(Data, Offset + 10))
+          Dim r As Byte = Data(Offset + 12)
+          Dim g As Byte = Data(Offset + 13)
+          Dim b As Byte = Data(Offset + 14)
+          Dim a As Byte = Data(Offset + 15)
 
           Dim normalX As Single = ConvertByteToFloat_(r)
           Dim normalY As Single = ConvertByteToFloat_(g)
@@ -623,10 +612,16 @@ enddisplaylist:
                                      vertex.U = u
                                      vertex.V = v
 
-                                     'vertex.R = r
-                                     'vertex.G = g
-                                     'vertex.B = b
-                                     'vertex.A = a
+                                     vertex.NormalX = normalX
+                                     vertex.NormalY = normalY
+                                     vertex.NormalZ = normalZ
+
+                                     vertex.R = r
+                                     vertex.G = g
+                                     vertex.B = b
+                                     vertex.A = a
+
+                                     Return vertex
                                    End Function)
           Offset += 16
         Next
@@ -733,47 +728,21 @@ enddisplaylist:
     TileDescriptors(tileDescriptorIndex) = tileDescriptor
   End Sub
 
-  Private Sub BindTextures(ByRef vertex As Vertex)
+  Private Sub BindTextureUvs(ByRef vertex As IVertex)
     ' TODO: These lookups are slow, cache these.
     Dim texture0 As Texture = GetTexture(0)
-    Dim tileDescriptor0 As TileDescriptor
+    Dim tileDescriptor0 As TileDescriptor = Nothing
     If texture0 IsNot Nothing Then
       tileDescriptor0 = texture0.TileDescriptor
     End If
 
-    Dim u As Double = vertex.U
-    Dim v As Double = vertex.V
-
-    Dim u0 As Single = u
-    Dim v0 As Single = v
-    GetUv(tileDescriptor0, u0, v0)
-
-    If MultiTexCoord Then
-      Dim texture1 As Texture = GetTexture(1)
-      Dim tileDescriptor1 As TileDescriptor
-      If texture1 IsNot Nothing Then
-        tileDescriptor1 = texture1.TileDescriptor
-      End If
-
-      Dim u1 As Single = u
-      Dim v1 As Single = v
-      GetUv(tileDescriptor1, u1, v1)
-
-      Gl.glVertexAttrib2f(ShaderManager.Uv0Location, u0, v0)
-      Gl.glVertexAttrib2f(ShaderManager.Uv1Location, u1, v1)
-    Else
-      Gl.glVertexAttrib2f(ShaderManager.Uv0Location, u0, v0)
+    Dim texture1 As Texture = GetTexture(1)
+    Dim tileDescriptor1 As TileDescriptor = Nothing
+    If texture1 IsNot Nothing Then
+      tileDescriptor1 = texture1.TileDescriptor
     End If
-  End Sub
 
-  Private Sub GetUv(tileDescriptor As TileDescriptor, ByRef u As Double, ByRef v As Double)
-    'u = u*tileDescriptor.TextureWRatio*tileDescriptor.UScaling
-    'v = v*tileDescriptor.TextureHRatio*tileDescriptor.VScaling +
-    '    AnimatedTextureHacks.GetVOffsetForTexture(tileDescriptor)
-
-    u = u * tileDescriptor.TextureWRatio
-    v = v * tileDescriptor.TextureHRatio +
-        AnimatedTextureHacks.GetVOffsetForTexture(tileDescriptor)
+    ShaderManager.BindTextureUvs(vertex, tileDescriptor0, tileDescriptor1)
   End Sub
 
 
@@ -799,7 +768,7 @@ enddisplaylist:
         Gl.glBegin(Gl.GL_TRIANGLES)
         For i As Integer = 0 To 2
           Dim vertex As Vertex = vertexCache(Polygons(i))
-          BindTextures(vertex)
+          BindTextureUvs(vertex)
 
           ShaderManager.PassInVertexAttribs(vertex)
           Gl.glVertex3d(vertex.X, vertex.Y, vertex.Z)
@@ -845,7 +814,7 @@ enddisplaylist:
         Gl.glBegin(Gl.GL_TRIANGLES)
         For i As Integer = 0 To 5
           Dim vertex As Vertex = vertexCache(Polygons(i))
-          BindTextures(vertex)
+          BindTextureUvs(vertex)
 
           ShaderManager.PassInVertexAttribs(vertex)
           Gl.glVertex3d(vertex.X, vertex.Y, vertex.Z)

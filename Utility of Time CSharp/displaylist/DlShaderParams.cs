@@ -40,6 +40,7 @@ namespace UoT.displaylist {
     public bool PrecompiledCombiner { get; set; }
 
     public bool MultiTexture { get; set; }
+    public bool MultiTexCoord { get; set; }
     public bool EnableCombiner { get; set; }
     public bool EnableLighting { get; set; }
     public bool EnableSphericalUv { get; set; }

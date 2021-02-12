@@ -1,22 +1,24 @@
-﻿namespace UoT {
-  public struct Vertex {
+﻿using UoT.displaylist;
+
+namespace UoT {
+  public struct Vertex : IVertex {
     public bool Populated;
 
     public double X;
     public double Y;
     public double Z;
 
-    public short U;
-    public short V;
+    public short U { get; set; }
+    public short V { get; set; }
 
-    public byte R;
-    public byte G;
-    public byte B;
-    public byte A;
+    public byte R { get; set; }
+    public byte G { get; set; }
+    public byte B { get; set; }
+    public byte A { get; set; }
 
-    public float NormalX;
-    public float NormalY;
-    public float NormalZ;
+    public float NormalX { get; set; }
+    public float NormalY { get; set; }
+    public float NormalZ { get; set; }
   } 
 
   public class VertexCache {

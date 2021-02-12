@@ -331,7 +331,7 @@ namespace UoT.displaylist {
                  cycles,
                  this.Params.CombArg);
 
-    public void PassInVertexAttribs(Vertex vertex) {
+    public void PassInVertexAttribs(IVertex vertex) {
       if (this.Params.EnableLighting) {
         if (!this.Params.EnableCombiner) {
           Gl.glColor4fv(this.Params.PrimColor);
@@ -371,10 +371,12 @@ namespace UoT.displaylist {
         this.TextureParams0.MirroredV = texture0.GlMirroredT;
 
         var tileDescriptor0 = texture0.TileDescriptor;
-        this.TextureParams0.MaxU = (tileDescriptor0.LRS - tileDescriptor0.ULS + 1) /
-                                   texture0.TileDescriptor.LoadWidth;
-        this.TextureParams0.MaxV = (tileDescriptor0.LRT - tileDescriptor0.ULT + 1) /
-                                   texture0.TileDescriptor.LoadHeight;
+        this.TextureParams0.MaxU =
+            (tileDescriptor0.LRS - tileDescriptor0.ULS + 1) /
+            texture0.TileDescriptor.LoadWidth;
+        this.TextureParams0.MaxV =
+            (tileDescriptor0.LRT - tileDescriptor0.ULT + 1) /
+            texture0.TileDescriptor.LoadHeight;
 
         this.TextureParams0.Bind();
       } else {
@@ -407,6 +409,43 @@ namespace UoT.displaylist {
         Gl.glActiveTexture(Gl.GL_TEXTURE0);
       }
       Gl.glDisable(Gl.GL_TEXTURE_2D);
+    }
+
+    public void BindTextureUvs(
+        IVertex vertex,
+        TileDescriptor? tileDescriptor0,
+        TileDescriptor? tileDescriptor1) {
+      var u = (float) vertex.U;
+      var v = (float) vertex.V;
+
+      var u0 = u;
+      var v0 = v;
+      this.GetUv(tileDescriptor0, ref u0, ref v0);
+      Gl.glVertexAttrib2f(this.Uv0Location, u0, v0);
+
+      if (this.Params.MultiTexCoord) {
+        var u1 = u;
+        var v1 = v;
+        this.GetUv(tileDescriptor1, ref u1, ref v1);
+        Gl.glVertexAttrib2f(this.Uv1Location, u1, v1);
+      }
+    }
+
+    public void GetUv(
+        TileDescriptor? tileDescriptor,
+        ref float u,
+        ref float v) {
+      /*'u = u*tileDescriptor.TextureWRatio*tileDescriptor.UScaling
+      'v = v*tileDescriptor.TextureHRatio*tileDescriptor.VScaling +
+           '    AnimatedTextureHacks.GetVOffsetForTexture(tileDescriptor) */
+      if (tileDescriptor == null) {
+        return;
+      }
+
+      u = (float) (u * tileDescriptor.Value.TextureWRatio);
+      v = (float) (v * tileDescriptor.Value.TextureHRatio +
+                   AnimatedTextureHacks.GetVOffsetForTexture(
+                       tileDescriptor.Value));
     }
   }
 }
