@@ -2,6 +2,7 @@
 Imports MathNet.Numerics.LinearAlgebra
 Imports MathNet.Numerics.LinearAlgebra.Double
 Imports Tao.OpenGl
+Imports UoT.displaylist
 Imports UoT.limbs
 
 Public Class F3DEX2_Parser
@@ -139,9 +140,9 @@ settextureimg:
                 Else
                   MultiTexCoord = False
                 End If
-                ShaderManager.MultiTexture = True
+                ShaderManager.Params.MultiTexture = True
               Else
-                ShaderManager.MultiTexture = False
+                ShaderManager.Params.MultiTexture = False
                 MultiTexCoord = False
                 CurrentSelectedTileDescriptor = 0
                 DlModel.UpdateTexture(1, Nothing)
@@ -192,6 +193,8 @@ seothtermodelow:
 matrix:
               ' MTX(.CMDLow, .CMDHigh)
               Dim targetAddress As UInteger = .High
+
+              DlModel.SetCurrentVisibleLimbByMatrixAddress(targetAddress)
 
               Dim m As Matrix = LimbMatrices.GetMatrixAtAddress(targetAddress)
               ModelViewMatrixTransformer.Set(m)
@@ -401,15 +404,15 @@ enddisplaylist:
     N64GeometryMode = N64GeometryMode Or MSET
 
     If (N64GeometryMode And RDP.G_TEXTURE_GEN) Then
-      ShaderManager.EnableSphericalUv = True
+      ShaderManager.Params.EnableSphericalUv = True
     Else
-      ShaderManager.EnableSphericalUv = False
+      ShaderManager.Params.EnableSphericalUv = False
     End If
 
     If (N64GeometryMode And RDP.G_TEXTURE_GEN_LINEAR) Then
-      ShaderManager.EnableLinearUv = True
+      ShaderManager.Params.EnableLinearUv = True
     Else
-      ShaderManager.EnableLinearUv = False
+      ShaderManager.Params.EnableLinearUv = False
     End If
 
     If N64GeometryMode And RDP.G_CULL_BOTH Then
@@ -425,11 +428,11 @@ enddisplaylist:
 
     If ParseMode = Parse.EVERYTHING Then
       If N64GeometryMode And RDP.G_LIGHTING Then
-        ShaderManager.EnableLighting = True
+        ShaderManager.Params.EnableLighting = True
         Gl.glEnable(Gl.GL_NORMALIZE)
         Gl.glEnable(Gl.GL_LIGHTING)
       Else
-        ShaderManager.EnableLighting = False
+        ShaderManager.Params.EnableLighting = False
         Gl.glDisable(Gl.GL_NORMALIZE)
         Gl.glDisable(Gl.GL_LIGHTING)
       End If
@@ -638,7 +641,7 @@ enddisplaylist:
   Private Sub PrepareDrawTriangle_()
     If ParseMode = Parse.EVERYTHING Then
       ShaderManager.PassValuesToShader()
-      If Not ShaderManager.EnableCombiner Then
+      If Not ShaderManager.Params.EnableCombiner Then
         DlModel.UpdateTexture(1, Nothing)
       End If
 
@@ -677,7 +680,7 @@ enddisplaylist:
         Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2)
       End If
 
-      If ShaderManager.MultiTexture Then
+      If ShaderManager.Params.MultiTexture Then
         Gl.glActiveTexture(Gl.GL_TEXTURE1)
         Dim texture1 As Texture = GetTexture(1)
         Dim tileDescriptor1 As TileDescriptor = GetSelectedTileDescriptor(1)
@@ -823,7 +826,7 @@ enddisplaylist:
         End If
       Next
 
-      DlModel.AddTriangle(Polygons(0), Polygons(1), Polygons(2))
+      DlModel.AddTriangle(ShaderManager.Params, Polygons(0), Polygons(1), Polygons(2))
 
       If ParseMode = Parse.EVERYTHING Then
         Gl.glBegin(Gl.GL_TRIANGLES)
@@ -831,19 +834,7 @@ enddisplaylist:
           Dim vertex As Vertex = vertexCache(Polygons(i))
           BindTextures(vertex)
 
-          If ShaderManager.EnableLighting Then
-            If (Not ShaderManager.EnableCombiner) Then Gl.glColor4fv(ShaderManager.PrimColor) Else Gl.glColor3f(1, 1, 1)
-            Gl.glVertexAttrib4f(ShaderManager.ColorLocation, 1, 1, 1, 1)
-            Gl.glNormal3f(vertex.NormalX, vertex.NormalY, vertex.NormalZ)
-            Gl.glVertexAttrib3f(ShaderManager.NormalLocation, vertex.NormalX, vertex.NormalY, vertex.NormalZ)
-          Else
-            Gl.glColor4ub(vertex.R, vertex.G, vertex.B, vertex.A)
-            Gl.glVertexAttrib4f(ShaderManager.ColorLocation, vertex.R / 255.0F, vertex.G / 255.0F, vertex.B / 255.0F,
-                                vertex.A / 255.0F)
-            ' Normal is invalid, but we have to pass a value in to prevent NaNs
-            ' when normalizing in the shader.
-            Gl.glVertexAttrib3f(ShaderManager.NormalLocation, 1, 1, 1)
-          End If
+          ShaderManager.PassInVertexAttribs(vertex)
           Gl.glVertex3d(vertex.X, vertex.Y, vertex.Z)
         Next
         Gl.glEnd()
@@ -880,8 +871,8 @@ enddisplaylist:
         End If
       Next
 
-      DlModel.AddTriangle(Polygons(0), Polygons(1), Polygons(2))
-      DlModel.AddTriangle(Polygons(3), Polygons(4), Polygons(5))
+      DlModel.AddTriangle(ShaderManager.Params, Polygons(0), Polygons(1), Polygons(2))
+      DlModel.AddTriangle(ShaderManager.Params, Polygons(3), Polygons(4), Polygons(5))
 
       If ParseMode = Parse.EVERYTHING Then
         Gl.glBegin(Gl.GL_TRIANGLES)
@@ -889,19 +880,7 @@ enddisplaylist:
           Dim vertex As Vertex = vertexCache(Polygons(i))
           BindTextures(vertex)
 
-          If ShaderManager.EnableLighting Then
-            If (Not ShaderManager.EnableCombiner) Then Gl.glColor4fv(ShaderManager.PrimColor) Else Gl.glColor3f(1, 1, 1)
-            Gl.glVertexAttrib4f(ShaderManager.ColorLocation, 1, 1, 1, 1)
-            Gl.glNormal3f(vertex.NormalX, vertex.NormalY, vertex.NormalZ)
-            Gl.glVertexAttrib3f(ShaderManager.NormalLocation, vertex.NormalX, vertex.NormalY, vertex.NormalZ)
-          Else
-            Gl.glColor4ub(vertex.R, vertex.G, vertex.B, vertex.A)
-            Gl.glVertexAttrib4f(ShaderManager.ColorLocation, vertex.R / 255.0F, vertex.G / 255.0F, vertex.B / 255.0F,
-                                vertex.A / 255.0F)
-            ' Normal is invalid, but we have to pass a value in to prevent NaNs
-            ' when normalizing in the shader.
-            Gl.glVertexAttrib3f(ShaderManager.NormalLocation, 1, 1, 1)
-          End If
+          ShaderManager.PassInVertexAttribs(vertex)
           Gl.glVertex3d(vertex.X, vertex.Y, vertex.Z)
         Next
         Gl.glEnd()

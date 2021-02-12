@@ -3,10 +3,23 @@ using System.Collections.Generic;
 
 using Tao.OpenGl;
 
+using UoT.displaylist;
+using UoT.limbs;
 using UoT.util;
 
 namespace UoT {
-  public class StaticDlModel {
+  public interface IDlModel {
+    IList<IOldLimb> Limbs { get; }
+  }
+
+  public class Vec3d {
+    public double X { get; set; }
+    public double Y { get; set; }
+    public double Z { get; set; }
+  }
+
+
+  public class StaticDlModel : IDlModel {
     // TODO: Prune unused values.
     // TODO: Split out vertices into separately indexed position/uv/color arrays.
 
@@ -17,7 +30,21 @@ namespace UoT {
     // TODO: Simplify some triangles to quads.
     // TODO: Separate common shader params as different materials.
 
-    public bool IsComplete { get; set; }
+    private bool isComplete_;
+
+    public bool IsComplete {
+      get => this.isComplete_;
+      set {
+        this.isComplete_ = value;
+
+        this.projectedVertices_.Clear();
+        if (value) {
+          for (var i = 0; i < this.allVertices_.Count; ++i) {
+            this.projectedVertices_.Add(new Vec3d());
+          }
+        }
+      }
+    }
 
     private LimbInstance? activeLimb_;
     private readonly int[] activeVertices_ = new int[32];
@@ -26,13 +53,17 @@ namespace UoT {
     // TODO: Needed for models w/o limbs.
     private LimbInstance? root_;
 
-    private readonly IList<LimbInstance> allLimbs_ = new List<LimbInstance>();
-
     private readonly IList<VertexParams>
         allVertices_ = new List<VertexParams>();
 
+    private readonly IList<Vec3d>
+        projectedVertices_ = new List<Vec3d>();
+
     private readonly IList<TextureWrapper> allTextures_ =
         new List<TextureWrapper>();
+
+    private IList<LimbInstance> allLimbs_ = new List<LimbInstance>();
+    public IList<IOldLimb> Limbs { get; } = new List<IOldLimb>();
 
     public void Reset() {
       this.IsComplete = false;
@@ -45,10 +76,10 @@ namespace UoT {
       }
 
       this.root_ = new LimbInstance {
-          FirstChild = -1,
-          NextSibling = -1
+          firstChild = -1,
+          nextSibling = -1
       };
-      this.SetCurrentLimb(-1);
+      this.activeLimb_ = this.root_;
 
       // TODO: Clear vertices and textures.
 
@@ -58,79 +89,185 @@ namespace UoT {
       }
 
       this.allLimbs_.Clear();
+      this.Limbs.Clear();
+
       this.allVertices_.Clear();
+      this.projectedVertices_.Clear();
       this.allTextures_.Clear();
     }
 
-    public void DrawWithAnimation(IAnimation animation, double frame) {
-      // TODO: Include animations directly in this model.
-      // TODO: Project vertices first.
+    public void DrawWithLimbMatrices(LimbMatrices limbMatrices) {
       // TODO: Then draw w/ projected vertices.
       // TODO: Add helper class for shader program.
 
-      foreach (var limb in this.allLimbs_) {
-        foreach (var triangle in limb.Triangles) {
-          Gl.glBegin(Gl.GL_TRIANGLES);
+      // TODO: Is the recursive stuff needed?
 
-          // TODO: Draw.
-          foreach (var vertexId in triangle.Vertices) {
-            var vertex = this.allVertices_[vertexId];
-            Gl.glVertex3d(vertex.X, vertex.Y, vertex.Z);
-          }
+      ModelViewMatrixTransformer.Push();
+      this.ForEachLimbRecursively_(
+          0,
+          limb => {
+            if (limb.VisibleIndex == -1) {
+              return;
+            }
 
-          Gl.glEnd();
-        }
+            var matrix =
+                limbMatrices.GetMatrixForLimb((uint) limb.VisibleIndex);
+            ModelViewMatrixTransformer.Set(matrix);
+
+            foreach (var vertexIndex in limb.OwnedVertices) {
+              var ownedVertex = this.allVertices_[vertexIndex];
+              var projectedVertex = this.projectedVertices_[vertexIndex];
+
+              var x = ownedVertex.X;
+              var y = ownedVertex.Y;
+              var z = ownedVertex.Z;
+
+              ModelViewMatrixTransformer.ProjectVertex(ref x, ref y, ref z);
+
+              projectedVertex.X = x;
+              projectedVertex.Y = y;
+              projectedVertex.Z = z;
+            }
+          });
+      ModelViewMatrixTransformer.Pop();
+
+      Gl.glDisable(Gl.GL_TEXTURE);
+
+      this.ForEachLimbRecursively_(
+          0,
+          limb => {
+            foreach (var triangle in limb.Triangles) {
+              Gl.glColor3b(255, 255, 255);
+              Gl.glBegin(Gl.GL_TRIANGLES);
+
+              // TODO: Use texture.
+              // TODO: Use color.
+              // TODO: Use normal.
+              // TODO: Use shader.
+
+              // BindTextures(vertex)
+
+              foreach (var vertexId in triangle.Vertices) {
+                var vertex = this.projectedVertices_[vertexId];
+                Gl.glVertex3d(vertex.X, vertex.Y, vertex.Z);
+
+                /*If ShaderManager.EnableLighting Then
+                If(Not ShaderManager.EnableCombiner) Then Gl.glColor4fv(ShaderManager.PrimColor) Else Gl.glColor3f(1, 1, 1)
+                Gl.glVertexAttrib4f(ShaderManager.ColorLocation, 1, 1, 1, 1)
+                Gl.glNormal3f(vertex.NormalX, vertex.NormalY, vertex.NormalZ)
+                Gl.glVertexAttrib3f(ShaderManager.NormalLocation, vertex.NormalX, vertex.NormalY, vertex.NormalZ)
+                Else
+                Gl.glColor4ub(vertex.R, vertex.G, vertex.B, vertex.A)
+                Gl.glVertexAttrib4f(ShaderManager.ColorLocation, vertex.R / 255.0F, vertex.G / 255.0F, vertex.B / 255.0F,
+                                    vertex.A / 255.0F)
+                ' Normal is invalid, but we have to pass a value in to prevent NaNs
+                ' when normalizing in the shader.
+                                          Gl.glVertexAttrib3f(ShaderManager.NormalLocation, 1, 1, 1)
+                End If*/
+              }
+
+              Gl.glEnd();
+            }
+          });
+    }
+
+    private void ForEachLimbRecursively_(
+        sbyte limbIndex,
+        Action<LimbInstance> handler) {
+      var limb = this.allLimbs_[limbIndex];
+
+      handler(limb);
+
+      var firstChildIndex = limb.firstChild;
+      if (firstChildIndex > -1) {
+        this.ForEachLimbRecursively_(firstChildIndex, handler);
+      }
+
+      var nextSiblingIndex = limb.nextSibling;
+      if (nextSiblingIndex > -1) {
+        this.ForEachLimbRecursively_(nextSiblingIndex, handler);
       }
     }
 
     public void AddLimb(
-        double x,
-        double y,
-        double z,
-        int firstChild,
-        int nextSibling) {
+        bool visible,
+        short x,
+        short y,
+        short z,
+        sbyte firstChild,
+        sbyte nextSibling) {
       if (this.IsComplete) {
         return;
       }
 
-      this.allLimbs_.Add(new LimbInstance {
-          X = x,
-          Y = y,
-          Z = z,
-          FirstChild = firstChild,
-          NextSibling = nextSibling
-      });
+      var newLimb = new LimbInstance {
+          Visible = visible,
+          x = x,
+          y = y,
+          z = z,
+          firstChild = firstChild,
+          nextSibling = nextSibling
+      };
+
+      this.allLimbs_.Add(newLimb);
+      this.Limbs.Add(newLimb);
     }
 
-    public void SetCurrentLimb(int limb) {
-      if (this.IsComplete) {
-        return;
-      }
-
-      if (limb == -1) {
-        this.activeLimb_ = this.root_;
-      } else {
-        this.activeLimb_ = this.allLimbs_[limb];
+    public void CalculateVisibleLimbIndices() {
+      var currentVisibleCount = 0;
+      foreach (var limb in this.allLimbs_) {
+        // TODO: Split this to check if bank is 0 instead?
+        if (limb.Visible) {
+          limb.VisibleIndex = currentVisibleCount++;
+        } else {
+          limb.VisibleIndex = -1;
+        }
       }
     }
 
-    public void AddTriangle(int vertex1, int vertex2, int vertex3) {
+    public void SetCurrentVisibleLimbByMatrixAddress(uint matrixAddress)
+      => this.SetCurrentVisibleLimbByIndex(
+          LimbMatrices.ConvertAddressToVisibleLimbIndex(matrixAddress));
+
+    public void SetCurrentVisibleLimbByIndex(uint visibleLimbIndex) {
       if (this.IsComplete) {
         return;
       }
 
-      var triangle = new TriangleParams();
+      var limbIndex = -1;
+      foreach (var limb in this.allLimbs_) {
+        if (limb.VisibleIndex == visibleLimbIndex) {
+          limbIndex = limb.VisibleIndex;
+          break;
+        }
+      }
+      Asserts.Assert(limbIndex > -1);
 
-      triangle.Textures = new int[2];
+      this.activeLimb_ = this.allLimbs_[limbIndex];
+    }
+
+    public void AddTriangle(
+        DlShaderParams shaderParams,
+        int vertex1,
+        int vertex2,
+        int vertex3) {
+      if (this.IsComplete) {
+        return;
+      }
+
+      var textures = new int[2];
       for (var t = 0; t < 2; ++t) {
-        triangle.Textures[t] = this.activeTextures_[t];
+        textures[t] = this.activeTextures_[t];
       }
 
-      triangle.Vertices = new int[3];
-      triangle.Vertices[0] = this.activeVertices_[vertex1];
-      triangle.Vertices[1] = this.activeVertices_[vertex2];
-      triangle.Vertices[2] = this.activeVertices_[vertex3];
+      var vertices = new int[3];
+      vertices[0] = this.activeVertices_[vertex1];
+      vertices[1] = this.activeVertices_[vertex2];
+      vertices[2] = this.activeVertices_[vertex3];
 
+      // TODO: Merge existing shader params.
+      var triangle =
+          new TriangleParams(shaderParams.Clone(), textures, vertices);
       Asserts.Assert(this.activeLimb_).Triangles.Add(triangle);
     }
 
@@ -177,23 +314,36 @@ namespace UoT {
     }
   }
 
-  public class LimbInstance {
+  public class LimbInstance : IOldLimb {
     public IList<TriangleParams> Triangles { get; } =
       new List<TriangleParams>();
 
     public IList<int> OwnedVertices { get; } = new List<int>();
 
-    public double X { get; set; }
-    public double Y { get; set; }
-    public double Z { get; set; }
+    public bool Visible { get; set; }
+    public int VisibleIndex { get; set; }
 
-    public int FirstChild { get; set; }
-    public int NextSibling { get; set; }
+    public short x { get; set; }
+    public short y { get; set; }
+    public short z { get; set; }
+
+    public sbyte firstChild { get; set; }
+    public sbyte nextSibling { get; set; }
   }
 
-  public struct TriangleParams {
-    public int[] Textures { get; set; }
-    public int[] Vertices { get; set; }
+  public class TriangleParams {
+    public TriangleParams(
+        DlShaderParams shaderParams,
+        int[] textures,
+        int[] vertices) {
+      this.ShaderParams = shaderParams;
+      this.Textures = textures;
+      this.Vertices = vertices;
+    }
+
+    public DlShaderParams ShaderParams { get; }
+    public int[] Textures { get; }
+    public int[] Vertices { get; }
   }
 
   public struct VertexParams {

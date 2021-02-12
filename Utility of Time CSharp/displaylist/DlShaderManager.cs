@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Text;
 
 using Tao.OpenGl;
 
 using UoT.ui.main.viewer;
 using UoT.util;
 
-namespace UoT {
+namespace UoT.displaylist {
   /// <summary>
   ///   Helper class for managing shader-specific fields and passing them into
   ///   OpenGL.
@@ -35,21 +34,7 @@ namespace UoT {
      * ENVIRONMENT: A global color, typically used for coloring in alpha
      *   textures like Link's tunic.
      */
-    public float[] PrimColor = new float[4];
-
-    public float PrimColorLOD = 0f;
-    public float PrimColorM = 0f;
-    public float[] EnvironmentColor = new float[4];
-    public float[] BlendColor = new float[4];
-    public float[] FogColor = new float[4];
-    private UnpackedCombiner combArg_ = new UnpackedCombiner();
-    private bool PrecompiledCombiner = false;
-
-    public bool MultiTexture = false;
-    public bool EnableCombiner = false;
-    public bool EnableLighting = false;
-    public bool EnableSphericalUv = false;
-    public bool EnableLinearUv = false;
+    public DlShaderParams Params { get; } = new DlShaderParams();
 
     private void ResetColor_(float[] color)
       => this.SetColor_(color, 1, 1, 1, .5f);
@@ -122,7 +107,7 @@ namespace UoT {
     public void SetCombine(uint w0, uint w1) {
       if (GLExtensions.GLFragProg) {
         var ShaderCachePos = -1;
-        this.EnableCombiner = true;
+        this.Params.EnableCombiner = true;
 
         foreach (var cachedFragShader in this.FragShaderCache) {
           if (w0 == cachedFragShader.MUXS0 && w1 == cachedFragShader.MUXS1) {
@@ -185,7 +170,7 @@ namespace UoT {
                         this.FragShaderCache.Length);
       } else {
         Gl.glUseProgram(0);
-        this.EnableCombiner = false;
+        this.Params.EnableCombiner = false;
       }
     }
 
@@ -203,9 +188,9 @@ namespace UoT {
         float g,
         float b,
         float a) {
-      this.PrimColorM = primColorM;
-      this.PrimColorLOD = primColorLOD;
-      this.SetColor_(this.PrimColor, r, g, b, a);
+      this.Params.PrimColorM = primColorM;
+      this.Params.PrimColorLOD = primColorLOD;
+      this.SetColor_(this.Params.PrimColor, r, g, b, a);
     }
 
     public void SetEnvironmentColor(
@@ -213,27 +198,27 @@ namespace UoT {
         float g,
         float b,
         float a)
-      => this.SetColor_(this.EnvironmentColor, r, g, b, a);
+      => this.SetColor_(this.Params.EnvironmentColor, r, g, b, a);
 
     public void SetBlendColor(
         float r,
         float g,
         float b,
         float a)
-      => this.SetColor_(this.BlendColor, r, g, b, a);
+      => this.SetColor_(this.Params.BlendColor, r, g, b, a);
 
     public void SetFogColor(
         float r,
         float g,
         float b,
         float a)
-      => this.SetColor_(this.FogColor, r, g, b, a);
+      => this.SetColor_(this.Params.FogColor, r, g, b, a);
 
     public void Reset() {
-      this.ResetColor_(this.PrimColor);
-      this.ResetColor_(this.EnvironmentColor);
-      this.ResetColor_(this.BlendColor);
-      this.ResetColor_(this.FogColor);
+      this.ResetColor_(this.Params.PrimColor);
+      this.ResetColor_(this.Params.EnvironmentColor);
+      this.ResetColor_(this.Params.BlendColor);
+      this.ResetColor_(this.Params.FogColor);
 
       Gl.glDisable(Gl.GL_FRAGMENT_PROGRAM_ARB);
       Gl.glDisable(Gl.GL_CULL_FACE);
@@ -246,16 +231,16 @@ namespace UoT {
       Gl.glDisable(Gl.GL_LIGHTING);
       Gl.glDisable(Gl.GL_NORMALIZE);
 
-      this.EnableCombiner = false;
-      this.EnableLighting = true;
+      this.Params.EnableCombiner = false;
+      this.Params.EnableLighting = true;
 
-      if (!this.PrecompiledCombiner) {
+      if (!this.Params.PrecompiledCombiner) {
         this.PrecompileMUXS_(RDP_Defs.G_COMBINERMUX0, RDP_Defs.G_COMBINERMUX1);
       }
     }
 
     public void PassValuesToShader() {
-      if (this.EnableCombiner) {
+      if (this.Params.EnableCombiner) {
         Gl.glUniform1f(this.timeLocation_, (float) Time.Current);
         var camera = Asserts.Assert(Camera.Instance);
         Gl.glUniform3f(this.cameraPositionLocation_,
@@ -264,16 +249,18 @@ namespace UoT {
                        (float) camera.Z);
 
         Gl.glUniform1f(this.lightingEnabledLocation_,
-                       this.EnableLighting ? 1 : 0);
+                       this.Params.EnableLighting ? 1 : 0);
         Gl.glUniform1f(this.sphericalUvEnabledLocation_,
-                       this.EnableSphericalUv ? 1 : 0);
+                       this.Params.EnableSphericalUv ? 1 : 0);
         Gl.glUniform1f(this.linearUvEnabledLocation_,
-                       this.EnableLinearUv ? 1 : 0);
+                       this.Params.EnableLinearUv ? 1 : 0);
 
-        Gl.glUniform4fv(this.envColorLocation_, 1, this.EnvironmentColor);
-        Gl.glUniform4fv(this.primColorLocation_, 1, this.PrimColor);
-        Gl.glUniform4fv(this.blendLocation_, 1, this.BlendColor);
-        Gl.glUniform1f(this.primColorLodLocation_, this.PrimColorLOD);
+        Gl.glUniform4fv(this.envColorLocation_,
+                        1,
+                        this.Params.EnvironmentColor);
+        Gl.glUniform4fv(this.primColorLocation_, 1, this.Params.PrimColor);
+        Gl.glUniform4fv(this.blendLocation_, 1, this.Params.BlendColor);
+        Gl.glUniform1f(this.primColorLodLocation_, this.Params.PrimColorLOD);
 
         Gl.glUniform1i(this.texture0Location_, 0);
         Gl.glUniform1i(this.texture1Location_, 1);
@@ -283,8 +270,8 @@ namespace UoT {
         Gl.glDisable(Gl.GL_FRAGMENT_PROGRAM_ARB);
         Gl.glEnable(Gl.GL_LIGHTING);
         Gl.glEnable(Gl.GL_NORMALIZE);
-        this.MultiTexture = false;
-        this.EnableLighting = true;
+        this.Params.MultiTexture = false;
+        this.Params.EnableLighting = true;
       }
     }
 
@@ -298,7 +285,7 @@ namespace UoT {
         }
       }
 
-      this.PrecompiledCombiner = true;
+      this.Params.PrecompiledCombiner = true;
     }
 
     private void DecodeMUX_(
@@ -306,7 +293,7 @@ namespace UoT {
         uint MUXS1,
         ref ShaderCache[] Cache,
         int CacheEntry) {
-      this.UnpackMUX(MUXS0, MUXS1, ref this.combArg_);
+      this.UnpackMUX(MUXS0, MUXS1, this.Params.CombArg);
       Array.Resize(ref Cache, CacheEntry + 1);
       Cache[CacheEntry].MUXS0 = MUXS0;
       Cache[CacheEntry].MUXS1 = MUXS1;
@@ -316,16 +303,7 @@ namespace UoT {
     public void UnpackMUX(
         uint MUXS0,
         uint MUXS1,
-        ref UnpackedCombiner CC_Colors) {
-      CC_Colors = new UnpackedCombiner();
-      CC_Colors.aA = new uint[2];
-      CC_Colors.aB = new uint[2];
-      CC_Colors.aC = new uint[2];
-      CC_Colors.aD = new uint[2];
-      CC_Colors.cA = new uint[2];
-      CC_Colors.cB = new uint[2];
-      CC_Colors.cC = new uint[2];
-      CC_Colors.cD = new uint[2];
+        UnpackedCombiner CC_Colors) {
       CC_Colors.cA[0] = (uint) (MUXS0 >> 20 & 0xFL);
       CC_Colors.cB[0] = (uint) (MUXS1 >> 28 & 0xFL);
       CC_Colors.cC[0] = (uint) (MUXS0 >> 15 & 0x1FL);
@@ -349,6 +327,35 @@ namespace UoT {
         ref ShaderCache[] cache,
         int entry)
       => cache[entry].FragShader =
-             (uint) this.generator_.CreateShaderProgram(cycles, this.combArg_);
+             (uint) this.generator_.CreateShaderProgram(
+                 cycles,
+                 this.Params.CombArg);
+
+    public void PassInVertexAttribs(Vertex vertex) {
+      if (this.Params.EnableLighting) {
+        if (!this.Params.EnableCombiner) {
+          Gl.glColor4fv(this.Params.PrimColor);
+        } else {
+          Gl.glColor3f(1, 1, 1);
+        }
+
+        Gl.glVertexAttrib4f(this.ColorLocation, 1, 1, 1, 1);
+        Gl.glNormal3f(vertex.NormalX, vertex.NormalY, vertex.NormalZ);
+        Gl.glVertexAttrib3f(this.NormalLocation,
+                            vertex.NormalX,
+                            vertex.NormalY,
+                            vertex.NormalZ);
+      } else {
+        Gl.glColor4ub(vertex.R, vertex.G, vertex.B, vertex.A);
+        Gl.glVertexAttrib4f(this.ColorLocation,
+                            vertex.R / 255.0F,
+                            vertex.G / 255.0F,
+                            vertex.B / 255.0F,
+                            vertex.A / 255.0F);
+        // Normal is invalid, but we have to pass a value in to prevent NaNs
+        // when normalizing in the shader.
+        Gl.glVertexAttrib3f(this.NormalLocation, 1, 1, 1);
+      }
+    }
   }
 }

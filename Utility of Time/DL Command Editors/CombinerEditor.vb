@@ -1,4 +1,4 @@
-﻿Imports System.Windows.Forms
+﻿Imports UoT.displaylist
 
 Public Class CombinerEditor
   Private CombinerColors As UnpackedCombiner

@@ -3,7 +3,7 @@ using System.Text;
 
 using Tao.OpenGl;
 
-namespace UoT {
+namespace UoT.displaylist {
   public class DlShaderGenerator {
     // TODO: Lighting still seems a smidge off.
     // TODO: Fix shadows on cheeks, bad conversion of byte to float?

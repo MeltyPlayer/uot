@@ -3241,7 +3241,13 @@ Public Class MainWin
     animationTab_.AnimationPlaybackManager.Tick()
 
     If UseStaticDlModel And DlModel.IsComplete Then
-      DlModel.DrawWithAnimation(CurrAnimation, animationTab_.AnimationPlaybackManager.Frame)
+      DLParser.LimbMatrices.UpdateLimbMatrices(DlModel.Limbs, CurrAnimation, animationTab_.AnimationPlaybackManager)
+
+      DlModel.DrawWithLimbMatrices(DLParser.LimbMatrices)
+      Return
+    End If
+
+    If DlManager.Count = 0 Then
       Return
     End If
 
@@ -3317,9 +3323,7 @@ Public Class MainWin
       ' CurrLimb = id
       'End If
 
-      DlModel.SetCurrentLimb(id)
-
-      Dim dlIndex As Integer = - 1
+      Dim dlIndex As Integer = -1
       If .DisplayListAddress > Nothing Then
         dlIndex = DlManager.GetIndexByAddress(.DisplayListAddress)
       End If
@@ -4309,7 +4313,12 @@ Public Class MainWin
             DListSelection)
           If LimbEntries IsNot Nothing Then
             DlManager.HasLimbs = True
-            DLParser.LimbMatrices.Retarget(LimbEntries)
+
+            If UseStaticDlModel Then
+              DLParser.LimbMatrices.Retarget(DlModel.Limbs)
+            Else
+              DLParser.LimbMatrices.Retarget(LimbEntries)
+            End If
           Else
             DlManager.HasLimbs = False
             FindAllDLs(RamBanks.ZFileBuffer)

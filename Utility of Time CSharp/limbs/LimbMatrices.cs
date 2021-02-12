@@ -43,7 +43,7 @@ namespace UoT.limbs {
       return this.identity_;
     }
 
-    private uint ConvertAddressToVisibleLimbIndex_(uint address)
+    public static uint ConvertAddressToVisibleLimbIndex(uint address)
       => (address - 0x0d000000) / 0x40;
 
 
@@ -51,7 +51,7 @@ namespace UoT.limbs {
     ///   Retargets the lists of matrices to a new set of limbs. This MUST be
     ///   run whenever a new model is loaded.
     /// </summary>
-    public void Retarget(Limb[] limbs) {
+    public void Retarget(IList<IOldLimb> limbs) {
       var visibleCount = this.FindVisibleLimbs_(limbs);
       this.Resize_(limbs, visibleCount);
     }
@@ -61,14 +61,14 @@ namespace UoT.limbs {
     ///   Visibility is determined based on whether the display list's bank is
     ///   nonzero.
     /// </summary>
-    private int FindVisibleLimbs_(Limb[] limbs) {
+    private int FindVisibleLimbs_(IList<IOldLimb> limbs) {
       var currentVisibleCount = 0;
 
-      for (var i = 0; i < limbs.Length; ++i) {
+      for (var i = 0; i < limbs.Count; ++i) {
         var limb = limbs[i];
 
         // TODO: Split this to check if bank is 0 instead?
-        if (limb.DisplayListAddress > 0) {
+        if (limb.Visible) {
           limb.VisibleIndex = currentVisibleCount++;
         } else {
           limb.VisibleIndex = -1;
@@ -80,7 +80,7 @@ namespace UoT.limbs {
       return currentVisibleCount;
     }
 
-    private void Resize_(IReadOnlyList<Limb> limbs, int visibleCount) {
+    private void Resize_(IList<IOldLimb> limbs, int visibleCount) {
       this.impl_ = new Matrix[limbs.Count];
       this.visible_ = new Matrix[visibleCount];
 
@@ -99,14 +99,14 @@ namespace UoT.limbs {
 
 
     public void UpdateLimbMatrices(
-        Limb[] limbs,
+        IReadOnlyList<IOldLimb> limbs,
         IAnimation animation,
         IAnimationPlaybackManager playbackManager) {
       this.UpdateLimbMatricesRecursively_(limbs, 0, animation, playbackManager);
     }
 
     private void UpdateLimbMatricesRecursively_(
-        IReadOnlyList<Limb> limbs,
+        IReadOnlyList<IOldLimb> limbs,
         int limbIndex,
         IAnimation? animation,
         IAnimationPlaybackManager playbackManager) {

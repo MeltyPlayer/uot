@@ -1,4 +1,6 @@
-﻿Public Class N64DlistAssembler
+﻿Imports UoT.displaylist
+
+Public Class N64DlistAssembler
   Dim RDPCompiler As New RDPGlobal
   Dim F3DEX2Compiler As New UCodeSpecific.F3DEX2
   Dim F3DEXCompiler As New UCodeSpecific.F3DEX

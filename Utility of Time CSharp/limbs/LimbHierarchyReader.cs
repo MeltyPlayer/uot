@@ -112,7 +112,18 @@ namespace UoT.limbs {
 
                 tmpHierarchy[k] = new Limb();
                 {
+                  var displayListAddress =
+                      IoUtil.ReadUInt32(limbBankBuffer,
+                                        (uint)(limbOffset + 8L));
+                  IoUtil.SplitAddress(displayListAddress,
+                                      out var displayListBank,
+                                      out var displayListOffset);
+
+                  var visible = displayListAddress > 0;
+
                   var withBlock = tmpHierarchy[k];
+
+                  withBlock.Visible = visible;
                   withBlock.x =
                       (short) IoUtil.ReadUInt16(
                           limbBankBuffer,
@@ -129,18 +140,13 @@ namespace UoT.limbs {
                       (sbyte) limbBankBuffer[(int) (limbOffset + 6L)];
                   withBlock.nextSibling =
                       (sbyte) limbBankBuffer[(int) (limbOffset + 7L)];
-                  model.AddLimb(withBlock.x,
+                  
+                  model.AddLimb(visible,
+                                withBlock.x,
                                 withBlock.y,
                                 withBlock.z,
                                 withBlock.firstChild,
                                 withBlock.nextSibling);
-
-                  var displayListAddress =
-                      IoUtil.ReadUInt32(limbBankBuffer,
-                                        (uint) (limbOffset + 8L));
-                  IoUtil.SplitAddress(displayListAddress,
-                                      out var displayListBank,
-                                      out var displayListOffset);
 
                   if (displayListBank != 0L) {
                     var displayListBankBuffer =
@@ -172,6 +178,8 @@ namespace UoT.limbs {
                   tmpHierarchy[k] = withBlock;
                 }
               }
+
+              model.CalculateVisibleLimbIndices();
 
               if (isValid & !somethingVisible) {
                 throw new NotSupportedException(

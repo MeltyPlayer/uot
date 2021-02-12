@@ -2,6 +2,12 @@
 
 namespace UoT.util.array {
   public static class ArrayUtil {
+    public static T[] Copy<T>(T[] src) {
+      var dst = new T[src.Length];
+      ArrayUtil.CopyTo(src, dst);
+      return dst;
+    }
+
     public static void ExtractTo<T>(
         T[] src,
         int srcOffset,
@@ -10,6 +16,12 @@ namespace UoT.util.array {
         int count) {
       dst = new T[count];
       ArrayUtil.CopyTo(src, srcOffset, dst, dstOffset, count);
+    }
+
+    public static void CopyTo<T>(T[] src, T[] dst) {
+      Asserts.Assert(src.Length >= dst.Length,
+                     "Attempted to copy differently sized arrays!");
+      Array.Copy(src, dst, src.Length);
     }
 
     public static void CopyTo<T>(

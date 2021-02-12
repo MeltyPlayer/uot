@@ -206,17 +206,6 @@ namespace UoT {
   }
 
   /* TODO ERROR: Skipped RegionDirectiveTrivia */
-  public struct UnpackedCombiner {
-    public uint[] cA;
-    public uint[] cB;
-    public uint[] cC;
-    public uint[] cD;
-    public uint[] aA;
-    public uint[] aB;
-    public uint[] aC;
-    public uint[] aD;
-  }
-
   public struct UnpackedGeometryMode {
     public bool ZBUFFER;
     public bool CULLBACK;
