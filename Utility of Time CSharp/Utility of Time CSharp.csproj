@@ -20,6 +20,7 @@
   <ItemGroup>
     <PackageReference Include="FastFuzzyStringMatcher" Version="1.0.0" />
     <PackageReference Include="MathNet.Numerics" Version="4.15.0" />
+    <PackageReference Include="SharpGLTF.Toolkit" Version="1.0.0-alpha0020" />
     <PackageReference Include="SymSpell" Version="6.7.0" />
   </ItemGroup>
   <ItemGroup>
@@ -74,5 +75,9 @@
     <EmbeddedResource Update="ui\common\component\fields\HostPanel - Copy.resx">
       <DependentUpon>FieldControlList.resx</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="model\gltf\" />
+    <Folder Include="model\" />
   </ItemGroup>
 </Project>

@@ -3350,6 +3350,7 @@ Public Class MainWin
     ModelViewMatrixTransformer.Pop()
 
     DlModel.IsComplete = True
+    DlModel.SaveAsGlTf()
   End Sub
 
   Private Sub DrawJoint(ByVal id As Integer)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 
 using Tao.OpenGl;
 
@@ -8,7 +9,18 @@ using UoT.displaylist;
 using UoT.limbs;
 using UoT.util;
 
+using SharpGLTF.Geometry;
+using SharpGLTF.Geometry.VertexTypes;
+using SharpGLTF.Materials;
+using SharpGLTF.Schema2;
+using SharpGLTF.Transforms;
+
+using Buffer = SharpGLTF.Schema2.Buffer;
+
 namespace UoT {
+  using VERTEX =
+      VertexBuilder<VertexPositionNormal, VertexColor1Texture2, VertexEmpty>;
+
   public interface IDlModel {
     IList<IOldLimb> Limbs { get; }
   }
@@ -412,6 +424,83 @@ namespace UoT {
 
       this.allTextures_.Add(texture);
       return this.allTextures_.Count - 1;
+    }
+
+    // TODO: Pull this out.
+    public void SaveAsGlTf() {
+      var path = "R:/Noesis/Model/test.gltf";
+
+      var model = ModelRoot.CreateModel();
+
+      var material = new MaterialBuilder("material1").WithUnlitShader();
+
+      var skin = model.CreateSkin();
+
+      var rootNode = model.CreateLogicalNode();
+
+      var limbQueue = new Queue<(sbyte, Node)>();
+      limbQueue.Enqueue((0, rootNode));
+
+      // TODO: Use buffers for shader stuff?
+
+      var scale = .01;
+      while (limbQueue.Count > 0) {
+        var (limbIndex, parentNode) = limbQueue.Dequeue();
+        var limb = this.allLimbs_[limbIndex];
+
+        var limbMeshBuilder = VERTEX.CreateCompatibleMesh();
+
+        foreach (var triangle in limb.Triangles) {
+          // TODO: Should be possible to merge these by texture/shader.
+
+          var trianglePrimitive = limbMeshBuilder.UsePrimitive(material);
+
+          var vtx1 = this.allVertices_[triangle.Vertices[0]];
+          var vtx2 = this.allVertices_[triangle.Vertices[1]];
+          var vtx3 = this.allVertices_[triangle.Vertices[2]];
+
+          trianglePrimitive.AddTriangle(
+              VERTEX.Create(new Vector3((float) (vtx1.X * scale),
+                                        (float) (vtx1.Y * scale),
+                                        (float) (vtx1.Z * scale))),
+              VERTEX.Create(new Vector3((float) (vtx2.X * scale),
+                                        (float) (vtx2.Y * scale),
+                                        (float) (vtx2.Z * scale))),
+              VERTEX.Create(new Vector3((float) (vtx3.X * scale),
+                                        (float) (vtx3.Y * scale),
+                                        (float) (vtx3.Z * scale))));
+        }
+
+        var limbMesh = model.CreateMesh(limbMeshBuilder);
+
+        var node = parentNode.CreateNode()
+                             .WithMesh(limbMesh)
+                             .WithLocalTranslation(
+                                 new Vector3((float) (limb.x * scale),
+                                             (float) (limb.y * scale),
+                                             (float) (limb.z * scale)));
+        skin.BindJoints(node);
+
+        // Enqueues children and siblings.
+        var firstChildIndex = limb.firstChild;
+        if (firstChildIndex > -1) {
+          limbQueue.Enqueue((firstChildIndex, node));
+        }
+
+        var nextSiblingIndex = limb.nextSibling;
+        if (nextSiblingIndex > -1) {
+          limbQueue.Enqueue((nextSiblingIndex, parentNode));
+        }
+      }
+
+      // TODO: Write animations.
+      // TODO: Write textures.
+
+      var writeSettings = new WriteSettings {
+          JsonIndented = true,
+          ImageWriting = ResourceWriteMode.Embedded
+      };
+      model.SaveGLTF(path, writeSettings);
     }
   }
 
