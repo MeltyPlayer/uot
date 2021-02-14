@@ -380,7 +380,7 @@ namespace UoT.displaylist {
 
         this.TextureParams0.Bind();
       } else {
-        Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2);
+        Gl.glBindTexture(Gl.GL_TEXTURE_2D, -1);
       }
 
       if (this.Params.MultiTexture) {
@@ -404,7 +404,7 @@ namespace UoT.displaylist {
 
           this.TextureParams1.Bind();
         } else {
-          Gl.glBindTexture(Gl.GL_TEXTURE_2D, 2);
+          Gl.glBindTexture(Gl.GL_TEXTURE_2D, -1);
         }
         Gl.glActiveTexture(Gl.GL_TEXTURE0);
       }

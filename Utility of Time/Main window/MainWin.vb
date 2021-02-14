@@ -3402,6 +3402,7 @@ Public Class MainWin
 
       ModelViewMatrixTransformer.Push()
       ModelViewMatrixTransformer.Set(DLParser.LimbMatrices.GetMatrixForLimb(id))
+      DlModel.SetCurrentLimbByIndex(id)
 
       If validDl Then
         DrawDL(dlIndex, False)

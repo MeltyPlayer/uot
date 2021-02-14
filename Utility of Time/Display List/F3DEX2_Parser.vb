@@ -6,7 +6,6 @@ Imports UoT.displaylist
 Imports UoT.limbs
 
 Public Class F3DEX2_Parser
-
   Public Sub New(ShaderManager As DlShaderManager)
     Me.ShaderManager = ShaderManager
   End Sub
@@ -18,7 +17,7 @@ Public Class F3DEX2_Parser
     EVERYTHING = 0
   End Enum
 
-  Public ParseMode As Integer = -1
+  Public ParseMode As Integer = - 1
 
 #Region "SHADERS & TEXTURE RELATED"
 
@@ -38,7 +37,7 @@ Public Class F3DEX2_Parser
 
   Private UseJank As Boolean = True
 
-  Private JankTileDescriptors(-1) As TileDescriptor
+  Private JankTileDescriptors(- 1) As TileDescriptor
   Private JankCache As New TextureCache
   Private JankTextures(1) As Texture
 
@@ -55,7 +54,7 @@ Public Class F3DEX2_Parser
   '''   Judging from GLideN64's source, these are selected in TEXTURE() as tile
   '''   and tile+1.
   ''' </summary>
-  Private SelectedTileDescriptors(-1) As Integer
+  Private SelectedTileDescriptors(- 1) As Integer
 
   ' TODO: Delete this field?
   Private CurrentSelectedTileDescriptor As Integer
@@ -110,10 +109,10 @@ Public Class F3DEX2_Parser
 
   Public Sub ParseDL(DL As N64DisplayList, dlManager As DlManager)
     If HackEnvColor IsNot Nothing Then
-      ShaderManager.SetEnvironmentColor(HackEnvColor(0) / 255.0F,
-                                        HackEnvColor(1) / 255.0F,
-                                        HackEnvColor(2) / 255.0F,
-                                        HackEnvColor(3) / 255.0F)
+      ShaderManager.SetEnvironmentColor(HackEnvColor(0)/255.0F,
+                                        HackEnvColor(1)/255.0F,
+                                        HackEnvColor(2)/255.0F,
+                                        HackEnvColor(3)/255.0F)
     End If
 
     For i As Integer = 0 To DL.Commands.Length - 1
@@ -121,19 +120,19 @@ Public Class F3DEX2_Parser
         If ParseMode = Parse.EVERYTHING Then
           Select Case .Opcode
             Case F3DZEX.POPMTX
-popmatrix:
+              popmatrix:
               Debug.NotImplemented()
 
             Case RDP.G_SETENVCOLOR
-setenvironmentcolor:
+              setenvironmentcolor:
               ENVCOLOR(.CMDParams)
 
             Case RDP.G_SETPRIMCOLOR
-setprimitivecolor:
+              setprimitivecolor:
               SETPRIMCOLOR(.CMDParams)
 
             Case RDP.G_SETTIMG
-settextureimg:
+              settextureimg:
               Dim paletteMode As Boolean = (DL.Commands(i + 1).Opcode = RDP.G_RDPTILESYNC)
 
               If DL.Commands(i - 1).Opcode = RDP.G_SETTILESIZE Then
@@ -148,85 +147,83 @@ settextureimg:
                 ShaderManager.Params.MultiTexture = False
                 ShaderManager.Params.MultiTexCoord = False
                 CurrentSelectedTileDescriptor = 0
-                DlModel.UpdateTexture(1, Nothing)
               End If
 
               SETTIMG(.Low, .High, paletteMode)
 
             Case RDP.G_LOADTLUT
-loadtexturelut:
+              loadtexturelut:
               LOADTLUT(.High)
 
             Case RDP.G_LOADBLOCK
-loadtexblock:
+              loadtexblock:
               LOADBLOCK(.Low, .High)
 
             Case RDP.G_LOADTILE
               LOADTILE(.Low, .High)
 
             Case RDP.G_SETTILESIZE
-settilesize:
+              settilesize:
               SETTILESIZE(.Low, .High)
 
             Case RDP.G_SETTILE
-settile:
+              settile:
               If .CMDParams(1) > 0 Then SETTILE(.Low, .High)
 
             Case RDP.G_SETCOMBINE
-setcombiner:
+              setcombiner:
               SETCOMBINE(.Low, .High)
 
             Case F3DZEX.TEXTURE
-texture:
+              texture:
               TEXTURE(.Low, .High)
 
             Case F3DZEX.GEOMETRYMODE
-geometrymode:
+              geometrymode:
               GEOMETRYMODE(.Low, .High)
 
             Case F3DZEX.SETOTHERMODE_H
-setothermodehigh:
+              setothermodehigh:
               SETOTHERMODE_H(.Low, .High)
 
             Case F3DZEX.SETOTHERMODE_L
-seothtermodelow:
+              seothtermodelow:
               SETOTHERMODE_L(.Low, .High)
 
             Case F3DZEX.MTX
-matrix:
+              matrix:
               ' MTX(.CMDLow, .CMDHigh)
               Dim targetAddress As UInteger = .High
 
-              DlModel.SetCurrentVisibleLimbByMatrixAddress(targetAddress)
-
               Dim m As Matrix = LimbMatrices.GetMatrixAtAddress(targetAddress)
               ModelViewMatrixTransformer.Set(m)
+              DlModel.SetCurrentLimbByMatrixAddress(targetAddress)
 
             Case F3DZEX.VTX
-vertex:
+              vertex:
               Dim nextIsNotCulling As Boolean = DL.Commands(i + 1).Opcode <> F3DZEX.CULLDL
               If nextIsNotCulling Then
                 VTX(.Low, .High)
               End If
 
             Case F3DZEX.MODIFYVTX
-modifyvertex:
+              modifyvertex:
               MODIFYVTX(.CMDParams)
 
             Case F3DZEX.TRI1
-onetriangle:
+              onetriangle:
               TRI1(.CMDParams)
 
             Case F3DZEX.TRI2
-twotriangles:
+              twotriangles:
               TRI2(.CMDParams)
 
             Case F3DZEX.QUAD
-quad:
+              quad:
               Debug.NotImplemented()
 
             Case F3DZEX.DL
-dl:
+              dl:
               ' TODO: Support jumping to another DL.
               ' TODO: Decide to continue or quit depending on pp from w0. 
               Dim address As UInteger = .High
@@ -246,11 +243,11 @@ dl:
               End If
 
             Case F3DZEX.BRANCH_Z
-branchz:
+              branchz:
               Debug.NotImplemented()
 
             Case F3DZEX.ENDDL
-enddisplaylist:
+              enddisplaylist:
               Reset()
               Exit Sub
           End Select
@@ -326,7 +323,7 @@ enddisplaylist:
       For j As Integer = 0 To 3
         MatValue(0) = IoUtil.ReadUInt16(TempRSPMatrix.N64Mat, MtxPos + 0)
         MatValue(1) = IoUtil.ReadUInt16(TempRSPMatrix.N64Mat, MtxPos + 32)
-        TempRSPMatrix.OGLMat(i, j) = ((MatValue(0) << 16) Or MatValue(1)) * 1.0F / 65536.0F
+        TempRSPMatrix.OGLMat(i, j) = ((MatValue(0) << 16) Or MatValue(1))*1.0F/65536.0F
         MtxPos += 2
       Next
     Next
@@ -357,7 +354,7 @@ enddisplaylist:
   End Sub
 
   Private Sub MODIFYVTX(ByVal CMDParams() As Byte)
-    Dim i As Integer = (IoUtil.ReadUInt16(CMDParams, 2) And &HFFF) / 2
+    Dim i As Integer = (IoUtil.ReadUInt16(CMDParams, 2) And &HFFF)/2
     Dim Target As Integer = CMDParams(1)
 
     Dim vertex As Vertex = vertexCache(i)
@@ -369,18 +366,41 @@ enddisplaylist:
         vertex.B = CMDParams(6)
         vertex.A = CMDParams(7)
 
-        Dim normalX As Single = ConvertByteToFloat_(vertex.R)
-        Dim normalY As Single = ConvertByteToFloat_(vertex.G)
-        Dim normalZ As Single = ConvertByteToFloat_(vertex.B)
+        Dim rawNormalX As Single = ConvertByteToFloat_(vertex.R)
+        Dim rawNormalY As Single = ConvertByteToFloat_(vertex.G)
+        Dim rawNormalZ As Single = ConvertByteToFloat_(vertex.B)
+
+        DlModel.UpdateVertex(i, Function(vtxParams) As VertexParams
+                                  vtxParams.R = vertex.R
+                                  vtxParams.G = vertex.G
+                                  vtxParams.B = vertex.B
+                                  vtxParams.A = vertex.A
+
+                                  vtxParams.NormalX = rawNormalX
+                                  vtxParams.NormalY = rawNormalY
+                                  vtxParams.NormalZ = rawNormalZ
+
+                                  Return vtxParams
+                                End Function)
+
+        Dim normalX As Single = rawNormalX
+        Dim normalY As Single = rawNormalY
+        Dim normalZ As Single = rawNormalZ
         ModelViewMatrixTransformer.ProjectNormal(normalX, normalY, normalZ)
 
         vertex.NormalX = normalX
         vertex.NormalY = normalY
         vertex.NormalZ = normalZ
-
       Case &H14
         vertex.U = CShort(IoUtil.ReadUInt16(CMDParams, 4))
         vertex.V = CShort(IoUtil.ReadUInt16(CMDParams, 6))
+
+        DlModel.UpdateVertex(i, Function(vtxParams) As VertexParams
+                                  vtxParams.U = vertex.U
+                                  vtxParams.V = vertex.V
+
+                                  Return vtxParams
+                                End Function)
     End Select
 
     vertexCache(i) = vertex
@@ -561,9 +581,13 @@ enddisplaylist:
     Select Case DataSource
       Case RamBanks.CurrentBank
         For i2 As Integer = v0 To (v0 + n0) - 1
-          Dim x As Double = IoUtil.ReadInt16(Data, Offset)
-          Dim y As Double = IoUtil.ReadInt16(Data, Offset + 2)
-          Dim z As Double = IoUtil.ReadInt16(Data, Offset + 4)
+          Dim rawX As Double = IoUtil.ReadInt16(Data, Offset)
+          Dim rawY As Double = IoUtil.ReadInt16(Data, Offset + 2)
+          Dim rawZ As Double = IoUtil.ReadInt16(Data, Offset + 4)
+
+          Dim x As Double = rawX
+          Dim y As Double = rawY
+          Dim z As Double = rawZ
 
           ModelViewMatrixTransformer.ProjectVertex(x, y, z)
 
@@ -574,9 +598,13 @@ enddisplaylist:
           Dim b As Byte = Data(Offset + 14)
           Dim a As Byte = Data(Offset + 15)
 
-          Dim normalX As Single = ConvertByteToFloat_(r)
-          Dim normalY As Single = ConvertByteToFloat_(g)
-          Dim normalZ As Single = ConvertByteToFloat_(b)
+          Dim rawNormalX As Single = ConvertByteToFloat_(r)
+          Dim rawNormalY As Single = ConvertByteToFloat_(g)
+          Dim rawNormalZ As Single = ConvertByteToFloat_(b)
+
+          Dim normalX As Single = rawNormalX
+          Dim normalY As Single = rawNormalY
+          Dim normalZ As Single = rawNormalZ
           ModelViewMatrixTransformer.ProjectNormal(normalX, normalY, normalZ)
 
           Dim newVertex As Vertex
@@ -605,16 +633,16 @@ enddisplaylist:
           vertexCache(i2) = newVertex
 
           DlModel.UpdateVertex(i2, Function(vertex) As VertexParams
-                                     vertex.X = x
-                                     vertex.Y = y
-                                     vertex.Z = z
+                                     vertex.X = rawX
+                                     vertex.Y = rawY
+                                     vertex.Z = rawZ
 
                                      vertex.U = u
                                      vertex.V = v
 
-                                     vertex.NormalX = normalX
-                                     vertex.NormalY = normalY
-                                     vertex.NormalZ = normalZ
+                                     vertex.NormalX = rawNormalX
+                                     vertex.NormalY = rawNormalY
+                                     vertex.NormalZ = rawNormalZ
 
                                      vertex.R = r
                                      vertex.G = g
@@ -639,10 +667,6 @@ enddisplaylist:
   ''' </summary>
   Private Sub PrepareDrawTriangle_()
     If ParseMode = Parse.EVERYTHING Then
-      If Not ShaderManager.Params.EnableCombiner Then
-        DlModel.UpdateTexture(1, Nothing)
-      End If
-
       Gl.glEnable(Gl.GL_TEXTURE_2D)
       Dim texture0 As Texture = GetTexture(0)
       Dim texture1 As Texture = Nothing
@@ -655,7 +679,6 @@ enddisplaylist:
           LoadTex(targetBuffer0, 0)
 
           texture0 = SearchTexCache(tileDescriptor0)
-          DlModel.UpdateTexture(0, texture0)
         End If
       End If
 
@@ -679,7 +702,6 @@ enddisplaylist:
           End Select
 
           texture1 = SearchTexCache(tileDescriptor1)
-          DlModel.UpdateTexture(1, texture1)
         End If
         Gl.glActiveTexture(Gl.GL_TEXTURE0)
       End If
@@ -762,7 +784,9 @@ enddisplaylist:
         End If
       Next
 
-      DlModel.AddTriangle(ShaderManager.Params, Polygons(0), Polygons(1), Polygons(2))
+      Dim texture0 As Texture = GetTexture(0)
+      Dim texture1 As Texture = GetTexture(1)
+      DlModel.AddTriangle(ShaderManager.Params, Polygons(0), Polygons(1), Polygons(2), texture0, texture1)
 
       If ParseMode = Parse.EVERYTHING Then
         Gl.glBegin(Gl.GL_TRIANGLES)
@@ -807,8 +831,10 @@ enddisplaylist:
         End If
       Next
 
-      DlModel.AddTriangle(ShaderManager.Params, Polygons(0), Polygons(1), Polygons(2))
-      DlModel.AddTriangle(ShaderManager.Params, Polygons(3), Polygons(4), Polygons(5))
+      Dim texture0 As Texture = GetTexture(0)
+      Dim texture1 As Texture = GetTexture(1)
+      DlModel.AddTriangle(ShaderManager.Params, Polygons(0), Polygons(1), Polygons(2), texture0, texture1)
+      DlModel.AddTriangle(ShaderManager.Params, Polygons(3), Polygons(4), Polygons(5), texture0, texture1)
 
       If ParseMode = Parse.EVERYTHING Then
         Gl.glBegin(Gl.GL_TRIANGLES)
@@ -946,9 +972,9 @@ enddisplaylist:
       .LRT = (w1 And &HFFF) >> 2
       .Width = ((.LRS - .ULS) + 1)
       .Height = ((.LRT - .ULT) + 1)
-      .TexBytes = (.Width * .Height) * 2
+      .TexBytes = (.Width*.Height)*2
       If .TexBytes >> 16 = &HFFFF Then
-        .TexBytes = (.TexBytes << 16 >> 16) * 2
+        .TexBytes = (.TexBytes << 16 >> 16)*2
       End If
     End With
 
@@ -995,18 +1021,18 @@ enddisplaylist:
       Dim Mask_Height As UInteger = 1 << .MaskT
 
       Dim Line_Height As UInteger = 0
-      If Line_Width > 0 Then Line_Height = Min(MaxTexel / Line_Width, Tile_Height)
+      If Line_Width > 0 Then Line_Height = Min(MaxTexel/Line_Width, Tile_Height)
 
-      If .MaskS > 0 And ((Mask_Width * Mask_Height) <= MaxTexel) Then
+      If .MaskS > 0 And ((Mask_Width*Mask_Height) <= MaxTexel) Then
         .Width = Mask_Width
-      ElseIf ((Tile_Width * Tile_Height) <= MaxTexel) Then
+      ElseIf ((Tile_Width*Tile_Height) <= MaxTexel) Then
         .Width = Tile_Width
       Else
         .Width = Line_Width
       End If
-      If .MaskT > 0 And ((Mask_Width * Mask_Height) <= MaxTexel) Then
+      If .MaskT > 0 And ((Mask_Width*Mask_Height) <= MaxTexel) Then
         .Height = Mask_Height
-      ElseIf ((Tile_Width * Tile_Height) <= MaxTexel) Then
+      ElseIf ((Tile_Width*Tile_Height) <= MaxTexel) Then
         .Height = Tile_Height
       Else
         .Height = Line_Height
@@ -1065,8 +1091,8 @@ enddisplaylist:
         .ShiftT /= (1 << .TShiftT)
       End If
 
-      .TextureHRatio = ((.T_Scale * .ShiftT) / 32 / .LoadHeight)
-      .TextureWRatio = ((.S_Scale * .ShiftS) / 32 / .LoadWidth)
+      .TextureHRatio = ((.T_Scale*.ShiftT)/32/.LoadHeight)
+      .TextureWRatio = ((.S_Scale*.ShiftS)/32/.LoadWidth)
     End With
   End Sub
 
@@ -1098,11 +1124,11 @@ enddisplaylist:
       Select Case .PaletteBank
         Case RamBanks.CurrentBank
           For i As Integer = 0 To paletteSizeMinus1
-            palette16(i) = IoUtil.ReadUInt16(RamBanks.ZFileBuffer, .PaletteOffset + 2 * i)
+            palette16(i) = IoUtil.ReadUInt16(RamBanks.ZFileBuffer, .PaletteOffset + 2*i)
           Next
         Case 2
           For i As Integer = 0 To paletteSizeMinus1
-            palette16(i) = IoUtil.ReadUInt16(RamBanks.ZSceneBuffer, .PaletteOffset + 2 * i)
+            palette16(i) = IoUtil.ReadUInt16(RamBanks.ZSceneBuffer, .PaletteOffset + 2*i)
           Next
       End Select
 
@@ -1186,33 +1212,33 @@ enddisplaylist:
   End Sub
 
   Private Sub SETFOGCOLOR(ByVal CMDParams() As Byte)
-    ShaderManager.SetFogColor(CMDParams(4) / 255,
-                              CMDParams(5) / 255,
-                              CMDParams(6) / 255,
-                              CMDParams(7) / 255)
+    ShaderManager.SetFogColor(CMDParams(4)/255,
+                              CMDParams(5)/255,
+                              CMDParams(6)/255,
+                              CMDParams(7)/255)
   End Sub
 
   Private Sub ENVCOLOR(ByVal CMDParams() As Byte)
-    ShaderManager.SetEnvironmentColor(CMDParams(4) / 255,
-                                      CMDParams(5) / 255,
-                                      CMDParams(6) / 255,
-                                      CMDParams(7) / 255)
+    ShaderManager.SetEnvironmentColor(CMDParams(4)/255,
+                                      CMDParams(5)/255,
+                                      CMDParams(6)/255,
+                                      CMDParams(7)/255)
   End Sub
 
   Private Sub SETPRIMCOLOR(ByVal CMDParams() As Byte)
-    ShaderManager.SetPrimaryColor(CMDParams(2) / 255,
-                                  CMDParams(3) / 255,
-                                  CMDParams(4) / 255,
-                                  CMDParams(5) / 255,
-                                  CMDParams(6) / 255,
-                                  CMDParams(7) / 255)
+    ShaderManager.SetPrimaryColor(CMDParams(2)/255,
+                                  CMDParams(3)/255,
+                                  CMDParams(4)/255,
+                                  CMDParams(5)/255,
+                                  CMDParams(6)/255,
+                                  CMDParams(7)/255)
   End Sub
 
   Private Sub SETBLENDCOLOR(ByVal CMDParams() As Byte)
-    ShaderManager.SetBlendColor(CMDParams(4) / 255,
-                                CMDParams(5) / 255,
-                                CMDParams(6) / 255,
-                                CMDParams(7) / 255)
+    ShaderManager.SetBlendColor(CMDParams(4)/255,
+                                CMDParams(5)/255,
+                                CMDParams(6)/255,
+                                CMDParams(7)/255)
   End Sub
 
 #End Region
@@ -1224,6 +1250,7 @@ enddisplaylist:
     KillTexCache()
     MatrixMap.Clear()
     vertexCache.Reset()
+    ShaderManager.Reset()
   End Sub
 
   Public Sub KillTexCache()
@@ -1247,8 +1274,6 @@ enddisplaylist:
       JankTileDescriptors(i).T_Scale = 1.0F
       SelectedTileDescriptors(i) = i
     Next
-
-    ShaderManager.Reset()
   End Sub
 
 #End Region

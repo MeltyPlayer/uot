@@ -100,8 +100,12 @@ namespace UoT.limbs {
 
     public void UpdateLimbMatrices(
         IList<IOldLimb> limbs,
-        IAnimation animation,
+        IAnimation? animation,
         IAnimationPlaybackManager playbackManager) {
+      if (limbs.Count == 0) {
+        return;
+      }
+
       this.UpdateLimbMatricesRecursively_(limbs, 0, animation, playbackManager);
     }
 

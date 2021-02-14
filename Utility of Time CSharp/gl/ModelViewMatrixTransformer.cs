@@ -158,7 +158,7 @@ namespace UoT {
 
       // TODO: Assigned in push, possible to fix this?
       this.current_ = this.current_;
-    } 
+    }
 
     public void ProjectVertex(ref double x, ref double y, ref double z)
       => GlMatrixUtil.Project(Asserts.Assert(this.current_),

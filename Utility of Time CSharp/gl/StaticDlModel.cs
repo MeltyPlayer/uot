@@ -13,10 +13,22 @@ namespace UoT {
     IList<IOldLimb> Limbs { get; }
   }
 
-  public class Vec3d {
+  public class Vec3d : IVertex {
     public double X { get; set; }
     public double Y { get; set; }
     public double Z { get; set; }
+
+    public short U { get; set; }
+    public short V { get; set; }
+
+    public float NormalX { get; set; }
+    public float NormalY { get; set; }
+    public float NormalZ { get; set; }
+
+    public byte R { get; set; }
+    public byte G { get; set; }
+    public byte B { get; set; }
+    public byte A { get; set; }
   }
 
 
@@ -25,11 +37,11 @@ namespace UoT {
     // TODO: Split out vertices into separately indexed position/uv/color arrays.
 
     // TODO: How to separate limbs?
-    // TODO: How to apply matrix to specific limb's vertices?
-    // TODO: Keep track of texture params, combine modes, env colors, etc.
     // TODO: Support submeshes (e.g. held items).
     // TODO: Simplify some triangles to quads.
     // TODO: Separate common shader params as different materials.
+
+    // TODO: Add remainder of shader params for blend modes/etc.
 
     private readonly DlShaderManager shaderManager_;
     private bool isComplete_;
@@ -55,7 +67,6 @@ namespace UoT {
 
     private LimbInstance? activeLimb_;
     private readonly int[] activeVertices_ = new int[32];
-    private readonly int[] activeTextures_ = new int[2];
 
     // TODO: Needed for models w/o limbs.
     private LimbInstance? root_;
@@ -66,8 +77,7 @@ namespace UoT {
     private readonly IList<Vec3d>
         projectedVertices_ = new List<Vec3d>();
 
-    private readonly IList<TextureWrapper> allTextures_ =
-        new List<TextureWrapper>();
+    private readonly IList<Texture> allTextures_ = new List<Texture>();
 
     private readonly IList<LimbInstance> allLimbs_ = new List<LimbInstance>();
     public IList<IOldLimb> Limbs { get; } = new List<IOldLimb>();
@@ -77,9 +87,6 @@ namespace UoT {
 
       for (var i = 0; i < this.activeVertices_.Length; ++i) {
         this.activeVertices_[i] = -1;
-      }
-      for (var i = 0; i < this.activeTextures_.Length; ++i) {
-        this.activeTextures_[i] = -1;
       }
 
       this.root_ = new LimbInstance {
@@ -108,13 +115,6 @@ namespace UoT {
     public void Draw(
         IAnimation animation,
         IAnimationPlaybackManager animationPlaybackManager) {
-      // TODO: Then draw w/ projected vertices.
-      // TODO: Add helper class for shader program.
-
-      // TODO: Is the recursive stuff needed?
-
-      // TODO: Why aren't bones working?
-
       ModelViewMatrixTransformer.Push();
 
       if (animation != null) {
@@ -140,11 +140,11 @@ namespace UoT {
         indirectTextureHack.EyeState = face.EyeState
         indirectTextureHack.MouthState = face.MouthState
         End If*/
-
-        this.LimbMatrices.UpdateLimbMatrices(this.Limbs,
-                                             animation,
-                                             animationPlaybackManager);
       }
+
+      this.LimbMatrices.UpdateLimbMatrices(this.Limbs,
+                                           animation,
+                                           animationPlaybackManager);
 
       this.ForEachLimbRecursively_(
           0,
@@ -197,12 +197,29 @@ namespace UoT {
               var x = ownedVertex.X;
               var y = ownedVertex.Y;
               var z = ownedVertex.Z;
-
               ModelViewMatrixTransformer.ProjectVertex(ref x, ref y, ref z);
-
               projectedVertex.X = x;
               projectedVertex.Y = y;
               projectedVertex.Z = z;
+
+              projectedVertex.U = ownedVertex.U;
+              projectedVertex.V = ownedVertex.V;
+
+              double normalX = ownedVertex.NormalX;
+              double normalY = ownedVertex.NormalY;
+              double normalZ = ownedVertex.NormalZ;
+              ModelViewMatrixTransformer.ProjectNormal(
+                  ref normalX,
+                  ref normalY,
+                  ref normalZ);
+              projectedVertex.NormalX = (float) normalX;
+              projectedVertex.NormalY = (float) normalY;
+              projectedVertex.NormalZ = (float) normalZ;
+
+              projectedVertex.R = ownedVertex.R;
+              projectedVertex.G = ownedVertex.G;
+              projectedVertex.B = ownedVertex.B;
+              projectedVertex.A = ownedVertex.A;
             }
           },
           (limb, _) => ModelViewMatrixTransformer.Pop());
@@ -215,35 +232,32 @@ namespace UoT {
               this.shaderManager_.Params = triangle.ShaderParams;
               this.shaderManager_.PassValuesToShader();
 
-              Gl.glColor3b(255, 255, 255);
-              Gl.glBegin(Gl.GL_TRIANGLES);
+              var textureIds = triangle.TextureIds;
+              var texture0Id = textureIds[0];
+              var texture1Id = textureIds[1];
 
-              // TODO: Use texture.
-              // TODO: Use color.
-              // TODO: Use normal.
-              // TODO: Use shader.
-
-              var textures = triangle.Textures;
-              var texture0 = textures[0] > -1
-                                 ? this.allTextures_[textures[0]].Texture
+              var texture0 = texture0Id > -1
+                                 ? this.allTextures_[texture0Id]
                                  : null;
-              var texture1 = textures[1] > -1
-                                 ? this.allTextures_[textures[1]].Texture
+              var texture1 = texture1Id > -1
+                                 ? this.allTextures_[texture1Id]
                                  : null;
               this.shaderManager_.BindTextures(texture0, texture1);
+
+              Gl.glColor3b(255, 255, 255);
+              Gl.glBegin(Gl.GL_TRIANGLES);
 
               var tileDescriptor0 = texture0?.TileDescriptor;
               var tileDescriptor1 = texture1?.TileDescriptor;
 
               foreach (var vertexId in triangle.Vertices) {
-                var vertex = this.allVertices_[vertexId];
                 var projectedVertex = this.projectedVertices_[vertexId];
 
                 this.shaderManager_.BindTextureUvs(
-                    vertex,
+                    projectedVertex,
                     tileDescriptor0,
                     tileDescriptor1);
-                this.shaderManager_.PassInVertexAttribs(vertex);
+                this.shaderManager_.PassInVertexAttribs(projectedVertex);
                 Gl.glVertex3d(projectedVertex.X,
                               projectedVertex.Y,
                               projectedVertex.Z);
@@ -303,11 +317,11 @@ namespace UoT {
       this.Limbs.Add(newLimb);
     }
 
-    public void SetCurrentVisibleLimbByMatrixAddress(uint matrixAddress)
-      => this.SetCurrentVisibleLimbByIndex(
+    public void SetCurrentLimbByMatrixAddress(uint matrixAddress)
+      => this.SetCurrentLimbByVisibleLimbIndex(
           LimbMatrices.ConvertAddressToVisibleLimbIndex(matrixAddress));
 
-    public void SetCurrentVisibleLimbByIndex(uint visibleLimbIndex) {
+    public void SetCurrentLimbByVisibleLimbIndex(uint visibleLimbIndex) {
       if (this.IsComplete) {
         return;
       }
@@ -321,6 +335,14 @@ namespace UoT {
         }
       }
       Asserts.Assert(limbIndex > -1);
+
+      this.SetCurrentLimbByIndex(limbIndex);
+    }
+
+    public void SetCurrentLimbByIndex(int limbIndex) {
+      if (this.IsComplete) {
+        return;
+      }
       this.activeLimb_ = this.allLimbs_[limbIndex];
     }
 
@@ -328,15 +350,17 @@ namespace UoT {
         DlShaderParams shaderParams,
         int vertex1,
         int vertex2,
-        int vertex3) {
+        int vertex3,
+        Texture? texture0,
+        Texture? texture1) {
       if (this.IsComplete) {
         return;
       }
 
-      var textures = new int[2];
-      for (var t = 0; t < 2; ++t) {
-        textures[t] = this.activeTextures_[t];
-      }
+      var textureIds = new[] {
+          this.AddTexture_(texture0),
+          this.AddTexture_(texture1),
+      };
       var vertices = new int[3];
       vertices[0] = this.activeVertices_[vertex1];
       vertices[1] = this.activeVertices_[vertex2];
@@ -344,7 +368,7 @@ namespace UoT {
 
 // TODO: Merge existing shader params.
       var triangle =
-          new TriangleParams(shaderParams.Clone(), textures, vertices);
+          new TriangleParams(shaderParams.Clone(), textureIds, vertices);
 
       Asserts.Assert(this.activeLimb_).Triangles.Add(triangle);
     }
@@ -370,21 +394,24 @@ namespace UoT {
       this.allVertices_.Add(vertex);
     }
 
-    public void UpdateTexture(int index, Texture texture) {
+    private int AddTexture_(Texture? texture) {
       if (this.IsComplete) {
-        return;
-      }
-      if (texture == null) {
-        this.activeTextures_[index] = -1;
-        return;
+        Asserts.Fail("Should not try to create a new texture when complete!");
       }
 
-      var textureWrapper = new TextureWrapper {
-          Uuid = this.allTextures_.Count,
-          Texture = texture
-      };
-      this.activeTextures_[index] = textureWrapper.Uuid;
-      this.allTextures_.Add(textureWrapper);
+      if (texture == null) {
+        return -1;
+      }
+
+      for (var i = 0; i < this.allTextures_.Count; ++i) {
+        if (this.allTextures_[i].TileDescriptor.Uuid ==
+            texture.TileDescriptor.Uuid) {
+          return i;
+        }
+      }
+
+      this.allTextures_.Add(texture);
+      return this.allTextures_.Count - 1;
     }
   }
 
@@ -408,15 +435,16 @@ namespace UoT {
   public class TriangleParams {
     public TriangleParams(
         DlShaderParams shaderParams,
-        int[] textures,
+        int[] textureIds,
         int[] vertices) {
       this.ShaderParams = shaderParams;
-      this.Textures = textures;
+
+      this.TextureIds = textureIds;
       this.Vertices = vertices;
     }
 
     public DlShaderParams ShaderParams { get; }
-    public int[] Textures { get; }
+    public int[] TextureIds { get; }
     public int[] Vertices { get; }
   }
 
@@ -438,11 +466,6 @@ namespace UoT {
     public byte G { get; set; }
     public byte B { get; set; }
     public byte A { get; set; }
-  }
-
-  public struct TextureWrapper {
-    public int Uuid;
-    public Texture Texture;
   }
 
   public struct Normal {

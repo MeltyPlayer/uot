@@ -14,6 +14,7 @@ namespace UoT.displaylist {
           PrimColorM = this.PrimColorM,
           PrecompiledCombiner = this.PrecompiledCombiner,
           MultiTexture = this.MultiTexture,
+          MultiTexCoord = this.MultiTexCoord,
           EnableCombiner = this.EnableCombiner,
           EnableLighting = this.EnableLighting,
           EnableSphericalUv = this.EnableSphericalUv,
