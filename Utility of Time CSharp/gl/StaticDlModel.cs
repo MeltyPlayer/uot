@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 
 using Tao.OpenGl;
@@ -12,14 +13,12 @@ using UoT.util;
 using SharpGLTF.Geometry;
 using SharpGLTF.Geometry.VertexTypes;
 using SharpGLTF.Materials;
+using SharpGLTF.Memory;
 using SharpGLTF.Schema2;
-using SharpGLTF.Transforms;
-
-using Buffer = SharpGLTF.Schema2.Buffer;
 
 namespace UoT {
   using VERTEX =
-      VertexBuilder<VertexPositionNormal, VertexColor1Texture2, VertexEmpty>;
+      VertexBuilder<VertexPositionNormal, VertexColor1Texture2, VertexJoints4>;
 
   public interface IDlModel {
     IList<IOldLimb> Limbs { get; }
@@ -428,58 +427,41 @@ namespace UoT {
 
     // TODO: Pull this out.
     public void SaveAsGlTf() {
-      var path = "R:/Noesis/Model/test.gltf";
+      var basePath = "R:/Noesis/Model";
+      var path = $"{basePath}/test.gltf";
 
       var model = ModelRoot.CreateModel();
 
-      var material = new MaterialBuilder("material1").WithUnlitShader();
-
       var skin = model.CreateSkin();
 
+      var jointNodes = new List<Node>();
+
       var rootNode = model.CreateLogicalNode();
+      jointNodes.Add(rootNode);
 
       var limbQueue = new Queue<(sbyte, Node)>();
       limbQueue.Enqueue((0, rootNode));
 
       // TODO: Use buffers for shader stuff?
+      // TODO: Eliminate redundant definitions.
 
-      var scale = .01;
+
+      var scale = .001;
+
+      // Gathers up limbs and their nodes.
+      var limbsAndNodes = new (LimbInstance, Node)[this.allLimbs_.Count];
       while (limbQueue.Count > 0) {
         var (limbIndex, parentNode) = limbQueue.Dequeue();
+
         var limb = this.allLimbs_[limbIndex];
-
-        var limbMeshBuilder = VERTEX.CreateCompatibleMesh();
-
-        foreach (var triangle in limb.Triangles) {
-          // TODO: Should be possible to merge these by texture/shader.
-
-          var trianglePrimitive = limbMeshBuilder.UsePrimitive(material);
-
-          var vtx1 = this.allVertices_[triangle.Vertices[0]];
-          var vtx2 = this.allVertices_[triangle.Vertices[1]];
-          var vtx3 = this.allVertices_[triangle.Vertices[2]];
-
-          trianglePrimitive.AddTriangle(
-              VERTEX.Create(new Vector3((float) (vtx1.X * scale),
-                                        (float) (vtx1.Y * scale),
-                                        (float) (vtx1.Z * scale))),
-              VERTEX.Create(new Vector3((float) (vtx2.X * scale),
-                                        (float) (vtx2.Y * scale),
-                                        (float) (vtx2.Z * scale))),
-              VERTEX.Create(new Vector3((float) (vtx3.X * scale),
-                                        (float) (vtx3.Y * scale),
-                                        (float) (vtx3.Z * scale))));
-        }
-
-        var limbMesh = model.CreateMesh(limbMeshBuilder);
-
         var node = parentNode.CreateNode()
-                             .WithMesh(limbMesh)
                              .WithLocalTranslation(
                                  new Vector3((float) (limb.x * scale),
                                              (float) (limb.y * scale),
                                              (float) (limb.z * scale)));
-        skin.BindJoints(node);
+        jointNodes.Add(node);
+
+        limbsAndNodes[limbIndex] = (limb, node);
 
         // Enqueues children and siblings.
         var firstChildIndex = limb.firstChild;
@@ -492,6 +474,122 @@ namespace UoT {
           limbQueue.Enqueue((nextSiblingIndex, parentNode));
         }
       }
+      skin.BindJoints(jointNodes.ToArray());
+
+      // Gathers up vertex builders.
+      var vertexBuilders = new VERTEX[this.allVertices_.Count];
+      foreach (var (limb, node) in limbsAndNodes) {
+        foreach (var vertexId in limb.OwnedVertices) {
+          var vertex = this.allVertices_[vertexId];
+
+          var position = new Vector3(
+              (float) (vertex.X * scale),
+              (float) (vertex.Y * scale),
+              (float) (vertex.Z * scale));
+
+          vertexBuilders[vertexId] = VERTEX
+                                     .Create(position)
+                                     .WithSkinning((node.LogicalIndex, 1));
+        }
+      }
+
+
+      // Gathers up texture materials.
+      var materials = new MaterialBuilder[1 + this.allTextures_.Count];
+      materials[0] = new MaterialBuilder("null").WithUnlitShader();
+      for (var i = 0; i < this.allTextures_.Count; ++i) {
+        var glTexture = this.allTextures_[i];
+
+        var texturePath = $"{basePath}/{glTexture.TileDescriptor.Uuid}.bmp";
+        glTexture.SaveToFile(texturePath);
+
+        var glTfImage = new MemoryImage(texturePath);
+
+        var material = materials[1 + i] = new MaterialBuilder($"material{i}")
+                                          .WithUnlitShader();
+
+        var glTfTexture = material.UseChannel(KnownChannel.BaseColor)
+                                  .UseTexture();
+
+        var wrapModeS = glTexture.GlMirroredS
+                                        ?
+                                        TextureWrapMode.MIRRORED_REPEAT
+                                        : glTexture.GlClampedS
+                                            ? TextureWrapMode.CLAMP_TO_EDGE
+                                            : TextureWrapMode.REPEAT;
+        var wrapModeT = glTexture.GlMirroredT
+                            ?
+                            TextureWrapMode.MIRRORED_REPEAT
+                            : glTexture.GlClampedT
+                                ? TextureWrapMode.CLAMP_TO_EDGE
+                                : TextureWrapMode.REPEAT;
+        glTfTexture.WithPrimaryImage(glTfImage).WithSampler(wrapModeS, wrapModeT);
+      }
+
+      // Builds mesh.
+      var meshBuilder = VERTEX.CreateCompatibleMesh();
+      foreach (var (limb, _) in limbsAndNodes) {
+        foreach (var triangle in limb.Triangles) {
+          var shaderParams = triangle.ShaderParams;
+          var withNormal = shaderParams.EnableLighting;
+          var withPrimColor = withNormal && shaderParams.EnableCombiner;
+
+          // TODO: Should be possible to merge these by texture/shader.
+
+          var texture0Material = materials[1 + triangle.TextureIds[0]];
+
+          var trianglePrimitive = meshBuilder.UsePrimitive(texture0Material);
+          var triangleVertexBuilders = new List<IVertexBuilder>();
+
+          foreach (var vertexId in triangle.Vertices) {
+            var vertex = this.allVertices_[vertexId];
+
+            // TODO: How does environment color fit in?
+            var color = withNormal
+                            ? withPrimColor
+                                  ? new Vector4(
+                                      shaderParams.PrimColor[0],
+                                      shaderParams.PrimColor[1],
+                                      shaderParams.PrimColor[2],
+                                      shaderParams.PrimColor[3])
+                                  : new Vector4(1)
+                            : new Vector4(vertex.R / 255f,
+                                          vertex.G / 255f,
+                                          vertex.B / 255f,
+                                          vertex.A / 255f);
+
+            var vertexBuilder = vertexBuilders[vertexId];
+
+            var texture0 = this.allTextures_[triangle.TextureIds[0]];
+            var tileDescriptor0 = texture0.TileDescriptor;
+
+            var u = (float)(vertex.U * tileDescriptor0.TextureWRatio);
+            var v = (float)(vertex.V * tileDescriptor0.TextureHRatio);
+            vertexBuilder =
+                vertexBuilder.WithMaterial(color, new Vector2(u, v));
+
+            if (withNormal) {
+              // TODO: Normals seem broken?
+              var normal =
+                  new Vector3(vertex.NormalX, vertex.NormalY, vertex.NormalZ);
+              vertexBuilder =
+                  vertexBuilder.WithGeometry(vertexBuilder.Position, normal);
+            }
+
+            triangleVertexBuilders.Add(vertexBuilder);
+          }
+
+          trianglePrimitive.AddTriangle(triangleVertexBuilders[0],
+                                        triangleVertexBuilders[1],
+                                        triangleVertexBuilders[2]);
+        }
+      }
+
+      var mesh = model.CreateMesh(meshBuilder);
+
+      model.UseScene("default")
+           .CreateNode()
+           .WithSkinnedMesh(mesh, rootNode.WorldMatrix, jointNodes.ToArray());
 
       // TODO: Write animations.
       // TODO: Write textures.

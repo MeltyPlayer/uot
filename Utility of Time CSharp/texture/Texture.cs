@@ -9,11 +9,11 @@ namespace UoT {
   /// </summary>
   public class Texture {
     public TileDescriptor TileDescriptor { get; }
-    private readonly byte[] rgba_;
+    public byte[] Rgba { get; }
 
     public Texture(TileDescriptor tileDescriptor, byte[] rgba, bool save = false) {
       this.TileDescriptor = tileDescriptor;
-      this.rgba_ = rgba;
+      this.Rgba = rgba;
 
       if (save) {
         var format = tileDescriptor.ColorFormat;
@@ -59,7 +59,7 @@ namespace UoT {
       var width = this.TileDescriptor.LoadWidth;
       var height = this.TileDescriptor.LoadHeight;
 
-      var rgba = this.rgba_;
+      var rgba = this.Rgba;
 
       var bmp = new Bitmap(width, height);
       for (var y = 0; y < height; y++) {
