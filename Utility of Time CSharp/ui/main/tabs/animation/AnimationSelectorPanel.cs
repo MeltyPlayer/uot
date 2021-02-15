@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 
 using UoT.animation.banks;
+using UoT.hacks;
 using UoT.limbs;
 using UoT.util;
 
@@ -26,15 +27,28 @@ namespace UoT.ui.main.tabs.animation {
       }
     }
 
-    public void Reset(IList<Limb>? limbs) {
+    public void Reset(string filename, IList<Limb>? limbs) {
       this.limbs_ = limbs;
 
       if (limbs != null) {
         var initialIndex = this.bankComboBox_.SelectedIndex;
-        this.bankComboBox_.SelectedIndex = 0;
+
+        var targetBankName =
+            DefaultAnimationBankHack.GetDefaultAnimationBankForObject(filename);
+        var targetIndex = 0;
+        for (var i = 0; i < this.animationBanks_!.Count; ++i) {
+          var bank = this.animationBanks_[i];
+          if (bank.Name == targetBankName) {
+            targetIndex = i;
+            break;
+          }
+        }
+
+        this.bankComboBox_.SelectedIndex = targetIndex;
+
         // If initial index was 0, then change wasn't detected. We need to 
         // manually reload.
-        if (initialIndex == 0) {
+        if (initialIndex == targetIndex) {
           this.LoadBankAndSelectFirstAnimation_();
         }
       } else {

@@ -4360,7 +4360,7 @@ Public Class MainWin
           End If
       End Select
 
-      animationTab_.AnimationBanks.Reset(LimbEntries)
+      animationTab_.AnimationBanks.Reset(ObjectFilename, LimbEntries)
     Catch err As System.Exception
       MsgBox(
         "Error in entry point searching: " & Environment.NewLine & Environment.NewLine & "Debug Info: " & err.Message)

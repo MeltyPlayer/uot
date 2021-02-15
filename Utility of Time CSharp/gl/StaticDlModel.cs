@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Numerics;
 
@@ -55,6 +56,8 @@ namespace UoT {
     // TODO: Separate common shader params as different materials.
 
     // TODO: Add remainder of shader params for blend modes/etc.
+
+    // TODO: Some models have gaps again, e.g. Bazaar Shopkeeper.
 
     private readonly DlShaderManager shaderManager_;
     private bool isComplete_;
@@ -428,6 +431,9 @@ namespace UoT {
       return this.allTextures_.Count - 1;
     }
 
+    public static readonly Vector3 GLOSSY_SPECULAR = new Vector3(.1f);
+    public static readonly float GLOSSY_GLOSSINESS = .5f;
+
     public class MaterialPair {
       public MaterialPair(MaterialBuilder materialBuilder) {
         this.Lit = materialBuilder
@@ -436,7 +442,8 @@ namespace UoT {
                    .WithSpecularGlossiness(new Vector3(0), 0);
         this.Unlit = materialBuilder.Clone().WithUnlitShader();
         this.Glossy = materialBuilder
-            .WithSpecularGlossinessShader();
+                      .WithSpecularGlossinessShader()
+                      .WithSpecularGlossiness(StaticDlModel.GLOSSY_SPECULAR, StaticDlModel.GLOSSY_GLOSSINESS);
       }
 
       public MaterialPair(
@@ -587,6 +594,8 @@ namespace UoT {
 
         // TODO: Use metal instead?
         glossy.WithSpecularGlossinessShader()
+              .WithSpecularGlossiness(StaticDlModel.GLOSSY_SPECULAR,
+                                      StaticDlModel.GLOSSY_GLOSSINESS)
               .UseChannel(KnownChannel.Diffuse)
               .UseTexture()
               .WithPrimaryImage(glTfImage)
@@ -603,7 +612,7 @@ namespace UoT {
         for (var l = 0; l < limbsAndNodes.Length; ++l) {
           var (_, node) = limbsAndNodes[l];
 
-          // TODO: Simplify for constant values.
+          // TODO: Simplify for constant values, results in big files.
           var keyframes = new Dictionary<float, Quaternion>();
           for (var f = 0; f < animation.FrameCount; ++f) {
             var time = f / 20f;
@@ -739,14 +748,16 @@ namespace UoT {
       scene.CreateNode()
            .WithSkinnedMesh(mesh, rootNode.WorldMatrix, jointNodes.ToArray());
 
-      // TODO: Write animations.
-      // TODO: Write textures.
+      var di = new DirectoryInfo(basePath);
+      foreach (FileInfo file in di.GetFiles()) {
+        file.Delete();
+      }
 
       var writeSettings = new WriteSettings {
           JsonIndented = true,
           ImageWriting = ResourceWriteMode.Embedded
       };
-      model.SaveGLTF(path, writeSettings);
+      model.Save(path, writeSettings);
     }
   }
 
