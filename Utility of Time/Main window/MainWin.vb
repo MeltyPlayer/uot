@@ -3350,7 +3350,7 @@ Public Class MainWin
     ModelViewMatrixTransformer.Pop()
 
     DlModel.IsComplete = True
-    DlModel.SaveAsGlTf(animationTab_.AnimationBanks.Animations)
+    DlModel.SaveAsGlTf(ObjectFilename, animationTab_.AnimationBanks.Animations)
   End Sub
 
   Private Sub DrawJoint(ByVal id As Integer)

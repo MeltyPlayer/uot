@@ -158,133 +158,152 @@ namespace UoT {
         End If*/
       }
 
-      this.LimbMatrices.UpdateLimbMatrices(this.Limbs,
-                                           animation,
-                                           (float) animationPlaybackManager
-                                               .Frame);
+      var hasLimbs = (this.allLimbs_?.Count ?? 0) > 0;
 
-      this.ForEachLimbRecursively_(
-          0,
-          (limb, limbIndex) => {
-            if (false) {
-              var xI = 0.0;
-              var yI = 0.0;
-              var zI = 0.0;
-              ModelViewMatrixTransformer.ProjectVertex(ref xI, ref yI, ref zI);
+      void ProjectVertices(IEnumerable<int> vertexIndices) {
+        foreach (var vertexIndex in vertexIndices) {
+          var ownedVertex = this.allVertices_[vertexIndex];
+          var projectedVertex = this.projectedVertices_[vertexIndex];
 
-              double xF = limb.x;
-              double yF = limb.y;
-              double zF = limb.z;
-              ModelViewMatrixTransformer.ProjectVertex(ref xF, ref yF, ref zF);
+          var x = ownedVertex.X;
+          var y = ownedVertex.Y;
+          var z = ownedVertex.Z;
+          ModelViewMatrixTransformer.ProjectVertex(ref x, ref y, ref z);
+          projectedVertex.X = x;
+          projectedVertex.Y = y;
+          projectedVertex.Z = z;
 
-              Gl.glDepthRange(0, 0);
-              Gl.glLineWidth(9);
-              Gl.glBegin(Gl.GL_LINES);
-              Gl.glColor3f(1, 1, 1);
-              Gl.glVertex3d(xI, yI, zI);
-              Gl.glVertex3d(xF, yF, zF);
-              Gl.glEnd();
-              Gl.glDepthRange(0, -0.5);
-              Gl.glPointSize(11);
-              Gl.glBegin(Gl.GL_POINTS);
-              Gl.glColor3f(0, 0, 0);
-              Gl.glVertex3d(xF, yF, zF);
-              Gl.glEnd();
-              /*Gl.glPointSize(8);
-              Gl.glBegin(Gl.GL_POINTS);
-              Gl.glColor3ub(BoneColorFactor.r,
-                            BoneColorFactor.g,
-                            BoneColorFactor.b);
-              Gl.glVertex3f(xF, yF, zF);
-              Gl.glEnd();*/
-              Gl.glPointSize(1);
-              Gl.glLineWidth(1);
-              Gl.glDepthRange(0, 1);
-            }
+          projectedVertex.U = ownedVertex.U;
+          projectedVertex.V = ownedVertex.V;
 
-            ModelViewMatrixTransformer.Push();
+          double normalX = ownedVertex.NormalX;
+          double normalY = ownedVertex.NormalY;
+          double normalZ = ownedVertex.NormalZ;
+          ModelViewMatrixTransformer.ProjectNormal(ref normalX,
+                                                   ref normalY,
+                                                   ref normalZ);
+          projectedVertex.NormalX = (float) normalX;
+          projectedVertex.NormalY = (float) normalY;
+          projectedVertex.NormalZ = (float) normalZ;
 
-            var matrix = this.LimbMatrices.GetMatrixForLimb((uint) limbIndex);
-            ModelViewMatrixTransformer.Set(matrix);
+          projectedVertex.R = ownedVertex.R;
+          projectedVertex.G = ownedVertex.G;
+          projectedVertex.B = ownedVertex.B;
+          projectedVertex.A = ownedVertex.A;
+        }
+      }
 
-            foreach (var vertexIndex in limb.OwnedVertices) {
-              var ownedVertex = this.allVertices_[vertexIndex];
-              var projectedVertex = this.projectedVertices_[vertexIndex];
+      if (!hasLimbs) {
+        var allVertexIndices = new int[this.allVertices_.Count];
+        for (var i = 0; i < allVertexIndices.Length; ++i) {
+          allVertexIndices[i] = i;
+        }
 
-              var x = ownedVertex.X;
-              var y = ownedVertex.Y;
-              var z = ownedVertex.Z;
-              ModelViewMatrixTransformer.ProjectVertex(ref x, ref y, ref z);
-              projectedVertex.X = x;
-              projectedVertex.Y = y;
-              projectedVertex.Z = z;
+        ProjectVertices(allVertexIndices);
+      } else {
+        this.LimbMatrices.UpdateLimbMatrices(this.Limbs,
+                                             animation,
+                                             (float)animationPlaybackManager
+                                                 .Frame);
 
-              projectedVertex.U = ownedVertex.U;
-              projectedVertex.V = ownedVertex.V;
+        this.ForEachLimbRecursively_(
+            0,
+            (limb, limbIndex) => {
+              if (false) {
+                var xI = 0.0;
+                var yI = 0.0;
+                var zI = 0.0;
+                ModelViewMatrixTransformer.ProjectVertex(ref xI, ref yI, ref zI);
 
-              double normalX = ownedVertex.NormalX;
-              double normalY = ownedVertex.NormalY;
-              double normalZ = ownedVertex.NormalZ;
-              ModelViewMatrixTransformer.ProjectNormal(
-                  ref normalX,
-                  ref normalY,
-                  ref normalZ);
-              projectedVertex.NormalX = (float) normalX;
-              projectedVertex.NormalY = (float) normalY;
-              projectedVertex.NormalZ = (float) normalZ;
+                double xF = limb.x;
+                double yF = limb.y;
+                double zF = limb.z;
+                ModelViewMatrixTransformer.ProjectVertex(ref xF, ref yF, ref zF);
 
-              projectedVertex.R = ownedVertex.R;
-              projectedVertex.G = ownedVertex.G;
-              projectedVertex.B = ownedVertex.B;
-              projectedVertex.A = ownedVertex.A;
-            }
-          },
-          (limb, _) => ModelViewMatrixTransformer.Pop());
-      ModelViewMatrixTransformer.Pop();
-
-      this.ForEachLimbRecursively_(
-          0,
-          (limb, _) => {
-            foreach (var triangle in limb.Triangles) {
-              this.shaderManager_.Params = triangle.ShaderParams;
-              this.shaderManager_.PassValuesToShader();
-
-              var textureIds = triangle.TextureIds;
-              var texture0Id = textureIds[0];
-              var texture1Id = textureIds[1];
-
-              var texture0 = texture0Id > -1
-                                 ? this.allTextures_[texture0Id]
-                                 : null;
-              var texture1 = texture1Id > -1
-                                 ? this.allTextures_[texture1Id]
-                                 : null;
-              this.shaderManager_.BindTextures(texture0, texture1);
-
-              Gl.glColor3b(255, 255, 255);
-              Gl.glBegin(Gl.GL_TRIANGLES);
-
-              var tileDescriptor0 = texture0?.TileDescriptor;
-              var tileDescriptor1 = texture1?.TileDescriptor;
-
-              foreach (var vertexId in triangle.Vertices) {
-                var projectedVertex = this.projectedVertices_[vertexId];
-
-                this.shaderManager_.BindTextureUvs(
-                    projectedVertex,
-                    tileDescriptor0,
-                    tileDescriptor1);
-                this.shaderManager_.PassInVertexAttribs(projectedVertex);
-                Gl.glVertex3d(projectedVertex.X,
-                              projectedVertex.Y,
-                              projectedVertex.Z);
+                Gl.glDepthRange(0, 0);
+                Gl.glLineWidth(9);
+                Gl.glBegin(Gl.GL_LINES);
+                Gl.glColor3f(1, 1, 1);
+                Gl.glVertex3d(xI, yI, zI);
+                Gl.glVertex3d(xF, yF, zF);
+                Gl.glEnd();
+                Gl.glDepthRange(0, -0.5);
+                Gl.glPointSize(11);
+                Gl.glBegin(Gl.GL_POINTS);
+                Gl.glColor3f(0, 0, 0);
+                Gl.glVertex3d(xF, yF, zF);
+                Gl.glEnd();
+                /*Gl.glPointSize(8);
+                Gl.glBegin(Gl.GL_POINTS);
+                Gl.glColor3ub(BoneColorFactor.r,
+                              BoneColorFactor.g,
+                              BoneColorFactor.b);
+                Gl.glVertex3f(xF, yF, zF);
+                Gl.glEnd();*/
+                Gl.glPointSize(1);
+                Gl.glLineWidth(1);
+                Gl.glDepthRange(0, 1);
               }
 
-              Gl.glEnd();
-            }
-            Gl.glFinish();
-          },
-          null);
+              ModelViewMatrixTransformer.Push();
+
+              var matrix = this.LimbMatrices.GetMatrixForLimb((uint)limbIndex);
+              ModelViewMatrixTransformer.Set(matrix);
+
+              ProjectVertices(limb.OwnedVertices);
+            },
+            (limb, _) => ModelViewMatrixTransformer.Pop());
+      }
+      ModelViewMatrixTransformer.Pop();
+
+      void RenderTriangles(IList<TriangleParams> triangles) {
+        foreach (var triangle in triangles) {
+          this.shaderManager_.Params = triangle.ShaderParams;
+          this.shaderManager_.PassValuesToShader();
+
+          var textureIds = triangle.TextureIds;
+          var texture0Id = textureIds[0];
+          var texture1Id = textureIds[1];
+
+          var texture0 = texture0Id > -1
+                             ? this.allTextures_[texture0Id]
+                             : null;
+          var texture1 = texture1Id > -1
+                             ? this.allTextures_[texture1Id]
+                             : null;
+          this.shaderManager_.BindTextures(texture0, texture1);
+
+          Gl.glColor3b(255, 255, 255);
+          Gl.glBegin(Gl.GL_TRIANGLES);
+
+          var tileDescriptor0 = texture0?.TileDescriptor;
+          var tileDescriptor1 = texture1?.TileDescriptor;
+
+          foreach (var vertexId in triangle.Vertices) {
+            var projectedVertex = this.projectedVertices_[vertexId];
+
+            this.shaderManager_.BindTextureUvs(projectedVertex,
+                                               tileDescriptor0,
+                                               tileDescriptor1);
+            this.shaderManager_.PassInVertexAttribs(projectedVertex);
+            Gl.glVertex3d(projectedVertex.X,
+                          projectedVertex.Y,
+                          projectedVertex.Z);
+          }
+
+          Gl.glEnd();
+        }
+        Gl.glFinish();
+      }
+
+      if (!hasLimbs) {
+        RenderTriangles(this.root_!.Triangles);
+      } else {
+        this.ForEachLimbRecursively_(
+            0,
+            (limb, _) => RenderTriangles(limb.Triangles),
+            null);
+      }
     }
 
     private void ForEachLimbRecursively_(
@@ -443,7 +462,8 @@ namespace UoT {
         this.Unlit = materialBuilder.Clone().WithUnlitShader();
         this.Glossy = materialBuilder
                       .WithSpecularGlossinessShader()
-                      .WithSpecularGlossiness(StaticDlModel.GLOSSY_SPECULAR, StaticDlModel.GLOSSY_GLOSSINESS);
+                      .WithSpecularGlossiness(StaticDlModel.GLOSSY_SPECULAR,
+                                              StaticDlModel.GLOSSY_GLOSSINESS);
       }
 
       public MaterialPair(
@@ -488,7 +508,8 @@ namespace UoT {
     }
 
     // TODO: Pull this out.
-    public void SaveAsGlTf(IList<IAnimation> animations) {
+    public void SaveAsGlTf(string objectName, 
+                           IList<IAnimation>? animations) {
       // TODO: Use shader.
 
       var basePath = "R:/Noesis/Model";
@@ -505,48 +526,59 @@ namespace UoT {
       var rootNode = scene.CreateNode();
       jointNodes[0] = rootNode;
 
-      var limbQueue = new Queue<(sbyte, Node)>();
-      limbQueue.Enqueue((0, rootNode));
-
       // TODO: Use buffers for shader stuff?
       // TODO: Eliminate redundant definitions.
+      // TODO: Include face animations, somehow?
+      // TODO: Fix large filesize for Link, seems to be animations?
+      // TODO: Include positions for each animation, and each frame for link.
+      // TODO: Clamp textures by pre-repeating.
+      // TODO: Tweak shininess.
+      // TODO: Fix limb matrices for some characters, like Bazaar Shopkeeper?
 
-      var scale = .001;
+      var scale = objectName.StartsWith("object_gi_") ? .1 : .001;
+
+      var hasLimbs = this.allLimbs_.Count > 0;
+      var hasAnimations = (animations?.Count ?? 0) > 0;
 
       // Gathers up limbs and their nodes.
-
-      var firstAnimation = animations[0];
+      var firstAnimation = hasAnimations ? animations![0] : null;
 
       var limbsAndNodes = new (LimbInstance, Node)[this.allLimbs_.Count];
-      while (limbQueue.Count > 0) {
-        var (limbIndex, parentNode) = limbQueue.Dequeue();
+      if (hasLimbs) {
+        var limbQueue = new Queue<(sbyte, Node)>();
+        limbQueue.Enqueue((0, rootNode));
+        while (limbQueue.Count > 0) {
+          var (limbIndex, parentNode) = limbQueue.Dequeue();
 
-        var limb = this.allLimbs_[limbIndex];
+          var limb = this.allLimbs_[limbIndex];
 
-        var position = new Vector3((float) (limb.x * scale),
-                                   (float) (limb.y * scale),
-                                   (float) (limb.z * scale));
-        var rotation =
-            this.LimbMatrices.GetLimbRotationAtFrame(limbIndex,
-                                                     firstAnimation,
-                                                     0);
+          var position = new Vector3((float) (limb.x * scale),
+                                     (float) (limb.y * scale),
+                                     (float) (limb.z * scale));
+          var node = parentNode.CreateNode()
+                               .WithLocalTranslation(position);
 
-        var node = parentNode.CreateNode()
-                             .WithLocalTranslation(position)
-                             .WithLocalRotation(rotation);
+          if (firstAnimation != null) {
+            var rotation =
+                this.LimbMatrices.GetLimbRotationAtFrame(limbIndex,
+                                                         firstAnimation,
+                                                         0);
+            node.WithLocalRotation(rotation);
+          }
 
-        jointNodes[1 + limbIndex] = node;
-        limbsAndNodes[limbIndex] = (limb, node);
+          jointNodes[1 + limbIndex] = node;
+          limbsAndNodes[limbIndex] = (limb, node);
 
-        // Enqueues children and siblings.
-        var firstChildIndex = limb.firstChild;
-        if (firstChildIndex > -1) {
-          limbQueue.Enqueue((firstChildIndex, node));
-        }
+          // Enqueues children and siblings.
+          var firstChildIndex = limb.firstChild;
+          if (firstChildIndex > -1) {
+            limbQueue.Enqueue((firstChildIndex, node));
+          }
 
-        var nextSiblingIndex = limb.nextSibling;
-        if (nextSiblingIndex > -1) {
-          limbQueue.Enqueue((nextSiblingIndex, parentNode));
+          var nextSiblingIndex = limb.nextSibling;
+          if (nextSiblingIndex > -1) {
+            limbQueue.Enqueue((nextSiblingIndex, parentNode));
+          }
         }
       }
       skin.BindJoints(jointNodes.ToArray());
@@ -605,16 +637,26 @@ namespace UoT {
       }
 
       // Gathers up animations.
-      for (var a = 0; a < animations.Count; ++a) {
-        var animation = animations[a];
+      for (var a = 0; a < (animations?.Count ?? 0); ++a) {
+        var animation = animations![a];
         var animationName = $"animation{a}";
 
         for (var l = 0; l < limbsAndNodes.Length; ++l) {
           var (_, node) = limbsAndNodes[l];
 
+          var multiFrameTracks = 0;
+          for (var t = 0; t < 3; ++t) {
+            var track = animation.GetTrack(3 * l + t);
+            if (track.Type == 1) {
+              ++multiFrameTracks;
+            }
+          }
+          var isMultiFrame = multiFrameTracks > 0;
+          var trackFrameCount = isMultiFrame ? animation.FrameCount : 1;
+
           // TODO: Simplify for constant values, results in big files.
           var keyframes = new Dictionary<float, Quaternion>();
-          for (var f = 0; f < animation.FrameCount; ++f) {
+          for (var f = 0; f < trackFrameCount; ++f) {
             var time = f / 20f;
             keyframes[time] =
                 this.LimbMatrices.GetLimbRotationAtFrame(l, animation, f);
@@ -628,47 +670,56 @@ namespace UoT {
       ModelViewMatrixTransformer.Push();
       ModelViewMatrixTransformer.Identity();
 
-      this.LimbMatrices.UpdateLimbMatrices(this.Limbs,
-                                           firstAnimation,
-                                           0);
-
       var vertexBuilders = new VERTEX[this.allVertices_.Count];
-      for (var l = 0; l < limbsAndNodes.Length; ++l) {
-        var jointIndex = 1 + l;
-        var (limb, _) = limbsAndNodes[l];
 
-        ModelViewMatrixTransformer.Set(
-            this.LimbMatrices.GetMatrixForLimb((uint) l));
-
-        foreach (var vertexId in limb.OwnedVertices) {
-          var vertex = this.allVertices_[vertexId];
-
-          var x = vertex.X;
-          var y = vertex.Y;
-          var z = vertex.Z;
-
-          ModelViewMatrixTransformer.ProjectVertex(ref x, ref y, ref z);
-
+      if (!hasLimbs) {
+        for (var v = 0; v < this.allVertices_.Count; ++v) {
+          var vertex = this.allVertices_[v];
           var position = new Vector3(
-              (float) (x * scale),
-              (float) (y * scale),
-              (float) (z * scale));
+              (float) (vertex.X * scale),
+              (float) (vertex.Y * scale),
+              (float) (vertex.Z * scale));
 
-          vertexBuilders[vertexId] = VERTEX
-                                     .Create(position)
-                                     .WithSkinning((jointIndex, 1));
+          vertexBuilders[v] = VERTEX.Create(position).WithSkinning((0, 1));
+        }
+      } else {
+        this.LimbMatrices.UpdateLimbMatrices(this.Limbs,
+                                             firstAnimation,
+                                             0);
+
+        for (var l = 0; l < limbsAndNodes.Length; ++l) {
+          var jointIndex = 1 + l;
+          var (limb, _) = limbsAndNodes[l];
+
+          ModelViewMatrixTransformer.Set(
+              this.LimbMatrices.GetMatrixForLimb((uint) l));
+
+          foreach (var vertexId in limb.OwnedVertices) {
+            var vertex = this.allVertices_[vertexId];
+
+            var x = vertex.X;
+            var y = vertex.Y;
+            var z = vertex.Z;
+
+            ModelViewMatrixTransformer.ProjectVertex(ref x, ref y, ref z);
+
+            var position = new Vector3(
+                (float) (x * scale),
+                (float) (y * scale),
+                (float) (z * scale));
+
+            vertexBuilders[vertexId] = VERTEX
+                                       .Create(position)
+                                       .WithSkinning((jointIndex, 1));
+          }
         }
       }
 
       // Builds mesh.
       var meshBuilder = VERTEX.CreateCompatibleMesh();
-      for (var l = 0; l < limbsAndNodes.Length; ++l) {
-        var (limb, _) = limbsAndNodes[l];
 
-        ModelViewMatrixTransformer.Set(
-            this.LimbMatrices.GetMatrixForLimb((uint) l));
-
-        foreach (var triangle in limb.Triangles) {
+      void AddTrianglesToMesh(IList<TriangleParams> triangles) {
+        foreach (var triangle in triangles) {
           var shaderParams = triangle.ShaderParams;
           var enableLighting = shaderParams.EnableLighting;
           var withNormal = enableLighting;
@@ -693,11 +744,10 @@ namespace UoT {
             // TODO: How does environment color fit in?
             var color = withNormal
                             ? withPrimColor
-                                  ? new Vector4(
-                                      shaderParams.PrimColor[0],
-                                      shaderParams.PrimColor[1],
-                                      shaderParams.PrimColor[2],
-                                      shaderParams.PrimColor[3])
+                                  ? new Vector4(shaderParams.PrimColor[0],
+                                                shaderParams.PrimColor[1],
+                                                shaderParams.PrimColor[2],
+                                                shaderParams.PrimColor[3])
                                   : new Vector4(1)
                             : new Vector4(vertex.R / 255f,
                                           vertex.G / 255f,
@@ -739,6 +789,19 @@ namespace UoT {
           trianglePrimitive.AddTriangle(triangleVertexBuilders[0],
                                         triangleVertexBuilders[1],
                                         triangleVertexBuilders[2]);
+        }
+      }
+
+      if (!hasLimbs) {
+        AddTrianglesToMesh(this.root_!.Triangles);
+      } else {
+        for (var l = 0; l < limbsAndNodes.Length; ++l) {
+          var (limb, _) = limbsAndNodes[l];
+
+          ModelViewMatrixTransformer.Set(
+              this.LimbMatrices.GetMatrixForLimb((uint) l));
+
+          AddTrianglesToMesh(limb.Triangles);
         }
       }
       ModelViewMatrixTransformer.Pop();
