@@ -3342,7 +3342,7 @@ Public Class MainWin
 
       ' TODO: Precalculate matrices via a helper class.
 
-      DLParser.LimbMatrices.UpdateLimbMatrices(LimbEntries, CurrAnimation, animationTab_.AnimationPlaybackManager)
+      DLParser.LimbMatrices.UpdateLimbMatrices(LimbEntries, CurrAnimation, animationTab_.AnimationPlaybackManager.Frame)
 
       DrawJoint(0)
 
@@ -3350,7 +3350,7 @@ Public Class MainWin
     ModelViewMatrixTransformer.Pop()
 
     DlModel.IsComplete = True
-    DlModel.SaveAsGlTf()
+    DlModel.SaveAsGlTf(animationTab_.AnimationBanks.Animations)
   End Sub
 
   Private Sub DrawJoint(ByVal id As Integer)

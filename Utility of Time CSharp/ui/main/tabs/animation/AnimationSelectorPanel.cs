@@ -12,7 +12,7 @@ namespace UoT.ui.main.tabs.animation {
 
     private readonly AnimationReader animationReader_ = new AnimationReader();
     private IReadOnlyList<IAnimationBank>? animationBanks_;
-    private IList<IAnimation>? animations_;
+    public IList<IAnimation>? Animations { get; private set; }
     private IList<Limb>? limbs_;
 
     public AnimationSelectorPanel() => this.InitializeComponent();
@@ -62,7 +62,7 @@ namespace UoT.ui.main.tabs.animation {
         System.EventArgs e) => this.LoadBankAndSelectFirstAnimation_();
 
     private void LoadBankAndSelectFirstAnimation_() {
-      this.animations_ = null;
+      this.Animations = null;
 
       var limbCount = this.limbs_?.Count ?? 0;
       var selectedAnimationBank = this.SelectedAnimationBank;
@@ -70,20 +70,20 @@ namespace UoT.ui.main.tabs.animation {
       if (limbCount > 0 && selectedAnimationBank != null) {
         // Inline
         if (selectedAnimationBank.Bank == null) {
-          this.animations_ =
+          this.Animations =
               this.animationReader_.GetCommonAnimations(
                   RamBanks.ZFileBuffer,
                   limbCount,
                   this.animationsListBox_);
         } else {
           if (selectedAnimationBank.Name == "link_animetion") {
-            this.animations_ = this.animationReader_.GetLinkAnimations(
+            this.Animations = this.animationReader_.GetLinkAnimations(
                 RamBanks.GameplayKeep,
                 limbCount,
                 selectedAnimationBank.Bank,
                 this.animationsListBox_);
           } else {
-            this.animations_ = this.animationReader_.GetCommonAnimations(
+            this.Animations = this.animationReader_.GetCommonAnimations(
                 selectedAnimationBank.Bank,
                 limbCount,
                 this.animationsListBox_);
@@ -91,8 +91,8 @@ namespace UoT.ui.main.tabs.animation {
         }
       }
 
-      if (this.animations_ != null) {
-        Asserts.Assert(this.animations_.Count > 0);
+      if (this.Animations != null) {
+        Asserts.Assert(this.Animations.Count > 0);
         this.animationsListBox_.SelectedIndex = 0;
       } else {
         this.animationsListBox_.SelectedIndex = -1;
@@ -104,7 +104,7 @@ namespace UoT.ui.main.tabs.animation {
     public IAnimation? SelectedAnimation {
       get {
         var selectedIndex = this.animationsListBox_.SelectedIndex;
-        return selectedIndex == -1 ? null : this.animations_?[selectedIndex];
+        return selectedIndex == -1 ? null : this.Animations?[selectedIndex];
       }
     }
 

@@ -101,19 +101,19 @@ namespace UoT.limbs {
     public void UpdateLimbMatrices(
         IList<IOldLimb> limbs,
         IAnimation? animation,
-        IAnimationPlaybackManager playbackManager) {
+        float frame) {
       if (limbs.Count == 0) {
         return;
       }
 
-      this.UpdateLimbMatricesRecursively_(limbs, 0, animation, playbackManager);
+      this.UpdateLimbMatricesRecursively_(limbs, 0, animation, frame);
     }
 
     private void UpdateLimbMatricesRecursively_(
         IList<IOldLimb> limbs,
         int limbIndex,
         IAnimation? animation,
-        IAnimationPlaybackManager playbackManager) {
+        float frame) {
       var limb = limbs[limbIndex];
 
       ModelViewMatrixTransformer.Push();
@@ -121,7 +121,7 @@ namespace UoT.limbs {
         ModelViewMatrixTransformer.Translate(limb.x, limb.y, limb.z);
 
         if (animation != null) {
-          this.PushRotation_(limbIndex, animation, playbackManager);
+          this.PushRotation_(limbIndex, animation, frame);
         }
 
         ModelViewMatrixTransformer.Get(this.tempMatrix_);
@@ -132,7 +132,7 @@ namespace UoT.limbs {
           this.UpdateLimbMatricesRecursively_(limbs,
                                               firstChild,
                                               animation,
-                                              playbackManager);
+                                              frame);
         }
       }
       ModelViewMatrixTransformer.Pop();
@@ -142,23 +142,22 @@ namespace UoT.limbs {
         this.UpdateLimbMatricesRecursively_(limbs,
                                             nextSibling,
                                             animation,
-                                            playbackManager);
+                                            frame);
       }
     }
 
     private void PushRotation_(
         int limbIndex,
         IAnimation animation,
-        IAnimationPlaybackManager playbackManager) {
-      var q = this.GetLimbRotation_(limbIndex, animation, playbackManager);
+        float frame) {
+      var q = this.GetLimbRotation(limbIndex, animation, frame);
       this.ApplyQuaternion_(q);
     }
 
-
-    private Quaternion GetLimbRotation_(
+    public Quaternion GetLimbRotationAtFrame(
         int limbIndex,
         IAnimation animation,
-        IAnimationPlaybackManager playbackManager) {
+        int frame) {
       var trackIndex = limbIndex * 3;
 
       // TODO: This doesn't look like it should be needed.
@@ -170,33 +169,36 @@ namespace UoT.limbs {
       var yTrack = animation.GetTrack(trackIndex + 1);
       var zTrack = animation.GetTrack(trackIndex + 2);
 
+      this.WrapFrame_(xTrack, frame, out var xFrame);
+      this.WrapFrame_(yTrack, frame, out var yFrame);
+      this.WrapFrame_(zTrack, frame, out var zFrame);
+
       var xFrames = xTrack.Frames;
       var yFrames = yTrack.Frames;
       var zFrames = zTrack.Frames;
 
-      var frame = (int) Math.Floor(playbackManager.Frame);
-      this.GetFrameAndNext_(xTrack, frame, out var xFrame, out var nextXFrame);
-      this.GetFrameAndNext_(yTrack, frame, out var yFrame, out var nextYFrame);
-      this.GetFrameAndNext_(zTrack, frame, out var zFrame, out var nextZFrame);
-
       var r2d = Math.PI / 180;
-      var x1 = this.AngleToRad_(xFrames[xFrame]) * r2d;
-      var y1 = this.AngleToRad_(yFrames[yFrame]) * r2d;
-      var z1 = this.AngleToRad_(zFrames[zFrame]) * r2d;
+      var x = this.AngleToRad_(xFrames[xFrame]) * r2d;
+      var y = this.AngleToRad_(yFrames[yFrame]) * r2d;
+      var z = this.AngleToRad_(zFrames[zFrame]) * r2d;
 
-      var q1 = this.GetQuaternion_(x1, y1, z1);
+      return this.GetQuaternion_(x, y, z);
+    }
 
-      var x2 = this.AngleToRad_(xFrames[nextXFrame]) * r2d;
-      var y2 = this.AngleToRad_(yFrames[nextYFrame]) * r2d;
-      var z2 = this.AngleToRad_(zFrames[nextZFrame]) * r2d;
+    public Quaternion GetLimbRotation(
+        int limbIndex,
+        IAnimation animation,
+        float frameFloat) {
+      var frame = (int) Math.Floor(frameFloat);
 
-      var q2 = this.GetQuaternion_(x2, y2, z2);
+      var q1 = this.GetLimbRotationAtFrame(limbIndex, animation, frame);
+      var q2 = this.GetLimbRotationAtFrame(limbIndex, animation, frame + 1);
 
       if (Quaternion.Dot(q1, q2) < 0) {
         q2 = -q2;
       }
 
-      var frameDelta = (float) (playbackManager.Frame % 1);
+      var frameDelta = (float) (frameFloat % 1);
       var interp = Quaternion.Slerp(q1, q2, frameDelta);
       return Quaternion.Normalize(interp);
     }
@@ -216,19 +218,16 @@ namespace UoT.limbs {
       return Quaternion.Normalize(qz * qy * qx);
     }
 
-    private void GetFrameAndNext_(
+    private void WrapFrame_(
         IAnimationTrack track,
         int frame,
-        out int trackFrame,
-        out int nextTrackFrame) {
+        out int trackFrame) {
       var frameCount = track.Frames.Count;
 
       if (track.Type == 1) {
         trackFrame = frame % frameCount;
-        nextTrackFrame = (trackFrame + 1) % frameCount;
       } else {
         trackFrame = 0;
-        nextTrackFrame = 0;
       }
     }
 

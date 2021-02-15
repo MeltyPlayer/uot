@@ -25,7 +25,7 @@ namespace UoT {
                        size +
                        "_" +
                        address.ToString("X8") +
-                       ".bmp";
+                       ".png";
         this.SaveToFile(filename);
       }
     }

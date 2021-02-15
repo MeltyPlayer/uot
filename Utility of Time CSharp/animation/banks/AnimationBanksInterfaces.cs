@@ -8,6 +8,8 @@ namespace UoT.animation.banks {
     void Populate(IReadOnlyList<IAnimationBank> banks);
     void Reset(IList<Limb>? limbs);
 
+    IList<IAnimation>? Animations { get; }
+
     IAnimation? SelectedAnimation { get; }
     event Action<IAnimation?> AnimationSelected;
 

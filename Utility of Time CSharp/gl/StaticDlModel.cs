@@ -16,6 +16,8 @@ using SharpGLTF.Materials;
 using SharpGLTF.Memory;
 using SharpGLTF.Schema2;
 
+using AlphaMode = SharpGLTF.Materials.AlphaMode;
+
 namespace UoT {
   using VERTEX =
       VertexBuilder<VertexPositionNormal, VertexColor1Texture2, VertexJoints4>;
@@ -155,7 +157,8 @@ namespace UoT {
 
       this.LimbMatrices.UpdateLimbMatrices(this.Limbs,
                                            animation,
-                                           animationPlaybackManager);
+                                           (float) animationPlaybackManager
+                                               .Frame);
 
       this.ForEachLimbRecursively_(
           0,
@@ -425,19 +428,75 @@ namespace UoT {
       return this.allTextures_.Count - 1;
     }
 
+    public class MaterialPair {
+      public MaterialPair(MaterialBuilder materialBuilder) {
+        this.Lit = materialBuilder
+                   .Clone()
+                   .WithSpecularGlossinessShader()
+                   .WithSpecularGlossiness(new Vector3(0), 0);
+        this.Unlit = materialBuilder.Clone().WithUnlitShader();
+        this.Glossy = materialBuilder
+            .WithSpecularGlossinessShader();
+      }
+
+      public MaterialPair(
+          MaterialBuilder lit,
+          MaterialBuilder unlit,
+          MaterialBuilder glossy) {
+        this.Lit = lit;
+        this.Unlit = unlit;
+        this.Glossy = glossy;
+      }
+
+      /// <summary>
+      ///   Lit version of the material. Used for standard surfaces.
+      /// </summary>
+      public MaterialBuilder Lit { get; }
+
+      /// <summary>
+      ///   "Unlit" version of the material. Used for surfaces that shouldn't
+      ///   be affected by shadow, e.g. glowing enemy eyes.
+      /// </summary>
+      public MaterialBuilder Unlit { get; }
+
+      /// <summary>
+      ///   Glossy version of the material. Used for shiny surfaces, like
+      ///   swords and many items when held over Link's head.
+      /// </summary>
+      public MaterialBuilder Glossy { get; }
+    }
+
+    private TextureWrapMode GetWrapMode_(
+        bool mirrored,
+        bool clamped) {
+      if (mirrored) {
+        return TextureWrapMode.MIRRORED_REPEAT;
+      }
+
+      if (clamped) {
+        return TextureWrapMode.CLAMP_TO_EDGE;
+      }
+
+      return TextureWrapMode.REPEAT;
+    }
+
     // TODO: Pull this out.
-    public void SaveAsGlTf() {
+    public void SaveAsGlTf(IList<IAnimation> animations) {
+      // TODO: Use shader.
+
       var basePath = "R:/Noesis/Model";
       var path = $"{basePath}/test.gltf";
 
       var model = ModelRoot.CreateModel();
 
+      var scene = model.UseScene("default");
+
       var skin = model.CreateSkin();
 
-      var jointNodes = new List<Node>();
+      var jointNodes = new Node[1 + this.allLimbs_.Count];
 
-      var rootNode = model.CreateLogicalNode();
-      jointNodes.Add(rootNode);
+      var rootNode = scene.CreateNode();
+      jointNodes[0] = rootNode;
 
       var limbQueue = new Queue<(sbyte, Node)>();
       limbQueue.Enqueue((0, rootNode));
@@ -445,22 +504,31 @@ namespace UoT {
       // TODO: Use buffers for shader stuff?
       // TODO: Eliminate redundant definitions.
 
-
       var scale = .001;
 
       // Gathers up limbs and their nodes.
+
+      var firstAnimation = animations[0];
+
       var limbsAndNodes = new (LimbInstance, Node)[this.allLimbs_.Count];
       while (limbQueue.Count > 0) {
         var (limbIndex, parentNode) = limbQueue.Dequeue();
 
         var limb = this.allLimbs_[limbIndex];
-        var node = parentNode.CreateNode()
-                             .WithLocalTranslation(
-                                 new Vector3((float) (limb.x * scale),
-                                             (float) (limb.y * scale),
-                                             (float) (limb.z * scale)));
-        jointNodes.Add(node);
 
+        var position = new Vector3((float) (limb.x * scale),
+                                   (float) (limb.y * scale),
+                                   (float) (limb.z * scale));
+        var rotation =
+            this.LimbMatrices.GetLimbRotationAtFrame(limbIndex,
+                                                     firstAnimation,
+                                                     0);
+
+        var node = parentNode.CreateNode()
+                             .WithLocalTranslation(position)
+                             .WithLocalRotation(rotation);
+
+        jointNodes[1 + limbIndex] = node;
         limbsAndNodes[limbIndex] = (limb, node);
 
         // Enqueues children and siblings.
@@ -476,67 +544,136 @@ namespace UoT {
       }
       skin.BindJoints(jointNodes.ToArray());
 
-      // Gathers up vertex builders.
-      var vertexBuilders = new VERTEX[this.allVertices_.Count];
-      foreach (var (limb, node) in limbsAndNodes) {
-        foreach (var vertexId in limb.OwnedVertices) {
-          var vertex = this.allVertices_[vertexId];
-
-          var position = new Vector3(
-              (float) (vertex.X * scale),
-              (float) (vertex.Y * scale),
-              (float) (vertex.Z * scale));
-
-          vertexBuilders[vertexId] = VERTEX
-                                     .Create(position)
-                                     .WithSkinning((node.LogicalIndex, 1));
-        }
-      }
-
-
       // Gathers up texture materials.
-      var materials = new MaterialBuilder[1 + this.allTextures_.Count];
-      materials[0] = new MaterialBuilder("null").WithUnlitShader();
+      var materials = new MaterialPair[1 + this.allTextures_.Count];
+      materials[0] =
+          new MaterialPair(new MaterialBuilder("null").WithDoubleSide(true));
       for (var i = 0; i < this.allTextures_.Count; ++i) {
         var glTexture = this.allTextures_[i];
 
-        var texturePath = $"{basePath}/{glTexture.TileDescriptor.Uuid}.bmp";
+        var texturePath = $"{basePath}/{glTexture.TileDescriptor.Uuid}.png";
         glTexture.SaveToFile(texturePath);
 
         var glTfImage = new MemoryImage(texturePath);
+        // TODO: Need to handle wrapping in the shader?
+        var wrapModeS =
+            this.GetWrapMode_(glTexture.GlMirroredS, glTexture.GlClampedS);
+        var wrapModeT =
+            this.GetWrapMode_(glTexture.GlMirroredT, glTexture.GlClampedT);
 
-        var material = materials[1 + i] = new MaterialBuilder($"material{i}")
-                                          .WithUnlitShader();
+        // TODO: Alpha isn't always needed.
+        // TODO: Double-sided isn't always needed.
+        var material = new MaterialBuilder($"material{i}")
+                       .WithAlpha(AlphaMode.MASK)
+                       .WithDoubleSide(true);
 
-        var glTfTexture = material.UseChannel(KnownChannel.BaseColor)
-                                  .UseTexture();
+        // TODO: Don't always need to create all 3.
+        var lit = material;
+        var unlit = material.Clone();
+        var glossy = material.Clone();
 
-        var wrapModeS = glTexture.GlMirroredS
-                                        ?
-                                        TextureWrapMode.MIRRORED_REPEAT
-                                        : glTexture.GlClampedS
-                                            ? TextureWrapMode.CLAMP_TO_EDGE
-                                            : TextureWrapMode.REPEAT;
-        var wrapModeT = glTexture.GlMirroredT
-                            ?
-                            TextureWrapMode.MIRRORED_REPEAT
-                            : glTexture.GlClampedT
-                                ? TextureWrapMode.CLAMP_TO_EDGE
-                                : TextureWrapMode.REPEAT;
-        glTfTexture.WithPrimaryImage(glTfImage).WithSampler(wrapModeS, wrapModeT);
+        lit.WithSpecularGlossinessShader()
+           .WithSpecularGlossiness(new Vector3(0), 0)
+           .UseChannel(KnownChannel.Diffuse)
+           .UseTexture()
+           .WithPrimaryImage(glTfImage)
+           .WithSampler(wrapModeS, wrapModeT);
+
+        unlit.WithUnlitShader()
+             .UseChannel(KnownChannel.BaseColor)
+             .UseTexture()
+             .WithPrimaryImage(glTfImage)
+             .WithSampler(wrapModeS, wrapModeT);
+
+        // TODO: Use metal instead?
+        glossy.WithSpecularGlossinessShader()
+              .UseChannel(KnownChannel.Diffuse)
+              .UseTexture()
+              .WithPrimaryImage(glTfImage)
+              .WithSampler(wrapModeS, wrapModeT);
+
+        materials[1 + i] = new MaterialPair(lit, unlit, glossy);
+      }
+
+      // Gathers up animations.
+      for (var a = 0; a < animations.Count; ++a) {
+        var animation = animations[a];
+        var animationName = $"animation{a}";
+
+        for (var l = 0; l < limbsAndNodes.Length; ++l) {
+          var (_, node) = limbsAndNodes[l];
+
+          // TODO: Simplify for constant values.
+          var keyframes = new Dictionary<float, Quaternion>();
+          for (var f = 0; f < animation.FrameCount; ++f) {
+            var time = f / 20f;
+            keyframes[time] =
+                this.LimbMatrices.GetLimbRotationAtFrame(l, animation, f);
+          }
+
+          node.WithRotationAnimation(animationName, keyframes);
+        }
+      }
+
+      // Gathers up vertex builders.
+      ModelViewMatrixTransformer.Push();
+      ModelViewMatrixTransformer.Identity();
+
+      this.LimbMatrices.UpdateLimbMatrices(this.Limbs,
+                                           firstAnimation,
+                                           0);
+
+      var vertexBuilders = new VERTEX[this.allVertices_.Count];
+      for (var l = 0; l < limbsAndNodes.Length; ++l) {
+        var jointIndex = 1 + l;
+        var (limb, _) = limbsAndNodes[l];
+
+        ModelViewMatrixTransformer.Set(
+            this.LimbMatrices.GetMatrixForLimb((uint) l));
+
+        foreach (var vertexId in limb.OwnedVertices) {
+          var vertex = this.allVertices_[vertexId];
+
+          var x = vertex.X;
+          var y = vertex.Y;
+          var z = vertex.Z;
+
+          ModelViewMatrixTransformer.ProjectVertex(ref x, ref y, ref z);
+
+          var position = new Vector3(
+              (float) (x * scale),
+              (float) (y * scale),
+              (float) (z * scale));
+
+          vertexBuilders[vertexId] = VERTEX
+                                     .Create(position)
+                                     .WithSkinning((jointIndex, 1));
+        }
       }
 
       // Builds mesh.
       var meshBuilder = VERTEX.CreateCompatibleMesh();
-      foreach (var (limb, _) in limbsAndNodes) {
+      for (var l = 0; l < limbsAndNodes.Length; ++l) {
+        var (limb, _) = limbsAndNodes[l];
+
+        ModelViewMatrixTransformer.Set(
+            this.LimbMatrices.GetMatrixForLimb((uint) l));
+
         foreach (var triangle in limb.Triangles) {
           var shaderParams = triangle.ShaderParams;
-          var withNormal = shaderParams.EnableLighting;
+          var enableLighting = shaderParams.EnableLighting;
+          var withNormal = enableLighting;
           var withPrimColor = withNormal && shaderParams.EnableCombiner;
 
           // TODO: Should be possible to merge these by texture/shader.
 
-          var texture0Material = materials[1 + triangle.TextureIds[0]];
+          var texture0MaterialPair = materials[1 + triangle.TextureIds[0]];
+
+          var texture0Material = shaderParams.EnableSphericalUv
+                                     ? texture0MaterialPair.Glossy
+                                     : enableLighting
+                                         ? texture0MaterialPair.Lit
+                                         : texture0MaterialPair.Unlit;
 
           var trianglePrimitive = meshBuilder.UsePrimitive(texture0Material);
           var triangleVertexBuilders = new List<IVertexBuilder>();
@@ -560,18 +697,29 @@ namespace UoT {
 
             var vertexBuilder = vertexBuilders[vertexId];
 
-            var texture0 = this.allTextures_[triangle.TextureIds[0]];
-            var tileDescriptor0 = texture0.TileDescriptor;
+            var texture0Id = triangle.TextureIds[0];
+            var texture0 = texture0Id >= 0
+                               ? this.allTextures_[triangle.TextureIds[0]]
+                               : null;
+            var tileDescriptor0 = texture0?.TileDescriptor;
 
-            var u = (float)(vertex.U * tileDescriptor0.TextureWRatio);
-            var v = (float)(vertex.V * tileDescriptor0.TextureHRatio);
+            var u = (float) (vertex.U * tileDescriptor0?.TextureWRatio ?? 0);
+            var v = (float) (vertex.V * tileDescriptor0?.TextureHRatio ?? 0);
             vertexBuilder =
                 vertexBuilder.WithMaterial(color, new Vector2(u, v));
 
             if (withNormal) {
               // TODO: Normals seem broken?
+              // TODO: Might need to pre-project?
+
+              double x = vertex.NormalX;
+              double y = vertex.NormalY;
+              double z = vertex.NormalZ;
+              ModelViewMatrixTransformer.ProjectNormal(ref x, ref y, ref z);
+
               var normal =
-                  new Vector3(vertex.NormalX, vertex.NormalY, vertex.NormalZ);
+                  Vector3.Normalize(
+                      new Vector3((float) x, (float) y, (float) z));
               vertexBuilder =
                   vertexBuilder.WithGeometry(vertexBuilder.Position, normal);
             }
@@ -584,11 +732,11 @@ namespace UoT {
                                         triangleVertexBuilders[2]);
         }
       }
+      ModelViewMatrixTransformer.Pop();
 
       var mesh = model.CreateMesh(meshBuilder);
 
-      model.UseScene("default")
-           .CreateNode()
+      scene.CreateNode()
            .WithSkinnedMesh(mesh, rootNode.WorldMatrix, jointNodes.ToArray());
 
       // TODO: Write animations.

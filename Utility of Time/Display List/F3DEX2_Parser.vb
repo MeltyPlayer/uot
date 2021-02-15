@@ -37,7 +37,7 @@ Public Class F3DEX2_Parser
 
   Private UseJank As Boolean = True
 
-  Private JankTileDescriptors(- 1) As TileDescriptor
+  Private JankTileDescriptors(-1) As TileDescriptor
   Private JankCache As New TextureCache
   Private JankTextures(1) As Texture
 
@@ -54,7 +54,7 @@ Public Class F3DEX2_Parser
   '''   Judging from GLideN64's source, these are selected in TEXTURE() as tile
   '''   and tile+1.
   ''' </summary>
-  Private SelectedTileDescriptors(- 1) As Integer
+  Private SelectedTileDescriptors(-1) As Integer
 
   ' TODO: Delete this field?
   Private CurrentSelectedTileDescriptor As Integer
@@ -109,10 +109,10 @@ Public Class F3DEX2_Parser
 
   Public Sub ParseDL(DL As N64DisplayList, dlManager As DlManager)
     If HackEnvColor IsNot Nothing Then
-      ShaderManager.SetEnvironmentColor(HackEnvColor(0)/255.0F,
-                                        HackEnvColor(1)/255.0F,
-                                        HackEnvColor(2)/255.0F,
-                                        HackEnvColor(3)/255.0F)
+      ShaderManager.SetEnvironmentColor(HackEnvColor(0) / 255.0F,
+                                        HackEnvColor(1) / 255.0F,
+                                        HackEnvColor(2) / 255.0F,
+                                        HackEnvColor(3) / 255.0F)
     End If
 
     For i As Integer = 0 To DL.Commands.Length - 1
@@ -120,19 +120,19 @@ Public Class F3DEX2_Parser
         If ParseMode = Parse.EVERYTHING Then
           Select Case .Opcode
             Case F3DZEX.POPMTX
-              popmatrix:
+popmatrix:
               Debug.NotImplemented()
 
             Case RDP.G_SETENVCOLOR
-              setenvironmentcolor:
+setenvironmentcolor:
               ENVCOLOR(.CMDParams)
 
             Case RDP.G_SETPRIMCOLOR
-              setprimitivecolor:
+setprimitivecolor:
               SETPRIMCOLOR(.CMDParams)
 
             Case RDP.G_SETTIMG
-              settextureimg:
+settextureimg:
               Dim paletteMode As Boolean = (DL.Commands(i + 1).Opcode = RDP.G_RDPTILESYNC)
 
               If DL.Commands(i - 1).Opcode = RDP.G_SETTILESIZE Then
@@ -152,46 +152,46 @@ Public Class F3DEX2_Parser
               SETTIMG(.Low, .High, paletteMode)
 
             Case RDP.G_LOADTLUT
-              loadtexturelut:
+loadtexturelut:
               LOADTLUT(.High)
 
             Case RDP.G_LOADBLOCK
-              loadtexblock:
+loadtexblock:
               LOADBLOCK(.Low, .High)
 
             Case RDP.G_LOADTILE
               LOADTILE(.Low, .High)
 
             Case RDP.G_SETTILESIZE
-              settilesize:
+settilesize:
               SETTILESIZE(.Low, .High)
 
             Case RDP.G_SETTILE
-              settile:
+settile:
               If .CMDParams(1) > 0 Then SETTILE(.Low, .High)
 
             Case RDP.G_SETCOMBINE
-              setcombiner:
+setcombiner:
               SETCOMBINE(.Low, .High)
 
             Case F3DZEX.TEXTURE
-              texture:
+texture:
               TEXTURE(.Low, .High)
 
             Case F3DZEX.GEOMETRYMODE
-              geometrymode:
+geometrymode:
               GEOMETRYMODE(.Low, .High)
 
             Case F3DZEX.SETOTHERMODE_H
-              setothermodehigh:
+setothermodehigh:
               SETOTHERMODE_H(.Low, .High)
 
             Case F3DZEX.SETOTHERMODE_L
-              seothtermodelow:
+seothtermodelow:
               SETOTHERMODE_L(.Low, .High)
 
             Case F3DZEX.MTX
-              matrix:
+matrix:
               ' MTX(.CMDLow, .CMDHigh)
               Dim targetAddress As UInteger = .High
 
@@ -200,30 +200,30 @@ Public Class F3DEX2_Parser
               DlModel.SetCurrentLimbByMatrixAddress(targetAddress)
 
             Case F3DZEX.VTX
-              vertex:
+vertex:
               Dim nextIsNotCulling As Boolean = DL.Commands(i + 1).Opcode <> F3DZEX.CULLDL
               If nextIsNotCulling Then
                 VTX(.Low, .High)
               End If
 
             Case F3DZEX.MODIFYVTX
-              modifyvertex:
+modifyvertex:
               MODIFYVTX(.CMDParams)
 
             Case F3DZEX.TRI1
-              onetriangle:
+onetriangle:
               TRI1(.CMDParams)
 
             Case F3DZEX.TRI2
-              twotriangles:
+twotriangles:
               TRI2(.CMDParams)
 
             Case F3DZEX.QUAD
-              quad:
+quad:
               Debug.NotImplemented()
 
             Case F3DZEX.DL
-              dl:
+dl:
               ' TODO: Support jumping to another DL.
               ' TODO: Decide to continue or quit depending on pp from w0. 
               Dim address As UInteger = .High
@@ -243,11 +243,11 @@ Public Class F3DEX2_Parser
               End If
 
             Case F3DZEX.BRANCH_Z
-              branchz:
+branchz:
               Debug.NotImplemented()
 
             Case F3DZEX.ENDDL
-              enddisplaylist:
+enddisplaylist:
               Reset()
               Exit Sub
           End Select
@@ -323,7 +323,7 @@ Public Class F3DEX2_Parser
       For j As Integer = 0 To 3
         MatValue(0) = IoUtil.ReadUInt16(TempRSPMatrix.N64Mat, MtxPos + 0)
         MatValue(1) = IoUtil.ReadUInt16(TempRSPMatrix.N64Mat, MtxPos + 32)
-        TempRSPMatrix.OGLMat(i, j) = ((MatValue(0) << 16) Or MatValue(1))*1.0F/65536.0F
+        TempRSPMatrix.OGLMat(i, j) = ((MatValue(0) << 16) Or MatValue(1)) * 1.0F / 65536.0F
         MtxPos += 2
       Next
     Next
@@ -354,7 +354,7 @@ Public Class F3DEX2_Parser
   End Sub
 
   Private Sub MODIFYVTX(ByVal CMDParams() As Byte)
-    Dim i As Integer = (IoUtil.ReadUInt16(CMDParams, 2) And &HFFF)/2
+    Dim i As Integer = (IoUtil.ReadUInt16(CMDParams, 2) And &HFFF) / 2
     Dim Target As Integer = CMDParams(1)
 
     Dim vertex As Vertex = vertexCache(i)
@@ -366,9 +366,9 @@ Public Class F3DEX2_Parser
         vertex.B = CMDParams(6)
         vertex.A = CMDParams(7)
 
-        Dim rawNormalX As Single = ConvertByteToFloat_(vertex.R)
-        Dim rawNormalY As Single = ConvertByteToFloat_(vertex.G)
-        Dim rawNormalZ As Single = ConvertByteToFloat_(vertex.B)
+        Dim rawNormalX As Byte = vertex.R
+        Dim rawNormalY As Byte = vertex.G
+        Dim rawNormalZ As Byte = vertex.B
 
         DlModel.UpdateVertex(i, Function(vtxParams) As VertexParams
                                   vtxParams.R = vertex.R
@@ -376,16 +376,16 @@ Public Class F3DEX2_Parser
                                   vtxParams.B = vertex.B
                                   vtxParams.A = vertex.A
 
-                                  vtxParams.NormalX = rawNormalX
-                                  vtxParams.NormalY = rawNormalY
-                                  vtxParams.NormalZ = rawNormalZ
+                                  vtxParams.NormalX = ConvertByteToFloat_(rawNormalX)
+                                  vtxParams.NormalY = ConvertByteToFloat_(rawNormalY)
+                                  vtxParams.NormalZ = ConvertByteToFloat_(rawNormalZ)
 
                                   Return vtxParams
                                 End Function)
 
-        Dim normalX As Single = rawNormalX
-        Dim normalY As Single = rawNormalY
-        Dim normalZ As Single = rawNormalZ
+        Dim normalX As Single = ConvertByteToJankFloat_(rawNormalX)
+        Dim normalY As Single = ConvertByteToJankFloat_(rawNormalY)
+        Dim normalZ As Single = ConvertByteToJankFloat_(rawNormalZ)
         ModelViewMatrixTransformer.ProjectNormal(normalX, normalY, normalZ)
 
         vertex.NormalX = normalX
@@ -406,7 +406,7 @@ Public Class F3DEX2_Parser
     vertexCache(i) = vertex
   End Sub
 
-  Private Function ConvertByteToFloat_(value As Byte) As Single
+  Private Function ConvertByteToJankFloat_(value As Byte) As Single
     Dim total As Byte = 255
     Dim upper As Byte = 128
     Dim lower As Byte = total - upper
@@ -416,6 +416,11 @@ Public Class F3DEX2_Parser
     Else
       Return -value / lower
     End If
+  End Function
+
+  Private Function ConvertByteToFloat_(value As Byte) As Single
+    Return ConvertByteToJankFloat_(value)
+    Return -1 + 2 * (value / 255.0F)
   End Function
 
 
@@ -598,13 +603,13 @@ Public Class F3DEX2_Parser
           Dim b As Byte = Data(Offset + 14)
           Dim a As Byte = Data(Offset + 15)
 
-          Dim rawNormalX As Single = ConvertByteToFloat_(r)
-          Dim rawNormalY As Single = ConvertByteToFloat_(g)
-          Dim rawNormalZ As Single = ConvertByteToFloat_(b)
+          Dim rawNormalX As Byte = r
+          Dim rawNormalY As Byte = g
+          Dim rawNormalZ As Byte = b
 
-          Dim normalX As Single = rawNormalX
-          Dim normalY As Single = rawNormalY
-          Dim normalZ As Single = rawNormalZ
+          Dim normalX As Single = ConvertByteToJankFloat_(rawNormalX)
+          Dim normalY As Single = ConvertByteToJankFloat_(rawNormalY)
+          Dim normalZ As Single = ConvertByteToJankFloat_(rawNormalZ)
           ModelViewMatrixTransformer.ProjectNormal(normalX, normalY, normalZ)
 
           Dim newVertex As Vertex
@@ -640,9 +645,9 @@ Public Class F3DEX2_Parser
                                      vertex.U = u
                                      vertex.V = v
 
-                                     vertex.NormalX = rawNormalX
-                                     vertex.NormalY = rawNormalY
-                                     vertex.NormalZ = rawNormalZ
+                                     vertex.NormalX = ConvertByteToFloat_(rawNormalX)
+                                     vertex.NormalY = ConvertByteToFloat_(rawNormalY)
+                                     vertex.NormalZ = ConvertByteToFloat_(rawNormalZ)
 
                                      vertex.R = r
                                      vertex.G = g
@@ -972,9 +977,9 @@ Public Class F3DEX2_Parser
       .LRT = (w1 And &HFFF) >> 2
       .Width = ((.LRS - .ULS) + 1)
       .Height = ((.LRT - .ULT) + 1)
-      .TexBytes = (.Width*.Height)*2
+      .TexBytes = (.Width * .Height) * 2
       If .TexBytes >> 16 = &HFFFF Then
-        .TexBytes = (.TexBytes << 16 >> 16)*2
+        .TexBytes = (.TexBytes << 16 >> 16) * 2
       End If
     End With
 
@@ -1021,18 +1026,18 @@ Public Class F3DEX2_Parser
       Dim Mask_Height As UInteger = 1 << .MaskT
 
       Dim Line_Height As UInteger = 0
-      If Line_Width > 0 Then Line_Height = Min(MaxTexel/Line_Width, Tile_Height)
+      If Line_Width > 0 Then Line_Height = Min(MaxTexel / Line_Width, Tile_Height)
 
-      If .MaskS > 0 And ((Mask_Width*Mask_Height) <= MaxTexel) Then
+      If .MaskS > 0 And ((Mask_Width * Mask_Height) <= MaxTexel) Then
         .Width = Mask_Width
-      ElseIf ((Tile_Width*Tile_Height) <= MaxTexel) Then
+      ElseIf ((Tile_Width * Tile_Height) <= MaxTexel) Then
         .Width = Tile_Width
       Else
         .Width = Line_Width
       End If
-      If .MaskT > 0 And ((Mask_Width*Mask_Height) <= MaxTexel) Then
+      If .MaskT > 0 And ((Mask_Width * Mask_Height) <= MaxTexel) Then
         .Height = Mask_Height
-      ElseIf ((Tile_Width*Tile_Height) <= MaxTexel) Then
+      ElseIf ((Tile_Width * Tile_Height) <= MaxTexel) Then
         .Height = Tile_Height
       Else
         .Height = Line_Height
@@ -1091,8 +1096,8 @@ Public Class F3DEX2_Parser
         .ShiftT /= (1 << .TShiftT)
       End If
 
-      .TextureHRatio = ((.T_Scale*.ShiftT)/32/.LoadHeight)
-      .TextureWRatio = ((.S_Scale*.ShiftS)/32/.LoadWidth)
+      .TextureHRatio = ((.T_Scale * .ShiftT) / 32 / .LoadHeight)
+      .TextureWRatio = ((.S_Scale * .ShiftS) / 32 / .LoadWidth)
     End With
   End Sub
 
@@ -1124,11 +1129,11 @@ Public Class F3DEX2_Parser
       Select Case .PaletteBank
         Case RamBanks.CurrentBank
           For i As Integer = 0 To paletteSizeMinus1
-            palette16(i) = IoUtil.ReadUInt16(RamBanks.ZFileBuffer, .PaletteOffset + 2*i)
+            palette16(i) = IoUtil.ReadUInt16(RamBanks.ZFileBuffer, .PaletteOffset + 2 * i)
           Next
         Case 2
           For i As Integer = 0 To paletteSizeMinus1
-            palette16(i) = IoUtil.ReadUInt16(RamBanks.ZSceneBuffer, .PaletteOffset + 2*i)
+            palette16(i) = IoUtil.ReadUInt16(RamBanks.ZSceneBuffer, .PaletteOffset + 2 * i)
           Next
       End Select
 

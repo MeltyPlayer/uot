@@ -44,7 +44,7 @@ namespace UoT.limbs {
 
         limbMatrices.UpdateLimbMatrices(limbs,
                                         animation,
-                                        animationPlaybackManager);
+                                        (float) animationPlaybackManager.Frame);
       }
 
       SkeletonRenderer.ForEachLimbRecursively_(
