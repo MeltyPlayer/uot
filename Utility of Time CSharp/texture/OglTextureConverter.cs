@@ -54,8 +54,8 @@ namespace UoT {
                         ref loadedRgba,
                         palette32);
 
-      var gorbledS = clampS == mirrorS || sSize != width;
-      var gorbledT = clampT == mirrorT || tSize != height;
+      var gorbledS = (clampS && mirrorS) || sSize != width;
+      var gorbledT = (clampT && mirrorT) || tSize != height;
 
       byte[] resizedRgba;
       if (GlobalVarsCs.UnwrapTextures && (gorbledS || gorbledT)) {
