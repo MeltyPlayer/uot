@@ -16,6 +16,7 @@ using SharpGLTF.Geometry.VertexTypes;
 using SharpGLTF.Materials;
 using SharpGLTF.Memory;
 using SharpGLTF.Schema2;
+using SharpGLTF.Transforms;
 
 using AlphaMode = SharpGLTF.Materials.AlphaMode;
 
@@ -512,8 +513,13 @@ namespace UoT {
                            IList<IAnimation>? animations) {
       // TODO: Use shader.
 
-      var basePath = "R:/Noesis/Model";
+      var basePath = $"R:/Noesis/Model/{objectName}";
+      Directory.CreateDirectory(basePath);
+
       var path = $"{basePath}/test.gltf";
+
+      // Options
+      var includeAnimations = false;
 
       var model = ModelRoot.CreateModel();
 
@@ -625,6 +631,8 @@ namespace UoT {
              .WithSampler(wrapModeS, wrapModeT);
 
         // TODO: Use metal instead?
+        // TODO: The texture is actually used as the reflection, so this is
+        // wrong.
         glossy.WithSpecularGlossinessShader()
               .WithSpecularGlossiness(StaticDlModel.GLOSSY_SPECULAR,
                                       StaticDlModel.GLOSSY_GLOSSINESS)
@@ -637,32 +645,34 @@ namespace UoT {
       }
 
       // Gathers up animations.
-      for (var a = 0; a < (animations?.Count ?? 0); ++a) {
-        var animation = animations![a];
-        var animationName = $"animation{a}";
+      if (includeAnimations) {
+        for (var a = 0; a < (animations?.Count ?? 0); ++a) {
+          var animation = animations![a];
+          var animationName = $"animation{a}";
 
-        for (var l = 0; l < limbsAndNodes.Length; ++l) {
-          var (_, node) = limbsAndNodes[l];
+          for (var l = 0; l < limbsAndNodes.Length; ++l) {
+            var (_, node) = limbsAndNodes[l];
 
-          var multiFrameTracks = 0;
-          for (var t = 0; t < 3; ++t) {
-            var track = animation.GetTrack(3 * l + t);
-            if (track.Type == 1) {
-              ++multiFrameTracks;
+            var multiFrameTracks = 0;
+            for (var t = 0; t < 3; ++t) {
+              var track = animation.GetTrack(3 * l + t);
+              if (track.Type == 1) {
+                ++multiFrameTracks;
+              }
             }
-          }
-          var isMultiFrame = multiFrameTracks > 0;
-          var trackFrameCount = isMultiFrame ? animation.FrameCount : 1;
+            var isMultiFrame = multiFrameTracks > 0;
+            var trackFrameCount = isMultiFrame ? animation.FrameCount : 1;
 
-          // TODO: Simplify for constant values, results in big files.
-          var keyframes = new Dictionary<float, Quaternion>();
-          for (var f = 0; f < trackFrameCount; ++f) {
-            var time = f / 20f;
-            keyframes[time] =
-                this.LimbMatrices.GetLimbRotationAtFrame(l, animation, f);
-          }
+            // TODO: Simplify for constant values, results in big files.
+            var keyframes = new Dictionary<float, Quaternion>();
+            for (var f = 0; f < trackFrameCount; ++f) {
+              var time = f / 20f;
+              keyframes[time] =
+                  this.LimbMatrices.GetLimbRotationAtFrame(l, animation, f);
+            }
 
-          node.WithRotationAnimation(animationName, keyframes);
+            node.WithRotationAnimation(animationName, keyframes);
+          }
         }
       }
 
@@ -701,6 +711,7 @@ namespace UoT {
             var y = vertex.Y;
             var z = vertex.Z;
 
+            // Model MUST be pre-projected to match the orientation of the rig!
             ModelViewMatrixTransformer.ProjectVertex(ref x, ref y, ref z);
 
             var position = new Vector3(
@@ -811,16 +822,15 @@ namespace UoT {
       scene.CreateNode()
            .WithSkinnedMesh(mesh, rootNode.WorldMatrix, jointNodes.ToArray());
 
-      var di = new DirectoryInfo(basePath);
+      /*var di = new DirectoryInfo(basePath);
       foreach (FileInfo file in di.GetFiles()) {
         file.Delete();
-      }
+      }*/
 
       var writeSettings = new WriteSettings {
-          JsonIndented = true,
-          ImageWriting = ResourceWriteMode.Embedded
+          //ImageWriting = ResourceWriteMode.Embedded,
       };
-      model.Save(path, writeSettings);
+      model.Save(path);
     }
   }
 

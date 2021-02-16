@@ -36,10 +36,12 @@ namespace UoT {
       // These following values represent the true bounds of accessible uv
       // space for clamping. In standard OpenGL, uvs will always be clamped
       // between [0, 1], but in the N64 hardware these bounds can be altered.
-      var sSize =
-          clampS ? (tileDescriptor.LRS - tileDescriptor.ULS + 1) : width;
-      var tSize =
-          clampT ? (tileDescriptor.LRT - tileDescriptor.ULT + 1) : height;
+      var sSize = tileDescriptor.LRS - tileDescriptor.ULS + 1;
+      var tSize = tileDescriptor.LRT - tileDescriptor.ULT + 1;
+
+      if (tileDescriptor.Uuid == 4223219967995088) {
+        var hi = 0;
+      }
 
       var converter =
           TextureConverter.GetConverter(tileDescriptor.ColorFormat,
@@ -51,6 +53,52 @@ namespace UoT {
                         offset,
                         ref loadedRgba,
                         palette32);
+
+      var gorbledS = clampS == mirrorS || sSize != width;
+      var gorbledT = clampT == mirrorT || tSize != height;
+
+      byte[] resizedRgba;
+      if (GlobalVarsCs.UnwrapTextures && (gorbledS || gorbledT)) {
+        resizedRgba = new byte[4 * sSize * tSize];
+
+        for (var s = 0; s < sSize; ++s) {
+          for (var t = 0; t < tSize; ++t) {
+            var xTimes = Math.DivRem(s, width, out var xMod);
+            var yTimes = Math.DivRem(t, height, out var yMod);
+
+            var x = xMod;
+            var y = yMod;
+            if (mirrorS && xTimes % 2 == 1) {
+              x = width - 1 - xMod;
+            }
+            if (mirrorT && yTimes % 2 == 1) {
+              y = height - 1 - yMod;
+            }
+
+            for (var i = 0; i < 4; ++i) {
+              resizedRgba[4 * (t * sSize + s) + i] =
+                  loadedRgba[4 * (y * width + x) + i];
+            }
+          }
+        }
+
+        if (gorbledS) {
+          clampS = true;
+          mirrorS = false;
+
+          tileDescriptor.TextureWRatio *= (1.0 * width) / sSize;
+          tileDescriptor.LineSize = tileDescriptor.LoadWidth = width = sSize;
+        }
+        if (gorbledT) {
+          clampT = true;
+          mirrorT = false;
+
+          tileDescriptor.TextureHRatio *= (1.0 * height) / tSize;
+          tileDescriptor.LoadHeight = height = tSize;
+        }
+      } else {
+        resizedRgba = loadedRgba;
+      }
 
       // Some textures are repeated and THEN clamped, so we must resize the
       // image accordingly.
@@ -68,16 +116,17 @@ namespace UoT {
                       0,
                       Gl.GL_RGBA,
                       Gl.GL_UNSIGNED_BYTE,
-                      loadedRgba);
+                      resizedRgba);
       Glu.gluBuild2DMipmaps(Gl.GL_TEXTURE_2D,
                             Gl.GL_RGBA,
                             tileDescriptor.LoadWidth,
                             tileDescriptor.LoadHeight,
                             Gl.GL_RGBA,
                             Gl.GL_UNSIGNED_BYTE,
-                            loadedRgba);
+                            resizedRgba);
 
-      var texture = Asserts.Assert(cache.Add(tileDescriptor, loadedRgba, save));
+      var texture =
+          Asserts.Assert(cache.Add(tileDescriptor, resizedRgba, save));
 
       /**
        * Lets OpenGL manage wrapping instead of calculating it within the
