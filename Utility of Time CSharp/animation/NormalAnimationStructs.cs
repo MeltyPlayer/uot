@@ -15,11 +15,13 @@ namespace UoT {
     public ushort FrameCount { get; set; }
 
     public Vec3s? Position { get; set; }
+    public int PositionCount => 1;
     public Vec3s GetPosition(int _) => Asserts.Assert(this.Position);
-    public FacialState GetFacialState(int _) => FacialState.DEFAULT;
 
     public int TrackCount => this.Tracks.Length;
     public IAnimationTrack GetTrack(int i) => this.Tracks[i];
+
+    public FacialState GetFacialState(int _) => FacialState.DEFAULT;
   }
 
   public class NormalAnimationTrack : IAnimationTrack {

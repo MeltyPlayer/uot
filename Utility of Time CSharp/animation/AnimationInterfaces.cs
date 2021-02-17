@@ -5,11 +5,13 @@ namespace UoT {
   public interface IAnimation {
     ushort FrameCount { get; }
 
+    int PositionCount { get; }
     Vec3s GetPosition(int i);
-    FacialState GetFacialState(int i);
 
     int TrackCount { get; }
     IAnimationTrack GetTrack(int i);
+    
+    FacialState GetFacialState(int i);
   }
 
   public interface IAnimationTrack {

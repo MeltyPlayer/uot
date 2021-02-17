@@ -22,12 +22,14 @@ namespace UoT {
     }
 
     public ushort FrameCount { get; set; }
-    
+
+    public int PositionCount => this.positions_.Count;
     public Vec3s GetPosition(int i) => this.positions_[i];
-    public FacialState GetFacialState(int i) => this.facialStates_![i];
 
     public int TrackCount => this.tracks_.Count;
     public IAnimationTrack GetTrack(int i) => this.tracks_[i];
+    
+    public FacialState GetFacialState(int i) => this.facialStates_![i];
   }
 
   public class LinkAnimetionTrack : IAnimationTrack {

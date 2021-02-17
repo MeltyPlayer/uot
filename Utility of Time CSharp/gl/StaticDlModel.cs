@@ -204,7 +204,7 @@ namespace UoT {
       } else {
         this.LimbMatrices.UpdateLimbMatrices(this.Limbs,
                                              animation,
-                                             (float)animationPlaybackManager
+                                             (float) animationPlaybackManager
                                                  .Frame);
 
         this.ForEachLimbRecursively_(
@@ -214,12 +214,18 @@ namespace UoT {
                 var xI = 0.0;
                 var yI = 0.0;
                 var zI = 0.0;
-                ModelViewMatrixTransformer.ProjectVertex(ref xI, ref yI, ref zI);
+                ModelViewMatrixTransformer.ProjectVertex(
+                    ref xI,
+                    ref yI,
+                    ref zI);
 
                 double xF = limb.x;
                 double yF = limb.y;
                 double zF = limb.z;
-                ModelViewMatrixTransformer.ProjectVertex(ref xF, ref yF, ref zF);
+                ModelViewMatrixTransformer.ProjectVertex(
+                    ref xF,
+                    ref yF,
+                    ref zF);
 
                 Gl.glDepthRange(0, 0);
                 Gl.glLineWidth(9);
@@ -248,7 +254,7 @@ namespace UoT {
 
               ModelViewMatrixTransformer.Push();
 
-              var matrix = this.LimbMatrices.GetMatrixForLimb((uint)limbIndex);
+              var matrix = this.LimbMatrices.GetMatrixForLimb((uint) limbIndex);
               ModelViewMatrixTransformer.Set(matrix);
 
               ProjectVertices(limb.OwnedVertices);
@@ -509,17 +515,18 @@ namespace UoT {
     }
 
     // TODO: Pull this out.
-    public void SaveAsGlTf(string objectName, 
-                           IList<IAnimation>? animations) {
+    public void SaveAsGlTf(
+        string objectName,
+        IList<IAnimation>? animations) {
       // TODO: Use shader.
 
       var basePath = $"R:/Noesis/Model/{objectName}";
       Directory.CreateDirectory(basePath);
 
-      var path = $"{basePath}/test.gltf";
+      var path = $"{basePath}/test.glb";
 
       // Options
-      var includeAnimations = false;
+      var includeAnimations = true;
 
       var model = ModelRoot.CreateModel();
 
@@ -536,10 +543,9 @@ namespace UoT {
       // TODO: Eliminate redundant definitions.
       // TODO: Include face animations, somehow?
       // TODO: Fix large filesize for Link, seems to be animations?
-      // TODO: Include positions for each animation, and each frame for link.
-      // TODO: Clamp textures by pre-repeating.
       // TODO: Tweak shininess.
       // TODO: Fix limb matrices for some characters, like Bazaar Shopkeeper?
+      // TODO: Environment color isn't used yet, giving weird colors for link.
 
       var scale = objectName.StartsWith("object_gi_") ? .1 : .001;
 
@@ -650,6 +656,26 @@ namespace UoT {
           var animation = animations![a];
           var animationName = $"animation{a}";
 
+          var glTfAnimation = model.UseAnimation(animationName);
+
+          // Writes translation(s) for the root node.
+          var multiplePositions = animation.PositionCount > 1;
+          var translationKeyframes = new Dictionary<float, Vector3>();
+          for (var f = 0; f < animation.PositionCount; ++f) {
+            var translation = animation.GetPosition(f);
+
+            var time = f / 20f;
+            translationKeyframes[time] = new Vector3(
+                (float) (translation.X * scale),
+                (float) (translation.Y * scale),
+                (float) (translation.Z * scale));
+          }
+          glTfAnimation.CreateTranslationChannel(
+              rootNode,
+              translationKeyframes,
+              multiplePositions);
+
+          // Writes rotations for each bone.
           for (var l = 0; l < limbsAndNodes.Length; ++l) {
             var (_, node) = limbsAndNodes[l];
 
@@ -664,14 +690,17 @@ namespace UoT {
             var trackFrameCount = isMultiFrame ? animation.FrameCount : 1;
 
             // TODO: Simplify for constant values, results in big files.
-            var keyframes = new Dictionary<float, Quaternion>();
+            var rotationKeyframes = new Dictionary<float, Quaternion>();
             for (var f = 0; f < trackFrameCount; ++f) {
               var time = f / 20f;
-              keyframes[time] =
+              rotationKeyframes[time] =
                   this.LimbMatrices.GetLimbRotationAtFrame(l, animation, f);
             }
 
-            node.WithRotationAnimation(animationName, keyframes);
+            glTfAnimation.CreateRotationChannel(
+                node,
+                rotationKeyframes,
+                isMultiFrame);
           }
         }
       }
@@ -822,14 +851,11 @@ namespace UoT {
       scene.CreateNode()
            .WithSkinnedMesh(mesh, rootNode.WorldMatrix, jointNodes.ToArray());
 
-      /*var di = new DirectoryInfo(basePath);
+      var di = new DirectoryInfo(basePath);
       foreach (FileInfo file in di.GetFiles()) {
         file.Delete();
-      }*/
+      }
 
-      var writeSettings = new WriteSettings {
-          //ImageWriting = ResourceWriteMode.Embedded,
-      };
       model.Save(path);
     }
   }
